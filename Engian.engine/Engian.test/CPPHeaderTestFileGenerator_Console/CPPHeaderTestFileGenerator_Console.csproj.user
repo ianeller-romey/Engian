@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <StartArguments>-generatedxmlfile "C:\Users\elleri\Documents\TestManager\GeneratedTestFileList.xml" -headerfile "C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilHashTable.h" -testname "TestUtilHashTable" -testfile "C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Engian.test\testUtilHashTable.cpp" -chassisfile "C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Engian.test\testIcle.h"</StartArguments>
+  </PropertyGroup>
+</Project>

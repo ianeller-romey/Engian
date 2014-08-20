@@ -1,0 +1,560 @@
+
+#include "testIcle.h"
+
+#ifdef RUN_UNIT_TESTS
+
+#include "utilString.h"
+#include "utilList.h"
+
+
+namespace Test
+{
+
+  char const * const UnitTestChassis::TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst )
+  {
+    unsigned const compareAgainstLen = strlen( compareAgainst );
+    return TestUtilString_Helper_CheckStringAgainstArray( check, compareAgainst, compareAgainstLen );
+  }
+  
+
+  char const * const UnitTestChassis::TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst, unsigned const compareAgainstLen )
+  {
+    Util::String* string = static_cast< Util::String* >( check );
+    
+    if( string->m_capacity == 0 ) return "did not initialize m_capacity correctly";
+    if( string->m_size != compareAgainstLen + 1 ) return "did not increase the vector's m_size variable to the correct value";
+    if( memcmp( string->m_array, compareAgainst, compareAgainstLen ) != 0 ) return "did not insert correct value";
+    if( string->m_array[ compareAgainstLen ] != '\0' ) return "did not terminate string with a null character";
+    if( string->m_implementations != 0 ) return "created unnecessary Iterators";
+    return 0;
+  }
+
+
+  UnitTestChassis::UnitTestDictionaryPair UnitTestChassis::UnitTestArray_TestUtilString[] = {
+    T_FUNC_ARR_DEF( TestUtilString_String_Constructor0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Constructor1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Constructor2 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Constructor3 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Constructor4 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_CopyConstructor ),
+    T_FUNC_ARR_DEF( TestUtilString_String_PushBack ),
+    T_FUNC_ARR_DEF( TestUtilString_String_PushBackRange0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_PushBackRange1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_PopBack ),
+    T_FUNC_ARR_DEF( TestUtilString_String_GetStrLen ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BeginsWith ),
+    T_FUNC_ARR_DEF( TestUtilString_String_EndsWith ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BasicAssignment0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BasicAssignment1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BasicAssignment2 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_EqualTo ),
+    T_FUNC_ARR_DEF( TestUtilString_String_NotEqualTo ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Addition0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Addition1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_AdditionAssignment0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_AdditionAssignment1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BitwiseLeftShift0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_BitwiseLeftShift1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Indirection0 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Indirection1 ),
+    T_FUNC_ARR_DEF( TestUtilString_String_Conversion )
+  };
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Constructor0( char const * const name )
+  {
+    try
+    {
+      Util::String string;
+      TEST_ASSERT( string.m_capacity == 2, name, "did not initialize m_capacity to 2" );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, "", 0 ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String()" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Constructor1( char const * const name )
+  {
+    try
+    {
+      unsigned const capacity = 200;
+      Util::String string( capacity );
+      TEST_ASSERT( string.m_capacity == capacity, name, "did not initialize m_capacity correctly" );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, "", 0 ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String( unsigned const capacity )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Constructor2( char const * const name )
+  {
+    try
+    {
+      char const * const characters = "The quick brown fox jumps over the lazy dog.";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string( characters );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String( char const * const string )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Constructor3( char const * const name )
+  {
+    try
+    {
+      char const character = 'I';
+      Util::String string( character );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, &character, 1 ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String( char const character )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Constructor4( char const * const name )
+  {
+    try
+    {
+      char characters[] = "abcdefghijklmnopqrstuvwxyz";
+      unsigned const charactersLen = strlen( characters );
+      Util::List< char > list( characters, charactersLen );
+      Util::String string( list );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, charactersLen ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String( char const character )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_CopyConstructor( char const * const name )
+  {
+    try
+    {
+      char const * const characters = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string1( characters ),
+                   string2( string1 );
+      TEST_ASSERT( string2.m_capacity == string1.m_capacity, name, "did not initialize m_capacity correctly" );
+      TEST_ASSERT( string2.m_size == string1.m_size, name, "did not initialize m_size correctly" );
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, string1.m_array ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "String::String( String const& string )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_PushBack( char const * const name )
+  {
+    try
+    {
+      char characters[] = "THIS IS A STRING THAT I'M QUITE HAPPY TO USE TO TEST MY DATA STRUCTURES!";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string;
+      for( unsigned i = 0; i < charactersLen; ++i )
+        string.PushBack( characters[ i ] );
+      
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "void String::PushBack( char const& t )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_PushBackRange0( char const * const name )
+  {
+    try
+    {
+      char characters1[] = "THIS IS THE BEGINNING,",
+           characters2[] = "AND THIS IS THE MIDDLE,",
+           characters3[] = "AND THIS IS THE END,",
+           characters4[] = "OF A TEST STRING.";
+      unsigned const charactersLen1 = strlen( characters1 ),
+                     charactersLen2 = strlen( characters2 ),
+                     charactersLen3 = strlen( characters3 ),
+                     charactersLen4 = strlen( characters4 ),
+                     charactersLenAll = charactersLen1 + charactersLen2 + charactersLen3 + charactersLen4;
+      Util::String string;
+      string.PushBackRange( characters1 );
+      string.PushBackRange( characters2 );
+      string.PushBackRange( characters3 );
+      string.PushBackRange( characters4 );
+
+      Util::Vector< char > vector( charactersLenAll );
+      vector.PushBackRange( characters1, charactersLen1 );
+      vector.PushBackRange( characters2, charactersLen2 );
+      vector.PushBackRange( characters3, charactersLen3 );
+      vector.PushBackRange( characters4, charactersLen4 );
+      
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, vector.m_array, vector.m_size ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "void String::PushBackRange( char const * const string )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_PushBackRange1( char const * const name )
+  {
+    try
+    {
+      char characters[] = "this test string will be inserted several characters at a time";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string;
+      for( unsigned i = 0, incr = 5; i < charactersLen; i += incr )
+        string.PushBackRange( characters + i, ( charactersLen - i < incr ) ? charactersLen - i : incr );
+      
+      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( CheckTestCall( "void String::PushBackRange( char const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_PopBack( char const * const name )
+  {
+    try
+    {
+      char characters[] = "~!@#$%^&*()_+=-0987654321`";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string( characters );
+      for( int i = charactersLen; i > 0; ++i )
+      {
+        string.PopBack();
+        TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, i ) == 0, name, "did not update values correctly" );
+      }
+      TEST_ASSERT( CheckTestCall( "void String::PopBack()" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_GetStrLen( char const * const name )
+  {
+    try
+    {
+      char characters[] = "this STRING will BE used TO test THE GetStrLen MEMBER function";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string( characters );
+      TEST_ASSERT( string.GetStrLen() == charactersLen, name, "did not return correct string length" );
+      TEST_ASSERT( CheckTestCall( "unsigned const String::GetStrLen() const" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BeginsWith( char const * const name )
+  {
+    try
+    {
+      char characters[] = "TestUtilString_String_BeginsWith0";
+      unsigned const charactersLen = strlen( characters );
+      Util::String string( characters ), stringAlt( "TestUtilString" );
+
+      TEST_ASSERT( string.BeginsWith( "Test" ), name, "did not return true for correct string" );
+      TEST_ASSERT( string.BeginsWith( 'T' ), name, "did not return true for correct character" );
+      TEST_ASSERT( string.BeginsWith( "TestUtil", 8 ), name, "did not return true for correct string" );
+
+      TEST_ASSERT( string.BeginsWith( "TestUtilVector" ), name, "returned true for incorrect string" );
+      TEST_ASSERT( string.BeginsWith( 'a' ) == false, name, "returned true for incorrect character" );
+      TEST_ASSERT( string.BeginsWith( "UnitTest", 8 ), name, "returned true for incorrect string" );
+
+      TEST_ASSERT( string.BeginsWith( "TestUtilString_String_BeginsWith000" ), name, "returned true for incorrect string" );
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BeginsWith0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_EndsWith( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_EndsWith0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BasicAssignment0( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BasicAssignment0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BasicAssignment1( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BasicAssignment1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BasicAssignment2( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BasicAssignment1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_EqualTo( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_EqualTo" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_NotEqualTo( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_NotEqualTo" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Addition0( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_Addition0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Addition1( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_Addition1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_AdditionAssignment0( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_AdditionAssignment0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_AdditionAssignment1( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_AdditionAssignment1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BitwiseLeftShift0( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BitwiseLeftShift0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_BitwiseLeftShift1( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_BitwiseLeftShift1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Indirection0( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_Indirection0" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Indirection1( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_Indirection1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilString_String_Conversion( char const * const name )
+  {
+    try
+    {
+      TEST_ASSERT( CheckTestCall( "TestUtilString_String_Indirection1" ), name, "Appropriate function was not called" );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  extern "C"
+  {
+
+    TESTICLE_API void __stdcall GetTests_TestUtilString
+    (
+      /* out */ char*** allTests,
+      /* out */ int* numTests
+    )
+    {
+      *numTests = T_FUNC_ARR_SIZE( UnitTestChassis::UnitTestArray_TestUtilString );
+      UnitTestChassis::GetTests_UnitTests( UnitTestChassis::UnitTestArray_TestUtilString, *numTests, allTests );
+    }
+
+
+    TESTICLE_API void __stdcall RunTests_TestUtilString
+    (
+      char** testsToRun,  
+      int numTests,
+      /* out */  char*** allResults
+    )
+    {
+      int numUnitTests = T_FUNC_ARR_SIZE( UnitTestChassis::UnitTestArray_TestUtilString );
+      char const** const testResults = new char const*[ numTests ];
+
+      UnitTestChassis::RunTests_UnitTests( UnitTestChassis::UnitTestArray_TestUtilString, numUnitTests, testsToRun, numTests, allResults );
+    }
+
+  }
+
+}
+
+#endif

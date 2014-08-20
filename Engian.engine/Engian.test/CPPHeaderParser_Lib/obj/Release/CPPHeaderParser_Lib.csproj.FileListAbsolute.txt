@@ -1,0 +1,5 @@
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderParser_Lib\bin\Release\CPPHeaderParser_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderParser_Lib\bin\Release\CPPHeaderParser_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderParser_Lib\obj\Release\CPPHeaderParser_Lib.csprojResolveAssemblyReference.cache
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderParser_Lib\obj\Release\CPPHeaderParser_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderParser_Lib\obj\Release\CPPHeaderParser_Lib.pdb

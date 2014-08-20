@@ -1,0 +1,10 @@
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderTestFileGenerator_Console.exe.config
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderTestFileGenerator_Console.exe
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderTestFileGenerator_Console.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderParser_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderTestFileGenerator_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderParser_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\bin\Release\CPPHeaderTestFileGenerator_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\obj\Release\CPPHeaderTestFileGenerator_Console.csprojResolveAssemblyReference.cache
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\obj\Release\CPPHeaderTestFileGenerator_Console.exe
+C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Console\obj\Release\CPPHeaderTestFileGenerator_Console.pdb

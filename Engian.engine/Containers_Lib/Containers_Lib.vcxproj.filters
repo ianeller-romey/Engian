@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Murmur3">
+      <UniqueIdentifier>{7e304656-be68-42c2-b176-c242e9374867}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Murmur3">
+      <UniqueIdentifier>{8996b04d-ac6d-4fd5-ba5f-96c2cd39eb03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Test">
+      <UniqueIdentifier>{fe3476d1-bbd3-4a0d-a5dc-136178aaab88}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MurmurHash3.cpp">
+      <Filter>Source Files\Murmur3</Filter>
+    </ClCompile>
+    <ClCompile Include="utilHashFunctions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="utilContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilDictionary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilHashFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilSortedContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilSortedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilSortedVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilTemplateComparisonFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilUnsafeVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MurmurHash3.h">
+      <Filter>Header Files\Murmur3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engian.test\Engian.test\testIcle.h">
+      <Filter>Header Files\Test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="utilContainer.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilDictionary.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilHashTable.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilList.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilSortedList.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilSortedVector.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilString.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilTemplateComparisonFunctions.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilUnsafeVector.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilVector.inl">
+      <Filter>Source Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

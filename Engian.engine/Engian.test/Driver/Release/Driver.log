@@ -1,0 +1,463 @@
+﻿Build started 8/15/2014 3:24:59 PM.
+     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Driver\Driver.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Driver\..\Engian.test\ /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testUnitTestChassis.cpp ..\Engian.test\testUtilList.cpp ..\Engian.test\testUtilSortedList.cpp ..\Engian.test\testUtilSortedVector.cpp ..\Engian.test\testUtilString.cpp ..\Engian.test\testUtilUnsafeVector.cpp ..\Engian.test\testUtilVector.cpp driver.cpp
+         testUnitTestChassis.cpp
+     1>..\Engian.test\testUnitTestChassis.cpp(213): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Engian.test\testUnitTestChassis.cpp(232): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Engian.test\testUnitTestChassis.cpp(234): warning C4018: '<' : signed/unsigned mismatch
+     1>..\Engian.test\testUnitTestChassis.cpp(247): warning C4018: '<' : signed/unsigned mismatch
+         testUtilList.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(132) : see reference to class template instantiation 'Util::List<T>' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(59): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(58) : see reference to class template instantiation 'Util::List<T>::ListNode' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(71): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(68) : see reference to class template instantiation 'Util::List<T>::ListIteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(129) : see reference to class template instantiation 'Util::Vector<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(68): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(65) : see reference to class template instantiation 'Util::Vector<T>::VectorIteratorImpl' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilUnsafeVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilUnsafeVector.h(39) : see reference to class template instantiation 'Util::UnsafeVector<T>' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(227): warning C4002: too many actual parameters for macro 'TEST_ASSERT'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(234): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>..\Engian.test\testUtilList.cpp(269): warning C4002: too many actual parameters for macro 'TEST_ASSERT'
+     1>..\Engian.test\testUtilList.cpp(275): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(646): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilList.cpp(646): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilList.cpp(647): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilList.cpp(647): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilList.cpp(650): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilList.cpp(650): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilList.cpp(651): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilList.cpp(651): warning C4309: 'argument' : truncation of constant value
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(61): warning C4018: '<' : signed/unsigned mismatch
+                 ..\Engian.test\testUtilList.cpp(314) : see reference to function template instantiation 'const char *const Test::UnitTestChassis::TestUtilList_Helper_CheckListAgainstArray<char>(HELPER *,const unsigned int,const int,void *)' being compiled
+                 with
+                 [
+                     HELPER=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(105): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=float
+                 ]
+                 ..\Engian.test\testUtilList.cpp(360) : see reference to function template instantiation 'const char *const Test::UnitTestChassis::TestUtilList_Helper_CheckListAgainstContainer<float>(void *,void *)' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilList.cpp(105): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+                 ..\Engian.test\testUtilList.cpp(677) : see reference to function template instantiation 'const char *const Test::UnitTestChassis::TestUtilList_Helper_CheckListAgainstContainer<int>(void *,void *)' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+         testUtilSortedList.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(132) : see reference to class template instantiation 'Util::List<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(59): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(58) : see reference to class template instantiation 'Util::List<T>::ListNode' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(71): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilList.h(68) : see reference to class template instantiation 'Util::List<T>::ListIteratorImpl' being compiled
+         testUtilSortedVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(129) : see reference to class template instantiation 'Util::Vector<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(68): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(65) : see reference to class template instantiation 'Util::Vector<T>::VectorIteratorImpl' being compiled
+         testUtilString.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(129) : see reference to class template instantiation 'Util::Vector<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(68): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(65) : see reference to class template instantiation 'Util::Vector<T>::VectorIteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilUnsafeVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilUnsafeVector.h(39) : see reference to class template instantiation 'Util::UnsafeVector<T>' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+         testUtilUnsafeVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(129) : see reference to class template instantiation 'Util::Vector<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(68): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilVector.h(65) : see reference to class template instantiation 'Util::Vector<T>::VectorIteratorImpl' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilUnsafeVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilUnsafeVector.h(39) : see reference to class template instantiation 'Util::UnsafeVector<T>' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(132) : see reference to class template instantiation 'Util::List<T>' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(59): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(58) : see reference to class template instantiation 'Util::List<T>::ListNode' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(71): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(68) : see reference to class template instantiation 'Util::List<T>::ListIteratorImpl' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+         testUtilVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(15): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(173) : see reference to class template instantiation 'Util::Container<T>' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(27): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(25) : see reference to class template instantiation 'Util::Container<T>::IteratorImpl' being compiled
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(109): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see reference to class template instantiation 'Util::Container<T>::Iterator' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilVector.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilVector.h(129) : see reference to class template instantiation 'Util::Vector<T>' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilVector.h(68): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilVector.h(65) : see reference to class template instantiation 'Util::Vector<T>::VectorIteratorImpl' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(17): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(132) : see reference to class template instantiation 'Util::List<T>' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(59): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(58) : see reference to class template instantiation 'Util::List<T>::ListNode' being compiled
+     1>C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(71): warning C4099: 'Test::UnitTestChassis' : type name first seen using 'struct' now seen using 'class'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 C:\Users\elleri\Documents\Programs\Test\Engian.engine\Containers_Lib\utilList.h(68) : see reference to class template instantiation 'Util::List<T>::ListIteratorImpl' being compiled
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilVector.cpp(126): warning C4002: too many actual parameters for macro 'TEST_ASSERT'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilVector.cpp(133): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>..\Engian.test\testUtilVector.cpp(168): warning C4002: too many actual parameters for macro 'TEST_ASSERT'
+     1>..\Engian.test\testUtilVector.cpp(174): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilContainer.h(107) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+     1>..\Engian.test\testUtilVector.cpp(586): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilVector.cpp(586): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilVector.cpp(587): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilVector.cpp(587): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilVector.cpp(590): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilVector.cpp(590): warning C4309: 'argument' : truncation of constant value
+     1>..\Engian.test\testUtilVector.cpp(591): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>..\Engian.test\testUtilVector.cpp(591): warning C4309: 'argument' : truncation of constant value
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+                 c:\users\elleri\documents\programs\test\engian.engine\containers_lib\../Engian.test/Engian.test/testIcle.h(48) : see declaration of 'Test::UnitTestChassis'
+         driver.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Release\Driver.exe" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Release\Driver.pdb" /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Release\Driver.lib" /MACHINE:X86 /SAFESEH Release\testUnitTestChassis.obj
+         Release\testUtilList.obj
+         Release\testUtilSortedList.obj
+         Release\testUtilSortedVector.obj
+         Release\testUtilString.obj
+         Release\testUtilUnsafeVector.obj
+         Release\testUtilVector.obj
+         Release\driver.obj
+         Generating code
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<double>::UnsafeVector<double>' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<int>::UnsafeVector<int>' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<char>::UnsafeVector<char>' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<Test::UnitTestChassis::UnitTestSampleClass>::UnsafeVector<Test::UnitTestChassis::UnitTestSampleClass>' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<float>::UnsafeVector<float>' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<Util::List<char> >::UnsafeVector<Util::List<char> >' : recursive on all control paths, function will cause runtime stack overflow
+     1>c:\users\elleri\documents\programs\test\engian.engine\containers_lib\utilunsafevector.inl(49): warning C4717: 'Util::UnsafeVector<Test::UnitTestChassis::UnitTestSampleStruct>::UnsafeVector<Test::UnitTestChassis::UnitTestSampleStruct>' : recursive on all control paths, function will cause runtime stack overflow
+         Finished generating code
+         Driver.vcxproj -> C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Release\Driver.exe
+     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian.engine\Engian.test\Driver\Driver.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.91
