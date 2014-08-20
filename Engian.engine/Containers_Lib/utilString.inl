@@ -229,8 +229,11 @@ namespace Util
   String& String::operator<<( int const integer )
   {
     TRACKTESTCALL( "String& String::operator<<( int const integer )" );
-    for( int n = integer; n; n /= 10 )
-      PushBack( n % 10 );
+    // TODO: this can be optimized
+    for( int n = ( integer < 0 ) ? -integer : integer; n; n /= 10 )
+      PushFront( ( n % 10 ) + 48 );
+    if( integer < 0 )
+      PushFront( '-' );
     return *this;
   }
 
@@ -239,7 +242,7 @@ namespace Util
   {
     TRACKTESTCALL( "String& String::operator<<( unsigned const uinteger )" );
     for( unsigned n = uinteger; n; n /= 10 )
-      PushBack( n % 10 );
+      PushFront( ( n % 10 ) + 48 );
     return *this;
   }
 

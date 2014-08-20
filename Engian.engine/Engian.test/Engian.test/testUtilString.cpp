@@ -754,7 +754,7 @@ namespace Test
                    string2( string1 + list );
 
       TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( CheckTestCall( "String String::operator+( String const& string ) const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( CheckTestCall( "String String::operator+( Container< char > const& container ) const" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -803,7 +803,7 @@ namespace Test
 
       string += character;
       TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( CheckTestCall( "String String::operator+( char const character ) const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( CheckTestCall( "String& String::operator+=( char const character )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -829,7 +829,7 @@ namespace Test
 
       string1 += string2;
       TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string1, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( CheckTestCall( "String String::operator+( String const& string ) const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( CheckTestCall( "String& String::operator+=( String const& string )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -844,8 +844,8 @@ namespace Test
     try
     {
       {
-        int i = 100;
-        char characters[] = "100";
+        int i = -100;
+        char characters[] = "-100";
         unsigned const charactersLen = strlen( characters );
         Util::String string;
         string.Clear();
