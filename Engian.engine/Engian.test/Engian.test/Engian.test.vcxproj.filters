@@ -18,6 +18,15 @@
     <ClInclude Include="testIcle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="testUtilSortedVector_Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testUtilString_Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testUtilVector_Helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="testUnitTestChassis.cpp">
@@ -47,5 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="testUtilList_Helpers.h">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

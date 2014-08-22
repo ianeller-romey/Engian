@@ -6,6 +6,8 @@
 #include "utilUnsafeVector.h"
 #include "utilList.h"
 
+#include "testUtilVector_Helpers.h"
+
 
 namespace Test
 {
@@ -29,11 +31,11 @@ namespace Test
     try
     {
       Util::UnsafeVector< int > uVector;
-      TEST_ASSERT( uVector.m_capacity == Util::Vector< int >::c_defaultCapacity, name, "did not use c_defaultCapacity" );
-      TEST_ASSERT( uVector.m_size == 0, name, "did not initialize m_size to 0" );
-      TEST_ASSERT( uVector.m_array != 0, name, "did not initialize m_array" );
-      TEST_ASSERT( uVector.m_implementations == 0, name, "incorrectly initialized m_implementations" );
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >::UnsafeVector()" ), name, "Appropriate function was not called" );
+
+      TEST_ASSERT( TestHelper_Vector< int >::CheckVectorInit( uVector, Util::UnsafeVector< int >::dbgGet_c_defaultCapacity(), 0 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+
+      TEST_ASSERT( DEBUG_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >::UnsafeVector()" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -53,7 +55,7 @@ namespace Test
       TEST_ASSERT( uVector.m_size == 0, name, "did not initialize m_size to 0" );
       TEST_ASSERT( uVector.m_array != 0, name, "did not initialize m_array" );
       TEST_ASSERT( uVector.m_implementations == 0, name, "incorrectly initialized m_implementations" );
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >::UnsafeVector( unsigned const capacity )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "UnsafeVector< T >::UnsafeVector( unsigned const capacity )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -78,7 +80,7 @@ namespace Test
       for( unsigned i = 0; i < number; ++i )
         TEST_ASSERT( uVector.m_array[ i ] == numbers[ i ], name, "did not initialize m_array with the correct values" );
 
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -104,7 +106,7 @@ namespace Test
       for( unsigned i = 0; i < number; ++i )
         TEST_ASSERT( uVector.m_array[ i ] == numbers[ i ], name, "did not initialize m_array with the correct values" );
 
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -130,7 +132,7 @@ namespace Test
       for( unsigned i = 0; i < uVector1.m_size; ++i )
         TEST_ASSERT( uVector2.m_array[ i ] == uVector1.m_array[ i ], name, "did not initialize m_array with the correct values" );
 
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -158,7 +160,7 @@ namespace Test
       for( unsigned i = 0; i < number; ++i )
         TEST_ASSERT( uVector1.m_array[ number - 1 - i ] == numbers[ i ], name, "did not insert correct value" );
 
-      TEST_ASSERT( CheckTestCall( "void UnsafeVector< T >::PushFront( T const& t )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "void UnsafeVector< T >::PushFront( T const& t )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -187,7 +189,7 @@ namespace Test
       for( unsigned i = 0; i < number; ++i )
         TEST_ASSERT( uVector.m_array[ i ] == numbers[ i ], name, "did not insert correct values" );
 
-      TEST_ASSERT( CheckTestCall( "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -217,7 +219,7 @@ namespace Test
       for( unsigned i = 0; i < number; ++i )
         TEST_ASSERT( uVector2.m_array[ i ] == numbers[ i ], name, "did not insert correct values" );
 
-      TEST_ASSERT( CheckTestCall( "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -247,7 +249,7 @@ namespace Test
       for( unsigned i = 0; i < number2; ++i )
         TEST_ASSERT( uVector1.m_array[ i ] == uVector2.m_array[ i ], name, "did not correctly copy values" );
 
-      TEST_ASSERT( CheckTestCall( "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -282,7 +284,7 @@ namespace Test
 
       TEST_ASSERT( itVB == itVE && itLB == itLE, name, "UnsafeVector< T > and List< T > iterators appear to have been pointing to instances of different sizes, when they should have the same size after assignment" );
 
-      TEST_ASSERT( CheckTestCall( "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DEBUG_FUNC_CHECK( "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {

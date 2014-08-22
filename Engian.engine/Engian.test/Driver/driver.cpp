@@ -4,7 +4,7 @@
 void main()
 {
 
-  char const * const output = Test::UnitTestChassis::TestUtilString_String_BitwiseLeftShiftIntAndUint( "" );
+  char const * const output = Test::UnitTestChassis::TestUtilSortedVector_SortedVector_Constructor3( "" );
   
   {
     unsigned const numTests = 22;

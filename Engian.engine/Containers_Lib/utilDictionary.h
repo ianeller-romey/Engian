@@ -20,6 +20,8 @@ namespace Util
   class Dictionary : public HashTable< T, String >
   {
     public:      
+      //DEBUG_FUNC_TRACK_CLASS_DEC
+
       Dictionary();
       Dictionary( T const * const tArray, unsigned const size );
       Dictionary( Dictionary< T > const& dictionary );

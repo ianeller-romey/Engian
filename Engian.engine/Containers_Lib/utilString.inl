@@ -6,7 +6,7 @@ namespace Util
   String::String() :
     UnsafeVector< char >()
   {
-    TRACKTESTCALL( "String::String()" );
+    DEBUG_FUNC_TRACK( "String::String()" );
     MakeEmptyString();
   }
 
@@ -14,7 +14,7 @@ namespace Util
   String::String( unsigned const capacity ) :
     UnsafeVector< char >( capacity )
   {
-    TRACKTESTCALL( "String::String( unsigned const capacity )" );
+    DEBUG_FUNC_TRACK( "String::String( unsigned const capacity )" );
     MakeEmptyString();
   }
 
@@ -22,14 +22,14 @@ namespace Util
   String::String( char const * const string ) :
     UnsafeVector< char >( string, strlen( string ) + 1 )
   {
-    TRACKTESTCALL( "String::String( char const * const string )" );
+    DEBUG_FUNC_TRACK( "String::String( char const * const string )" );
   }
 
 
   String::String( char const character ) :
     UnsafeVector< char >( 2 )
   {
-    TRACKTESTCALL( "String::String( char const character )" );
+    DEBUG_FUNC_TRACK( "String::String( char const character )" );
     m_array[ 0 ] = character;
     m_array[ 1 ] = '\0';
     m_size = 2;
@@ -39,14 +39,14 @@ namespace Util
   String::String( String const& string ) :
     UnsafeVector( string )
   {
-    TRACKTESTCALL( "String::String( String const& string )" );
+    DEBUG_FUNC_TRACK( "String::String( String const& string )" );
   }
 
 
   String::String( Container< char > const& container ) :
     UnsafeVector( container.GetSize() )
   {
-    TRACKTESTCALL( "String::String( Container< char > const& container )" );
+    DEBUG_FUNC_TRACK( "String::String( Container< char > const& container )" );
     MakeEmptyString();
     Vector< char >::PushBackRange( container );
   }
@@ -54,7 +54,7 @@ namespace Util
 
   String& String::operator=( char const * const string )
   {
-    TRACKTESTCALL( "String& String::operator=( char const * const string )" );
+    DEBUG_FUNC_TRACK( "String& String::operator=( char const * const string )" );
     Deallocate();
     
     m_capacity = strlen( string ) + 1;
@@ -68,7 +68,7 @@ namespace Util
 
   String& String::operator=( char const character )
   {
-    TRACKTESTCALL( "String& String::operator=( char const character )" );
+    DEBUG_FUNC_TRACK( "String& String::operator=( char const character )" );
     Deallocate();
     
     m_capacity = 2;
@@ -83,7 +83,7 @@ namespace Util
 
   String& String::operator=( String const& string )
   {
-    TRACKTESTCALL( "String& String::operator=( String const& string )" );
+    DEBUG_FUNC_TRACK( "String& String::operator=( String const& string )" );
     Deallocate();
     
     m_capacity = string.m_size;
@@ -97,7 +97,7 @@ namespace Util
 
   Container< char >& String::operator=( Container< char > const& container )
   {
-    TRACKTESTCALL( "Container< char >& String::operator=( Container< char > const& container )" );
+    DEBUG_FUNC_TRACK( "Container< char >& String::operator=( Container< char > const& container )" );
     Deallocate();
     
     m_capacity = container.GetSize();
@@ -111,7 +111,7 @@ namespace Util
 
   String::~String()
   {
-    TRACKTESTCALL( "String::~String()" );
+    DEBUG_FUNC_TRACK( "String::~String()" );
     Deallocate();
     InvalidateAllIteratorImplementations();
   }
@@ -119,56 +119,56 @@ namespace Util
 
   String::operator const char *() const
   {
-    TRACKTESTCALL( "String::operator const char *() const" );
+    DEBUG_FUNC_TRACK( "String::operator const char *() const" );
     return m_array;
   }
 
 
   bool const String::operator==( char const * const string ) const
   {
-    TRACKTESTCALL( "bool const String::operator==( char const * const string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator==( char const * const string ) const" );
     return strcmp( m_array, string ) == 0;
   }
 
 
   bool const String::operator==( char const character ) const
   {
-    TRACKTESTCALL( "bool const String::operator==( char const character ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator==( char const character ) const" );
     return GetStrLen() == 1 && m_array[ 0 ] == character;
   }
 
 
   bool const String::operator==( String const& string ) const
   {
-    TRACKTESTCALL( "bool const String::operator==( String const& string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator==( String const& string ) const" );
     return m_size == string.m_size && strcmp( m_array, string.m_array ) == 0;
   }
 
 
   bool const String::operator!=( char const * const string ) const
   {
-    TRACKTESTCALL( "bool const String::operator!=( char const * const string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator!=( char const * const string ) const" );
     return strcmp( m_array, string ) != 0;
   }
 
 
   bool const String::operator!=( char const character ) const
   {
-    TRACKTESTCALL( "bool const String::operator!=( char const character ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator!=( char const character ) const" );
     return GetStrLen() != 1 || m_array[ 0 ] != character;
   }
 
 
   bool const String::operator!=( String const& string ) const
   {
-    TRACKTESTCALL( "bool const String::operator!=( String const& string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::operator!=( String const& string ) const" );
     return m_size != string.m_size || strcmp( m_array, string.m_array ) != 0;
   }
 
 
   String String::operator+( char const * const string ) const
   {
-    TRACKTESTCALL( "String String::operator+( char const * const string ) const" );
+    DEBUG_FUNC_TRACK( "String String::operator+( char const * const string ) const" );
     String newString( *this );
     newString.PushBackRange( string, strlen( string ) + 1 );
     return newString;
@@ -177,7 +177,7 @@ namespace Util
 
   String String::operator+( char const character ) const
   {
-    TRACKTESTCALL( "String String::operator+( char const character ) const" );
+    DEBUG_FUNC_TRACK( "String String::operator+( char const character ) const" );
     String newString( *this );
     newString.PushBack( character );
     return newString;
@@ -186,7 +186,7 @@ namespace Util
 
   String String::operator+( String const& string ) const
   {
-    TRACKTESTCALL( "String String::operator+( String const& string ) const" );
+    DEBUG_FUNC_TRACK( "String String::operator+( String const& string ) const" );
     String newString( *this );
     newString.PushBackRange( string );
     return newString;
@@ -195,7 +195,7 @@ namespace Util
 
   String String::operator+( Container< char > const& container ) const
   {
-    TRACKTESTCALL( "String String::operator+( Container< char > const& container ) const" );
+    DEBUG_FUNC_TRACK( "String String::operator+( Container< char > const& container ) const" );
     String newString( *this );
     newString.PushBackRange( container );
     return newString;
@@ -204,7 +204,7 @@ namespace Util
 
   String& String::operator+=( char const * const string )
   {
-    TRACKTESTCALL( "String& String::operator+=( char const * const string )" );
+    DEBUG_FUNC_TRACK( "String& String::operator+=( char const * const string )" );
     PushBackRange( string, strlen( string ) );
     return *this;
   }
@@ -212,7 +212,7 @@ namespace Util
 
   String& String::operator+=( char const character )
   {
-    TRACKTESTCALL( "String& String::operator+=( char const character )" );
+    DEBUG_FUNC_TRACK( "String& String::operator+=( char const character )" );
     PushBack( character );
     return *this;
   }  
@@ -220,7 +220,7 @@ namespace Util
 
   String& String::operator+=( String const& string )
   {
-    TRACKTESTCALL( "String& String::operator+=( String const& string )" );
+    DEBUG_FUNC_TRACK( "String& String::operator+=( String const& string )" );
     PushBackRange( string );
     return *this;
   }
@@ -228,7 +228,7 @@ namespace Util
 
   String& String::operator<<( int const integer )
   {
-    TRACKTESTCALL( "String& String::operator<<( int const integer )" );
+    DEBUG_FUNC_TRACK( "String& String::operator<<( int const integer )" );
     // TODO: this can be optimized
     for( int n = ( integer < 0 ) ? -integer : integer; n; n /= 10 )
       PushFront( ( n % 10 ) + 48 );
@@ -240,7 +240,7 @@ namespace Util
 
   String& String::operator<<( unsigned const uinteger )
   {
-    TRACKTESTCALL( "String& String::operator<<( unsigned const uinteger )" );
+    DEBUG_FUNC_TRACK( "String& String::operator<<( unsigned const uinteger )" );
     for( unsigned n = uinteger; n; n /= 10 )
       PushFront( ( n % 10 ) + 48 );
     return *this;
@@ -249,7 +249,7 @@ namespace Util
 
   void String::PushBack( char const& t )
   {
-    TRACKTESTCALL( "void String::PushBack( char const& t )" );
+    DEBUG_FUNC_TRACK( "void String::PushBack( char const& t )" );
     CheckAndGrow();
     m_array[ m_size - 1 ] = t;
     m_array[ m_size++ ] = '\0';
@@ -259,14 +259,14 @@ namespace Util
     
   void String::PushBackRange( char const * const string )
   {
-    TRACKTESTCALL( "void String::PushBackRange( char const * const string )" );
+    DEBUG_FUNC_TRACK( "void String::PushBackRange( char const * const string )" );
     PushBackRange( string, strlen( string ) );
   }
 
     
   void String::PushBackRange( char const * const string, unsigned const strLen )
   {
-    TRACKTESTCALL( "void String::PushBackRange( char const * const tArray, unsigned const size )" );
+    DEBUG_FUNC_TRACK( "void String::PushBackRange( char const * const tArray, unsigned const size )" );
     while( ( m_size + strLen + 1 ) >= m_capacity )
       Grow();
     char* copyTo = m_array + m_size - 1;
@@ -279,14 +279,14 @@ namespace Util
     
   void String::PushBackRange( String const& string )
   {
-    TRACKTESTCALL( "void String::PushBackRange( String const& string )" );
+    DEBUG_FUNC_TRACK( "void String::PushBackRange( String const& string )" );
     PushBackRange( string.m_array, string.GetStrLen() );
   }
 
 
   void String::PopBack()
   {
-    TRACKTESTCALL( "void String::PopBack()" );
+    DEBUG_FUNC_TRACK( "void String::PopBack()" );
     if( IsEmpty() )
       return;
     --m_size;
@@ -297,14 +297,14 @@ namespace Util
 
   unsigned const String::GetStrLen() const
   {
-    TRACKTESTCALL( "unsigned const String::GetStrLen() const" );
+    DEBUG_FUNC_TRACK( "unsigned const String::GetStrLen() const" );
     return m_size - 1;
   }
 
 
   bool const String::BeginsWith( char const * const string ) const
   {
-    TRACKTESTCALL( "bool const String::BeginsWith( char const * const string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::BeginsWith( char const * const string ) const" );
     int strLen = strlen( string );
     return BeginsWith( string, strLen );
   }
@@ -312,14 +312,14 @@ namespace Util
 
   bool const String::BeginsWith( char const character ) const
   {
-    TRACKTESTCALL( "bool const String::BeginsWith( char const character ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::BeginsWith( char const character ) const" );
     return m_array[ 0 ] == character;
   }
 
 
   bool const String::BeginsWith( char const * const string, unsigned strLen ) const
   {
-    TRACKTESTCALL( "bool const String::BeginsWith( char const * const string, unsigned strLen ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::BeginsWith( char const * const string, unsigned strLen ) const" );
     if( GetStrLen() < strLen )
       return false;
     return strncmp( m_array, string, strLen ) == 0;
@@ -328,14 +328,14 @@ namespace Util
 
   bool const String::BeginsWith( String const& string ) const
   {
-    TRACKTESTCALL( "bool const String::BeginsWith( String const& string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::BeginsWith( String const& string ) const" );
     return BeginsWith( string.m_array, string.GetStrLen() );
   }
 
 
   bool const String::BeginsWith( Container< char > const& container ) const
   {
-    TRACKTESTCALL( "bool const String::BeginsWith( Container< char > const& container ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::BeginsWith( Container< char > const& container ) const" );
     if( GetStrLen() < container.GetSize() )
       return false;
     Container< char >::Iterator itB = container.Begin(),
@@ -349,7 +349,7 @@ namespace Util
 
   bool const String::EndsWith( char const * const string ) const
   {
-    TRACKTESTCALL( "bool const String::EndsWith( char const * const string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::EndsWith( char const * const string ) const" );
     int strLen = strlen( string );
     return EndsWith( string, strLen );
   }
@@ -357,14 +357,14 @@ namespace Util
 
   bool const String::EndsWith( char const character ) const
   {
-    TRACKTESTCALL( "bool const String::EndsWith( char const character ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::EndsWith( char const character ) const" );
     return m_array[ GetStrLen() - 1 ] == character;
   }
 
 
   bool const String::EndsWith( char const * const string, unsigned strLen ) const
   {
-    TRACKTESTCALL( "bool const String::EndsWith( char const * const string, unsigned strLen ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::EndsWith( char const * const string, unsigned strLen ) const" );
     if( GetStrLen() < strLen )
       return false;
     return strncmp( m_array + ( GetStrLen() - strLen ), string, strLen ) == 0;
@@ -373,14 +373,14 @@ namespace Util
 
   bool const String::EndsWith( String const& string ) const
   {
-    TRACKTESTCALL( "bool const String::EndsWith( String const& string ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::EndsWith( String const& string ) const" );
     return EndsWith( string.m_array, string.GetStrLen() );
   }
 
 
   bool const String::EndsWith( Container< char > const& container ) const
   {
-    TRACKTESTCALL( "bool const String::EndsWith( Container< char > const& container ) const" );
+    DEBUG_FUNC_TRACK( "bool const String::EndsWith( Container< char > const& container ) const" );
     if( GetStrLen() < container.GetSize() )
       return false;
     Container< char >::Iterator itB = container.Begin(),
@@ -394,21 +394,21 @@ namespace Util
 
   bool const String::IsEmpty() const
   {
-    TRACKTESTCALL( "bool const String::IsEmpty() const" );
+    DEBUG_FUNC_TRACK( "bool const String::IsEmpty() const" );
     return m_size == 1;
   }
   
       
   void String::Clear()
   {
-    TRACKTESTCALL( "void String::Clear()" );
+    DEBUG_FUNC_TRACK( "void String::Clear()" );
     MakeEmptyString();
   }
 
 
   void String::MakeEmptyString()
   {
-    TRACKTESTCALL( "void String::MakeEmptyString()" );
+    DEBUG_FUNC_TRACK( "void String::MakeEmptyString()" );
     m_array[ 0 ] = '\0';
     m_size = 1;
   }
@@ -416,7 +416,7 @@ namespace Util
       
   void String::Deallocate()
   {
-    TRACKTESTCALL( "void String::Deallocate()" );
+    DEBUG_FUNC_TRACK( "void String::Deallocate()" );
 
     if( m_array != 0 )
     {

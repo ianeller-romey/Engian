@@ -15,7 +15,6 @@
     <ClCompile Include="utilHashFunctions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engian.test\Engian.test\testIcle.h" />
     <ClInclude Include="MurmurHash3.h" />
     <ClInclude Include="utilContainer.h" />
     <ClInclude Include="utilDictionary.h" />
@@ -114,7 +113,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Debug_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -123,6 +122,9 @@
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)$(Configuration)\$(ProjectName).$(PlatformTarget).$(Configuration).lib" "$(SolutionDir)Engian.test\$(Configuration)\$(ProjectName).$(PlatformTarget).$(Configuration).lib"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Debug_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -133,8 +135,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>
-      </AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Debug_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,6 +146,9 @@
     <PostBuildEvent>
       <Command>copy "$(SolutionDir)$(Configuration)\$(ProjectName).$(PlatformTarget).$(Configuration).lib" "$(SolutionDir)Engian.test\$(Configuration)\$(ProjectName).$(PlatformTarget).$(Configuration).lib"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Debug_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

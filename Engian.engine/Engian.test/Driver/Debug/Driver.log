@@ -1,5 +1,31 @@
-﻿Build started 8/20/2014 11:57:02 AM.
+﻿Build started 8/22/2014 11:01:38 AM.
+     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Driver\Driver.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Driver\..\Engian.test\ /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testUnitTestChassis.cpp ..\Engian.test\testUtilList.cpp ..\Engian.test\testUtilSortedList.cpp ..\Engian.test\testUtilSortedVector.cpp ..\Engian.test\testUtilString.cpp ..\Engian.test\testUtilUnsafeVector.cpp ..\Engian.test\testUtilVector.cpp driver.cpp
+         testUtilVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUtilUnsafeVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilunsafevector.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUtilString.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilstring.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUtilSortedVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUtilSortedList.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUtilList.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(5): fatal error C1083: Cannot open include file: 'debugDefines.h': No such file or directory
+         testUnitTestChassis.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(130): warning C4244: 'return' : conversion from 'const double' to 'const int', possible loss of data
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(264): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(283): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(285): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(298): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+         Compiling...
+         driver.cpp
+         Generating Code...
+     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Driver\Driver.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:00.02
+Time Elapsed 00:00:01.48

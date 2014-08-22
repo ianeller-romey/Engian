@@ -5,8 +5,6 @@
 
 #include "objBase.h"
 
-#include <vector>
-#include <string>
 #include <cstring>
 
 
@@ -15,7 +13,6 @@ namespace Test
 
   unsigned UnitTestChassis::UnitTestSampleStruct::s_numberOfDeletes = 0;
   unsigned UnitTestChassis::UnitTestSampleClass::s_numberOfDeletes = 0;
-  std::vector< std::string > CalledTests;
 
 
   UnitTestChassis::UnitTestDictionaryPair::UnitTestDictionaryPair( char const * const (*function) ( char const * const ), char const * const name ) :
@@ -104,6 +101,36 @@ namespace Test
   }
 
 
+  bool const UnitTestChassis::UnitTestSampleStruct::operator>( UnitTestSampleStruct const& other ) const
+  {
+    return Sum() > other.Sum();
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleStruct::operator<( UnitTestSampleStruct const& other ) const
+  {
+    return Sum() < other.Sum();
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleStruct::operator>=( UnitTestSampleStruct const& other ) const
+  {
+    return Sum() >= other.Sum();
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleStruct::operator<=( UnitTestSampleStruct const& other ) const
+  {
+    return Sum() <= other.Sum();
+  }
+
+
+  int const UnitTestChassis::UnitTestSampleStruct::Sum() const
+  {
+    return m_int1 + m_int2 + m_int3 + m_doubles[ 0 ] + m_doubles[ 1 ] + m_doubles[ 2 ] + m_doubles[ 3 ] + m_doubles[ 4 ];
+  }
+
+
   UnitTestChassis::UnitTestSampleStruct* UnitTestChassis::UnitTestSampleStruct::CreateABunch( unsigned bunch )
   {
     UnitTestSampleStruct* aBunchOfStructs = new UnitTestSampleStruct[ bunch ];
@@ -184,6 +211,30 @@ namespace Test
   bool const UnitTestChassis::UnitTestSampleClass::operator!=( UnitTestSampleClass const& other ) const
   {
     return !( *this == other );
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleClass::operator>( UnitTestSampleClass const& other ) const
+  {
+    return strcmp( m_string, other.m_string ) > 0 && m_int > other.m_int && m_struct > other.m_struct;
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleClass::operator<( UnitTestSampleClass const& other ) const
+  {
+    return strcmp( m_string, other.m_string ) < 0 && m_int < other.m_int && m_struct < other.m_struct;
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleClass::operator>=( UnitTestSampleClass const& other ) const
+  {
+    return strcmp( m_string, other.m_string ) >= 0 && m_int >= other.m_int && m_struct >= other.m_struct;
+  }
+
+
+  bool const UnitTestChassis::UnitTestSampleClass::operator<=( UnitTestSampleClass const& other ) const
+  {
+    return strcmp( m_string, other.m_string ) <= 0 && m_int <= other.m_int && m_struct <= other.m_struct;
   }
 
 
@@ -329,35 +380,10 @@ namespace Test
   }
 
 
-  void UnitTestChassis::TrackTestCall( char const * const testName )
-  {
-    std::string testNameStr( testName );
-    CalledTests.push_back( testNameStr );
-  }
-
-
-  bool const UnitTestChassis::CheckTestCall( char const * const testName, bool clear )
-  {
-    bool const success = std::find( CalledTests.begin(), CalledTests.end(), std::string( testName ) ) != CalledTests.end();
-    if( clear )
-      ClearTestCalls();
-    return success;
-  }
-
-
-  void UnitTestChassis::ClearTestCalls()
-  {
-    CalledTests.clear();
-    // this is just an abitrary starting point, but it seems pretty reasonable
-    CalledTests.reserve( 150 );
-  }
-
-
   void UnitTestChassis::Reset()
   {
     UnitTestSampleStruct::s_numberOfDeletes = 0;
     UnitTestSampleClass::s_numberOfDeletes = 0;
-    ClearTestCalls();
   }
 
 }

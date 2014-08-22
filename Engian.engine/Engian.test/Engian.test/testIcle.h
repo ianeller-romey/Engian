@@ -20,14 +20,6 @@
       #endif
     #else
       #define TESTICLE_API
-    #endif  
-  
-    // Helper defines for classes being tested
-    #define TESTCHASSISFRIEND friend class Test::UnitTestChassis;
-    #ifndef RUN_UNIT_TESTS_SPEED
-      #define TRACKTESTCALL( test ) Test::UnitTestChassis::TrackTestCall( test )
-    #else
-      #define TRACKTESTCALL( test )
     #endif
 
     // Helper defines for test chassis
@@ -73,6 +65,12 @@
 
             bool const operator==( UnitTestSampleStruct const& other ) const;
             bool const operator!=( UnitTestSampleStruct const& other ) const;
+            bool const operator>( UnitTestSampleStruct const& other ) const;
+            bool const operator<( UnitTestSampleStruct const& other ) const;
+            bool const operator>=( UnitTestSampleStruct const& other ) const;
+            bool const operator<=( UnitTestSampleStruct const& other ) const;
+
+            int const Sum() const;
 
             static UnitTestSampleStruct* CreateABunch( unsigned bunch );
           };
@@ -94,6 +92,10 @@
 
               bool const operator==( UnitTestSampleClass const& other ) const;
               bool const operator!=( UnitTestSampleClass const& other ) const;
+              bool const operator>( UnitTestSampleClass const& other ) const;
+              bool const operator<( UnitTestSampleClass const& other ) const;
+              bool const operator>=( UnitTestSampleClass const& other ) const;
+              bool const operator<=( UnitTestSampleClass const& other ) const;
 
               static UnitTestSampleClass* CreateABunch( unsigned bunch );
 
@@ -107,7 +109,6 @@
           /***
           **** UNIT TESTS: TestUtilVector
           ***/
-          static char const * const TestUtilList_Helper_List( ... );
           T_FUNC_ARR_DEC( TestUtilVector );
           static char const * const TestUtilVector_VectorIteratorImpl_Constructor0( char const * const name );
           static char const * const TestUtilVector_VectorIteratorImpl_AdvanceValue( char const * const name );
@@ -143,14 +144,6 @@
           /***
           **** UNIT TESTS: TestUtilList
           ***/
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckEmptyList( void* check );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListFrontAndBack( void* check, unsigned const size, bool endCheck );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListAgainstArray( void* compareFrom, HELPER* compareAgainst, unsigned const arraySize, int const incr );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListAgainstContainer( void* compareFrom, void* compareAgainst );
           T_FUNC_ARR_DEC( TestUtilList );
           static char const * const TestUtilList_ListIteratorImpl_Constructor0( char const * const name );
           static char const * const TestUtilList_ListIteratorImpl_AdvanceValue( char const * const name );
@@ -197,9 +190,6 @@
           /***
           **** UNIT TESTS: TestUtilString
           ***/
-          static char const * const TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst );
-          static char const * const TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst, unsigned const compareAgainstLen );
-          static char const * const TestUtilString_Helper_CheckStringAgainstContainer( void* compareFrom, void* compareAgainst );
           T_FUNC_ARR_DEC( TestUtilString );
           static char const * const TestUtilString_String_Constructor0( char const * const name );
           static char const * const TestUtilString_String_Constructor1( char const * const name );
@@ -364,9 +354,6 @@
           // test result functions
           static char const * const TestFailureText( char const * const testName, char const * const fileName, char const * const lineNumber, char const * const failedReason );
         
-          static void TrackTestCall( char const * const testName );
-          static bool const CheckTestCall( char const * const testName, bool clear = false );
-          static void ClearTestCalls();
           static void Reset();
 
       };
@@ -374,10 +361,6 @@
     }
 
 #else
-
-// Helper defines for classes being tested
-#define TRACKTESTCALL( test )
-#define TESTCHASSISFRIEND
 
 #endif
 

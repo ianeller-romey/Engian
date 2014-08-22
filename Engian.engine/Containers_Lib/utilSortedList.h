@@ -2,7 +2,7 @@
 #ifndef UTIL_SORTEDLIST_H
 #define UTIL_SORTEDLIST_H
 
-#include "../Engian.test/Engian.test/testIcle.h"
+#include "debugDefines.h"
 
 #include "utilSortedContainer.h"
 #include "utilList.h"
@@ -18,6 +18,10 @@ namespace Util
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
       typedef bool const (*LessThanFunc) ( T const&, T const& );
+
+      //DEBUG_FUNC_TRACK_CLASS_DEC
+      DEBUG_VAR_GET( m_tiers, unsigned );
+      DEBUG_VAR_GET( c_logBase, float const );
 
       SortedList();
       SortedList( unsigned const capacity );
@@ -47,10 +51,12 @@ namespace Util
       // member classes
       struct SortedListNode : public List< T >::ListNode
       {
+        //DEBUG_FUNC_TRACK_CLASS_DEC
+
         SortedListNode( ListNode* prev, 
-                ListNode* next, 
-                T* data, 
-                SortedListNode* nextTier );
+                        ListNode* next, 
+                        T* data, 
+                        SortedListNode* nextTier );
 
         SortedListNode* m_nextTier;
       };
@@ -64,6 +70,8 @@ namespace Util
       
       SortedListNode* GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const
       {
+        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const" );
+
         SortedListNode* bottom = topTier;
         // NOTE: second condition SHOULD be redundant, and can HOPEFULLY be removed after testing
         for( unsigned i = topTierLevel; i > bottomTierLevel && bottom->m_nextTier != 0; --i )
@@ -72,18 +80,24 @@ namespace Util
       }
 
       unsigned const GetNumberOfTiers( SortedListNode const * const topTier ) const;
+
       void ClearTiers( SortedListNode const * topTier ) const;
       
       SortedListNode* FindNewFront() const
       {
+        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewFront() const" );
+
         SortedListNode* node = static_cast< SortedListNode* >( m_front );
         while( node->m_next == 0 && node != 0 )
           node = node->m_nextTier;
         return ( node == 0 ) ? 0 : static_cast< SortedListNode* >( node->m_next );
       }
 
+
       SortedListNode* FindNewBack() const
       {
+        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewBack() const" );
+
         SortedListNode  *node = dynamic_cast< SortedListNode* >( m_front ),
                 *temp;
         while( node != 0 )

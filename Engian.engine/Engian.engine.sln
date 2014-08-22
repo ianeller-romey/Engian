@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "Driver\Driver.vcx
 		{D8749284-22B7-4FF8-AF30-A87A85199034} = {D8749284-22B7-4FF8-AF30-A87A85199034}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Debug_Lib", "Debug_Lib\Debug_Lib.vcxproj", "{25976149-1820-412C-9414-2575FE562C9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -22,6 +24,10 @@ Global
 		{431D2A76-B729-4540-97F6-CA61C1F4A576}.Debug|Win32.Build.0 = Debug|Win32
 		{431D2A76-B729-4540-97F6-CA61C1F4A576}.Release|Win32.ActiveCfg = Release|Win32
 		{431D2A76-B729-4540-97F6-CA61C1F4A576}.Release|Win32.Build.0 = Release|Win32
+		{25976149-1820-412C-9414-2575FE562C9F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{25976149-1820-412C-9414-2575FE562C9F}.Debug|Win32.Build.0 = Debug|Win32
+		{25976149-1820-412C-9414-2575FE562C9F}.Release|Win32.ActiveCfg = Release|Win32
+		{25976149-1820-412C-9414-2575FE562C9F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

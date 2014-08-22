@@ -2,7 +2,7 @@
 #ifndef UTIL_LIST_H
 #define UTIL_LIST_H
 
-#include "../Engian.test/Engian.test/testIcle.h"
+#include "debugDefines.h"
 
 #include "utilContainer.h"
 
@@ -13,8 +13,14 @@ namespace Util
   template< typename T >
   class List : public virtual Container< T >
   {
+    protected:
+      struct ListNode;
+
     public:
-      TESTCHASSISFRIEND;
+      DEBUG_FUNC_TRACK_CLASS_DEC;
+      DEBUG_VAR_GET( m_end, ListNode* );;
+      DEBUG_VAR_GET( m_front, ListNode* )
+      DEBUG_VAR_GET( m_back, ListNode* );
 
       List();
       List( T const * const tArray, unsigned const size );
@@ -27,7 +33,8 @@ namespace Util
 
       virtual Iterator Begin() const
       {
-        TRACKTESTCALL( "Iterator List< T >::Begin() const" );
+        DEBUG_FUNC_TRACK( "Iterator List< T >::Begin() const" );
+
         ListIteratorImpl* iter = new ListIteratorImpl( m_front );
         return CreateIteratorFromImplementation( iter );
       }
@@ -35,7 +42,8 @@ namespace Util
 
       virtual Iterator const End() const
       {
-        TRACKTESTCALL( "Iterator const List< T >::End() const" );
+        DEBUG_FUNC_TRACK( "Iterator const List< T >::End() const" );
+
         ListIteratorImpl* iter = new ListIteratorImpl( m_end );
         return CreateIteratorFromImplementation( iter );
       }
@@ -51,12 +59,12 @@ namespace Util
       virtual void PopFirst( T const& t );
       virtual void PopAll( T const& t );
       virtual bool const Contains( T const& t ) const;
-
+      
 
     protected:
       struct ListNode
       {
-        TESTCHASSISFRIEND;
+        DEBUG_FUNC_TRACK_CLASS_DEC;
 
         ListNode( ListNode* prev, ListNode* next, T* data );
         virtual ~ListNode();
@@ -68,7 +76,9 @@ namespace Util
       class ListIteratorImpl : public IteratorImpl
       {
         public:
-          TESTCHASSISFRIEND;
+          DEBUG_FUNC_TRACK_CLASS_DEC;
+          DEBUG_VAR_GET( m_listNode, ListNode* );
+          DEBUG_VAR_GET( m_isEnd, bool );
 
           ListIteratorImpl( ListNode* const listNode );
           virtual ~ListIteratorImpl();
@@ -76,7 +86,7 @@ namespace Util
 
           virtual bool const operator==( IteratorImpl const& iterator ) const
           {
-            TRACKTESTCALL( "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
+            DEBUG_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
 
             ListIteratorImpl const* listIteratorImpl = dynamic_cast< ListIteratorImpl const* >( &iterator );
             if( listIteratorImpl == 0 )
@@ -88,7 +98,7 @@ namespace Util
 
           virtual bool const operator!=( IteratorImpl const& iterator ) const
           {
-            TRACKTESTCALL( "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
+            DEBUG_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
 
             ListIteratorImpl const* listIteratorImpl = dynamic_cast< ListIteratorImpl const* >( &iterator );
             if( listIteratorImpl == 0 )
@@ -100,7 +110,9 @@ namespace Util
 
           virtual IteratorImpl * const Clone() const
           {
-            return new ListIteratorImpl( m_listNode );
+            DEBUG_FUNC_TRACK( "IteratorImpl * const List< T >::ListIteratorImpl::Clone() const" );
+
+            return new ListIteratorImpl( *this );
           }
           
 

@@ -2,7 +2,7 @@
 #ifndef UTIL_SORTEDVECTOR_H
 #define UTIL_SORTEDVECTOR_H
 
-#include "../Engian.test/Engian.test/testIcle.h"
+#include "debugDefines.h"
 
 #include "utilSortedContainer.h"
 #include "utilVector.h"
@@ -15,6 +15,8 @@ namespace Util
   class SortedVector : public SortedContainer< T >, public Vector< T >
   {
     public:
+      //DEBUG_FUNC_TRACK_CLASS_DEF
+
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
       typedef bool const (*LessThanFunc) ( T const&, T const& );
@@ -22,7 +24,8 @@ namespace Util
       SortedVector();
       SortedVector( unsigned const capacity );
       SortedVector( T const * const tArray, unsigned const size );
-      SortedVector( SortedVector< T > const& SortedVector );
+      SortedVector( SortedVector< T > const& sortedVector );
+      SortedVector( Container< T > const& container );
       virtual ~SortedVector();
       virtual SortedVector< T >& operator=( SortedVector< T > const& sortedVector );
       virtual SortedContainer< T >& operator=( SortedContainer< T > const& sortedContainer );

@@ -2,7 +2,7 @@
 #ifndef UTIL_STRING_H
 #define UTIL_STRING_H
 
-#include "../Engian.test/Engian.test/testIcle.h"
+#include "debugDefines.h"
 
 #include "utilUnsafeVector.h"
 
@@ -15,7 +15,7 @@ namespace Util
   class String : public UnsafeVector< char >
   {
     public:
-      TESTCHASSISFRIEND;
+      //DEBUG_FUNC_TRACK_CLASS_DEC
 
       String();
       String( unsigned const capacity );

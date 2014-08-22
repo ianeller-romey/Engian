@@ -19,8 +19,8 @@
     <Filter Include="Source Files\Murmur3">
       <UniqueIdentifier>{8996b04d-ac6d-4fd5-ba5f-96c2cd39eb03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Test">
-      <UniqueIdentifier>{fe3476d1-bbd3-4a0d-a5dc-136178aaab88}</UniqueIdentifier>
+    <Filter Include="Header Files\Debug">
+      <UniqueIdentifier>{4a4c574d-ff3e-4c16-b3a0-8d12e07450b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -70,9 +70,6 @@
     </ClInclude>
     <ClInclude Include="MurmurHash3.h">
       <Filter>Header Files\Murmur3</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engian.test\Engian.test\testIcle.h">
-      <Filter>Header Files\Test</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

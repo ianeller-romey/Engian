@@ -2,7 +2,7 @@
 #ifndef UTIL_UNSAFEVECTOR_H
 #define UTIL_UNSAFEVECTOR_H
 
-#include "../Engian.test/Engian.test/testIcle.h"
+#include "debugDefines.h"
 
 #include "utilVector.h"
 
@@ -14,7 +14,7 @@ namespace Util
   class UnsafeVector : public Vector< T >
   {
     public:
-      TESTCHASSISFRIEND;
+      //DEBUG_FUNC_TRACK_CLASS_DEC
 
       UnsafeVector();
       UnsafeVector( unsigned const capacity );

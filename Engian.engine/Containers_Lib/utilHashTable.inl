@@ -5,6 +5,9 @@
 namespace Util
 {
 
+  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T _COMMA typename KEY >, HashTable< T _COMMA KEY >::HashTableNode );
+
+
   template< typename T, typename KEY >
   HashTable< T, KEY >::KeyedIterator::KeyedIterator( KeyedIterator const& iterator ) :
     m_implementation( ++iterator.m_implReferenceCounter ),
@@ -59,7 +62,7 @@ namespace Util
     m_currentBucketIndex( 0 ),
     m_currentBucketNode( 0 )
   {
-    // m_buckets will be 0 if this is and .End() or .KeyedEnd() iterator
+    // m_buckets will be 0 if this is an .End() or .KeyedEnd() iterator
     // if m_buckets is not 0, but the first bucket is, walk forward until we find the first non-0 bucket
     if( m_buckets != 0 && m_buckets[ m_currentBucketIndex ] == 0 )
     {
@@ -72,6 +75,17 @@ namespace Util
         }
       }
     }
+  }
+
+      
+  template< typename T, typename KEY >
+  HashTable< T, KEY >::HashTableIteratorImpl::HashTableIteratorImpl( HashTableIteratorImpl const& other ) :
+    IteratorImpl( true ),
+    m_buckets( other.m_buckets ),
+    m_capacity( other.m_capacity ),
+    m_currentBucketIndex( other.m_currentBucketIndex ),
+    m_currentBucketNode( other.m_currentBucketNode )
+  {
   }
 
   
