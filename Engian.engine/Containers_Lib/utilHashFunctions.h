@@ -2,7 +2,7 @@
 #ifndef UTIL_HASHES_H
 #define UTIL_HASHES_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 
 namespace Util

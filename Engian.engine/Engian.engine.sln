@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Containers_Lib", "Containers_Lib\Containers_Lib.vcxproj", "{D8749284-22B7-4FF8-AF30-A87A85199034}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "Driver\Driver.vcxproj", "{431D2A76-B729-4540-97F6-CA61C1F4A576}"
@@ -8,7 +10,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "Driver\Driver.vcx
 		{D8749284-22B7-4FF8-AF30-A87A85199034} = {D8749284-22B7-4FF8-AF30-A87A85199034}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Debug_Lib", "Debug_Lib\Debug_Lib.vcxproj", "{25976149-1820-412C-9414-2575FE562C9F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DebugForTest_Lib", "DebugForTest_Lib\DebugForTest_Lib.vcxproj", "{25976149-1820-412C-9414-2575FE562C9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

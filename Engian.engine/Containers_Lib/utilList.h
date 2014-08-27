@@ -2,7 +2,7 @@
 #ifndef UTIL_LIST_H
 #define UTIL_LIST_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilContainer.h"
 
@@ -17,10 +17,11 @@ namespace Util
       struct ListNode;
 
     public:
-      DEBUG_FUNC_TRACK_CLASS_DEC;
-      DEBUG_VAR_GET( m_end, ListNode* );;
-      DEBUG_VAR_GET( m_front, ListNode* )
-      DEBUG_VAR_GET( m_back, ListNode* );
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_UTILLIST_FRIEND
+      DFT_VAR_GET( m_end, ListNode* )
+      DFT_VAR_GET( m_front, ListNode* )
+      DFT_VAR_GET( m_back, ListNode* )
 
       List();
       List( T const * const tArray, unsigned const size );
@@ -33,7 +34,7 @@ namespace Util
 
       virtual Iterator Begin() const
       {
-        DEBUG_FUNC_TRACK( "Iterator List< T >::Begin() const" );
+        DFT_FUNC_TRACK( "Iterator List< T >::Begin() const" );
 
         ListIteratorImpl* iter = new ListIteratorImpl( m_front );
         return CreateIteratorFromImplementation( iter );
@@ -42,7 +43,7 @@ namespace Util
 
       virtual Iterator const End() const
       {
-        DEBUG_FUNC_TRACK( "Iterator const List< T >::End() const" );
+        DFT_FUNC_TRACK( "Iterator const List< T >::End() const" );
 
         ListIteratorImpl* iter = new ListIteratorImpl( m_end );
         return CreateIteratorFromImplementation( iter );
@@ -64,7 +65,7 @@ namespace Util
     protected:
       struct ListNode
       {
-        DEBUG_FUNC_TRACK_CLASS_DEC;
+        DFT_FUNC_TRACK_CLASS_DEC;
 
         ListNode( ListNode* prev, ListNode* next, T* data );
         virtual ~ListNode();
@@ -76,9 +77,9 @@ namespace Util
       class ListIteratorImpl : public IteratorImpl
       {
         public:
-          DEBUG_FUNC_TRACK_CLASS_DEC;
-          DEBUG_VAR_GET( m_listNode, ListNode* );
-          DEBUG_VAR_GET( m_isEnd, bool );
+          DFT_FUNC_TRACK_CLASS_DEC;
+          DFT_VAR_GET( m_listNode, ListNode* );
+          DFT_VAR_GET( m_isEnd, bool );
 
           ListIteratorImpl( ListNode* const listNode );
           virtual ~ListIteratorImpl();
@@ -86,7 +87,7 @@ namespace Util
 
           virtual bool const operator==( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
 
             ListIteratorImpl const* listIteratorImpl = dynamic_cast< ListIteratorImpl const* >( &iterator );
             if( listIteratorImpl == 0 )
@@ -98,7 +99,7 @@ namespace Util
 
           virtual bool const operator!=( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
 
             ListIteratorImpl const* listIteratorImpl = dynamic_cast< ListIteratorImpl const* >( &iterator );
             if( listIteratorImpl == 0 )
@@ -110,7 +111,7 @@ namespace Util
 
           virtual IteratorImpl * const Clone() const
           {
-            DEBUG_FUNC_TRACK( "IteratorImpl * const List< T >::ListIteratorImpl::Clone() const" );
+            DFT_FUNC_TRACK( "IteratorImpl * const List< T >::ListIteratorImpl::Clone() const" );
 
             return new ListIteratorImpl( *this );
           }

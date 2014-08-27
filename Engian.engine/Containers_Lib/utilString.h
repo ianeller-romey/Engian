@@ -2,7 +2,7 @@
 #ifndef UTIL_STRING_H
 #define UTIL_STRING_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilUnsafeVector.h"
 
@@ -15,7 +15,8 @@ namespace Util
   class String : public UnsafeVector< char >
   {
     public:
-      //DEBUG_FUNC_TRACK_CLASS_DEC
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_UTILSTRING_FRIEND
 
       String();
       String( unsigned const capacity );

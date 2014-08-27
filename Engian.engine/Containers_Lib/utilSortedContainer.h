@@ -2,7 +2,7 @@
 #ifndef UTIL_SORTEDCONTAINER_H
 #define UTIL_SORTEDCONTAINER_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilContainer.h"
 #include "utilTemplateComparisonFunctions.h"
@@ -15,10 +15,10 @@ namespace Util
   class SortedContainer : public virtual Container< T >
   {
     public:
-      //DEBUG_FUNC_TRACK_CLASS_DEC
-      DEBUG_VAR_GET( m_equalityFunc, EqualityFunc )
-      DEBUG_VAR_GET( m_greaterThanFunc, GreaterThanFunc )
-      DEBUG_VAR_GET( m_lessThanFunc, LessThanFunc )
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_VAR_GET( m_equalityFunc, EqualityFunc )
+      DFT_VAR_GET( m_greaterThanFunc, GreaterThanFunc )
+      DFT_VAR_GET( m_lessThanFunc, LessThanFunc )
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );

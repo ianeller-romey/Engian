@@ -2,7 +2,7 @@
 #ifndef UTIL_SORTEDVECTOR_H
 #define UTIL_SORTEDVECTOR_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilSortedContainer.h"
 #include "utilVector.h"
@@ -15,7 +15,8 @@ namespace Util
   class SortedVector : public SortedContainer< T >, public Vector< T >
   {
     public:
-      //DEBUG_FUNC_TRACK_CLASS_DEF
+      //DFT_FUNC_TRACK_CLASS_DEF
+      DFT_UTILSORTEDVECTOR_FRIEND
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );

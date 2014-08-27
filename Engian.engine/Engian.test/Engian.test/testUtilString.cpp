@@ -6,6 +6,7 @@
 #include "utilString.h"
 #include "utilList.h"
 
+#include "testUtilVector_Helpers.h"
 #include "testUtilString_Helpers.h"
 
 
@@ -46,14 +47,19 @@ namespace Test
     T_FUNC_ARR_DEF( TestUtilString_String_BitwiseLeftShiftIntAndUint )
   };
 
+
   char const * const UnitTestChassis::TestUtilString_String_Constructor0( char const * const name )
   {
     try
     {
       Util::String string;
-      TEST_ASSERT( string.m_capacity == Util::String::c_defaultCapacity, name, "did not initialize m_capacity to c_defaultCapacity" );
-      TEST_ASSERT( UnitTestChass( &string, "", 0 ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String()" ), name, "Appropriate function was not called" );
+
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, Util::String::dbgGet_c_defaultCapacity(), 0 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, "", 0 ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String()" ),
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -69,9 +75,12 @@ namespace Test
     {
       unsigned const capacity = 200;
       Util::String string( capacity );
-      TEST_ASSERT( string.m_capacity == capacity, name, "did not initialize m_capacity correctly" );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, "", 0 ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String( unsigned const capacity )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, capacity, 0 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, "", 0 ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( unsigned const capacity )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -88,8 +97,13 @@ namespace Test
       char const * const characters = "The quick brown fox jumps over the lazy dog.";
       unsigned const charactersLen = strlen( characters );
       Util::String string( characters );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String( char const * const string )" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( char const * const string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -105,8 +119,13 @@ namespace Test
     {
       char const character = 'I';
       Util::String string( character );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, &character, 1 ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String( char const character )" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, 2, 2 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, &character, 1 ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( char const character )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -124,9 +143,13 @@ namespace Test
       unsigned const charactersLen = strlen( characters );
       Util::List< char > list( characters, charactersLen );
       Util::String string( list );
-      Util::Container< char >* containerPtr = dynamic_cast< Util::Container< char >* >( &list );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstContainer( &string, containerPtr ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String( Container< char > const& container )" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, list.dbgGet_m_size() ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string, list ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( Container< char > const& container )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -144,10 +167,13 @@ namespace Test
       unsigned const charactersLen = strlen( characters );
       Util::String string1( characters ),
                    string2( string1 );
-      TEST_ASSERT( string2.m_capacity == string1.m_capacity, name, "did not initialize m_capacity correctly" );
-      TEST_ASSERT( string2.m_size == string1.m_size, name, "did not initialize m_size correctly" );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, string1.m_array ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String::String( String const& string )" ), name, "Appropriate function was not called" );
+
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, string1.dbgGet_m_capacity(), string1.dbgGet_m_size() ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string2, string1 ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( String const& string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -167,8 +193,10 @@ namespace Test
       for( unsigned i = 0; i < charactersLen; ++i )
         string.PushBack( characters[ i ] );
       
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::PushBack( char const& t )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBack( char const& t )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -202,9 +230,13 @@ namespace Test
       vector.PushBackRange( characters2, charactersLen2 );
       vector.PushBackRange( characters3, charactersLen3 );
       vector.PushBackRange( characters4, charactersLen4 );
-      
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, vector.m_array, vector.m_size ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::PushBackRange( char const * const string )" ), name, "Appropriate function was not called" );
+
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLenAll + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( char const * const string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -224,8 +256,11 @@ namespace Test
       for( unsigned i = 0, incr = 5; i < charactersLen; i += incr )
         string.PushBackRange( characters + i, ( charactersLen - i < incr ) ? charactersLen - i : incr );
       
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::PushBackRange( char const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( char const * const tArray, unsigned const size )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -245,8 +280,11 @@ namespace Test
                    string2( characters );
       string1.PushBackRange( string2 );
       
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string1, characters ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::PushBackRange( String const& string )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, string2.dbgGet_m_size() ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( String const& string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -263,13 +301,17 @@ namespace Test
       char characters[] = "~!@#$%^&*()_+=-0987654321`";
       unsigned const charactersLen = strlen( characters );
       Util::String string( characters );
+
       for( int i = charactersLen; i > 0; --i )
       {
         string.PopBack();
-        TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, i - 1 ) == 0, name, "did not update values correctly" );
+        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1, i - 1 ) == 0,
+                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, i - 1 ) == 0, name, "did not update values correctly" );
       }
       TEST_ASSERT( string.IsEmpty(), name, "returned false for .IsEmpty() after removing all elements" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::PopBack()" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PopBack()" ), 
+                   name, "Appropriate function was not called" );
 
       // check for exceptions
       string.PopBack();
@@ -289,8 +331,10 @@ namespace Test
       char characters[] = "this STRING will BE used TO test THE GetStrLen MEMBER function";
       unsigned const charactersLen = strlen( characters );
       Util::String string( characters );
+
       TEST_ASSERT( string.GetStrLen() == charactersLen, name, "did not return correct string length" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "unsigned const String::GetStrLen() const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "unsigned const String::GetStrLen() const" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -313,17 +357,17 @@ namespace Test
       TEST_ASSERT( string.BeginsWith( "TestUtilString_String_BeginsWith0" ), name, "did not return true for correct string" );
       TEST_ASSERT( string.BeginsWith( "TestUtilVector" ) == false, name, "returned true for incorrect string" );
       TEST_ASSERT( string.BeginsWith( "TestUtilString_String_BeginsWith000" ) == false, name, "returned true for longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::BeginsWith( char const * const string ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string ) const", true ), name, "Appropriate function not called" );
 
       TEST_ASSERT( string.BeginsWith( "Test", 3 ), name, "did not return true for correct string" );
       TEST_ASSERT( string.BeginsWith( "TestUtilString_String_BeginsWith0", charactersLen ), name, "did not return true for correct string" );
       TEST_ASSERT( string.BeginsWith( "TestUtilVector", 10 ) == false, name, "returned true for incorrect string" );
       TEST_ASSERT( string.BeginsWith( "TestUtilString_String_BeginsWith000", 34 ) == false, name, "returned true for longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::BeginsWith( char const * const string, unsigned strLen ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string, unsigned strLen ) const", true ), name, "Appropriate function not called" );
 
       TEST_ASSERT( string.BeginsWith( 'T' ), name, "did not return true for correct character" );
       TEST_ASSERT( string.BeginsWith( 't' ) == false, name, "returned true for incorrect character" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::BeginsWith( char const character ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const character ) const", true ), name, "Appropriate function not called" );
 
       stringAlt = "TestUtilString";
       TEST_ASSERT( string.BeginsWith( stringAlt ), name, "did not return true for correct String" );
@@ -333,7 +377,7 @@ namespace Test
       TEST_ASSERT( string.BeginsWith( stringAlt ) == false, name, "returned true for incorrect String" );
       stringAlt = "TestUtilString_String_BeginsWith000";
       TEST_ASSERT( string.BeginsWith( stringAlt ) == false, name, "returned true for longer String" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::BeginsWith( String const& string ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( String const& string ) const", true ), name, "Appropriate function not called" );
 
       list.Clear();
       for( unsigned i = 0, j = charactersLen / 2; i < j; ++i ) list.PushBack( characters[ i ] );
@@ -348,7 +392,7 @@ namespace Test
       for( unsigned i = 0; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
       list.PushBack( '0' );
       TEST_ASSERT( string.BeginsWith( list ) == false, name, "returned true for longer Container< char >" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::BeginsWith( Container< char > const& container ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( Container< char > const& container ) const", true ), name, "Appropriate function not called" );
     }
     catch( ... )
     {
@@ -371,17 +415,17 @@ namespace Test
       TEST_ASSERT( string.EndsWith( "TestUtilString_String_EndsWith0" ), name, "did not return true for correct string" );
       TEST_ASSERT( string.EndsWith( "TestUtilVector" ) == false, name, "returned true for incorrect string" );
       TEST_ASSERT( string.EndsWith( "TestUtilString_String_EndsWith000" ) == false, name, "returned true for longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::EndsWith( char const * const string ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string ) const", true ), name, "Appropriate function not called" );
 
       TEST_ASSERT( string.EndsWith( "With0With0With0", 5 ), name, "did not return true for correct string" );
       TEST_ASSERT( string.EndsWith( "TestUtilString_String_EndsWith0", charactersLen ), name, "did not return true for correct string" );
       TEST_ASSERT( string.EndsWith( "TestUtilVector", 10 ) == false, name, "returned true for incorrect string" );
       TEST_ASSERT( string.EndsWith( "TestUtilString_String_EndsWith000", 34 ) == false, name, "returned true for longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::EndsWith( char const * const string, unsigned strLen ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string, unsigned strLen ) const", true ), name, "Appropriate function not called" );
 
       TEST_ASSERT( string.EndsWith( '0' ), name, "did not return true for correct character" );
       TEST_ASSERT( string.EndsWith( 't' ) == false, name, "returned true for incorrect character" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::EndsWith( char const character ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const character ) const", true ), name, "Appropriate function not called" );
 
       stringAlt = "EndsWith0";
       TEST_ASSERT( string.EndsWith( stringAlt ), name, "did not return true for correct String" );
@@ -391,7 +435,7 @@ namespace Test
       TEST_ASSERT( string.EndsWith( stringAlt ) == false, name, "returned true for incorrect String" );
       stringAlt = "TestUtilString_String_EndsWith000";
       TEST_ASSERT( string.EndsWith( stringAlt ) == false, name, "returned true for longer String" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::EndsWith( String const& string ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( String const& string ) const", true ), name, "Appropriate function not called" );
 
       list.Clear();
       for( unsigned i = charactersLen / 2; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
@@ -406,7 +450,7 @@ namespace Test
       for( unsigned i = 0; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
       list.PushBack( '0' );
       TEST_ASSERT( string.EndsWith( list ) == false, name, "returned true for longer Container< char >" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::EndsWith( Container< char > const& container ) const", true ), name, "Appropriate function not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( Container< char > const& container ) const", true ), name, "Appropriate function not called" );
     }
     catch( ... )
     {
@@ -421,9 +465,10 @@ namespace Test
     try
     {
       Util::String string;
+
       TEST_ASSERT( string.IsEmpty(), name, "did not return true for empty String" );
-      TEST_ASSERT( string.IsEmpty() && string.m_size == 1, name, "returned true when m_size did not equal 1" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::IsEmpty() const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( string.IsEmpty() && string.dbgGet_m_size()  == 1, name, "returned true when m_size did not equal 1" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::IsEmpty() const" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -443,10 +488,10 @@ namespace Test
 
       string.Clear();
       TEST_ASSERT( string.IsEmpty(), name, "did not return true for .IsEmpty() after" );
-      TEST_ASSERT( string.m_size == 1, name, "did not correctly decrement m_size" );
-      TEST_ASSERT( string.m_array != 0, name, "incorrectly deallocated m_array" );
-      TEST_ASSERT( string.m_array[ 0 ] == '\0', name, "did not revert string to an empty, null-terminated string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void String::Clear()" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( string.dbgGet_m_size() == 1, name, "did not correctly decrement m_size" );
+      TEST_ASSERT( string.dbgGet_m_array() != 0, name, "incorrectly deallocated m_array" );
+      TEST_ASSERT( string.dbgGet_m_array()[ 0 ] == '\0', name, "did not revert string to an empty, null-terminated string" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::Clear()" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -465,8 +510,12 @@ namespace Test
       Util::String string;
 
       string = characters;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, charactersLen ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator=( char const * const string )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1, charactersLen + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( char const * const string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -484,8 +533,12 @@ namespace Test
       Util::String string;
 
       string = character;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, &character, 1 ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator=( char const character )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, 2, 2 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, &character, 1 ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( char const character )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -504,8 +557,12 @@ namespace Test
       Util::String string1, string2( characters );
 
       string1 = string2;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string1, string2.m_array, string2.GetStrLen() ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator=( String const& string )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, string2.dbgGet_m_size(), string2.dbgGet_m_size() ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, string2.dbgGet_m_array(), string2.GetStrLen() ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( String const& string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -525,9 +582,12 @@ namespace Test
       Util::List< char > list( characters, charactersLen );
 
       string = list;
-      Util::Container< char >* containerPtr = dynamic_cast< Util::Container< char >* >( &list );
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstContainer( &string, containerPtr ) == 0, name, "did not initialize values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "Container< char >& String::operator=( Container< char > const& container )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, list.dbgGet_m_size(), list.dbgGet_m_size() ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string, list ) == 0, 
+                   name, "did not initialize values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "Container< char >& String::operator=( Container< char > const& container )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -546,11 +606,13 @@ namespace Test
       
       TEST_ASSERT( string == characters, name, "returned false when checking for equality of equivalent string" );
       TEST_ASSERT( ( string == "This is a non-equivalent string" ) == false, name, "returned true when checking for equality of non-equivalent string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator==( char const * const string ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const * const string ) const", true ), 
+                   name, "Appropriate function was not called" );
       
       TEST_ASSERT( ( string != characters ) == false, name, "returned true when checking for inequality of equivalent string" );
       TEST_ASSERT( string != "This is a non-equivalent string", name, "returned false when checking for inequality of non-equivalent string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator!=( char const * const string ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const * const string ) const", true ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -573,7 +635,8 @@ namespace Test
       TEST_ASSERT( ( string == '1' ) == false, name, "returned true when checking for equality of non-equivalent character" );
       string = "^^^";
       TEST_ASSERT( ( string == character ) == false, name, "returned true when when checking for equality of a longer string beginning with an equivalent character" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator==( char const character ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const character ) const", true ), 
+                   name, "Appropriate function was not called" );
       
       string.Clear();
       string.PushBack( character );
@@ -581,7 +644,8 @@ namespace Test
       TEST_ASSERT( string != '1', name, "returned false when checking for inequality of non-equivalent character" );
       string = "^^^";
       TEST_ASSERT( string != character, name, "returned false when when checking for inequality of a longer string beginning with an equivalent character" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator!=( char const character ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const character ) const", true ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -609,7 +673,8 @@ namespace Test
       string3.PushBackRange( characters + charactersHalfLen, charactersLen - charactersHalfLen );
       string3.PushBackRange( "000", 3 );
       TEST_ASSERT( ( string1 == string3 ) == false, name, "returned true when checking for equality of longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator==( String const& string ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( String const& string ) const", true ), 
+                   name, "Appropriate function was not called" );
       
       string3.Clear();
       string3.PushBackRange( characters, charactersHalfLen );
@@ -618,7 +683,8 @@ namespace Test
       string3.PushBackRange( characters + charactersHalfLen, charactersLen - charactersHalfLen );
       string3.PushBackRange( "000", 3 );
       TEST_ASSERT( string1 != string3, name, "returned false when checking for inequality of longer string" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const String::operator!=( String const& string ) const", true ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( String const& string ) const", true ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -641,9 +707,13 @@ namespace Test
       vector.PushBackRange( characters2, charactersLen2 );
       Util::String string1( characters1 ),
                    string2 = string1 + characters2;
-
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, vector.m_array, vector.m_size ), name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String String::operator+( char const * const string ) const" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string2, vector ), 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( char const * const string ) const" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -665,9 +735,13 @@ namespace Test
       vector.PushBack( character );
       Util::String string1( characters ),
                    string2 = string1 + character;
-
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String String::operator+( char const character ) const" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen + 1 + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string2, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( char const character ) const" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -691,9 +765,13 @@ namespace Test
       Util::String string1( characters1 ),
                    string2( characters2 ),
                    string3( string1 + string2 );
-
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string3, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String String::operator+( String const& string ) const" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string3, charactersLen1 + charactersLen2 + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string3, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( String const& string ) const" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -717,9 +795,13 @@ namespace Test
       Util::List< char > list( characters2, charactersLen2 );
       Util::String string1( characters1 ),
                    string2( string1 + list );
-
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string2, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String String::operator+( Container< char > const& container ) const" ), name, "Appropriate function was not called" );
+      
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
+                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string2, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( Container< char > const& container ) const" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -743,8 +825,12 @@ namespace Test
       Util::String string( characters1 );
 
       string += characters2;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator+=( char const * const string )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen1 + charactersLen2 + 1 ) == 0,
+                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( char const * const string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -767,8 +853,12 @@ namespace Test
       Util::String string( characters );
 
       string += character;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator+=( char const character )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 + 1 ) == 0,
+                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( char const character )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -793,8 +883,12 @@ namespace Test
                    string2( characters2 );
 
       string1 += string2;
-      TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string1, vector.m_array, vector.m_size ) == 0, name, "did not insert values correctly" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator+=( String const& string )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, charactersLen1 + charactersLen2 + 1 ) == 0,
+                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+                   name, "did not insert values correctly" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( String const& string )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -814,9 +908,14 @@ namespace Test
         unsigned const charactersLen = strlen( characters );
         Util::String string;
         string.Clear();
+
         string << i;
-        TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, charactersLen ) == 0, name, "did not insert values correctly" );
-        TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator<<( int const integer )", true ), name, "Appropriate function was not called" );
+        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+                     name, "did not insert values correctly" );
+        TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( int const integer )", true ), 
+                     name, "Appropriate function was not called" );
       }
       
       {
@@ -825,9 +924,14 @@ namespace Test
         unsigned const charactersLen = strlen( characters );
         Util::String string;
         string.Clear();
+
         string << u;
-        TEST_ASSERT( TestUtilString_Helper_CheckStringAgainstArray( &string, characters, charactersLen ) == 0, name, "did not insert values correctly" );
-        TEST_ASSERT( DEBUG_FUNC_CHECK( "String& String::operator<<( unsigned const uinteger )", true ), name, "Appropriate function was not called" );
+        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+                     name, "did not insert values correctly" );
+        TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( unsigned const uinteger )", true ), 
+                     name, "Appropriate function was not called" );
       }
 
     }

@@ -2,7 +2,7 @@
 #ifndef UTIL_TEMPLATECOMPARISONFUNCTIONS_H
 #define UTIL_TEMPLATECOMPARISONFUNCTIONS_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 
 namespace Util

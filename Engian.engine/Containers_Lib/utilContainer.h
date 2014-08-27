@@ -2,7 +2,7 @@
 #ifndef UTIL_CONTAINER_H
 #define UTIL_CONTAINER_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 
 namespace Util
@@ -22,8 +22,8 @@ namespace Util
       class IteratorImpl
       {
         public:
-          DEBUG_FUNC_TRACK_CLASS_DEC;
-          DEBUG_VAR_GET( m_valid, bool );
+          DFT_FUNC_TRACK_CLASS_DEC;
+          DFT_VAR_GET( m_valid, bool );
 
           IteratorImpl( bool valid );
           virtual ~IteratorImpl();
@@ -71,7 +71,7 @@ namespace Util
        */
       struct IteratorImplNode
       {
-        DEBUG_FUNC_TRACK_CLASS_DEC;
+        DFT_FUNC_TRACK_CLASS_DEC;
 
         IteratorImplNode( IteratorImpl* implementation, IteratorImplNode* next );
 
@@ -81,7 +81,7 @@ namespace Util
       
       Iterator CreateIteratorFromImplementation( IteratorImpl* const implementation ) const
       {    
-        DEBUG_FUNC_TRACK( "Iterator CreateIteratorFromImplementation( IteratorImpl* const implementation ) const" );
+        DFT_FUNC_TRACK( "Iterator CreateIteratorFromImplementation( IteratorImpl* const implementation ) const" );
 
         if( m_implementations == 0 )
           m_implementations = new IteratorImplNode( implementation, 0 );
@@ -101,9 +101,9 @@ namespace Util
 
 
     public:
-      DEBUG_FUNC_TRACK_CLASS_DEC;
-      DEBUG_VAR_GET( m_size, unsigned );
-      DEBUG_VAR_GET( m_implementations, IteratorImplNode* );
+      DFT_FUNC_TRACK_CLASS_DEC;
+      DFT_VAR_GET( m_size, unsigned );
+      DFT_VAR_GET( m_implementations, IteratorImplNode* );
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
@@ -112,9 +112,9 @@ namespace Util
       class Iterator
       {
         public:
-          DEBUG_FUNC_TRACK_CLASS_DEC;
-          DEBUG_VAR_GET( m_implementation, IteratorImpl* );
-          DEBUG_VAR_GET( m_parentsIterators, IteratorImplNode** );
+          DFT_FUNC_TRACK_CLASS_DEC;
+          DFT_VAR_GET( m_implementation, IteratorImpl* );
+          DFT_VAR_GET( m_parentsIterators, IteratorImplNode** );
 
           friend class Container< T >; //!< Friending always feels gross, but this allows a Container< T > to create
                                        //!< an original Iterator, whereas a user can only create a copy constructed Iterator. 

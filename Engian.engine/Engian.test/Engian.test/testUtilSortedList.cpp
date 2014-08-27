@@ -44,7 +44,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -58,7 +58,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -72,7 +72,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor2" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor2" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -86,7 +86,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor3" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Constructor3" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -100,7 +100,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_CopyConstructor0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_CopyConstructor0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -114,7 +114,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_CopyConstructor1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_CopyConstructor1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -128,7 +128,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PushFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PushFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -142,7 +142,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PushBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PushBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -156,7 +156,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PopFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PopFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -170,7 +170,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PopBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PopBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -184,7 +184,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PopFirst" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PopFirst" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -198,7 +198,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_PopAll" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_PopAll" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -212,7 +212,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Contains" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Contains" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -226,7 +226,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Clear" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Clear" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -240,7 +240,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Push" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Push" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -254,7 +254,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_NewSortedListNodeTier" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_NewSortedListNodeTier" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -268,7 +268,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_FindInsertionNodeInTier" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_FindInsertionNodeInTier" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -282,7 +282,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_GetBottomTier" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_GetBottomTier" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -296,7 +296,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_GetNumberOfTiers" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_GetNumberOfTiers" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -310,7 +310,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_ClearTiers" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_ClearTiers" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -324,7 +324,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_FindNewFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_FindNewFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -338,7 +338,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_FindNewBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_FindNewBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -352,7 +352,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Search" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Search" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -366,7 +366,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Pop" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Pop" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -380,7 +380,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_BasicAssignment0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_BasicAssignment0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -394,7 +394,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_BasicAssignment1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_BasicAssignment1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -408,7 +408,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_Addition" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_Addition" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -422,7 +422,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilSortedList_SortedList_AdditionAssignment" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilSortedList_SortedList_AdditionAssignment" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {

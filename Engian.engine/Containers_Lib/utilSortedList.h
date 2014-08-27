@@ -2,7 +2,7 @@
 #ifndef UTIL_SORTEDLIST_H
 #define UTIL_SORTEDLIST_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilSortedContainer.h"
 #include "utilList.h"
@@ -19,9 +19,9 @@ namespace Util
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
       typedef bool const (*LessThanFunc) ( T const&, T const& );
 
-      //DEBUG_FUNC_TRACK_CLASS_DEC
-      DEBUG_VAR_GET( m_tiers, unsigned );
-      DEBUG_VAR_GET( c_logBase, float const );
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_VAR_GET( m_tiers, unsigned );
+      DFT_VAR_GET( c_logBase, float const );
 
       SortedList();
       SortedList( unsigned const capacity );
@@ -51,7 +51,7 @@ namespace Util
       // member classes
       struct SortedListNode : public List< T >::ListNode
       {
-        //DEBUG_FUNC_TRACK_CLASS_DEC
+        //DFT_FUNC_TRACK_CLASS_DEC
 
         SortedListNode( ListNode* prev, 
                         ListNode* next, 
@@ -70,7 +70,7 @@ namespace Util
       
       SortedListNode* GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const
       {
-        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const" );
+        DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const" );
 
         SortedListNode* bottom = topTier;
         // NOTE: second condition SHOULD be redundant, and can HOPEFULLY be removed after testing
@@ -85,7 +85,7 @@ namespace Util
       
       SortedListNode* FindNewFront() const
       {
-        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewFront() const" );
+        DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewFront() const" );
 
         SortedListNode* node = static_cast< SortedListNode* >( m_front );
         while( node->m_next == 0 && node != 0 )
@@ -96,7 +96,7 @@ namespace Util
 
       SortedListNode* FindNewBack() const
       {
-        DEBUG_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewBack() const" );
+        DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewBack() const" );
 
         SortedListNode  *node = dynamic_cast< SortedListNode* >( m_front ),
                 *temp;

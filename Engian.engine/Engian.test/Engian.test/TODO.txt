@@ -1,2 +1,2 @@
 Unit tests for invalidated iterators for Container classes
-Additional DEBUG_FUNC_CHECKs for tertiary functions ( e.g. Search, ShiftAndPop, etc. )
+Additional DFT_FUNC_CHECKs for tertiary functions ( e.g. Search, ShiftAndPop, etc. )

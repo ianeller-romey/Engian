@@ -49,13 +49,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>USE_DEBUG_LIB;WIN32;_DEBUG;_WINDOWS;_WINDLL;_USRDLL;TESTICLE_EXPORTS;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Debug_Lib;$(SolutionDir)..\Containers_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_DFT_LIB;WIN32;_DEBUG;_WINDOWS;_WINDLL;_USRDLL;TESTICLE_EXPORTS;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\DebugForTest_Lib;$(SolutionDir)..\Containers_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(ProjectName).$(PlatformTarget).$(Configuration)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\Debug_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)$(ProjectName).$(PlatformTarget).$(Configuration).dll" "$(TargetPath)"</Command>
@@ -68,15 +68,15 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>USE_DEBUG_LIB;WIN32;NDEBUG;_WINDOWS;_WINDLL;_USRDLL;TESTICLE_EXPORTS;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\Debug_Lib;$(SolutionDir)..\Containers_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>USE_DFT_LIB;WIN32;NDEBUG;_WINDOWS;_WINDLL;_USRDLL;TESTICLE_EXPORTS;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\DebugForTest_Lib;$(SolutionDir)..\Containers_Lib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(ProjectName).$(PlatformTarget).$(Configuration)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\Debug_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)$(ProjectName).$(PlatformTarget).$(Configuration).dll" "$(TargetPath)"</Command>

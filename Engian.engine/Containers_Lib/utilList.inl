@@ -5,13 +5,12 @@
 namespace Util
 {
 
-  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T >, List< T > );
-
-
-  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T >, List< T >::ListNode );
-
-
-  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T >, List< T >::ListIteratorImpl );
+#ifdef USE_DFT_LIB
+  template< typename T >
+  Debug::FunctionTracker List< T >::ListNode::s_functionTracker;
+  template< typename T >
+  Debug::FunctionTracker List< T >::ListIteratorImpl::s_functionTracker;
+#endif
 
 
   template< typename T >
@@ -20,7 +19,7 @@ namespace Util
     m_next( next ),
     m_data( data )
   {
-    DEBUG_FUNC_TRACK( "List< T >::ListNode::ListNode( ListNode* prev, ListNode* next, T* data )" );
+    DFT_FUNC_TRACK( "List< T >::ListNode::ListNode( ListNode* prev, ListNode* next, T* data )" );
   }
 
 
@@ -35,7 +34,7 @@ namespace Util
     IteratorImpl( true ),
     m_listNode( listNode )
   {
-    DEBUG_FUNC_TRACK( "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" );
+    DFT_FUNC_TRACK( "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" );
   }
 
 
@@ -44,21 +43,21 @@ namespace Util
     IteratorImpl( true ),
     m_listNode( other.m_listNode )
   {
-    DEBUG_FUNC_TRACK( "List< T >::ListIteratorImpl::ListIteratorImpl( ListIteratorImpl const& other )" );
+    DFT_FUNC_TRACK( "List< T >::ListIteratorImpl::ListIteratorImpl( ListIteratorImpl const& other )" );
   }
 
 
   template< typename T >
   List< T >::ListIteratorImpl::~ListIteratorImpl()
   {
-    DEBUG_FUNC_TRACK( "List< T >::ListIteratorImpl::~ListIteratorImpl()" );
+    DFT_FUNC_TRACK( "List< T >::ListIteratorImpl::~ListIteratorImpl()" );
   }
 
 
   template< typename T >
   void List< T >::ListIteratorImpl::AdvanceValue()
   {
-    DEBUG_FUNC_TRACK( "void List< T >::ListIteratorImpl::AdvanceValue()" );
+    DFT_FUNC_TRACK( "void List< T >::ListIteratorImpl::AdvanceValue()" );
 
     m_listNode = m_listNode->m_next;
   }
@@ -67,7 +66,7 @@ namespace Util
   template< typename T >
   T const& List< T >::ListIteratorImpl::GetValue() const
   {
-    DEBUG_FUNC_TRACK( "T const& List< T >::ListIteratorImpl::GetValue() const" );
+    DFT_FUNC_TRACK( "T const& List< T >::ListIteratorImpl::GetValue() const" );
 
     return *( m_listNode->m_data );
   }
@@ -80,7 +79,7 @@ namespace Util
     m_front( m_end ),
     m_back( m_end )
   {
-    DEBUG_FUNC_TRACK( "List< T >::List()" );
+    DFT_FUNC_TRACK( "List< T >::List()" );
   }
 
 
@@ -91,7 +90,7 @@ namespace Util
     m_front( m_end ),
     m_back( m_end )
   {
-    DEBUG_FUNC_TRACK( "List< T >::List( T const * const tArray, unsigned const size )" );
+    DFT_FUNC_TRACK( "List< T >::List( T const * const tArray, unsigned const size )" );
 
     PushBackRange( tArray, size );
   }
@@ -104,7 +103,7 @@ namespace Util
     m_front( m_end ),
     m_back( m_end )
   {
-    DEBUG_FUNC_TRACK( "List< T >::List( List< T > const& list )" );
+    DFT_FUNC_TRACK( "List< T >::List( List< T > const& list )" );
 
     PushBackRange( list );
   }
@@ -117,7 +116,7 @@ namespace Util
     m_front( m_end ),
     m_back( m_end )
   {
-    DEBUG_FUNC_TRACK( "List< T >::List( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "List< T >::List( Container< T > const& container )" );
 
     PushBackRange( container );
   }
@@ -126,7 +125,7 @@ namespace Util
   template< typename T >
   List< T >& List< T >::operator=( List< T > const& list )
   {
-    DEBUG_FUNC_TRACK( "List< T >& List< T >::operator=( List< T > const& list )" );
+    DFT_FUNC_TRACK( "List< T >& List< T >::operator=( List< T > const& list )" );
 
     Clear();
 
@@ -138,7 +137,7 @@ namespace Util
   template< typename T >
   Container< T >& List< T >::operator=( Container< T > const& container )
   {
-    DEBUG_FUNC_TRACK( "Container< T >& List< T >::operator=( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "Container< T >& List< T >::operator=( Container< T > const& container )" );
 
     Clear();
 
@@ -150,7 +149,7 @@ namespace Util
   template< typename T >
   List< T >::~List()
   {
-    DEBUG_FUNC_TRACK( "List< T >::~List()" );
+    DFT_FUNC_TRACK( "List< T >::~List()" );
 
     Clear();
     delete m_end;
@@ -160,7 +159,7 @@ namespace Util
   template< typename T >
   List< T > List< T >::operator+( List< T > const& list ) const
   {
-    DEBUG_FUNC_TRACK( "List< T > List< T >::operator+( List< T > const& list ) const" );
+    DFT_FUNC_TRACK( "List< T > List< T >::operator+( List< T > const& list ) const" );
 
     List< T > newList( *this );
     newList.PushBackRange( list );
@@ -171,7 +170,7 @@ namespace Util
   template< typename T >
   List< T >& List< T >::operator+=( List< T > const& list )
   {
-    DEBUG_FUNC_TRACK( "List< T >& List< T >::operator+=( List< T > const& list )" );
+    DFT_FUNC_TRACK( "List< T >& List< T >::operator+=( List< T > const& list )" );
       
     PushBackRange( list );
     return *this;
@@ -181,7 +180,7 @@ namespace Util
   template< typename T >
   void List< T >::PushFront( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PushFront( T const& t )" );
+    DFT_FUNC_TRACK( "void List< T >::PushFront( T const& t )" );
 
     char* memLoc = new char[ sizeof( ListNode ) + sizeof( T ) ];
 
@@ -201,7 +200,7 @@ namespace Util
   template< typename T >
   void List< T >::PushBack( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PushBack( T const& t )" );
+    DFT_FUNC_TRACK( "void List< T >::PushBack( T const& t )" );
 
     char* memLoc = new char[ sizeof( ListNode ) + sizeof( T ) ];
     
@@ -221,7 +220,7 @@ namespace Util
   template< typename T >
   void List< T >::PopFront()
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PopFront()" );
+    DFT_FUNC_TRACK( "void List< T >::PopFront()" );
 
     if( IsEmpty() )
       return;
@@ -234,7 +233,7 @@ namespace Util
   template< typename T >
   void List< T >::PopBack()
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PopBack()" );
+    DFT_FUNC_TRACK( "void List< T >::PopBack()" );
 
     if( IsEmpty() )
       return;
@@ -247,7 +246,7 @@ namespace Util
   template< typename T >
   void List< T >::PopFirst( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PopFirst( T const& t )" );
+    DFT_FUNC_TRACK( "void List< T >::PopFirst( T const& t )" );
 
     if( IsEmpty() )
       return;
@@ -261,7 +260,7 @@ namespace Util
   template< typename T >
   void List< T >::PopAll( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void List< T >::PopAll( T const& t )" );
+    DFT_FUNC_TRACK( "void List< T >::PopAll( T const& t )" );
 
     if( IsEmpty() )
       return;
@@ -281,7 +280,7 @@ namespace Util
   template< typename T >
   bool const List< T >::Contains( T const& t ) const
   {
-    DEBUG_FUNC_TRACK( "bool const List< T >::Contains( T const& t ) const" );
+    DFT_FUNC_TRACK( "bool const List< T >::Contains( T const& t ) const" );
 
     ListNode const * temp = m_front;
     return Search( &temp, t );
@@ -291,7 +290,7 @@ namespace Util
   template< typename T >
   bool const List< T >::Search( ListNode const** startIndex, T const& t ) const
   {
-    DEBUG_FUNC_TRACK( "bool const List< T >::Search( ListNode const** startIndex, T const& t ) const" );
+    DFT_FUNC_TRACK( "bool const List< T >::Search( ListNode const** startIndex, T const& t ) const" );
 
     while( ( *startIndex ) != m_end && *( ( *startIndex )->m_data ) != t )
       ( *startIndex ) = ( *startIndex )->m_next;
@@ -303,7 +302,7 @@ namespace Util
   template< typename T >
   void List< T >::Pop( ListNode const * const listNode )
   {
-    DEBUG_FUNC_TRACK( "void List< T >::Pop( ListNode const * const listNode )" );
+    DFT_FUNC_TRACK( "void List< T >::Pop( ListNode const * const listNode )" );
 
     if( listNode->m_prev != m_end )
       listNode->m_prev->m_next = listNode->m_next;

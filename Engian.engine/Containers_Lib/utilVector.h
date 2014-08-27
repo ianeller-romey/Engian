@@ -2,7 +2,7 @@
 #ifndef UTIL_VECTOR_H
 #define UTIL_VECTOR_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilContainer.h"
 
@@ -14,11 +14,12 @@ namespace Util
   class Vector : public virtual Container< T >
   {
     public:
-      //DEBUG_FUNC_TRACK_CLASS_DEC
-      DEBUG_VAR_GET( c_defaultCapacity, static unsigned const )
-      DEBUG_VAR_GET( c_growMultiplier, static float const )
-      DEBUG_VAR_GET( m_capacity, unsigned )
-      DEBUG_VAR_GET( m_array, T* )
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_UTILVECTOR_FRIEND
+      DFT_S_VAR_GET( c_defaultCapacity, unsigned const )
+      DFT_S_VAR_GET( c_growMultiplier, float const )
+      DFT_VAR_GET( m_capacity, unsigned )
+      DFT_VAR_GET( m_array, T* )
 
       Vector();
       Vector( unsigned const capacity );
@@ -32,7 +33,7 @@ namespace Util
 
       virtual Iterator Begin() const
       {
-        DEBUG_FUNC_TRACK( "Iterator Vector< T >::Begin() const" );
+        DFT_FUNC_TRACK( "Iterator Vector< T >::Begin() const" );
 
         VectorIteratorImpl* iter = new VectorIteratorImpl( m_array );
         return CreateIteratorFromImplementation( iter );
@@ -41,7 +42,7 @@ namespace Util
 
       virtual Iterator const End() const
       {
-        DEBUG_FUNC_TRACK( "Iterator Vector< T >::End() const" );
+        DFT_FUNC_TRACK( "Iterator Vector< T >::End() const" );
 
         VectorIteratorImpl* iter = new VectorIteratorImpl( m_array + m_size );
         return CreateIteratorFromImplementation( iter );
@@ -71,8 +72,8 @@ namespace Util
       class VectorIteratorImpl : public IteratorImpl
       {
         public:
-          DEBUG_FUNC_TRACK_CLASS_DEC;
-          DEBUG_VAR_GET( m_value, T* );
+          DFT_FUNC_TRACK_CLASS_DEC;
+          DFT_VAR_GET( m_value, T* );
 
           VectorIteratorImpl( T* const tArray );
           virtual ~VectorIteratorImpl();
@@ -80,7 +81,7 @@ namespace Util
 
           virtual bool const operator==( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const Vector< T >::VectorIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const Vector< T >::VectorIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
 
             VectorIteratorImpl const* vectorIteratorImpl = dynamic_cast< VectorIteratorImpl const* >( &iterator );
             if( vectorIteratorImpl == 0 )
@@ -92,7 +93,7 @@ namespace Util
 
           virtual bool const operator!=( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const Vector< T >::VectorIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const Vector< T >::VectorIteratorImpl::operator!=( IteratorImpl const& iterator ) const" );
 
             VectorIteratorImpl const* vectorIteratorImpl = dynamic_cast< VectorIteratorImpl const* >( &iterator );
             if( vectorIteratorImpl == 0 )
@@ -104,7 +105,7 @@ namespace Util
 
           virtual IteratorImpl * const Clone() const
           {
-            DEBUG_FUNC_TRACK( "IteratorImpl * const Vector< T >::VectorIteratorImpl::Clone() const" );
+            DFT_FUNC_TRACK( "IteratorImpl * const Vector< T >::VectorIteratorImpl::Clone() const" );
 
             return new VectorIteratorImpl( *this );
           }

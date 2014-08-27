@@ -45,7 +45,9 @@ namespace Test
       Util::List< double > list;
       list.PushBack( 1.1 );
       Util::List< double >::Iterator itB = list.Begin(), itE = list.End();
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" ), name, "Appropriate function was not called" );
+
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< double >, "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" ), 
+                   name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -65,7 +67,8 @@ namespace Test
       list.PushBackRange( structs, number );
       Util::List< UnitTestSampleStruct >::Iterator itB = list.Begin(), itE = list.End();
       for( ; itB != itE; ++itB ) ;
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "void List< T >::ListIteratorImpl::AdvanceValue()" ), name, "Appropriate function was not called", delete [] structs );
+        TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >, "void List< T >::ListIteratorImpl::AdvanceValue()" ), 
+                        name, "Appropriate function was not called", delete [] structs );
       delete [] structs;
     }
     catch( ... )
@@ -87,7 +90,8 @@ namespace Test
       Util::List< UnitTestSampleStruct >::Iterator itB = list.Begin(), itE = list.End();
       for( unsigned i = 0; itB != itE; ++itB, ++i ) 
         TEST_ASSERT_EX( itB.Get() == structs[ i ], name, "did not return the appropriate value", delete [] structs );
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "T const& List< T >::ListIteratorImpl::GetValue() const" ), name, "Appropriate function was not called", delete [] structs );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >, "T const& List< T >::ListIteratorImpl::GetValue() const" ), 
+                      name, "Appropriate function was not called", delete [] structs );
       delete [] structs;
     }
     catch( ... )
@@ -112,6 +116,7 @@ namespace Test
                                      itE1 = list1.End(),
                                      itB2 = list2.Begin(),
                                      itE2 = list2.End();
+
         TEST_ASSERT( ( itB1 == itB2 ) == false, name, "returned true for two Iterators from separate List< T > instances" );
         TEST_ASSERT( ( itE1 == itE2 ) == false, name, "returned true for two Iterators from separate List< T > instances" );
         for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
@@ -120,7 +125,8 @@ namespace Test
         TEST_ASSERT( itB1 == itAlt, name, "returned false for two equivalent Iterators from the same List< T > instance" );
         for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
           TEST_ASSERT( itB1 == itAlt, name, "returned false for two equivalent Iterators from the same List< T > instance" );
-        TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" ), name, "Appropriate function was not called", delete [] structs );
+        TEST_ASSERT( DFT_FUNC_CHECK( Util::List< bool >, "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" ), 
+                     name, "Appropriate function was not called", delete [] structs );
       }
 
       {
@@ -154,6 +160,7 @@ namespace Test
                                    itE1 = list1.End(),
                                    itB2 = list2.Begin(),
                                    itE2 = list2.End();
+
       TEST_ASSERT( itB1 != itB2, name, "returned false for two Iterators from separate List< T > instances" );
       TEST_ASSERT( itE1 != itE2, name, "returned false for two Iterators from separate List< T > instances" );
       for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
@@ -162,7 +169,8 @@ namespace Test
       TEST_ASSERT( ( itB1 != itAlt ) == false, name, "returned true for two equivalent Iterators from the same List< T > instance" );
       for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
         TEST_ASSERT( ( itB1 != itAlt ) == false, name, "returned true for two equivalent Iterators from the same List< T > instance" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" ), name, "Appropriate function was not called", delete [] structs );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< bool >, "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" ), 
+                   name, "Appropriate function was not called", delete [] structs );
 
       {
         Util::List< int > list;
@@ -187,8 +195,9 @@ namespace Test
     try
     {
       Util::List< Util::Vector< int > > list;
+
       TEST_ASSERT( UnitTestChassis_Helper_List< Util::Vector< int > >::CheckEmptyList( &list ) == 0, name, "did not properly initialize list" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >::List()" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >::List()" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -209,7 +218,7 @@ namespace Test
       TEST_ASSERT( UnitTestChassis_Helper_List< char >::CheckListFrontAndBack( &list, number, true ) == 0, name, "did not correctly initialize m_front or m_back" );
       TEST_ASSERT( UnitTestChassis_Helper_List< char >::CheckListAgainstArray( &list, chars, number, 1 ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >::List( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >::List( T const * const tArray, unsigned const size )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -231,7 +240,7 @@ namespace Test
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< double >::CheckListFrontAndBack( &list, vector.m_size, true ) == 0, name, "did not correctly initialize m_front or m_back", delete [] doubles );
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< double >::CheckListAgainstArray( &list, vector.m_array, vector.m_size, 1 ) == 0, name, "failed a list check", delete [] doubles );
 
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "List< T >::List( Container< T > const& container )" ), name, "Appropriate function was not called", delete [] doubles );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >::List( Container< T > const& container )" ), name, "Appropriate function was not called", delete [] doubles );
       delete [] doubles;
     }
     catch( ... )
@@ -255,7 +264,7 @@ namespace Test
       Util::Container< float >* containerPtr = &list1;
       TEST_ASSERT( UnitTestChassis_Helper_List< float >::CheckListAgainstContainer( &list2, containerPtr ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >::List( List< T > const& list )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >::List( List< T > const& list )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -277,7 +286,7 @@ namespace Test
         Util::List< char >::Iterator itB = list.Begin();
         TEST_ASSERT( itB.dbgGet_m_implementation() != 0, name, "did not create a ListIteratorImpl instance" );
         TEST_ASSERT( &( itB.Get() ) == list.dbgGet_m_front()->m_data, name, "returned an Iterator not pointing to the first element" );
-        TEST_ASSERT( DEBUG_FUNC_CHECK( "Iterator List< T >::Begin() const" ), name, "Appropriate function was not called" );
+        TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "Iterator List< T >::Begin() const" ), name, "Appropriate function was not called" );
       }
       TEST_ASSERT( list.m_implementations == 0, name, "List< T > did not have m_implementations reset to 0 after all Iterators left scope" );
 
@@ -309,7 +318,7 @@ namespace Test
         Util::List< char >::ListIteratorImpl* itImpl = dynamic_cast< Util::List< char >::ListIteratorImpl* >( itE.m_implementation );
         TEST_ASSERT( itImpl != 0, name, "did not create a ListIteratorImpl instance" );
         TEST_ASSERT( itImpl->m_listNode == list.m_end, name, "returned an Iterator not pointing to m_end" );
-        TEST_ASSERT( DEBUG_FUNC_CHECK( "Iterator const List< T >::End() const" ), name, "Appropriate function was not called" );
+        TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "Iterator const List< T >::End() const" ), name, "Appropriate function was not called" );
       }
       TEST_ASSERT( list.m_implementations == 0, name, "List< T > did not have m_implementations reset to 0 after all Iterators left scope" );
 
@@ -341,7 +350,7 @@ namespace Test
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleStruct >::CheckListFrontAndBack( &list, number, true ) == 0, name, "did not correctly update m_front or m_back", delete [] testStructs );
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleStruct >::CheckListAgainstArray( &list, testStructs + number - 1, number, -1 ) == 0, name, "failed a list check", delete [] testStructs );
 
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "void List< T >::PushFront( T const& t )" ), name, "Appropriate function was not called", delete [] testStructs );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PushFront( T const& t )" ), name, "Appropriate function was not called", delete [] testStructs );
       delete [] testStructs;
     }
     catch( ... )
@@ -365,7 +374,7 @@ namespace Test
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleClass >::CheckListFrontAndBack( &list, number, true ) == 0, name, "did not correctly update m_front or m_back", delete [] testClasses );
       TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleClass >::CheckListAgainstArray( &list, testClasses, number, 1 ) == 0, name, "failed a list check", delete [] testClasses );
 
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "void List< T >::PushBack( T const& t )" ), name, "Appropriate function was not called", delete [] testClasses );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PushBack( T const& t )" ), name, "Appropriate function was not called", delete [] testClasses );
       delete [] testClasses;
     }
     catch( ... )
@@ -393,7 +402,7 @@ namespace Test
         TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleStruct >::CheckListAgainstArray( &list, testStructs + 1 + i, number - 1 - i, 1 ) == 0, name, "failed a list check", delete [] testStructs );
       }
       TEST_ASSERT_EX( list.IsEmpty(), name, "Container< T >::IsEmpty() did not return true after", delete [] testStructs );
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "void List< T >::PopFront()" ), name, "Appropriate function was not called", delete [] testStructs );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PopFront()" ), name, "Appropriate function was not called", delete [] testStructs );
 
       // checking for exceptions
       list.PopFront();
@@ -425,7 +434,7 @@ namespace Test
         TEST_ASSERT_EX( UnitTestChassis_Helper_List< UnitTestSampleClass >::CheckListAgainstArray( &list, testClasses, number - 1 - i, 1 ) == 0, name, "failed a list check", delete [] testClasses );
       }
       TEST_ASSERT_EX( list.IsEmpty(), name, "Container< T >::IsEmpty() did not return true after", delete [] testClasses );
-      TEST_ASSERT_EX( DEBUG_FUNC_CHECK( "void List< T >::PopBack()" ), name, "Appropriate function was not called", delete [] testClasses );
+      TEST_ASSERT_EX( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PopBack()" ), name, "Appropriate function was not called", delete [] testClasses );
 
       // checking for exceptions
       list.PopBack();
@@ -476,7 +485,7 @@ namespace Test
         TEST_ASSERT( UnitTestChassis_Helper_List< float >::CheckEmptyList( &list ) == 0, name, "altered an empty List< T >" );
       }
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void List< T >::PopFirst( T const& t )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PopFirst( T const& t )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -522,7 +531,7 @@ namespace Test
         TEST_ASSERT( UnitTestChassis_Helper_List< float >::CheckEmptyList( &list ) == 0, name, "altered an empty List< T >" );
       }
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "void List< T >::PopAll( T const& t )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "void List< T >::PopAll( T const& t )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -545,7 +554,7 @@ namespace Test
       TEST_ASSERT( list.Contains( 9999999999999999 ), name, "did not return true for a contained value" );
       TEST_ASSERT( list.Contains( 12345678987654321 ), name, "did not return true for a contained value" );
       TEST_ASSERT( list.Contains( 1 ) == false, name, "did not return false for a value that was not contained" );
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "bool const List< T >::Contains( T const& t ) const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "bool const List< T >::Contains( T const& t ) const" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -571,7 +580,7 @@ namespace Test
       Util::Container< int >* containerPtr = dynamic_cast< Util::Container< int >* >( &list2 );
       TEST_ASSERT( UnitTestChassis_Helper_List< int >::CheckListAgainstContainer( &list1, containerPtr ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >& List< T >::operator=( List< T > const& list )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >& List< T >::operator=( List< T > const& list )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -598,7 +607,7 @@ namespace Test
       Util::Container< int >* containerPtr = dynamic_cast< Util::Container< int >* >( &vector );
       TEST_ASSERT( UnitTestChassis_Helper_List< int >::CheckListAgainstContainer( &list, containerPtr ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "Container< T >& List< T >::operator=( Container< T > const& container )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "Container< T >& List< T >::operator=( Container< T > const& container )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -626,7 +635,7 @@ namespace Test
       TEST_ASSERT( UnitTestChassis_Helper_List<  unsigned char  >::CheckListFrontAndBack( &list3, list1.m_size + list2.m_size, true ) == 0, name, "did not correctly assign m_size" );
       TEST_ASSERT( UnitTestChassis_Helper_List<  unsigned char  >::CheckListAgainstArray( &list3, numbers, number1 + number2, 1 ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T > List< T >::operator+( List< T > const& list ) const" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T > List< T >::operator+( List< T > const& list ) const" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -654,7 +663,7 @@ namespace Test
       TEST_ASSERT( UnitTestChassis_Helper_List< unsigned char >::CheckListFrontAndBack( &list1, number1 + number2, true ) == 0, name, "did not correctly assign m_size" );
       TEST_ASSERT( UnitTestChassis_Helper_List< unsigned char >::CheckListAgainstArray( &list1, numbers, number1 + number2, 1 ) == 0, name, "failed a list check" );
 
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "List< T >& List< T >::operator+=( List< T > const& list )" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::List< BARFBARFBAAARF >, "List< T >& List< T >::operator+=( List< T > const& list )" ), name, "Appropriate function was not called" );
     
     }
     catch( ... )

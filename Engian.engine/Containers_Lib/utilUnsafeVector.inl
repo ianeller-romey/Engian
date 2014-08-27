@@ -7,7 +7,7 @@ namespace Util
   UnsafeVector< T >::UnsafeVector() :
     Vector< T >()
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector()" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector()" );
   }
 
   
@@ -15,7 +15,7 @@ namespace Util
   UnsafeVector< T >::UnsafeVector( unsigned const capacity ) :
     Vector< T >( capacity )
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( unsigned const capacity )" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( unsigned const capacity )" );
   }
 
     
@@ -24,7 +24,7 @@ namespace Util
     Container< T >(),
     Vector< T >( size )
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" );
     PushBackRange( tArray, size );
   }
 
@@ -34,7 +34,7 @@ namespace Util
     Container< T >(),
     Vector< T >( uVector.m_capacity )
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" );
     PushBackRange( uVector.m_array, uVector.m_size );
   }
 
@@ -44,7 +44,7 @@ namespace Util
     Container< T >(),
     Vector< T >( container.GetSize() )
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" );
     Vector< T >::PushBackRange( container );
   }
 
@@ -52,7 +52,7 @@ namespace Util
   template< typename T >
   UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" );
     Clear();
 
     m_capacity = uVector.GetCapacity();
@@ -67,7 +67,7 @@ namespace Util
   template< typename T >
   Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )
   {
-    DEBUG_FUNC_TRACK( "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" );
     Clear();
 
     m_capacity = container.GetSize();
@@ -82,7 +82,7 @@ namespace Util
   template< typename T >
   UnsafeVector< T >::~UnsafeVector()
   {
-    DEBUG_FUNC_TRACK( "UnsafeVector< T >::~UnsafeVector()" );
+    DFT_FUNC_TRACK( "UnsafeVector< T >::~UnsafeVector()" );
     Clear();
   }
 
@@ -90,7 +90,7 @@ namespace Util
   template< typename T >
   void UnsafeVector< T >::PushFront( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void UnsafeVector< T >::PushFront( T const& t )" );
+    DFT_FUNC_TRACK( "void UnsafeVector< T >::PushFront( T const& t )" );
     CheckAndGrow();
     T* copyTo = m_array + 1;
     memmove( copyTo, m_array, sizeof( T ) * m_size );
@@ -103,7 +103,7 @@ namespace Util
   template< typename T >
   void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )
   {
-    DEBUG_FUNC_TRACK( "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" );
+    DFT_FUNC_TRACK( "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" );
     while( ( m_size + size ) >= m_capacity )
       Grow();
     T* copyTo = m_array + m_size;
@@ -116,7 +116,7 @@ namespace Util
   template< typename T >
   void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )
   {
-    DEBUG_FUNC_TRACK( "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" );
+    DFT_FUNC_TRACK( "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" );
     PushBackRange( *vector, vector.GetSize() );
   }
 
@@ -124,7 +124,7 @@ namespace Util
   template< typename T >
   void UnsafeVector< T >::Grow()
   {
-    DEBUG_FUNC_TRACK( "void UnsafeVector< T >::Grow()" );
+    DFT_FUNC_TRACK( "void UnsafeVector< T >::Grow()" );
     unsigned tempCapacity = ( m_capacity != 0 ) ? ( unsigned )( ( float )m_capacity * c_growMultiplier ) : c_defaultCapacity;
     T* tempArray = new T[ tempCapacity ];
 
@@ -140,7 +140,7 @@ namespace Util
   template< typename T >
   void UnsafeVector< T >::ShiftAndPop( unsigned const startIndex )
   {
-    DEBUG_FUNC_TRACK( "void UnsafeVector< T >::ShiftAndPop( unsigned const startIndex )" );
+    DFT_FUNC_TRACK( "void UnsafeVector< T >::ShiftAndPop( unsigned const startIndex )" );
     T* copyLoc = m_array + startIndex + 1;
     memmove( m_array, copyLoc, sizeof( T ) * ( m_size - 1 ) );
     m_array[ --m_size ].~T();

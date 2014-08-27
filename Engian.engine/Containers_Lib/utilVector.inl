@@ -2,7 +2,10 @@
 namespace Util
 {
 
-  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T >, Vector< T >::VectorIteratorImpl );
+#ifdef USE_DFT_LIB
+  template< typename T >
+  Debug::FunctionTracker Vector< T >::VectorIteratorImpl::s_functionTracker;
+#endif
 
 
   template< typename T >
@@ -10,7 +13,7 @@ namespace Util
     IteratorImpl( true ),
     m_value( tArray )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::VectorIteratorImpl( T * const tArray )" );
+    DFT_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::VectorIteratorImpl( T * const tArray )" );
   }
 
 
@@ -19,21 +22,21 @@ namespace Util
     IteratorImpl( true ),
     m_value( other.m_value )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::VectorIteratorImpl( VectorIteratorImpl const& other )" );
+    DFT_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::VectorIteratorImpl( VectorIteratorImpl const& other )" );
   }
 
 
   template< typename T >
   Vector< T >::VectorIteratorImpl::~VectorIteratorImpl()
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::~VectorIteratorImpl()" );
+    DFT_FUNC_TRACK( "Vector< T >::VectorIteratorImpl::~VectorIteratorImpl()" );
   }
 
 
   template< typename T >
   void Vector< T >::VectorIteratorImpl::AdvanceValue()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::VectorIteratorImpl::AdvanceValue()" );
+    DFT_FUNC_TRACK( "void Vector< T >::VectorIteratorImpl::AdvanceValue()" );
     m_value += 1;
   }
 
@@ -41,7 +44,7 @@ namespace Util
   template< typename T >
   T const& Vector< T >::VectorIteratorImpl::GetValue() const
   {
-    DEBUG_FUNC_TRACK( "T const& Vector< T >::VectorIteratorImpl::GetValue() const" );
+    DFT_FUNC_TRACK( "T const& Vector< T >::VectorIteratorImpl::GetValue() const" );
     return *m_value;
   }
   
@@ -58,7 +61,7 @@ namespace Util
     m_capacity( c_defaultCapacity ),
     m_array( new T[ c_defaultCapacity ] )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::Vector()" );
+    DFT_FUNC_TRACK( "Vector< T >::Vector()" );
   }
 
   
@@ -68,7 +71,7 @@ namespace Util
     m_capacity( capacity ),
     m_array( new T[ capacity ] )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::Vector( unsigned const capacity )" );
+    DFT_FUNC_TRACK( "Vector< T >::Vector( unsigned const capacity )" );
   }
 
     
@@ -78,7 +81,7 @@ namespace Util
     m_capacity( size ),
     m_array( new T[ size ] )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::Vector( T const * const tArray, unsigned const size )" );
+    DFT_FUNC_TRACK( "Vector< T >::Vector( T const * const tArray, unsigned const size )" );
     PushBackRange( tArray, size );
   }
 
@@ -89,7 +92,7 @@ namespace Util
     m_capacity( vector.m_capacity ),
     m_array( new T[ vector.m_capacity ] )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::Vector( Vector< T > const& vector )" );
+    DFT_FUNC_TRACK( "Vector< T >::Vector( Vector< T > const& vector )" );
     PushBackRange( vector.m_array, vector.m_size );
   }
 
@@ -100,7 +103,7 @@ namespace Util
     m_capacity( container.GetSize() ),
     m_array( new T[ container.GetSize() ] )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::Vector( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "Vector< T >::Vector( Container< T > const& container )" );
     PushBackRange( container );
   }
 
@@ -108,7 +111,7 @@ namespace Util
   template< typename T >
   Vector< T >& Vector< T >::operator=( Vector< T > const& vector )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >& Vector< T >::operator=( Vector< T > const& vector )" );
+    DFT_FUNC_TRACK( "Vector< T >& Vector< T >::operator=( Vector< T > const& vector )" );
     Clear();
 
     m_capacity = vector.GetCapacity();
@@ -122,7 +125,7 @@ namespace Util
   template< typename T >
   Container< T >& Vector< T >::operator=( Container< T > const& container )
   {
-    DEBUG_FUNC_TRACK( "Container< T >& Vector< T >::operator=( Container< T > const& container )" );
+    DFT_FUNC_TRACK( "Container< T >& Vector< T >::operator=( Container< T > const& container )" );
     Clear();
 
     m_capacity = container.GetSize();
@@ -136,7 +139,7 @@ namespace Util
   template< typename T >
   Vector< T >::~Vector()
   {
-    DEBUG_FUNC_TRACK( "Vector< T >::~Vector()" );
+    DFT_FUNC_TRACK( "Vector< T >::~Vector()" );
     Clear();
   }
 
@@ -144,7 +147,7 @@ namespace Util
   template< typename T >
   T& Vector< T >::operator[]( int const index ) const
   {
-    DEBUG_FUNC_TRACK( "T& Vector< T >::operator[]( int const index ) const" );
+    DFT_FUNC_TRACK( "T& Vector< T >::operator[]( int const index ) const" );
     return m_array[ index ];
   }
 
@@ -152,7 +155,7 @@ namespace Util
   template< typename T >
   Vector< T > Vector< T >::operator+( Vector< T > const& vector ) const
   {
-    DEBUG_FUNC_TRACK( "Vector< T > Vector< T >::operator+( Vector< T > const& vector ) const" );
+    DFT_FUNC_TRACK( "Vector< T > Vector< T >::operator+( Vector< T > const& vector ) const" );
     Vector< T > newVector( *this );
     newVector.PushBackRange( *vector, vector.GetSize() );
     return newVector;
@@ -162,7 +165,7 @@ namespace Util
   template< typename T >
   Vector< T >& Vector< T >::operator+=( Vector< T > const& vector )
   {
-    DEBUG_FUNC_TRACK( "Vector< T >& Vector< T >::operator+=( Vector< T > const& vector )" );
+    DFT_FUNC_TRACK( "Vector< T >& Vector< T >::operator+=( Vector< T > const& vector )" );
     PushBackRange( *vector, vector.GetSize() );
     return *this;
   }
@@ -171,7 +174,7 @@ namespace Util
   template< typename T >
   T const* Vector< T >::operator*() const
   {
-    DEBUG_FUNC_TRACK( "T const* Vector< T >::operator*() const" );
+    DFT_FUNC_TRACK( "T const* Vector< T >::operator*() const" );
     return m_array;
   }
 
@@ -179,7 +182,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PushFront( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PushFront( T const& t )" );
+    DFT_FUNC_TRACK( "void Vector< T >::PushFront( T const& t )" );
     CheckAndGrow();
 
     for( unsigned i = m_size; i > 0; --i )
@@ -193,7 +196,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PushBack( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PushBack( T const& t )" );
+    DFT_FUNC_TRACK( "void Vector< T >::PushBack( T const& t )" );
     CheckAndGrow();
     m_array[ m_size++ ] = t;
     InvalidateAllIteratorImplementations();
@@ -203,7 +206,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PopFront()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PopFront()" );
+    DFT_FUNC_TRACK( "void Vector< T >::PopFront()" );
     if( IsEmpty() )
       return;
 
@@ -214,7 +217,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PopBack()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PopBack()" );
+    DFT_FUNC_TRACK( "void Vector< T >::PopBack()" );
     if( IsEmpty() )
       return;
     m_array[ --m_size ].~T();
@@ -225,7 +228,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PopFirst( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PopFirst( T const& t )" );
+    DFT_FUNC_TRACK( "void Vector< T >::PopFirst( T const& t )" );
     if( IsEmpty() )
       return;
 
@@ -240,7 +243,7 @@ namespace Util
   template< typename T >
   void Vector< T >::PopAll( T const& t )
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::PopAll( T const& t )" );
+    DFT_FUNC_TRACK( "void Vector< T >::PopAll( T const& t )" );
     if( IsEmpty() )
       return;
 
@@ -253,7 +256,7 @@ namespace Util
   template< typename T >
   bool const Vector< T >::Contains( T const& t ) const
   {
-    DEBUG_FUNC_TRACK( "bool const Vector< T >::Contains( T const& t ) const" );
+    DFT_FUNC_TRACK( "bool const Vector< T >::Contains( T const& t ) const" );
     unsigned startIndex = 0;
     return Search( startIndex, t );
   }
@@ -262,7 +265,7 @@ namespace Util
   template< typename T >
   bool const Vector< T >::IsFull() const
   {
-    DEBUG_FUNC_TRACK( "bool const Vector< T >::IsFull() const" );
+    DFT_FUNC_TRACK( "bool const Vector< T >::IsFull() const" );
     return m_size == m_capacity;
   }
 
@@ -270,7 +273,7 @@ namespace Util
   template< typename T >
   unsigned const Vector< T >::GetCapacity() const
   {
-    DEBUG_FUNC_TRACK( "unsigned const Vector< T >::GetCapacity() const" );
+    DFT_FUNC_TRACK( "unsigned const Vector< T >::GetCapacity() const" );
     return m_capacity;
   }
   
@@ -278,7 +281,7 @@ namespace Util
   template< typename T >
   void Vector< T >::Clear()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::Clear()" );
+    DFT_FUNC_TRACK( "void Vector< T >::Clear()" );
     if( m_array != 0 )
     {
       delete[] m_array;
@@ -293,7 +296,7 @@ namespace Util
   template< typename T >
   void Vector< T >::CheckAndGrow()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::CheckAndGrow()" );
+    DFT_FUNC_TRACK( "void Vector< T >::CheckAndGrow()" );
     if( m_size == m_capacity )
       Grow();
   }
@@ -302,7 +305,7 @@ namespace Util
   template< typename T >
   void Vector< T >::Grow()
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::Grow()" );
+    DFT_FUNC_TRACK( "void Vector< T >::Grow()" );
     unsigned tempCapacity = ( m_capacity != 0 ) ? ( unsigned )( ( float )m_capacity * c_growMultiplier ) : c_defaultCapacity;
     T* tempArray = new T[ tempCapacity ];
 
@@ -319,7 +322,7 @@ namespace Util
   template< typename T >
   bool const Vector< T >::Search( unsigned& startIndex, T const& t ) const
   {
-    DEBUG_FUNC_TRACK( "bool const Vector< T >::Search( unsigned& startIndex, T const& t ) const" );
+    DFT_FUNC_TRACK( "bool const Vector< T >::Search( unsigned& startIndex, T const& t ) const" );
     for( unsigned i = startIndex; i < m_size; ++i )
       if( m_array[ i ] == t )
       {
@@ -333,7 +336,7 @@ namespace Util
   template< typename T >
   void Vector< T >::ShiftAndPop( unsigned const startIndex )
   {
-    DEBUG_FUNC_TRACK( "void Vector< T >::ShiftAndPop( unsigned const startIndex )" );
+    DFT_FUNC_TRACK( "void Vector< T >::ShiftAndPop( unsigned const startIndex )" );
     for( unsigned i = startIndex; i < m_size - 1; ++i )
       m_array[ i ] = m_array[ i + 1 ];
     PopBack();

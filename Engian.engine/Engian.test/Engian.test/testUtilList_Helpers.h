@@ -6,64 +6,60 @@ namespace Test
 {  
 
   template< typename HELPER >
-  struct UnitTestChassis_Helper_List
+  struct TestHelper_UtilList
   {
 
-    static char const * const CheckEmptyList( void* check )
+    static char const * const CheckEmptyList( Util::List< HELPER > const& check )
     {
-      Util::List< HELPER >* list = static_cast< Util::List< HELPER >* >( check );
-      if( list->m_size != 0 ) return "did not properly initialize m_size";
-      if( list->m_implementations != 0 ) return "did not properly initialize m_implementations";
-      if( list->m_end == 0 ) return "m_end initialized to 0";
-      if( list->m_end->m_prev != 0 ) return "m_end->m_prev not initialized to 0";
-      if( list->m_end->m_next != 0 ) return "m_end->m_next not initialized to 0";
-      if( list->m_end->m_data != 0 ) return "m_end->m_data not initialized to 0";
-      if( list->m_front == 0 ) return "m_front initialized to 0";
-      if( list->m_front != list->m_end ) return "m_front not initialized to m_end";
-      if( list->m_back == 0 ) return "m_back initialized to 0";
-      if( list->m_back != list->m_end ) return "m_back not initialized to m_end";
+      if( check.dbgGet_m_size != 0 ) return "did not properly initialize m_size";
+      if( check.dbgGet_m_implementations != 0 ) return "did not properly initialize m_implementations";
+      if( check.dbgGet_m_end == 0 ) return "m_end initialized to 0";
+      if( check.dbgGet_m_end->m_prev != 0 ) return "m_end->m_prev not initialized to 0";
+      if( check.dbgGet_m_end->m_next != 0 ) return "m_end->m_next not initialized to 0";
+      if( check.dbgGet_m_end->m_data != 0 ) return "m_end->m_data not initialized to 0";
+      if( check.dbgGet_m_front == 0 ) return "m_front initialized to 0";
+      if( check.dbgGet_m_front != check.dbgGet_m_end ) return "m_front not initialized to m_end";
+      if( check.dbgGet_m_back == 0 ) return "m_back initialized to 0";
+      if( check.dbgGet_m_back != check.dbgGet_m_end ) return "m_back not initialized to m_end";
       return 0;
     }
 
 
-    static char const * const CheckListFrontAndBack( void* check, unsigned const size, bool endCheck )
+    static char const * const CheckListFrontAndBack( Util::List< HELPER > const& check, unsigned const size, bool endCheck )
     {
-      Util::List< HELPER >* list = static_cast< Util::List< HELPER >* >( check );
-      if( list->m_size != size ) return "did not properly initialize m_size";
-      if( list->m_implementations != 0 ) return "did not properly initialize m_implementations";
-      if( list->m_end == 0 ) return "m_end initialized to 0";
-      if( list->m_end->m_prev != 0 ) return "m_end->m_prev not initialized to 0";
-      if( list->m_end->m_next != 0 ) return "m_end->m_next not initialized to 0";
-      if( list->m_end->m_data != 0 ) return "m_end->m_data not initialized to 0";
-      if( list->m_front == 0 ) return "m_front initialized to 0";
-      if( list->m_back == 0 ) return "m_back initialized to 0";
+      if( check.dbgGet_m_size != size ) return "did not properly initialize m_size";
+      if( check.dbgGet_m_implementations != 0 ) return "did not properly initialize m_implementations";
+      if( check.dbgGet_m_end == 0 ) return "m_end initialized to 0";
+      if( check.dbgGet_m_end->m_prev != 0 ) return "m_end->m_prev not initialized to 0";
+      if( check.dbgGet_m_end->m_next != 0 ) return "m_end->m_next not initialized to 0";
+      if( check.dbgGet_m_end->m_data != 0 ) return "m_end->m_data not initialized to 0";
+      if( check.dbgGet_m_front == 0 ) return "m_front initialized to 0";
+      if( check.dbgGet_m_back == 0 ) return "m_back initialized to 0";
       if( endCheck )
       {
-        if( list->m_front == list->m_end ) return "m_front initialized to m_end";
-        if( list->m_front->m_prev != list->m_end ) return "initialized m_front->m_prev to a non-m_end value";
-        if( list->m_back == list->m_end ) return "m_back initialized to m_end";
-        if( list->m_back->m_next != list->m_end ) return "initialized m_back->m_next to a non-m_end value"; 
+        if( check.dbgGet_m_front == check.dbgGet_m_end ) return "m_front initialized to m_end";
+        if( check.dbgGet_m_front->m_prev != check.dbgGet_m_end ) return "initialized m_front->m_prev to a non-m_end value";
+        if( check.dbgGet_m_back == check.dbgGet_m_end ) return "m_back initialized to m_end";
+        if( check.dbgGet_m_back->m_next != check.dbgGet_m_end ) return "initialized m_back->m_next to a non-m_end value"; 
       }
       return 0;
     }
   
 
-    static char const * const CheckListAgainstArray( void* compareFrom, HELPER* compareAgainst, unsigned const arraySize, int const incr )
+    static char const * const CheckListAgainstArray( Util::List< HELPER > const& check, HELPER* compareAgainst, unsigned const arraySize, int const incr )
     {
-      Util::List< HELPER >* list = static_cast< Util::List< HELPER >* >( compareFrom );
-
       int i = 0;
-      Util::List< HELPER >::ListNode* node = list->m_front;
-      for( ; node != list->m_end && abs( i ) < arraySize; node = node->m_next, i += incr )
+      Util::List< HELPER >::ListNode* node = check.dbgGet_m_front;
+      for( ; node != check.dbgGet_m_end && abs( i ) < arraySize; node = node->m_next, i += incr )
       {
-        if( node->m_prev != list->m_end )
+        if( node->m_prev != check.dbgGet_m_end )
         {
           if( ( *( node->m_prev->m_data ) == compareAgainst[ i - incr ] ) == false ) return "did not properly initialize a node's m_prev pointer";
         }
         else
           if( ( i == 0 ) == false ) return "did not properly initialize a node's m_prev pointer, as an element that isn't the first one has an m_prev pointer pointing to 0";
 
-        if( node->m_next != list->m_end )
+        if( node->m_next != check.dbgGet_m_end )
         {
           if( ( *( node->m_next->m_data ) == compareAgainst[ i + incr ] ) == false ) return "did not properly initialize a node's m_next pointer";
         }

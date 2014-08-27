@@ -5,7 +5,10 @@
 namespace Util
 {
 
-  DEBUG_FUNC_TRACK_CLASS_T_DEF( template< typename T _COMMA typename KEY >, HashTable< T _COMMA KEY >::HashTableNode );
+#ifdef USE_DFT_LIB
+  template< typename T, typename KEY >
+  Debug::FunctionTracker HashTable< T, KEY >::HashTableNode::s_functionTracker;
+#endif
 
 
   template< typename T, typename KEY >

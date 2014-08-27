@@ -2,7 +2,7 @@
 #ifndef UTIL_HASHTABLE_H
 #define UTIL_HASHTABLE_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilContainer.h"
 #include "utilVector.h"
@@ -21,18 +21,18 @@ namespace Util
     public:
       typedef unsigned const (*HashFunc) ( void const * const key, unsigned const upperLimit );
       
-      //DEBUG_FUNC_TRACK_CLASS_DEC
-      DEBUG_VAR_GET( c_defaultCapacity, static unsigned const )
-      DEBUG_VAR_GET( c_growRatio, static float const )
-      DEBUG_VAR_GET( c_growMultiplier, static float const )
-      DEBUG_VAR_GET( m_hashFunc, HashFunc const )
-      DEBUG_VAR_GET( m_capacity, unsigned )
-      DEBUG_VAR_GET( m_buckets, HashTableNode** )
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_S_VAR_GET( c_defaultCapacity, unsigned const )
+      DFT_S_VAR_GET( c_growRatio, float const )
+      DFT_S_VAR_GET( c_growMultiplier, float const )
+      DFT_VAR_GET( m_hashFunc, HashFunc const )
+      DFT_VAR_GET( m_capacity, unsigned )
+      DFT_VAR_GET( m_buckets, HashTableNode** )
 
       class KeyedIterator : public Container< T >::Iterator
       {
         public:
-          //DEBUG_FUNC_TRACK_CLASS_DEC
+          //DFT_FUNC_TRACK_CLASS_DEC
 
           friend class HashTable< T, KEY >;  //!< Friending always feels gross, but this allows a HashTable< T, KEY > to create
                                              //!< an original KeyedIterator, whereas a user can only create a copy constructed KeyedIterator. 
@@ -71,7 +71,7 @@ namespace Util
         
       virtual Iterator Begin() const
       {
-        DEBUG_FUNC_TRACK( "Iterator HashTable< T, KEY >::Begin() const" );
+        DFT_FUNC_TRACK( "Iterator HashTable< T, KEY >::Begin() const" );
 
         HashTableIteratorImpl* iter = new HashTableIteratorImpl( m_buckets, m_capacity );
         return CreateIteratorFromImplementation( iter );
@@ -80,7 +80,7 @@ namespace Util
 
       virtual Iterator const End() const
       {
-        DEBUG_FUNC_TRACK( "Iterator const HashTable< T, KEY >::End() const" );
+        DFT_FUNC_TRACK( "Iterator const HashTable< T, KEY >::End() const" );
 
         HashTableIteratorImpl* iter = new HashTableIteratorImpl( 0, m_capacity );
         return CreateIteratorFromImplementation( iter );
@@ -89,7 +89,7 @@ namespace Util
 
       virtual KeyedIterator KeyedBegin() const
       {
-        DEBUG_FUNC_TRACK( "KeyedIterator HashTable< T, KEY >::KeyedBegin() const" );
+        DFT_FUNC_TRACK( "KeyedIterator HashTable< T, KEY >::KeyedBegin() const" );
 
         HashTableIteratorImpl* iter = new HashTableIteratorImpl( m_buckets, m_capacity );
         return CreateKeyedIteratorFromImplementation( iter );
@@ -98,7 +98,7 @@ namespace Util
 
       virtual KeyedIterator const KeyedEnd() const
       {
-        DEBUG_FUNC_TRACK( "KeyedIterator const HashTable< T, KEY >::KeyedEnd() const" );
+        DFT_FUNC_TRACK( "KeyedIterator const HashTable< T, KEY >::KeyedEnd() const" );
 
         HashTableIteratorImpl* iter = new HashTableIteratorImpl( 0, m_capacity );
         return CreateKeyedIteratorFromImplementation( iter );
@@ -130,7 +130,7 @@ namespace Util
       // member classes
       struct HashTableNode
       {
-        DEBUG_FUNC_TRACK_CLASS_DEC;
+        DFT_FUNC_TRACK_CLASS_DEC;
 
         HashTableNode( HashTableNode* next, T* data, KEY const& key );
         virtual ~HashTableNode();
@@ -143,18 +143,18 @@ namespace Util
       class HashTableIteratorImpl : public Container< T >::IteratorImpl
       {
         public:
-          //DEBUG_FUNC_TRACK_CLASS_DEC
-          DEBUG_VAR_GET( m_buckets, HashTableNode** const )
-          DEBUG_VAR_GET( m_capacity, unsigned const )
-          DEBUG_VAR_GET( m_currentBucketIndex, unsigned )
-          DEBUG_VAR_GET( m_currentBucketNode, HashTableNode* )
+          //DFT_FUNC_TRACK_CLASS_DEC
+          DFT_VAR_GET( m_buckets, HashTableNode** const )
+          DFT_VAR_GET( m_capacity, unsigned const )
+          DFT_VAR_GET( m_currentBucketIndex, unsigned )
+          DFT_VAR_GET( m_currentBucketNode, HashTableNode* )
 
           HashTableIteratorImpl( HashTableNode** buckets, unsigned const numberOfBuckets );
           virtual ~HashTableIteratorImpl();
           
           virtual bool const operator==( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const HashTable< T, KEY >::HashTableIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const HashTable< T, KEY >::HashTableIteratorImpl::operator==( IteratorImpl const& iterator ) const" );
 
             HashTableIteratorImpl const* hashTableIteratorImpl = dynamic_cast< HashTableIteratorImpl const* >( &iterator );
             if( hashTableIteratorImpl == 0 )
@@ -166,7 +166,7 @@ namespace Util
 
           virtual bool const operator!=( IteratorImpl const& iterator ) const
           {
-            DEBUG_FUNC_TRACK( "bool const HashTable< T, KEY >::HashTableIteratorImpl::operator=!( IteratorImpl const& iterator ) const" );
+            DFT_FUNC_TRACK( "bool const HashTable< T, KEY >::HashTableIteratorImpl::operator=!( IteratorImpl const& iterator ) const" );
 
             HashTableIteratorImpl const* hashTableIteratorImpl = dynamic_cast< HashTableIteratorImpl const* >( &iterator );
             if( hashTableIteratorImpl == 0 )
@@ -178,7 +178,7 @@ namespace Util
 
           virtual IteratorImpl * const Clone() const
           {
-            DEBUG_FUNC_TRACK( "IteratorImpl * const HashTable< T, KEY >::HashTableIteratorImpl::Clone() const" );
+            DFT_FUNC_TRACK( "IteratorImpl * const HashTable< T, KEY >::HashTableIteratorImpl::Clone() const" );
 
             return new HashTableIteratorImpl( *this );
           }
@@ -211,7 +211,7 @@ namespace Util
       
       KeyedIterator CreateKeyedIteratorFromImplementation( IteratorImpl* const implementation ) const
       {    
-        DEBUG_FUNC_TRACK( "KeyedIterator HashTable< T, KEY >::CreateKeyedIteratorFromImplementation( IteratorImpl* const implementation ) const" );
+        DFT_FUNC_TRACK( "KeyedIterator HashTable< T, KEY >::CreateKeyedIteratorFromImplementation( IteratorImpl* const implementation ) const" );
 
         if( m_implementations == 0 )
           m_implementations = new Container< T >::IteratorImplNode( implementation, 0 );

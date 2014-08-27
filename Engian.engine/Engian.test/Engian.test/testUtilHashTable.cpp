@@ -65,7 +65,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_CopyConstructor" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -79,7 +79,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Constructor0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -93,7 +93,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Constructor1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -107,7 +107,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Key" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_Key" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -121,7 +121,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_PrefixIncrement" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_PrefixIncrement" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -135,7 +135,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_BasicAssignment" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_KeyedIterator_BasicAssignment" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -149,7 +149,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Constructor0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -163,7 +163,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Constructor1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -177,7 +177,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_CopyConstructor" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -191,7 +191,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Key" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_Key" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -205,7 +205,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_AdvanceValue" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_AdvanceValue" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -219,7 +219,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_GetValue" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_GetValue" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -233,7 +233,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_GetKey" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_GetKey" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -247,7 +247,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_EqualTo" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_EqualTo" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -261,7 +261,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_NotEqualTo" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_NotEqualTo" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -275,7 +275,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_BasicAssignment" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTableIteratorImpl_BasicAssignment" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -289,7 +289,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -303,7 +303,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -317,7 +317,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor2" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor2" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -331,7 +331,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor3" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor3" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -345,7 +345,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor4" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor4" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -359,7 +359,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor5" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor5" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -373,7 +373,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor6" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Constructor6" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -387,7 +387,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_CopyConstructor" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -401,7 +401,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Begin" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Begin" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -415,7 +415,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_End" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_End" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -429,7 +429,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_KeyedBegin" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_KeyedBegin" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -443,7 +443,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_KeyedEnd" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_KeyedEnd" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -457,7 +457,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PushFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PushFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -471,7 +471,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PushBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PushBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -485,7 +485,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Push0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Push0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -499,7 +499,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Push1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Push1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -513,7 +513,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PopFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PopFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -527,7 +527,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PopBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PopBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -541,7 +541,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PopFirst" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PopFirst" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -555,7 +555,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_PopAll" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_PopAll" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -569,7 +569,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Pop" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Pop" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -583,7 +583,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_GetKeys" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_GetKeys" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -597,7 +597,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_GetCapacity" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_GetCapacity" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -611,7 +611,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Clear0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Clear0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -625,7 +625,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Clear1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Clear1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -639,7 +639,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_CheckAndGrow" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_CheckAndGrow" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -653,7 +653,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Grow" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Grow" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -667,7 +667,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_CreateKeyedIteratorFromImplementation" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_CreateKeyedIteratorFromImplementation" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -681,7 +681,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_BasicAssignment0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_BasicAssignment0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -695,7 +695,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_BasicAssignment1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_BasicAssignment1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -709,7 +709,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_ArraySubscript" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_ArraySubscript" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -723,7 +723,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_Addition" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_Addition" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -737,7 +737,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DEBUG_FUNC_CHECK( "TestUtilHashTable_HashTable_AdditionAssignment" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( "TestUtilHashTable_HashTable_AdditionAssignment" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {

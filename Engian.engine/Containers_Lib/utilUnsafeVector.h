@@ -2,7 +2,7 @@
 #ifndef UTIL_UNSAFEVECTOR_H
 #define UTIL_UNSAFEVECTOR_H
 
-#include "debugDefines.h"
+#include "debugForTestDefines.h"
 
 #include "utilVector.h"
 
@@ -14,7 +14,8 @@ namespace Util
   class UnsafeVector : public Vector< T >
   {
     public:
-      //DEBUG_FUNC_TRACK_CLASS_DEC
+      //DFT_FUNC_TRACK_CLASS_DEC
+      DFT_UTILVECTOR_FRIEND
 
       UnsafeVector();
       UnsafeVector( unsigned const capacity );
