@@ -9,6 +9,17 @@
 #include "utilList.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilHashTable;
+}
+#define TESTHELPER_UTILHASHTABLE_FRIEND friend class Test::TestHelper_UtilHashTable
+#else
+#define TESTHELPER_UTILHASHTABLE_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -21,18 +32,14 @@ namespace Util
     public:
       typedef unsigned const (*HashFunc) ( void const * const key, unsigned const upperLimit );
       
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_S_VAR_GET( c_defaultCapacity, unsigned const )
-      DFT_S_VAR_GET( c_growRatio, float const )
-      DFT_S_VAR_GET( c_growMultiplier, float const )
-      DFT_VAR_GET( m_hashFunc, HashFunc const )
-      DFT_VAR_GET( m_capacity, unsigned )
-      DFT_VAR_GET( m_buckets, HashTableNode** )
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILHASHTABLE_FRIEND;
 
       class KeyedIterator : public Container< T >::Iterator
       {
         public:
-          //DFT_FUNC_TRACK_CLASS_DEC
+          //DFT_FUNC_TRACK_CLASS_DEC;
+          TESTHELPER_UTILHASHTABLE_FRIEND;
 
           friend class HashTable< T, KEY >;  //!< Friending always feels gross, but this allows a HashTable< T, KEY > to create
                                              //!< an original KeyedIterator, whereas a user can only create a copy constructed KeyedIterator. 
@@ -131,6 +138,7 @@ namespace Util
       struct HashTableNode
       {
         DFT_FUNC_TRACK_CLASS_DEC;
+        TESTHELPER_UTILHASHTABLE_FRIEND;
 
         HashTableNode( HashTableNode* next, T* data, KEY const& key );
         virtual ~HashTableNode();
@@ -143,11 +151,8 @@ namespace Util
       class HashTableIteratorImpl : public Container< T >::IteratorImpl
       {
         public:
-          //DFT_FUNC_TRACK_CLASS_DEC
-          DFT_VAR_GET( m_buckets, HashTableNode** const )
-          DFT_VAR_GET( m_capacity, unsigned const )
-          DFT_VAR_GET( m_currentBucketIndex, unsigned )
-          DFT_VAR_GET( m_currentBucketNode, HashTableNode* )
+          //DFT_FUNC_TRACK_CLASS_DEC;
+          TESTHELPER_UTILHASHTABLE_FRIEND;
 
           HashTableIteratorImpl( HashTableNode** buckets, unsigned const numberOfBuckets );
           virtual ~HashTableIteratorImpl();

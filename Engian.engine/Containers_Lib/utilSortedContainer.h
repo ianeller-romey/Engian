@@ -8,6 +8,17 @@
 #include "utilTemplateComparisonFunctions.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilSortedContainer;
+}
+#define TESTHELPER_UTILSORTEDCONTAINER_FRIEND friend class Test::TestHelper_UtilSortedContainer
+#else
+#define TESTHELPER_UTILSORTEDCONTAINER_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -15,10 +26,8 @@ namespace Util
   class SortedContainer : public virtual Container< T >
   {
     public:
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_VAR_GET( m_equalityFunc, EqualityFunc )
-      DFT_VAR_GET( m_greaterThanFunc, GreaterThanFunc )
-      DFT_VAR_GET( m_lessThanFunc, LessThanFunc )
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILSORTEDCONTAINER_FRIEND;
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );

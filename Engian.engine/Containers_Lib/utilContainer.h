@@ -5,6 +5,17 @@
 #include "debugForTestDefines.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilContainer;
+}
+#define TESTHELPER_UTILCONTAINER_FRIEND friend class Test::TestHelper_UtilContainer
+#else
+#define TESTHELPER_UTILCONTAINER_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -23,7 +34,7 @@ namespace Util
       {
         public:
           DFT_FUNC_TRACK_CLASS_DEC;
-          DFT_VAR_GET( m_valid, bool );
+          TESTHELPER_UTILCONTAINER_FRIEND;
 
           IteratorImpl( bool valid );
           virtual ~IteratorImpl();
@@ -53,9 +64,8 @@ namespace Util
           
           ////////
           // member variables
-          static char const * const c_exception_invalidatedContainer; //!< This exception message will be thrown whenever
-                                                                      //!< an invalidated IteratorImpl is accessed.
-          bool m_valid; //!< When the parent Container< T > changes size, all existing IteratorImpls are effectively invalidated.
+          static char const * const c_exception_invalidatedContainer;
+          bool m_valid;
 
         private:
           IteratorImpl(); //!< No default constructor allowed.
@@ -72,10 +82,11 @@ namespace Util
       struct IteratorImplNode
       {
         DFT_FUNC_TRACK_CLASS_DEC;
+        TESTHELPER_UTILCONTAINER_FRIEND;
 
         IteratorImplNode( IteratorImpl* implementation, IteratorImplNode* next );
 
-        IteratorImpl* m_implementation;
+        IteratorImpl*  m_implementation;
         IteratorImplNode* m_next;
       };
       
@@ -102,8 +113,7 @@ namespace Util
 
     public:
       DFT_FUNC_TRACK_CLASS_DEC;
-      DFT_VAR_GET( m_size, unsigned );
-      DFT_VAR_GET( m_implementations, IteratorImplNode* );
+      TESTHELPER_UTILCONTAINER_FRIEND;
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
@@ -113,8 +123,7 @@ namespace Util
       {
         public:
           DFT_FUNC_TRACK_CLASS_DEC;
-          DFT_VAR_GET( m_implementation, IteratorImpl* );
-          DFT_VAR_GET( m_parentsIterators, IteratorImplNode** );
+          TESTHELPER_UTILCONTAINER_FRIEND;
 
           friend class Container< T >; //!< Friending always feels gross, but this allows a Container< T > to create
                                        //!< an original Iterator, whereas a user can only create a copy constructed Iterator. 
@@ -146,7 +155,7 @@ namespace Util
           ////////
           // member variables
           IteratorImpl* m_implementation;
-          IteratorImplNode** m_parentsIterators;
+          IteratorImplNode**  m_parentsIterators;
 
 
         private:

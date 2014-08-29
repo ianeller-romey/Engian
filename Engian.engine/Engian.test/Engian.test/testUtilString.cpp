@@ -6,8 +6,7 @@
 #include "utilString.h"
 #include "utilList.h"
 
-#include "testUtilVector_Helpers.h"
-#include "testUtilString_Helpers.h"
+#include "testUnitTestHelper.h"
 
 
 namespace Test
@@ -54,9 +53,9 @@ namespace Test
     {
       Util::String string;
 
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, Util::String::dbgGet_c_defaultCapacity(), 0 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, UnitTestHelper::GetUtilVectorDefaultCapacity< char >(), 0 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, "", 0 ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, "", 0 ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String()" ),
                    name, "Appropriate function was not called" );
@@ -75,9 +74,9 @@ namespace Test
     {
       unsigned const capacity = 200;
       Util::String string( capacity );
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, capacity, 0 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, capacity, 0 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, "", 0 ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, "", 0 ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( unsigned const capacity )" ), 
                    name, "Appropriate function was not called" );
@@ -98,9 +97,9 @@ namespace Test
       unsigned const charactersLen = strlen( characters );
       Util::String string( characters );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( char const * const string )" ), 
                    name, "Appropriate function was not called" );
@@ -120,9 +119,9 @@ namespace Test
       char const character = 'I';
       Util::String string( character );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, 2, 2 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, 2, 2 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, &character, 1 ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, &character, 1 ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( char const character )" ), 
                    name, "Appropriate function was not called" );
@@ -144,9 +143,9 @@ namespace Test
       Util::List< char > list( characters, charactersLen );
       Util::String string( list );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, list.dbgGet_m_size() ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, UnitTestHelper::GetUtilContainerSize( list ) ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string, list ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstContainer( string, list ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( Container< char > const& container )" ), 
                    name, "Appropriate function was not called" );
@@ -168,9 +167,11 @@ namespace Test
       Util::String string1( characters ),
                    string2( string1 );
 
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, string1.dbgGet_m_capacity(), string1.dbgGet_m_size() ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string2, 
+                                                                UnitTestHelper::GetUtilVectorCapacity< char >( string1 ), 
+                                                                UnitTestHelper::GetUtilContainerSize( string1 ) ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string2, string1 ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstContainer( string2, string1 ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String::String( String const& string )" ), 
                    name, "Appropriate function was not called" );
@@ -193,9 +194,9 @@ namespace Test
       for( unsigned i = 0; i < charactersLen; ++i )
         string.PushBack( characters[ i ] );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBack( char const& t )" ), name, "Appropriate function was not called" );
     }
     catch( ... )
@@ -231,9 +232,11 @@ namespace Test
       vector.PushBackRange( characters3, charactersLen3 );
       vector.PushBackRange( characters4, charactersLen4 );
 
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLenAll + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLenAll + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ),
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( char const * const string )" ), 
                    name, "Appropriate function was not called" );
@@ -256,9 +259,9 @@ namespace Test
       for( unsigned i = 0, incr = 5; i < charactersLen; i += incr )
         string.PushBackRange( characters + i, ( charactersLen - i < incr ) ? charactersLen - i : incr );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters ) == 0, name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( char const * const tArray, unsigned const size )" ), 
                    name, "Appropriate function was not called" );
     }
@@ -280,9 +283,9 @@ namespace Test
                    string2( characters );
       string1.PushBackRange( string2 );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, string2.dbgGet_m_size() ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string1, UnitTestHelper::GetUtilContainerSize( string2 ) ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, characters ) == 0, name, "did not initialize values correctly" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string1, characters ) == 0, name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PushBackRange( String const& string )" ), 
                    name, "Appropriate function was not called" );
     }
@@ -305,9 +308,9 @@ namespace Test
       for( int i = charactersLen; i > 0; --i )
       {
         string.PopBack();
-        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1, i - 1 ) == 0,
+        TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1, i - 1 ) == 0,
                      name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, i - 1 ) == 0, name, "did not update values correctly" );
+        TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters, i - 1 ) == 0, name, "did not update values correctly" );
       }
       TEST_ASSERT( string.IsEmpty(), name, "returned false for .IsEmpty() after removing all elements" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::PopBack()" ), 
@@ -467,7 +470,7 @@ namespace Test
       Util::String string;
 
       TEST_ASSERT( string.IsEmpty(), name, "did not return true for empty String" );
-      TEST_ASSERT( string.IsEmpty() && string.dbgGet_m_size()  == 1, name, "returned true when m_size did not equal 1" );
+      TEST_ASSERT( string.IsEmpty() && UnitTestHelper::GetUtilContainerSize( string )  == 1, name, "returned true when m_size did not equal 1" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "bool const String::IsEmpty() const" ), name, "Appropriate function was not called" );
     }
     catch( ... )
@@ -488,9 +491,9 @@ namespace Test
 
       string.Clear();
       TEST_ASSERT( string.IsEmpty(), name, "did not return true for .IsEmpty() after" );
-      TEST_ASSERT( string.dbgGet_m_size() == 1, name, "did not correctly decrement m_size" );
-      TEST_ASSERT( string.dbgGet_m_array() != 0, name, "incorrectly deallocated m_array" );
-      TEST_ASSERT( string.dbgGet_m_array()[ 0 ] == '\0', name, "did not revert string to an empty, null-terminated string" );
+      TEST_ASSERT( UnitTestHelper::GetUtilContainerSize( string ) == 1, name, "did not correctly decrement m_size" );
+      TEST_ASSERT( UnitTestHelper::GetUtilVectorArray( string ) != 0, name, "incorrectly deallocated m_array" );
+      TEST_ASSERT( UnitTestHelper::GetUtilVectorArray( string )[ 0 ] == '\0', name, "did not revert string to an empty, null-terminated string" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "void String::Clear()" ), name, "Appropriate function was not called" );
     }
     catch( ... )
@@ -510,9 +513,9 @@ namespace Test
       Util::String string;
 
       string = characters;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1, charactersLen + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1, charactersLen + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters, charactersLen ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( char const * const string )" ), 
                    name, "Appropriate function was not called" );
@@ -533,9 +536,9 @@ namespace Test
       Util::String string;
 
       string = character;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, 2, 2 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, 2, 2 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, &character, 1 ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, &character, 1 ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( char const character )" ), 
                    name, "Appropriate function was not called" );
@@ -557,9 +560,13 @@ namespace Test
       Util::String string1, string2( characters );
 
       string1 = string2;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, string2.dbgGet_m_size(), string2.dbgGet_m_size() ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string1, 
+                                                                UnitTestHelper::GetUtilContainerSize( string2 ), 
+                                                                UnitTestHelper::GetUtilContainerSize( string2 ) ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, string2.dbgGet_m_array(), string2.GetStrLen() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string1, 
+                                                                UnitTestHelper::GetUtilVectorArray( string2 ), 
+                                                                string2.GetStrLen() ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator=( String const& string )" ), 
                    name, "Appropriate function was not called" );
@@ -582,9 +589,11 @@ namespace Test
       Util::List< char > list( characters, charactersLen );
 
       string = list;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, list.dbgGet_m_size(), list.dbgGet_m_size() ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, 
+                                                                UnitTestHelper::GetUtilContainerSize( list ), 
+                                                                UnitTestHelper::GetUtilContainerSize( list ) ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string, list ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstContainer( string, list ) == 0, 
                    name, "did not initialize values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "Container< char >& String::operator=( Container< char > const& container )" ), 
                    name, "Appropriate function was not called" );
@@ -708,9 +717,9 @@ namespace Test
       Util::String string1( characters1 ),
                    string2 = string1 + characters2;
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstContainer( string2, vector ), 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstContainer( string2, vector ), 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( char const * const string ) const" ), 
                    name, "Appropriate function was not called" );
@@ -736,9 +745,11 @@ namespace Test
       Util::String string1( characters ),
                    string2 = string1 + character;
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen + 1 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string2, charactersLen + 1 + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string2, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string2,
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( char const character ) const" ), 
                    name, "Appropriate function was not called" );
@@ -766,9 +777,11 @@ namespace Test
                    string2( characters2 ),
                    string3( string1 + string2 );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string3, charactersLen1 + charactersLen2 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string3, charactersLen1 + charactersLen2 + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string3, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string3, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( String const& string ) const" ), 
                    name, "Appropriate function was not called" );
@@ -796,9 +809,11 @@ namespace Test
       Util::String string1( characters1 ),
                    string2( string1 + list );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string2, charactersLen1 + charactersLen2 + 1 ) == 0,
                    name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string2, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string2, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String String::operator+( Container< char > const& container ) const" ), 
                    name, "Appropriate function was not called" );
@@ -825,9 +840,11 @@ namespace Test
       Util::String string( characters1 );
 
       string += characters2;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen1 + charactersLen2 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen1 + charactersLen2 + 1 ) == 0,
                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( char const * const string )" ), 
                    name, "Appropriate function was not called" );
@@ -853,9 +870,11 @@ namespace Test
       Util::String string( characters );
 
       string += character;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 + 1 ) == 0,
                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( char const character )" ), 
                    name, "Appropriate function was not called" );
@@ -883,9 +902,11 @@ namespace Test
                    string2( characters2 );
 
       string1 += string2;
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string1, charactersLen1 + charactersLen2 + 1 ) == 0,
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string1, charactersLen1 + charactersLen2 + 1 ) == 0,
                     name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string1, vector.dbgGet_m_array(), vector.dbgGet_m_size() ) == 0, 
+      TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string1, 
+                                                                UnitTestHelper::GetUtilVectorArray( vector ), 
+                                                                UnitTestHelper::GetUtilContainerSize( vector ) ) == 0, 
                    name, "did not insert values correctly" );
       TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator+=( String const& string )" ), 
                    name, "Appropriate function was not called" );
@@ -910,9 +931,9 @@ namespace Test
         string.Clear();
 
         string << i;
-        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+        TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 ) == 0,
                      name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+        TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters, charactersLen ) == 0, 
                      name, "did not insert values correctly" );
         TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( int const integer )", true ), 
                      name, "Appropriate function was not called" );
@@ -926,9 +947,9 @@ namespace Test
         string.Clear();
 
         string << u;
-        TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( string, charactersLen + 1 ) == 0,
+        TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( string, charactersLen + 1 ) == 0,
                      name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-        TEST_ASSERT( TestHelper_UtilString::CheckStringAgainstArray( string, characters, charactersLen ) == 0, 
+        TEST_ASSERT( UnitTestHelper::CheckUtilStringAgainstArray( string, characters, charactersLen ) == 0, 
                      name, "did not insert values correctly" );
         TEST_ASSERT( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( unsigned const uinteger )", true ), 
                      name, "Appropriate function was not called" );

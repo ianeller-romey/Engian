@@ -4,13 +4,13 @@ namespace Util
 
 #ifdef USE_DFT_LIB
   template< typename T >
-  Debug::FunctionTracker Container< T >::s_functionTracker;
+  DebugForTest::FunctionTracker Container< T >::s_functionTracker;
   template< typename T >
-  Debug::FunctionTracker Container< T >::Iterator::s_functionTracker;
+  DebugForTest::FunctionTracker Container< T >::Iterator::s_functionTracker;
   template< typename T >
-  Debug::FunctionTracker Container< T >::IteratorImpl::s_functionTracker;
+  DebugForTest::FunctionTracker Container< T >::IteratorImpl::s_functionTracker;
   template< typename T >
-  Debug::FunctionTracker Container< T >::IteratorImplNode::s_functionTracker;
+  DebugForTest::FunctionTracker Container< T >::IteratorImplNode::s_functionTracker;
 #endif
 
 

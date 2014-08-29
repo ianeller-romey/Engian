@@ -41,6 +41,42 @@
     <ClCompile Include="..\Engian.test\testUtilVector.cpp">
       <Filter>Source Files\Engian.test</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilContainer.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilDictionary.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilHashTable.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilList.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedContainer.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedList.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedVector.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilString.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilUnsafeVector.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilVector.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testUnitTestSampleClass.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engian.test\testUnitTestSampleStruct.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engian.test\testIcle.h">

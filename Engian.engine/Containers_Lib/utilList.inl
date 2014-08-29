@@ -7,9 +7,9 @@ namespace Util
 
 #ifdef USE_DFT_LIB
   template< typename T >
-  Debug::FunctionTracker List< T >::ListNode::s_functionTracker;
+  DebugForTest::FunctionTracker List< T >::ListNode::s_functionTracker;
   template< typename T >
-  Debug::FunctionTracker List< T >::ListIteratorImpl::s_functionTracker;
+  DebugForTest::FunctionTracker List< T >::ListIteratorImpl::s_functionTracker;
 #endif
 
 

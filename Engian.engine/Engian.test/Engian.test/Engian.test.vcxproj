@@ -55,7 +55,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(ProjectName).$(PlatformTarget).$(Configuration)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)..\$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)$(ProjectName).$(PlatformTarget).$(Configuration).dll" "$(TargetPath)"</Command>
@@ -76,7 +76,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <OutputFile>$(OutDir)$(ProjectName).$(PlatformTarget).$(Configuration)$(TargetExt)</OutputFile>
-      <AdditionalDependencies>$(SolutionDir)$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\$(Configuration)\Containers_Lib.$(PlatformTarget).$(Configuration).lib;$(SolutionDir)..\$(Configuration)\DebugForTest_Lib.$(PlatformTarget).$(Configuration).lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>copy "$(TargetDir)$(ProjectName).$(PlatformTarget).$(Configuration).dll" "$(TargetPath)"</Command>
@@ -84,31 +84,90 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="testIcle.h" />
-    <ClInclude Include="testUtilSortedVector_Helpers.h" />
-    <ClInclude Include="testUtilString_Helpers.h" />
-    <ClInclude Include="testUtilVector_Helpers.h" />
+    <ClInclude Include="testTestHelper_UtilContainer.h" />
+    <ClInclude Include="testTestHelper_UtilDictionary.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilHashTable.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilList.h" />
+    <ClInclude Include="testTestHelper_UtilSortedContainer.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSortedList.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSortedVector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilString.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilUnsafeVector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilVector.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="testUnitTestSampleClass.h" />
+    <ClInclude Include="testUnitTestSampleStruct.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="testTestHelper_UtilContainer.cpp" />
+    <ClCompile Include="testTestHelper_UtilDictionary.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilHashTable.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilList.cpp" />
+    <ClCompile Include="testTestHelper_UtilSortedContainer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSortedList.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSortedVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilString.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilUnsafeVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="testUnitTestChassis.cpp" />
-    <ClCompile Include="testUtilHashTable.cpp" />
+    <ClCompile Include="testUnitTestSampleClass.cpp" />
+    <ClCompile Include="testUnitTestSampleStruct.cpp" />
+    <ClCompile Include="testUtilHashTable.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="testUtilList.cpp" />
-    <ClCompile Include="testUtilSortedList.cpp" />
-    <ClCompile Include="testUtilSortedVector.cpp" />
-    <ClCompile Include="testUtilString.cpp" />
-    <ClCompile Include="testUtilUnsafeVector.cpp" />
-    <ClCompile Include="testUtilVector.cpp" />
+    <ClCompile Include="testUtilSortedList.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testUtilSortedVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testUtilString.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testUtilUnsafeVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="testUtilVector.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="testUtilList_Helpers.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
-    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

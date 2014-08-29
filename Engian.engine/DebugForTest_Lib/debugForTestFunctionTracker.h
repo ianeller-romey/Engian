@@ -2,7 +2,7 @@
 #ifndef DEBUGFORTEST_FUNCTIONTRACKER_H
 #define DEBUGFORTEST_FUNCTIONTRACKER_H
 
-namespace Debug
+namespace DebugForTest
 {
 
   class FunctionTracker

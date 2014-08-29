@@ -1,13 +1,12 @@
 
+#ifndef TEST_ICLE_H
+#define TEST_ICLE_H
+
 //#define RUN_UNIT_TESTS_SPEED
 //#define RUN_UNIT_TESTS_MANUAL
 #ifdef RUN_UNIT_TESTS_MANUAL
   #define RUN_UNIT_TESTS
 #endif
-
-#ifndef TEST_ICLE_H
-#define TEST_ICLE_H
-
 
 #ifdef RUN_UNIT_TESTS
   
@@ -45,63 +44,6 @@
             char const * const Name;
 
             UnitTestDictionaryPair( char const * const (*function) ( char const * const ), char const * const name );
-          };
-
-          struct UnitTestSampleStruct
-          {
-            mutable unsigned* m_referenceCount;
-            static unsigned s_numberOfDeletes;
-
-            int m_int1,
-              m_int2,
-              m_int3;
-            double m_doubles[ 5 ];
-
-            UnitTestSampleStruct();
-            UnitTestSampleStruct( int int1, int int2, int int3, double* doubles );
-            UnitTestSampleStruct( UnitTestSampleStruct const& other );
-            UnitTestSampleStruct& operator=( UnitTestSampleStruct const& other );
-            ~UnitTestSampleStruct();
-
-            bool const operator==( UnitTestSampleStruct const& other ) const;
-            bool const operator!=( UnitTestSampleStruct const& other ) const;
-            bool const operator>( UnitTestSampleStruct const& other ) const;
-            bool const operator<( UnitTestSampleStruct const& other ) const;
-            bool const operator>=( UnitTestSampleStruct const& other ) const;
-            bool const operator<=( UnitTestSampleStruct const& other ) const;
-
-            int const Sum() const;
-
-            static UnitTestSampleStruct* CreateABunch( unsigned bunch );
-          };
-
-          class UnitTestSampleClass
-          {
-            private:
-              char* m_string;
-              int m_int;
-              UnitTestSampleStruct m_struct;
-
-
-            public:
-              UnitTestSampleClass();
-              UnitTestSampleClass( char const * const string, int i, UnitTestSampleStruct utss );
-              UnitTestSampleClass( UnitTestSampleClass const& other );
-              UnitTestSampleClass& operator=( UnitTestSampleClass const& other );
-              ~UnitTestSampleClass();
-
-              bool const operator==( UnitTestSampleClass const& other ) const;
-              bool const operator!=( UnitTestSampleClass const& other ) const;
-              bool const operator>( UnitTestSampleClass const& other ) const;
-              bool const operator<( UnitTestSampleClass const& other ) const;
-              bool const operator>=( UnitTestSampleClass const& other ) const;
-              bool const operator<=( UnitTestSampleClass const& other ) const;
-
-              static UnitTestSampleClass* CreateABunch( unsigned bunch );
-
-              mutable unsigned* m_referenceCount;
-              static unsigned s_numberOfDeletes;
-
           };
 
 /* BEGINNING OF UNIT TEST FUNCTIONS */

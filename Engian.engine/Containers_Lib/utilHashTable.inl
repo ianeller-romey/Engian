@@ -7,7 +7,7 @@ namespace Util
 
 #ifdef USE_DFT_LIB
   template< typename T, typename KEY >
-  Debug::FunctionTracker HashTable< T, KEY >::HashTableNode::s_functionTracker;
+  DebugForTest::FunctionTracker HashTable< T, KEY >::HashTableNode::s_functionTracker;
 #endif
 
 

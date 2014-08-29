@@ -18,13 +18,40 @@
     <ClInclude Include="testIcle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testUtilSortedVector_Helpers.h">
+    <ClInclude Include="testTestHelper_UtilContainer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testUtilString_Helpers.h">
+    <ClInclude Include="testTestHelper_UtilDictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testUtilVector_Helpers.h">
+    <ClInclude Include="testTestHelper_UtilHashTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSortedContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSortedList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSortedVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilString.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilUnsafeVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testUnitTestSampleStruct.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testUnitTestSampleClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -53,13 +80,44 @@
     <ClCompile Include="testUtilHashTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="testTestHelper_UtilContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilDictionary.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilHashTable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSortedContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSortedList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSortedVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilUnsafeVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilVector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testUnitTestSampleStruct.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testUnitTestSampleClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="testUtilList_Helpers.h">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

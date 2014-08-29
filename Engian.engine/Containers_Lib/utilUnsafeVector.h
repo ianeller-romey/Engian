@@ -7,6 +7,17 @@
 #include "utilVector.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilUnsafeVector;
+}
+#define TESTHELPER_UTILUNSAFEVECTOR_FRIEND friend class Test::TestHelper_UtilUnsafeVector
+#else
+#define TESTHELPER_UTILUNSAFEVECTOR_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -14,8 +25,8 @@ namespace Util
   class UnsafeVector : public Vector< T >
   {
     public:
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_UTILVECTOR_FRIEND
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILUNSAFEVECTOR_FRIEND;
 
       UnsafeVector();
       UnsafeVector( unsigned const capacity );

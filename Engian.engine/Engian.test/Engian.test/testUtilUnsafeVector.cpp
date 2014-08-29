@@ -6,7 +6,7 @@
 #include "utilUnsafeVector.h"
 #include "utilList.h"
 
-#include "testUtilVector_Helpers.h"
+#include "testUnitTestHelper.h"
 
 
 namespace Test
@@ -32,10 +32,9 @@ namespace Test
     {
       Util::UnsafeVector< int > uVector;
 
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( uVector, Util::UnsafeVector< int >::dbgGet_c_defaultCapacity(), 0 ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( CheckUtilVectorInit< int >( uVector, GetUtilVectorDefaultCapacity< int >(), 0 ) == 0 );
 
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >::UnsafeVector()" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >::UnsafeVector()" ) );
     }
     catch( ... )
     {
@@ -52,8 +51,7 @@ namespace Test
       unsigned const capacity = 200;
       Util::UnsafeVector< int > uVector( capacity );
 
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( uVector, capacity, 0 ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
+      TEST_ASSERT( CheckUtilVectorInit< int >( uVector, capacity, 0 ) == 0 );
 
       TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >::UnsafeVector( unsigned const capacity )" ), 
                    name, "Appropriate function was not called" );
@@ -76,10 +74,8 @@ namespace Test
         numbers[ i ] = rand();
       Util::UnsafeVector< int > uVector( numbers, size );
       
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( uVector, size, size ) == 0,
-                      name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorAgainstArray( uVector, numbers, size ) == 0,
-                      name, "did not initialize with correct values" );
+      TEST_ASSERT( CheckUtilVectorInit< int >( uVector, size, size ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstArray< int >( uVector, numbers, size ) == 0 );
 
       TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int > , "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" ), 
                       name, "Appropriate function was not called" );
@@ -103,10 +99,9 @@ namespace Test
       Util::List< double > list( doubles, size );
       Util::UnsafeVector< double > uVector( list );
             
-      TEST_ASSERT( TestHelper_UtilVector< double >::CheckVectorInit( uVector, list.dbgGet_m_size(), list.dbgGet_m_size() ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< double >::CheckVectorAgainstContainer( uVector, list ) == 0,
-                   name, "did not initialize with correct values" );
+      unsigned const listSize = GetUtilContainerSize< double >( list );
+      TEST_ASSERT( CheckUtilVectorInit< double >( uVector, listSize, listSize ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstContainer< double >( uVector, list ) == 0 );
 
       TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< double >, "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" ), 
                    name, "Appropriate function was not called" );
@@ -128,11 +123,13 @@ namespace Test
         uVector1.PushBack( (float)i );
       Util::UnsafeVector< float > uVector2( uVector1 );
       
-      TEST_ASSERT( TestHelper_UtilVector< float >::CheckVectorInit( uVector2, uVector1.dbgGet_m_capacity(), uVector1.dbgGet_m_size() ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( uVector2.dbgGet_m_array() != uVector1.dbgGet_m_array(), name, "did not initialize m_array correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< float >::CheckVectorAgainstContainer( uVector2, uVector1 ) == 0,
-                   name, "did not initialize with correct values" );
+      TEST_ASSERT( CheckUtilVectorInit< float >( uVector2, 
+                                                                 GetUtilVectorCapacity< float >( uVector1 ), 
+                                                                 GetUtilContainerSize< float >( uVector1 ) ) == 0 );
+      TEST_ASSERT( GetUtilVectorArray< float >( uVector2 ) != 
+                   GetUtilVectorArray< float >( uVector1 ), 
+                   name, "did not initialize m_array correctly" );
+      TEST_ASSERT( CheckUtilVectorAgainstContainer< float >( uVector2, uVector1 ) == 0 );
 
       TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< float >, "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" ), 
                    name, "Appropriate function was not called" );
@@ -158,13 +155,10 @@ namespace Test
         uVector.PushFront( numbers[ i ] );
       }
       
-      TEST_ASSERT( TestHelper_UtilVector< unsigned short >::CheckVectorInit( uVector, number ) == 0,
-                   name, "did not update m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< unsigned short >::CheckVectorAgainstArray( uVector, numbers, number ) == 0,
-                   name, "did not insert correct value" );
+      TEST_ASSERT( CheckUtilVectorInit< unsigned short >( uVector, number ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstArray< unsigned short >( uVector, numbers, number ) == 0 );
 
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< unsigned short >, "void UnsafeVector< T >::PushFront( T const& t )" ),
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< unsigned short >, "void UnsafeVector< T >::PushFront( T const& t )" ) );
     }
     catch( ... )
     {
@@ -185,13 +179,10 @@ namespace Test
       Util::UnsafeVector< double > uVector( number );
       uVector.PushBackRange( numbers, number );
       
-      TEST_ASSERT( TestHelper_UtilVector< double >::CheckVectorInit( uVector, number ) == 0,
-                   name, "did not update m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< double >::CheckVectorAgainstArray( uVector, numbers, number ) == 0,
-                   name, "did not insert correct value" );
+      TEST_ASSERT( CheckUtilVectorInit< double >( uVector, number ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstArray< double >( uVector, numbers, number ) == 0 );
       
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< double >, "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" ),
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< double >, "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" ) );
     }
     catch( ... )
     {
@@ -213,13 +204,10 @@ namespace Test
                                  uVector2;
       uVector2.PushBackRange( uVector1 );
       
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorInit( uVector2, uVector2.dbgGet_m_size() ) == 0,
-                   name, "did not update m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< char >::CheckVectorAgainstContainer( uVector2, uVector1 ) == 0,
-                   name, "did not insert correct value" );
+      TEST_ASSERT( CheckUtilVectorInit< char >( uVector2, GetUtilContainerSize< char >( uVector1 ) ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstContainer< char >( uVector2, uVector1 ) == 0 );
       
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< char >, "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" ),
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< char >, "void UnsafeVector< T >::PushBackRange( UnsafeVector< T > const& vector )" ) );
     }
     catch( ... )
     {
@@ -239,15 +227,14 @@ namespace Test
         uVector1.PushBack( i );
       for( unsigned i = 0; i < number2; ++i )
         uVector2.PushBack( i );
-      uVector1 = uVector2;
 
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( uVector1, uVector2.dbgGet_m_capacity(), uVector2.dbgGet_m_size() ) == 0,
-                   name, "did not update m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorAgainstContainer( uVector1, uVector2 ) == 0,
-                   name, "did not insert correct value" );
+      uVector1 = uVector2;
+      TEST_ASSERT( CheckUtilVectorInit< int >( uVector1, 
+                                                               GetUtilVectorCapacity< int >( uVector2 ), 
+                                                               GetUtilContainerSize< int >( uVector2 ) ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstContainer< int >( uVector1, uVector2 ) == 0 );
       
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" ),
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "UnsafeVector< T >& UnsafeVector< T >::operator=( UnsafeVector< T > const& uVector )" ) );
    }
     catch( ... )
     {
@@ -270,13 +257,10 @@ namespace Test
         list1.PushBack( i );
       uVector1 = list1;
 
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( uVector1, list1.dbgGet_m_size() ) == 0,
-                   name, "did not update m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorAgainstContainer( uVector1, list1 ) == 0,
-                   name, "did not insert correct value" );
+      TEST_ASSERT( CheckUtilVectorInit( uVector1, GetUtilContainerSize< int >( list1 ) ) == 0 );
+      TEST_ASSERT( CheckUtilVectorAgainstContainer< int >( uVector1, list1 ) == 0 );
       
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" ),
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::UnsafeVector< int >, "Container< T >& UnsafeVector< T >::operator=( Container< T > const& container )" ) );
    }
     catch( ... )
     {

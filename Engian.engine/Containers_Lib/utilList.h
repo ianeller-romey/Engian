@@ -7,6 +7,17 @@
 #include "utilContainer.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilList;
+}
+#define TESTHELPER_UTILLIST_FRIEND friend class Test::TestHelper_UtilList
+#else
+#define TESTHELPER_UTILLIST_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -17,11 +28,8 @@ namespace Util
       struct ListNode;
 
     public:
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_UTILLIST_FRIEND
-      DFT_VAR_GET( m_end, ListNode* )
-      DFT_VAR_GET( m_front, ListNode* )
-      DFT_VAR_GET( m_back, ListNode* )
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILLIST_FRIEND;
 
       List();
       List( T const * const tArray, unsigned const size );
@@ -66,11 +74,13 @@ namespace Util
       struct ListNode
       {
         DFT_FUNC_TRACK_CLASS_DEC;
+        TESTHELPER_UTILLIST_FRIEND;
 
         ListNode( ListNode* prev, ListNode* next, T* data );
         virtual ~ListNode();
 
-        ListNode *m_prev, *m_next;
+        ListNode *m_prev,
+                 *m_next;
         T* m_data;
       };
 
@@ -78,12 +88,10 @@ namespace Util
       {
         public:
           DFT_FUNC_TRACK_CLASS_DEC;
-          DFT_VAR_GET( m_listNode, ListNode* );
-          DFT_VAR_GET( m_isEnd, bool );
+          TESTHELPER_UTILLIST_FRIEND;
 
           ListIteratorImpl( ListNode* const listNode );
           virtual ~ListIteratorImpl();
-
 
           virtual bool const operator==( IteratorImpl const& iterator ) const
           {
@@ -122,8 +130,9 @@ namespace Util
           virtual T const& GetValue() const;
 
           ListNode* m_listNode;
-          bool m_isEnd; //!< We use this boolean to determine if we're an .End() Iterator, while still being able to differentiate between
-                        //!< .End() Iterators from different Lists (instead of having all .End() Iterators pointing to 0)
+          //!< We use this boolean to determine if we're an .End() Iterator, while still being able to differentiate between
+          //!< .End() Iterators from different Lists (instead of having all .End() Iterators pointing to 0)
+          bool m_isEnd;
 
         private:
           ListIteratorImpl();
@@ -133,10 +142,11 @@ namespace Util
 
       ////////
       // member variables
-      ListNode *m_end,  //!< m_end is an empty pointer to which m_back->m_next will always point; m_prev, m_next, and m_data will all be set to 0 for that ListNode
-                        //!< m_end should be unique for every List, to prevent accidental equivalence of Iterators
-               *m_front, 
-               *m_back;
+      //!< m_end is an empty pointer to which m_back->m_next will always point; m_prev, m_next, and m_data will all be set to 0 for that ListNode
+      //!< m_end should be unique for every List, to prevent accidental equivalence of Iterators
+      ListNode* m_end;
+      ListNode* m_front;
+      ListNode* m_back;
 
 
     private:

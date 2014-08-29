@@ -4,7 +4,7 @@ namespace Util
 
 #ifdef USE_DFT_LIB
   template< typename T >
-  Debug::FunctionTracker Vector< T >::VectorIteratorImpl::s_functionTracker;
+  DebugForTest::FunctionTracker Vector< T >::VectorIteratorImpl::s_functionTracker;
 #endif
 
 

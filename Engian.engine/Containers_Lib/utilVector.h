@@ -7,6 +7,17 @@
 #include "utilContainer.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilVector;
+}
+#define TESTHELPER_UTILVECTOR_FRIEND friend class Test::TestHelper_UtilVector
+#else
+#define TESTHELPER_UTILVECTOR_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -14,12 +25,8 @@ namespace Util
   class Vector : public virtual Container< T >
   {
     public:
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_UTILVECTOR_FRIEND
-      DFT_S_VAR_GET( c_defaultCapacity, unsigned const )
-      DFT_S_VAR_GET( c_growMultiplier, float const )
-      DFT_VAR_GET( m_capacity, unsigned )
-      DFT_VAR_GET( m_array, T* )
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILVECTOR_FRIEND;
 
       Vector();
       Vector( unsigned const capacity );
@@ -73,7 +80,7 @@ namespace Util
       {
         public:
           DFT_FUNC_TRACK_CLASS_DEC;
-          DFT_VAR_GET( m_value, T* );
+          TESTHELPER_UTILVECTOR_FRIEND;
 
           VectorIteratorImpl( T* const tArray );
           virtual ~VectorIteratorImpl();

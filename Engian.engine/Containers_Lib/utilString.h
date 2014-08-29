@@ -9,14 +9,25 @@
 #include <cstring>
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilString;
+}
+#define TESTHELPER_UTILSTRING_FRIEND friend class Test::TestHelper_UtilString
+#else
+#define TESTHELPER_UTILSTRING_FRIEND
+#endif
+
+
 namespace Util
 {
 
   class String : public UnsafeVector< char >
   {
     public:
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_UTILSTRING_FRIEND
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILSTRING_FRIEND;
 
       String();
       String( unsigned const capacity );

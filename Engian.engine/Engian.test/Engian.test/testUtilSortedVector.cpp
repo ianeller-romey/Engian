@@ -6,8 +6,7 @@
 #include "utilSortedVector.h"
 #include "utilString.h"
 
-#include "testUtilVector_Helpers.h"""
-#include "testUtilSortedVector_Helpers.h"
+#include "testUnitTestHelper.h"
 
 
 namespace Test
@@ -40,12 +39,9 @@ namespace Test
     {      
       Util::SortedVector< int > sVector;
       
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( sVector, Util::SortedVector< int >::dbgGet_c_defaultCapacity(), 0 ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilSortedVector< int >::CheckSortedVector( sVector ) == 0, 
-                   name, "did not initialize vector correctly" );
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "SortedVector< T >::SortedVector()" ), 
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< int >( sVector, UnitTestHelper::GetUtilVectorDefaultCapacity< int >(), 0 ) == 0 );
+      TEST_ASSERT( UnitTestHelper::CheckUtilSortedVector< int >( sVector ) == 0 );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "SortedVector< T >::SortedVector()" ) );
     }
     catch( ... )
     {
@@ -62,12 +58,9 @@ namespace Test
       unsigned const number = 1111;
       Util::SortedVector< int > sVector( number );
 
-      TEST_ASSERT( TestHelper_UtilVector< int >::CheckVectorInit( sVector, number, 0 ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilSortedVector< int >::CheckSortedVector( sVector ) == 0, 
-                   name, "did not initialize vector correctly" );
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "SortedVector< T >::SortedVector()" ), 
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< int >( sVector, number, 0 ) == 0 );
+      TEST_ASSERT( UnitTestHelper::CheckUtilSortedVector< int >( sVector ) == 0 );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "SortedVector< T >::SortedVector()" ) );
     }
     catch( ... )
     {
@@ -89,12 +82,9 @@ namespace Test
       unsigned const size = sizeof( classes ) / sizeof( UnitTestSampleClass );
       Util::SortedVector< UnitTestSampleClass > sVector( classes, size );
 
-      TEST_ASSERT( TestHelper_UtilVector< UnitTestSampleClass >::CheckVectorInit( sVector, size, size ) == 0,
-                   name, "did not initialize m_capacity, m_size, m_array, or m_implementations correctly" );
-      TEST_ASSERT( TestHelper_UtilSortedVector< UnitTestSampleClass >::CheckSortedVector( sVector ) == 0, 
-                   name, "did not initialize vector correctly" );
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< UnitTestSampleClass >, "SortedVector< T >::SortedVector( T const * const tArray, unsigned const size )" ), 
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< UnitTestSampleClass >( sVector, size, size ) == 0 );
+      TEST_ASSERT( UnitTestHelper::CheckUtilSortedVector< UnitTestSampleClass >( sVector ) == 0 );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< UnitTestSampleClass >, "SortedVector< T >::SortedVector( T const * const tArray, unsigned const size )" ) );
     }
     catch( ... )
     {
@@ -113,10 +103,11 @@ namespace Test
       Util::String string( characters );
       Util::SortedVector< char > sVector( string );
       
-      TEST_ASSERT( TestHelper_UtilSortedVector< UnitTestSampleClass >::CheckSortedVector( sVector, 0, string.dbgGet_m_size() ) == 0, 
-                   name, "did not initialize vector correctly" );
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_Constructor3" ), 
-                   name, "Appropriate function was not called" );
+      TEST_ASSERT( UnitTestHelper::CheckUtilVectorInit< char >( sVector, 
+                                                                UnitTestHelper::GetUtilContainerSize< char >( string ), 
+                                                                UnitTestHelper::GetUtilContainerSize< char >( string ) ) == 0 );
+      TEST_ASSERT( UnitTestHelper::CheckUtilSortedVector< char >( sVector ) == 0 );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< char >, "TestUtilSortedVector_SortedVector_Constructor3" ) );
     }
     catch( ... )
     {
@@ -130,7 +121,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_CopyConstructor" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -144,7 +135,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_PushFront" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_PushFront" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -158,7 +149,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_PushBack" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_PushBack" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -172,7 +163,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_PushBackRange0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_PushBackRange0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -186,7 +177,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_PushBackRange1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_PushBackRange1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -200,7 +191,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_Search" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_Search" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -214,7 +205,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_ShiftAndPush" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_ShiftAndPush" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -228,7 +219,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_FindInsertionIndex" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_FindInsertionIndex" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -242,7 +233,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_QuickSort" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_QuickSort" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -256,7 +247,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_BasicAssignment0" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_BasicAssignment0" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -270,7 +261,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_BasicAssignment1" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_BasicAssignment1" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -284,7 +275,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_Addition" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_Addition" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {
@@ -298,7 +289,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< BARFBARF >, "TestUtilSortedVector_SortedVector_AdditionAssignment" ), name, "Appropriate function was not called" );
+      TEST_ASSERT( DFT_FUNC_CHECK( Util::SortedVector< int >, "TestUtilSortedVector_SortedVector_AdditionAssignment" ), name, "Appropriate function was not called" );
     }
     catch( ... )
     {

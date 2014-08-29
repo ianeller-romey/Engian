@@ -8,6 +8,17 @@
 #include "utilVector.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilSortedVector;
+}
+#define TESTHELPER_UTILSORTEDVECTOR_FRIEND friend class Test::TestHelper_UtilSortedVector
+#else
+#define TESTHELPER_UTILSORTEDVECTOR_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -15,8 +26,8 @@ namespace Util
   class SortedVector : public SortedContainer< T >, public Vector< T >
   {
     public:
-      //DFT_FUNC_TRACK_CLASS_DEF
-      DFT_UTILSORTEDVECTOR_FRIEND
+      //DFT_FUNC_TRACK_CLASS_DEF;
+      TESTHELPER_UTILSORTEDVECTOR_FRIEND;
 
       typedef bool const (*EqualityFunc) ( T const&, T const& );
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );

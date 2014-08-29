@@ -4,7 +4,7 @@
 #include <new>
 
 
-namespace Debug
+namespace DebugForTest
 {
 
   FunctionTracker::FunctionTrackerNode::FunctionTrackerNode() :

@@ -6,6 +6,17 @@
 #include "utilString.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilDictionary;
+}
+#define TESTHELPER_UTILDICTIONARY_FRIEND friend class Test::TestHelper_UtilDictionary
+#else
+#define TESTHELPER_UTILDICTIONARY_FRIEND
+#endif
+
+
 namespace Util
 {
   
@@ -21,6 +32,7 @@ namespace Util
   {
     public:      
       //DFT_FUNC_TRACK_CLASS_DEC
+      TESTHELPER_UTILDICTIONARY_FRIEND;
 
       Dictionary();
       Dictionary( T const * const tArray, unsigned const size );

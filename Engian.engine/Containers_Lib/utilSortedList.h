@@ -8,6 +8,17 @@
 #include "utilList.h"
 
 
+#ifdef USE_DFT_LIB
+namespace Test
+{
+  class TestHelper_UtilSortedList;
+}
+#define TESTHELPER_UTILSORTEDLIST_FRIEND friend class Test::TestHelper_UtilSortedList
+#else
+#define TESTHELPER_UTILSORTEDLIST_FRIEND
+#endif
+
+
 namespace Util
 {
 
@@ -19,9 +30,8 @@ namespace Util
       typedef bool const (*GreaterThanFunc) ( T const&, T const& );
       typedef bool const (*LessThanFunc) ( T const&, T const& );
 
-      //DFT_FUNC_TRACK_CLASS_DEC
-      DFT_VAR_GET( m_tiers, unsigned );
-      DFT_VAR_GET( c_logBase, float const );
+      //DFT_FUNC_TRACK_CLASS_DEC;
+      TESTHELPER_UTILSORTEDLIST_FRIEND;
 
       SortedList();
       SortedList( unsigned const capacity );
@@ -51,7 +61,8 @@ namespace Util
       // member classes
       struct SortedListNode : public List< T >::ListNode
       {
-        //DFT_FUNC_TRACK_CLASS_DEC
+        //DFT_FUNC_TRACK_CLASS_DEC;
+        TESTHELPER_UTILSORTEDLIST_FRIEND;
 
         SortedListNode( ListNode* prev, 
                         ListNode* next, 
