@@ -146,8 +146,6 @@ namespace Test
 
   void UnitTestChassis::Reset()
   {
-    UnitTestSampleStruct::s_numberOfDeletes = 0;
-    UnitTestSampleClass::s_numberOfDeletes = 0;
   }
 
 }

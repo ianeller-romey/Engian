@@ -8,26 +8,20 @@
 namespace Test
 {
   
-  unsigned UnitTestSampleStruct::s_numberOfDeletes = 0;
-
-  
   UnitTestSampleStruct::UnitTestSampleStruct() :
     m_int1( 0 ),
     m_int2( 0 ),
-    m_int3( 0 ),
-    m_referenceCount( new unsigned( 1 ) )
+    m_int3( 0 )
   {
     for( unsigned i = 0; i < 5; ++i )
       m_doubles[ i ] = 0.0;
-
   }
 
 
   UnitTestSampleStruct::UnitTestSampleStruct( int int1, int int2, int int3, double* doubles ) :
     m_int1( int1 ),
     m_int2( int2 ),
-    m_int3( int3 ),
-    m_referenceCount( new unsigned( 1 ) )
+    m_int3( int3 )
   {
     if( doubles != 0 )
       for( unsigned i = 0; i < 5; ++i )
@@ -41,11 +35,9 @@ namespace Test
   UnitTestSampleStruct::UnitTestSampleStruct( UnitTestSampleStruct const& other ) :
     m_int1( other.m_int1 ),
     m_int2( other.m_int2 ),
-    m_int3( other.m_int3 ),
-    m_referenceCount( other.m_referenceCount )
+    m_int3( other.m_int3 )
   {
     memcpy( m_doubles, other.m_doubles, sizeof( double ) * 5 );
-    ++( *m_referenceCount );
   }
 
 
@@ -55,20 +47,13 @@ namespace Test
     m_int1 = other.m_int1;
     m_int2 = other.m_int2;
     m_int3 = other.m_int3;
-    m_referenceCount = other.m_referenceCount;
     memcpy( m_doubles, other.m_doubles, sizeof( double ) * 5 );
-    ++( *m_referenceCount );
     return *this;
   }
 
 
   UnitTestSampleStruct::~UnitTestSampleStruct()
   {
-    if( --( *m_referenceCount ) <= 0 )
-    {
-      delete m_referenceCount;
-      ++s_numberOfDeletes;
-    }
   }
 
 

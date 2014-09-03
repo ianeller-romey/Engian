@@ -41,16 +41,16 @@ namespace Test
 
     private:
       template< typename T >
-      static bool const CheckEmptyUtilList( Util::List< T > const& list );
+      static unsigned const CheckEmptyUtilList( Util::List< T > const& list );
       template< typename T >
-      static bool const CheckUtilListFrontAndBack( Util::List< T > const& list, unsigned const size, bool endCheck );
+      static unsigned const CheckUtilListFrontAndBack( Util::List< T > const& list, unsigned const size, bool endCheck );
       template< typename T >
-      static bool const CheckUtilListAgainstArray( Util::List< T > const& list, 
-                                                           T const* compareAgainst, 
-                                                           unsigned const arraySize, 
-                                                           int const incr );
+      static unsigned const CheckUtilListAgainstArray( Util::List< T > const& list, 
+                                                       T const* compareAgainst, 
+                                                       unsigned const arraySize, 
+                                                       int const incr );
       template< typename T >
-      static bool const CheckUtilListAgainstContainer( Util::List< T > const& list, Util::Container< T > const& container );
+      static unsigned const CheckUtilListAgainstContainer( Util::List< T > const& list, Util::Container< T > const& container );
 
   };
 

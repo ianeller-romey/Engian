@@ -71,6 +71,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Engian.test\testIcle.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilContainer.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilDictionary.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilHashTable.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilList.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedContainer.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedList.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedVector.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilString.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilUnsafeVector.h" />
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilVector.h" />
+    <ClInclude Include="..\Engian.test\testUnitTestSampleClass.h" />
+    <ClInclude Include="..\Engian.test\testUnitTestSampleStruct.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilContainer.cpp" />
@@ -82,19 +100,19 @@
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilList.cpp" />
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedContainer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedList.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedVector.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilString.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilUnsafeVector.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilVector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -107,16 +125,16 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testUtilSortedVector.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testUtilString.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testUtilUnsafeVector.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testUtilVector.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="driver.cpp" />
   </ItemGroup>

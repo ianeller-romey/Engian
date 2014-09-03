@@ -1,4 +1,9 @@
 
+#include "utilString.h"
+
+#include <cstring>
+
+
 namespace Util
 {
     

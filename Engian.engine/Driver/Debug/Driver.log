@@ -1,5 +1,169 @@
-﻿Build started 8/28/2014 2:44:01 PM.
+﻿Build started 9/3/2014 7:52:38 AM.
+     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Driver\Driver.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt driver.cpp
+         driver.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\driver\driver.cpp(17) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=unsigned int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=unsigned int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\driver\driver.cpp(19) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(215): warning C4244: 'initializing' : conversion from 'const float' to 'unsigned int', possible loss of data
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(212) : while compiling class template member function 'void Util::SortedList<T>::Push(const T &)'
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(121) : see reference to function template instantiation 'void Util::SortedList<T>::Push(const T &)' being compiled
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(26) : while compiling class template member function 'Util::SortedList<T>::SortedList(void)'
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\driver\driver.cpp(19) : see reference to function template instantiation 'Util::SortedList<T>::SortedList(void)' being compiled
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\driver\driver.cpp(19) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
+                 with
+                 [
+                     T=double
+                 ]
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Driver.exe" /INCREMENTAL /NOLOGO C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Containers_Lib.x86.Debug.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Driver.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Driver.lib" /MACHINE:X86 Debug\driver.obj
+         Driver.vcxproj -> C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Driver.exe
+     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Driver\Driver.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:01.31

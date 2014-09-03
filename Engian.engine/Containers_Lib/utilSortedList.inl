@@ -11,13 +11,14 @@ namespace Util
 
 
   template< typename T >
-  SortedList< T >::SortedListNode::SortedListNode(  ListNode* prev, 
-                            ListNode* next, 
-                            T* data, 
-                            SortedListNode* nextTier ) :
+  SortedList< T >::SortedListNode::SortedListNode( ListNode* prev, 
+                                                   ListNode* next, 
+                                                   T* data, 
+                                                   SortedListNode* nextTier ) :
     ListNode( prev, next, data ),
     m_nextTier( nextTier )
   {
+    DFT_FUNC_TRACK( "SortedList< T >::SortedListNode::SortedListNode( ListNode* prev, ListNode* next, T* data, SortedListNode* nextTier )" );
   }
       
 
@@ -27,6 +28,7 @@ namespace Util
     List< T >(),
     SortedContainer< T >()
   {
+    DFT_FUNC_TRACK( "SortedList< T >::SortedList()" );
   }
 
 
@@ -34,8 +36,9 @@ namespace Util
   SortedList< T >::SortedList( T const * const tArray, unsigned const size ) :
     m_tiers( 0 ),
     List< T >(),
-    SortedContainer< T >(),
+    SortedContainer< T >()
   {
+    DFT_FUNC_TRACK( "SortedList< T >::SortedList( T const * const tArray, unsigned const size )" );
     PushBackRange( tArray, size );
   }
 
@@ -46,6 +49,7 @@ namespace Util
     List< T >(),
     SortedContainer< T >()
   {
+    DFT_FUNC_TRACK( "SortedList< T >::SortedList( SortedList< T > const& sortedList )" );
     PushBackRange( sortedList );
   }
 
@@ -56,6 +60,7 @@ namespace Util
     List< T >(),
     SortedContainer< T >()
   {
+    DFT_FUNC_TRACK( "SortedList< T >::SortedList( Container< T > const& container )" );
     PushBackRange( container );
   }
 
@@ -63,6 +68,7 @@ namespace Util
   template< typename T >
   SortedList< T >& SortedList< T >::operator=( SortedList< T > const& sortedList )
   {
+    DFT_FUNC_TRACK( "SortedList< T >& SortedList< T >::operator=( SortedList< T > const& sortedList )" );
     Clear();
 
     PushBackRange( sortedList );
@@ -73,6 +79,7 @@ namespace Util
   template< typename T >
   SortedContainer< T >& SortedList< T >::operator=( SortedContainer< T > const& sortedContainer )
   {
+    DFT_FUNC_TRACK( "SortedContainer< T >& SortedList< T >::operator=( SortedContainer< T > const& sortedContainer )" );
     Clear();
 
     PushBackRange( sortedContainer );
@@ -83,6 +90,7 @@ namespace Util
   template< typename T >
   SortedList< T >::~SortedList()
   {
+    DFT_FUNC_TRACK( "SortedList< T >::~SortedList()" );
     Clear();
   }
 
@@ -90,6 +98,7 @@ namespace Util
   template< typename T >
   SortedList< T > SortedList< T >::operator+( SortedList< T > const& sortedList ) const
   {
+    DFT_FUNC_TRACK( "SortedList< T > SortedList< T >::operator+( SortedList< T > const& sortedList ) const" );
     SortedList< T > newList( *this );
     newList.PushBackRange( sortedList );
     return newList;
@@ -99,6 +108,7 @@ namespace Util
   template< typename T >
   SortedList< T >& SortedList< T >::operator+=( SortedList< T > const& sortedList )
   {
+    DFT_FUNC_TRACK( "SortedList< T >& SortedList< T >::operator+=( SortedList< T > const& sortedList )" );
     PushBackRange( sortedList );
     return *this;
   }
@@ -107,6 +117,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PushFront( T const& t )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PushFront( T const& t )" );
     Push( t );
   }
 
@@ -114,6 +125,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PushBack( T const& t )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PushBack( T const& t )" );
     Push( t );
   }
 
@@ -121,6 +133,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PopFront()
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PopFront()" );
     if( IsEmpty() )
       return;
 
@@ -132,6 +145,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PopBack()
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PopBack()" );
     if( IsEmpty() )
       return;
 
@@ -143,6 +157,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PopFirst( T const& t )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PopFirst( T const& t )" );
     if( IsEmpty() )
       return;
 
@@ -155,6 +170,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::PopAll( T const& t )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::PopAll( T const& t )" );
     if( IsEmpty() )
       return;
     
@@ -167,6 +183,7 @@ namespace Util
   template< typename T >
   bool const SortedList< T >::Contains( T const& t ) const
   {
+    DFT_FUNC_TRACK( "bool const SortedList< T >::Contains( T const& t ) const" );
     if( IsEmpty() )
       return false;
     
@@ -178,6 +195,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::Clear()
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::Clear()" );
     if( IsEmpty() )
       return;
 
@@ -192,6 +210,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::Push( T const& t )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::Push( T const& t )" );
     unsigned 
       possibleTiers = m_size / c_logBase,
       currentNodesTiers = 0;
@@ -214,10 +233,10 @@ namespace Util
     T* newT = new( memLoc ) T( t );
 
     bool contains;
-    SortedListNode  *newPrev,
-            *newNext,
-            *newNextTier,
-            *node = 0;
+    SortedListNode *newPrev,
+                   *newNext,
+                   *newNextTier,
+                   *node = 0;
 
     // if we're empty, we know we won't have any tiers, and we know we'll need to set m_front and m_back
     if( IsEmpty() )
@@ -253,6 +272,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::NewSortedListNodeTier()
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::NewSortedListNodeTier()" );
     SortedListNode  *front = static_cast< SortedListNode* >( m_front ),
             *newTier = new SortedListNode( 0, 0, front->m_data, front->m_nextTier );
     front->m_nextTier = newTier;
@@ -269,6 +289,7 @@ namespace Util
                           SortedListNode** next,
                           SortedListNode** nextTier ) const
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::FindInsertionNodeInTier(  unsigned const topTierLevel, unsigned const tierToInsert, T const& t, bool& contains, SortedListNode** prev, SortedListNode** next, SortedListNode** nextTier ) const" );
     SortedListNode* pointer = static_cast< SortedListNode* >( m_front );
     unsigned tier = topTierLevel;
 
@@ -332,6 +353,7 @@ namespace Util
   template< typename T >
   unsigned const SortedList< T >::GetNumberOfTiers( SortedListNode const * const topTier ) const
   {
+    DFT_FUNC_TRACK( "unsigned const SortedList< T >::GetNumberOfTiers( SortedListNode const * const topTier ) const" );
     unsigned number = 0;
     SortedListNode const * node = topTier;
     for( ; node->m_nextTier != 0; node = node->m_nextTier )
@@ -343,6 +365,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::ClearTiers( SortedListNode const * topTier ) const
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::ClearTiers( SortedListNode const * topTier ) const" );
     while( topTier != 0 )
     {
       if( topTier->m_prev != 0 )
@@ -360,6 +383,7 @@ namespace Util
   template< typename T >
   bool const SortedList< T >::Search( SortedListNode const** startIndex, T const& t ) const
   {
+    DFT_FUNC_TRACK( "bool const SortedList< T >::Search( SortedListNode const** startIndex, T const& t ) const" );
     SortedListNode *prev, *next, *nextTier;
     bool contains = false;
     FindInsertionNodeInTier( m_tiers, 0, t, contains, &prev, &next, &nextTier );
@@ -372,6 +396,7 @@ namespace Util
   template< typename T >
   void SortedList< T >::Pop( SortedListNode const * const sortedListNode )
   {
+    DFT_FUNC_TRACK( "void SortedList< T >::Pop( SortedListNode const * const sortedListNode )" );
     if( sortedListNode == m_front )
     {
       m_front = FindNewFront();
@@ -384,5 +409,7 @@ namespace Util
     --m_size;
     InvalidateAllIteratorImplementations();
   }
+
+  //template class SortedList< int >;
   
 }

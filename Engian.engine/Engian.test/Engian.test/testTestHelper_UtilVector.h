@@ -46,21 +46,17 @@ namespace Test
       static unsigned const Vector_AdditionAssignment();
       static unsigned const Vector_Indirection();
 
-    private:    
+    private:
       template< typename T >
-      static char const * const CheckUtilVectorInit( Util::Vector< T > const& vector, 
-                                                     unsigned const capacity,
-                                                     unsigned const size );   
+      static unsigned const CheckUtilVectorInit( Util::Vector< T > const& vector, unsigned const capacity, unsigned const size );   
       template< typename T >
-      static char const * const CheckUtilVectorInit( Util::Vector< T > const& vector, 
-                                                     unsigned const size );    
+      static unsigned const CheckUtilVectorInit( Util::Vector< T > const& vector, unsigned const size );    
       template< typename T >
-      static char const * const CheckUtilVectorAgainstArray( Util::Vector< T > const& vector, 
-                                                             T const * const compareAgainst, 
-                                                             unsigned const compareAgainstLen ); 
+      static unsigned const CheckUtilVectorAgainstArray( Util::Vector< T > const& vector, 
+                                                         T const * const compareAgainst, 
+                                                         unsigned const compareAgainstLen ); 
       template< typename T >
-      static char const * const CheckUtilVectorAgainstContainer( Util::Vector< T > const& vector, 
-                                                                 Util::Container< T > const& container );
+      static unsigned const CheckUtilVectorAgainstContainer( Util::Vector< T > const& vector, Util::Container< T > const& container );
 
   };
 

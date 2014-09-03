@@ -82,7 +82,6 @@ namespace Util
       SortedListNode* GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const" );
-
         SortedListNode* bottom = topTier;
         // NOTE: second condition SHOULD be redundant, and can HOPEFULLY be removed after testing
         for( unsigned i = topTierLevel; i > bottomTierLevel && bottom->m_nextTier != 0; --i )
@@ -97,7 +96,6 @@ namespace Util
       SortedListNode* FindNewFront() const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewFront() const" );
-
         SortedListNode* node = static_cast< SortedListNode* >( m_front );
         while( node->m_next == 0 && node != 0 )
           node = node->m_nextTier;
@@ -108,7 +106,6 @@ namespace Util
       SortedListNode* FindNewBack() const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewBack() const" );
-
         SortedListNode  *node = dynamic_cast< SortedListNode* >( m_front ),
                 *temp;
         while( node != 0 )

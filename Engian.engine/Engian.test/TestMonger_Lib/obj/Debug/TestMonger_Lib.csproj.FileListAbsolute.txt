@@ -1,0 +1,4 @@
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\bin\Debug\TestMonger_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\bin\Debug\TestMonger_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug\TestMonger_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug\TestMonger_Lib.pdb

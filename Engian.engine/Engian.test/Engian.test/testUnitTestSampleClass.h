@@ -31,10 +31,6 @@ namespace Test
       bool const operator<=( UnitTestSampleClass const& other ) const;
 
       static void UpdateAnArray( UnitTestSampleClass* array, unsigned const arraySize );
-
-      mutable unsigned* m_referenceCount;
-      static unsigned s_numberOfDeletes;
-
   };
 
 }

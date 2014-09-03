@@ -68,4 +68,6 @@ namespace Util
     InvalidateAllIteratorImplementations();
   }
 
+  //template class Dictionary< int >;
+
 }

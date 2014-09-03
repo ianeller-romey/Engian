@@ -203,37 +203,39 @@ namespace Util
   void SortedVector< T >::QuickSort(  T* const tArray, int left, int rght )
   {
     DFT_FUNC_TRACK( "void SortedVector< T >::QuickSort(  T* const tArray, int left, int rght )" );
-      int i = left,
-          j = rght;
-      T mid = tArray[ ( i + j ) / 2 ],
-        temp;
-      do
+    int i = left,
+        j = rght;
+    T mid = tArray[ ( i + j ) / 2 ],
+      temp;
+    do
+    {
+      // find element to the left greater than partition
+      for ( ; m_lessThanFunc( tArray[ i ], mid ); ++i ) ;
+      // find element to the right less than partition
+      for ( ; m_greaterThanFunc( tArray[ j ], mid ); --j ) ;
+
+      // we haven't crossed over, so swap
+      if ( i < j )
       {
-        // find element to the left greater than partition
-        for ( ; m_lessThanFunc( tArray[ i ], mid ); ++i ) ;
-        // find element to the right less than partition
-        for ( ; m_greaterThanFunc( tArray[ j ], mid ); --j ) ;
+        temp = tArray[ i ];
+        tArray[ i ] = tArray[ j ];
+        tArray[ j ] = temp;
+        ++i; --j;
+      }
+      else if( i == j )
+      {
+        ++i; --j;
+      }
+    } while ( i <= j );
 
-        // we haven't crossed over, so swap
-        if ( i < j )
-        {
-          temp = tArray[ i ];
-          tArray[ i ] = tArray[ j ];
-          tArray[ j ] = temp;
-          ++i; --j;
-        }
-        else if( i == j )
-        {
-          ++i; --j;
-        }
-      } while ( i <= j );
+    // if there are still elements to the left, sort them
+    if ( left < j )
+      QuickSort( tArray, left, j );
+    // if there are still elements to the right, sort them
+    if ( i < rght )
+      QuickSort( tArray, i, rght );
+  }
 
-      // if there are still elements to the left, sort them
-      if ( left < j )
-        QuickSort( tArray, left, j );
-      // if there are still elements to the right, sort them
-      if ( i < rght )
-        QuickSort( tArray, i, rght );
-    }
+  //template class SortedVector< int >;
 
 }

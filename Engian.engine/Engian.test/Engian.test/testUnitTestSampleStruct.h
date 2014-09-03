@@ -7,9 +7,6 @@ namespace Test
 
   struct UnitTestSampleStruct
   {
-    mutable unsigned* m_referenceCount;
-    static unsigned s_numberOfDeletes;
-
     int m_int1,
       m_int2,
       m_int3;

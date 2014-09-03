@@ -6,8 +6,6 @@
 
 #include "utilUnsafeVector.h"
 
-#include <cstring>
-
 
 #ifdef USE_DFT_LIB
 namespace Test
@@ -88,7 +86,5 @@ namespace Util
   };
 
 }
-
-#include "utilString.inl"
 
 #endif

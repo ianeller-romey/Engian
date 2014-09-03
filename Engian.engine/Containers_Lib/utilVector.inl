@@ -307,13 +307,13 @@ namespace Util
   {
     DFT_FUNC_TRACK( "void Vector< T >::Grow()" );
     unsigned tempCapacity = ( m_capacity != 0 ) ? ( unsigned )( ( float )m_capacity * c_growMultiplier ) : c_defaultCapacity;
-    T* tempArray = new T[ tempCapacity ];
+    T* tempArray = m_array;
+    m_array = new T[ tempCapacity ];
 
     for( unsigned i = 0; i < m_size; ++i )
-      tempArray[ i ] = m_array[ i ];
+      m_array[ i ] = tempArray[ i ];
 
-    delete [] m_array;
-    m_array = tempArray;
+    delete [] tempArray;
     m_capacity = tempCapacity;
     InvalidateAllIteratorImplementations();
   }
@@ -341,5 +341,7 @@ namespace Util
       m_array[ i ] = m_array[ i + 1 ];
     PopBack();
   }
+
+  //template class Vector< int >;
 
 }

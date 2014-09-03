@@ -323,4 +323,6 @@ namespace Util
     InvalidateAllIteratorImplementations();
   }
 
+  //template class List< int >;
+
 }

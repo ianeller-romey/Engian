@@ -13,9 +13,7 @@ namespace Util
 
   template< typename T, typename KEY >
   HashTable< T, KEY >::KeyedIterator::KeyedIterator( KeyedIterator const& iterator ) :
-    m_implementation( ++iterator.m_implReferenceCounter ),
-    m_implementation( iterator.m_implementation ),
-    m_parentsIterators( iterator.m_parentsIterators )
+    Iterator( iterator.m_implementation, iterator.m_parentsIterators )
   {
   }
 
@@ -557,5 +555,7 @@ namespace Util
     bucketArraySize = 0;
     InvalidateAllIteratorImplementations();
   }
+
+  //template class HashTable< int, int >;
 
 }

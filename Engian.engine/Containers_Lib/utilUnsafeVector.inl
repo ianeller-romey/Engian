@@ -147,4 +147,6 @@ namespace Util
     InvalidateAllIteratorImplementations();
   }
 
+  //template class UnsafeVector< int >;
+
 }

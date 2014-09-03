@@ -1,22 +1,25 @@
-﻿Build started 8/28/2014 2:44:05 PM.
-     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Containers_Lib\Containers_Lib.vcxproj" on node 2 (Build target(s)).
+﻿Build started 9/3/2014 10:03:21 AM.
+     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Containers_Lib\Containers_Lib.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MurmurHash3.cpp utilHashFunctions.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt MurmurHash3.cpp
+         MurmurHash3.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt utilHashFunctions.cpp utilString.cpp
+         utilString.cpp
          utilHashFunctions.cpp
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilhashfunctions.cpp(20): warning C4305: '*=' : truncation from 'unsigned __int64' to 'unsigned int'
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilhashfunctions.cpp(21): warning C4293: '>>' : shift count negative or too big, undefined behavior
-         MurmurHash3.cpp
          Generating Code...
        Lib:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Containers_Lib.x86.Debug.lib" C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\DebugForTest_Lib.x86.Debug.lib /NOLOGO Debug\MurmurHash3.obj
          Debug\utilHashFunctions.obj
+         Debug\utilString.obj
          Containers_Lib.vcxproj -> C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Containers_Lib.x86.Debug.lib
        PostBuildEvent:
          copy "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug\Containers_Lib.x86.Debug.lib" "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Containers_Lib.x86.Debug.lib"
          :VCEnd
                  1 file(s) copied.
-     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Containers_Lib\Containers_Lib.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Containers_Lib\Containers_Lib.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.58
+Time Elapsed 00:00:00.75

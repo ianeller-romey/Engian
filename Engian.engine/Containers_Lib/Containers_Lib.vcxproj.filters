@@ -30,6 +30,9 @@
     <ClCompile Include="utilHashFunctions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utilString.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utilContainer.h">
@@ -89,9 +92,6 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="utilSortedVector.inl">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="utilString.inl">
       <Filter>Source Files</Filter>
     </None>
     <None Include="utilTemplateComparisonFunctions.inl">

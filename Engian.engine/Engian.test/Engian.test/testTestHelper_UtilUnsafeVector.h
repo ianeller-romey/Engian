@@ -30,19 +30,18 @@ namespace Test
 
     private:    
       template< typename T >
-      static char const * const CheckUtilUnsafeVectorInit( Util::UnsafeVector< T > const& uVector, 
-                                                           unsigned const capacity,
-                                                           unsigned const size );   
+      static unsigned const CheckUtilUnsafeVectorInit( Util::UnsafeVector< T > const& uVector, 
+                                                       unsigned const capacity,
+                                                       unsigned const size );   
       template< typename T >
-      static char const * const CheckUtilUnsafeVectorInit( Util::UnsafeVector< T > const& uVector, 
-                                                           unsigned const size );    
+      static unsigned const CheckUtilUnsafeVectorInit( Util::UnsafeVector< T > const& uVector, unsigned const size );    
       template< typename T >
-      static char const * const CheckUtilUnsafeVectorAgainstArray( Util::UnsafeVector< T > const& uVector, 
-                                                                   T const * const compareAgainst, 
-                                                                   unsigned const compareAgainstLen ); 
+      static unsigned const CheckUtilUnsafeVectorAgainstArray( Util::UnsafeVector< T > const& uVector, 
+                                                               T const * const compareAgainst, 
+                                                               unsigned const compareAgainstLen ); 
       template< typename T >
-      static char const * const CheckUtilUnsafeVectorAgainstContainer( Util::UnsafeVector< T > const& uVector, 
-                                                                       Util::Container< T > const& container );
+      static unsigned const CheckUtilUnsafeVectorAgainstContainer( Util::UnsafeVector< T > const& uVector, 
+                                                                   Util::Container< T > const& container );
       
   };
 

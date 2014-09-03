@@ -1,14 +1,31 @@
 
 #include "testIcle.h"
+#include "testUnitTestSampleStruct.h"
+#include "testUnitTestSampleClass.h"
 
 void main()
 {
+  Test::UnitTestChassis::TestUtilVector_Vector_PopFront("");
+  Test::UnitTestChassis::TestUtilVector_Vector_PopBack("");
+
   char const * output;
   //output = Test::UnitTestChassis::TestUtilVector_Vector_Constructor0( "" );
   //output = Test::UnitTestChassis::TestUtilUnsafeVector_UnsafeVector_Constructor0( "" );
   //output = Test::UnitTestChassis::TestUtilString_String_Constructor0( "" );
   //output = Test::UnitTestChassis::TestUtilSortedVector_SortedVector_Constructor0( "" );
-  output = Test::UnitTestChassis::TestUtilList_List_PopFirst( "" );
+  //output = Test::UnitTestChassis::TestUtilList_List_PopFirst( "" );
+  
+  {
+    unsigned const numTests = 28;
+    char** allTests = new char*[ numTests ];
+  
+    unsigned const numTestsToRun = numTests;
+    char** allTestsToRun = new char*[ numTestsToRun ];
+
+    Test::UnitTestChassis::GetTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilVector, numTests, &allTests );
+    Test::UnitTestChassis::RunTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilVector, numTests, allTests, numTestsToRun, &allTestsToRun );
+    int i = 0;
+  }
 
   /*
   char const * const output = Test::UnitTestChassis::TestUtilSortedVector_SortedVector_Constructor3( "" );

@@ -7,21 +7,16 @@
 namespace Test
 {
   
-  unsigned UnitTestSampleClass::s_numberOfDeletes = 0;
-
-
   UnitTestSampleClass::UnitTestSampleClass() :
     m_string( 0 ),
-    m_int( 0 ),
-    m_referenceCount( new unsigned( 1 ) )
+    m_int( 0 )
   {
   }
 
 
   UnitTestSampleClass::UnitTestSampleClass( char const * const string, int i, UnitTestSampleStruct utss ) :
     m_int( i ),
-    m_struct( utss ),
-    m_referenceCount( new unsigned( 1 ) )
+    m_struct( utss )
   {
     unsigned strLen = strlen( string ) + sizeof( char );
     m_string = new char[ strLen ];
@@ -32,13 +27,11 @@ namespace Test
   UnitTestSampleClass::UnitTestSampleClass( UnitTestSampleClass const& other ) :
     m_string( 0 ),
     m_int( other.m_int ),
-    m_struct( other.m_struct ),
-    m_referenceCount( other.m_referenceCount )
+    m_struct( other.m_struct )
   {
     unsigned strLen = strlen( other.m_string ) + sizeof( char );
     m_string = new char[ strLen ];
     memcpy( m_string, other.m_string, strLen );
-    ++( *m_referenceCount );
   }
 
 
@@ -49,13 +42,11 @@ namespace Test
     m_string = 0;
     m_int = other.m_int;
     m_struct = other.m_struct;
-    m_referenceCount = other.m_referenceCount;
 
     unsigned strLen = strlen( other.m_string ) + sizeof( char );
     m_string = new char[ strLen ];
     memcpy( m_string, other.m_string, strLen );
 
-    ++( *m_referenceCount );
     return *this;
   }
 
@@ -64,11 +55,6 @@ namespace Test
   {
     if( m_string != 0 )
       delete [] m_string;
-    if( --( *m_referenceCount ) <= 0 )
-    {
-      ++s_numberOfDeletes;
-      delete m_referenceCount;
-    }
   }
 
 

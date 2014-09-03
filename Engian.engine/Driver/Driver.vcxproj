@@ -71,21 +71,6 @@
   <ItemGroup>
     <ClCompile Include="driver.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\Containers_Lib\MurmurHash3.h" />
-    <ClInclude Include="..\Containers_Lib\utilContainer.h" />
-    <ClInclude Include="..\Containers_Lib\utilDictionary.h" />
-    <ClInclude Include="..\Containers_Lib\utilHashFunctions.h" />
-    <ClInclude Include="..\Containers_Lib\utilHashTable.h" />
-    <ClInclude Include="..\Containers_Lib\utilList.h" />
-    <ClInclude Include="..\Containers_Lib\utilSortedContainer.h" />
-    <ClInclude Include="..\Containers_Lib\utilSortedList.h" />
-    <ClInclude Include="..\Containers_Lib\utilSortedVector.h" />
-    <ClInclude Include="..\Containers_Lib\utilString.h" />
-    <ClInclude Include="..\Containers_Lib\utilTemplateComparisonFunctions.h" />
-    <ClInclude Include="..\Containers_Lib\utilUnsafeVector.h" />
-    <ClInclude Include="..\Containers_Lib\utilVector.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

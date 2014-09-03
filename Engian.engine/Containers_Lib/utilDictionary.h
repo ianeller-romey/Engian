@@ -19,7 +19,7 @@ namespace Test
 
 namespace Util
 {
-  
+    
   // Kind of a hack-y way to get around the void* constraint
   unsigned const DictionaryHash( void const* key, unsigned const upperLimit )
   {

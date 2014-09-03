@@ -181,9 +181,6 @@
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange0( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange1( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Search( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_ShiftAndPush( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_FindInsertionIndex( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_QuickSort( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_BasicAssignment0( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_BasicAssignment1( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Addition( char const * const name );

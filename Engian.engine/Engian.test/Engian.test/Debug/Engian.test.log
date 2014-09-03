@@ -1,7 +1,17 @@
-﻿Build started 8/29/2014 2:52:31 PM.
-     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Engian.test\Engian.test.vcxproj" on node 2 (Build target(s)).
+﻿Build started 9/3/2014 10:15:05 AM.
+     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Engian.test\Engian.test.vcxproj" on node 4 (Rebuild target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\debug\engian.test.pdb' because it is being used by another process.
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilList.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilContainer.cpp testTestHelper_UtilList.cpp testUnitTestChassis.cpp testUnitTestSampleClass.cpp testUnitTestSampleStruct.cpp testUtilList.cpp
+         testUtilList.cpp
+         testUnitTestSampleStruct.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestsamplestruct.cpp(105): warning C4244: 'return' : conversion from 'const double' to 'const int', possible loss of data
+         testUnitTestSampleClass.cpp
+         testUnitTestChassis.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(28): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(47): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(49): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(62): warning C4018: '<' : signed/unsigned mismatch
          testTestHelper_UtilList.cpp
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(88): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
                  with
@@ -33,12 +43,12 @@
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(422): warning C4305: 'argument' : truncation from '__int64' to 'const long'
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(422): warning C4309: 'argument' : truncation of constant value
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(554): warning C4018: '<' : signed/unsigned mismatch
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(150) : see reference to function template instantiation 'const bool Test::TestHelper_UtilList::CheckUtilListAgainstArray<char>(const Util::List<T> &,const T *,const unsigned int,const int)' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(150) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstArray<char>(const Util::List<T> &,const T *,const unsigned int,const int)' being compiled
                  with
                  [
                      T=char
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(595): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(601): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
                  with
                  [
                      T=float
@@ -48,12 +58,12 @@
                  [
                      T=float
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(180) : see reference to function template instantiation 'const bool Test::TestHelper_UtilList::CheckUtilListAgainstContainer<float>(const Util::List<T> &,const Util::Container<T> &)' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(180) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstContainer<float>(const Util::List<T> &,const Util::Container<T> &)' being compiled
                  with
                  [
                      T=float
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(595): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(601): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
                  with
                  [
                      T=int
@@ -63,16 +73,740 @@
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(440) : see reference to function template instantiation 'const bool Test::TestHelper_UtilList::CheckUtilListAgainstContainer<int>(const Util::List<T> &,const Util::Container<T> &)' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(440) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstContainer<int>(const Util::List<T> &,const Util::Container<T> &)' being compiled
                  with
                  [
                      T=int
                  ]
+         testTestHelper_UtilContainer.cpp
+         Generating Code...
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(232): warning C4715: 'Test::TestHelper_UtilList::List_End' : not all control paths return a value
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(314): warning C4715: 'Test::TestHelper_UtilList::List_PopBack' : not all control paths return a value
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilVector.cpp
-         Skipping... (no relevant changes detected)
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilSortedVector.cpp testTestHelper_UtilString.cpp testTestHelper_UtilUnsafeVector.cpp testTestHelper_UtilVector.cpp testUtilSortedVector.cpp testUtilString.cpp testUtilUnsafeVector.cpp testUtilVector.cpp
+         testUtilVector.cpp
+         testUtilUnsafeVector.cpp
+         testUtilString.cpp
+         testUtilSortedVector.cpp
          testTestHelper_UtilVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(93): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(133): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4309: 'argument' : truncation of constant value
+         testTestHelper_UtilUnsafeVector.cpp
+         testTestHelper_UtilString.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(217): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(223): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(227): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(237): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(252): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(268): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(274): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(278): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(288): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(303): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(399): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(403): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(419): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(427): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(448): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(457): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(620): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(633): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+         testTestHelper_UtilSortedVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(24) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(52) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=Test::UnitTestSampleClass
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(66) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(82) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=double
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=double
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(125) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=long
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=long
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(143) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=unsigned char
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=unsigned char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::operator =' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(37) : see declaration of 'Util::Vector<T>::operator ='
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(182) : see reference to class template instantiation 'Util::SortedVector<T>' being compiled
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Begin' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(41) : see declaration of 'Util::Vector<T>::Begin'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::End' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(50) : see declaration of 'Util::Vector<T>::End'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFront' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(66) : see declaration of 'Util::Vector<T>::PopFront'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopBack' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(67) : see declaration of 'Util::Vector<T>::PopBack'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopFirst' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(68) : see declaration of 'Util::Vector<T>::PopFirst'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::PopAll' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(69) : see declaration of 'Util::Vector<T>::PopAll'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Contains' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(70) : see declaration of 'Util::Vector<T>::Contains'
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedvector.h(61): warning C4250: 'Util::SortedVector<T>' : inherits 'Util::Vector<T>::Util::Vector<T>::Clear' via dominance
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilvector.h(75) : see declaration of 'Util::Vector<T>::Clear'
+                 with
+                 [
+                     T=float
+                 ]
+         Generating Code...
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(41): warning C4715: 'Test::TestHelper_UtilSortedVector::SortedVector_Constructor1' : not all control paths return a value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(73): warning C4715: 'Test::TestHelper_UtilSortedVector::SortedVector_Constructor3' : not all control paths return a value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedvector.cpp(58): warning C4715: 'Test::TestHelper_UtilSortedVector::SortedVector_Constructor2' : not all control paths return a value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(331): warning C4715: 'Test::TestHelper_UtilString::String_Clear' : not all control paths return a value
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1137,5): warning MSB8012: TargetPath(C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.dll) does not match the Linker's OutputFile property value (C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.x86.Debug.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1139,5): warning MSB8012: TargetName(Engian.test) does not match the Linker's OutputFile property value (Engian.test.x86.Debug). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
        Link:
@@ -82,14 +816,22 @@
          Debug\testUnitTestSampleClass.obj
          Debug\testUnitTestSampleStruct.obj
          Debug\testUtilList.obj
+         Debug\testTestHelper_UtilSortedVector.obj
+         Debug\testTestHelper_UtilString.obj
+         Debug\testTestHelper_UtilUnsafeVector.obj
          Debug\testTestHelper_UtilVector.obj
+         Debug\testUtilSortedVector.obj
+         Debug\testUtilString.obj
+         Debug\testUtilUnsafeVector.obj
+         Debug\testUtilVector.obj
+            Creating library C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.lib and object C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.exp
          Engian.test.vcxproj -> C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.dll
        PostBuildEvent:
          copy "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.x86.Debug.dll" "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug\Engian.test.dll"
          :VCEnd
                  1 file(s) copied.
-     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Engian.test\Engian.test.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Engian.test\Engian.test.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.25
+Time Elapsed 00:00:04.17
