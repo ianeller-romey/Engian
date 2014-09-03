@@ -8,8 +8,6 @@
 
 #include "objBase.h"
 
-#include <cstring>
-
 
 namespace Test
 {
@@ -71,7 +69,7 @@ namespace Test
     if( string == 0 )
       return 0;
 
-    unsigned strLen = strlen( string ) + sizeof( char );
+    unsigned strLen = StrLen( string ) + sizeof( char );
     char* forReturn = ( char* )::CoTaskMemAlloc( strLen );
     memcpy( forReturn, string, strLen );
 
@@ -94,6 +92,24 @@ namespace Test
   }
 
 
+  unsigned const UnitTestChassis::StrLen( char const * const string )
+  {
+    unsigned len = 0;
+    while( string[ len ] != '\0') ++len;
+    return len;
+  }
+
+
+  void UnitTestChassis::UpdateTestHelperFailureText( char * const charArray, unsigned charArrayLen, int failedAtLine )
+  {
+    unsigned numDigits = 0;
+    for( unsigned n = failedAtLine; n; n /= 10 ) ++numDigits;
+    for( unsigned n = failedAtLine, i = numDigits - 1; n; n /= 10, --i )
+      charArray[ charArrayLen + i ] = ( n % 10 ) + 48;
+    charArray[ charArrayLen + numDigits ] = '\0';
+  }
+
+
   char const * const UnitTestChassis::TestFailureText( char const * const testName, char const * const fileName, char const * const lineNumber, char const * const failedReason )
   {
     char const 
@@ -101,39 +117,39 @@ namespace Test
       * const str2 = "}\r\nin FILE {",
       * const str3 = "}\r\nat LINE {",
       * const str4 = "}\r\nfailed:\r\n";
-    char * const string = new char[ strlen( str1 ) + strlen( testName ) + 
-                    strlen( str2 ) + strlen( fileName ) + 
-                    strlen( str3 ) + strlen( lineNumber ) +
-                    strlen( str4 ) + strlen( failedReason ) + 1 ];
-    int incr = 0, len = strlen( str1 );
+    char * const string = new char[ StrLen( str1 ) + StrLen( testName ) + 
+                    StrLen( str2 ) + StrLen( fileName ) + 
+                    StrLen( str3 ) + StrLen( lineNumber ) +
+                    StrLen( str4 ) + StrLen( failedReason ) + 1 ];
+    int incr = 0, len = StrLen( str1 );
     memcpy( string + incr, str1, len );
 
     incr += len;
-    len = strlen( testName );
+    len = StrLen( testName );
     memcpy( string + incr, testName, len );
 
     incr += len;
-    len = strlen( str2 );
+    len = StrLen( str2 );
     memcpy( string + incr, str2, len );
         
     incr += len;
-    len = strlen( fileName );
+    len = StrLen( fileName );
     memcpy( string + incr, fileName, len );
 
     incr += len;
-    len = strlen( str3 );
+    len = StrLen( str3 );
     memcpy( string + incr, str3, len );
         
     incr += len;
-    len = strlen( lineNumber );
+    len = StrLen( lineNumber );
     memcpy( string + incr, lineNumber, len );
         
     incr += len;
-    len = strlen( str4 );
+    len = StrLen( str4 );
     memcpy( string + incr, str4, len );
         
     incr += len;
-    len = strlen( failedReason );
+    len = StrLen( failedReason );
     memcpy( string + incr, failedReason, len );
         
     incr += len;

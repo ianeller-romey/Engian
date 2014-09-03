@@ -5,10 +5,16 @@
 
 void main()
 {
-  Test::UnitTestChassis::TestUtilVector_Vector_PopFront("");
-  Test::UnitTestChassis::TestUtilVector_Vector_PopBack("");
-
   char const * output;
+
+  Test::UnitTestChassis::TestUtilString_String_Constructor4("");
+  Test::UnitTestChassis::TestUtilString_String_CopyConstructor("");
+  Test::UnitTestChassis::TestUtilString_String_PopBack("");
+  Test::UnitTestChassis::TestUtilString_String_Clear("");
+  Test::UnitTestChassis::TestUtilString_String_BasicAssignment3("");
+  Test::UnitTestChassis::TestUtilString_String_Addition0("");
+
+
   //output = Test::UnitTestChassis::TestUtilVector_Vector_Constructor0( "" );
   //output = Test::UnitTestChassis::TestUtilUnsafeVector_UnsafeVector_Constructor0( "" );
   //output = Test::UnitTestChassis::TestUtilString_String_Constructor0( "" );

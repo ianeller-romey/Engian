@@ -56,6 +56,11 @@ namespace Test
                                                          T const * const compareAgainst, 
                                                          unsigned const compareAgainstLen ); 
       template< typename T >
+      static unsigned const CheckUtilVectorAgainstArray( Util::Vector< T > const& vector, 
+                                                         unsigned const vectorStartPos,
+                                                         T const * const compareAgainst, 
+                                                         unsigned const compareAgainstLen );
+      template< typename T >
       static unsigned const CheckUtilVectorAgainstContainer( Util::Vector< T > const& vector, Util::Container< T > const& container );
 
   };

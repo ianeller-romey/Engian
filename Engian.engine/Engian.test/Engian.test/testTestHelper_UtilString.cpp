@@ -20,7 +20,7 @@ namespace Test
   {
     Util::String string;
 
-    RETURNLINEIFFAILED( CheckUtilStringInit( string, Util::String::c_defaultCapacity, 0 ) == 0 );
+    RETURNLINEIFFAILED( CheckUtilStringInit( string, Util::String::c_defaultCapacity, 1 ) == 0 );
     RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string, "", 0 ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String::String()" ) );
     return 0;
@@ -31,7 +31,7 @@ namespace Test
   {
     unsigned const capacity = 200;
     Util::String string( capacity );
-    RETURNLINEIFFAILED( CheckUtilStringInit( string, capacity, 0 ) == 0 );
+    RETURNLINEIFFAILED( CheckUtilStringInit( string, capacity, 1 ) == 0 );
     RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string, "", 0 ) == 0 );                   
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String::String( unsigned const capacity )" ) );
     return 0;         
@@ -70,7 +70,7 @@ namespace Test
     Util::List< char > list( characters, charactersLen );
     Util::String string( list );
       
-    RETURNLINEIFFAILED( CheckUtilStringInit( string, TestHelper_UtilContainer::GetUtilContainerSize( list ) ) == 0 );                   
+    RETURNLINEIFFAILED( CheckUtilStringInit( string, TestHelper_UtilContainer::GetUtilContainerSize( list ) + 1 ) == 0 );                   
     RETURNLINEIFFAILED( CheckUtilStringAgainstContainer( string, list ) == 0 );                   
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String::String( Container< char > const& container )" ) );
     return 0;
@@ -82,10 +82,10 @@ namespace Test
     char const * const characters = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.";
     unsigned const charactersLen = strlen( characters );
     Util::String string1( characters ),
-                  string2( string1 );
+                 string2( string1 );
 
     RETURNLINEIFFAILED( CheckUtilStringInit( string2, string1.m_capacity, string1.m_size ) == 0 );
-    RETURNLINEIFFAILED( CheckUtilStringAgainstContainer( string2, string1 ) == 0 );                   
+    RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string2, string1.m_array, string1.m_size - 1 ) == 0 );                   
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String::String( String const& string )" ) );
     return 0;
   }
@@ -178,7 +178,7 @@ namespace Test
     for( int i = charactersLen; i > 0; --i )
     {
       string.PopBack();
-      RETURNLINEIFFAILED( CheckUtilStringInit( string, charactersLen + 1, i - 1 ) == 0 );
+      RETURNLINEIFFAILED( CheckUtilStringInit( string, charactersLen + 1, i ) == 0 );
                      
       RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string, characters, i - 1 ) == 0 );
     }
@@ -328,6 +328,7 @@ namespace Test
     RETURNLINEIFFAILED( string.m_array != 0 );
     RETURNLINEIFFAILED( string.m_array[ 0 ] == '\0' );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "void String::Clear()" ) );
+    return 0;
   }
 
 
@@ -381,8 +382,8 @@ namespace Test
 
     string = list;
     RETURNLINEIFFAILED( CheckUtilStringInit( string, 
-                                              TestHelper_UtilContainer::GetUtilContainerSize( list ), 
-                                              TestHelper_UtilContainer::GetUtilContainerSize( list ) ) == 0 );
+                                              TestHelper_UtilContainer::GetUtilContainerSize( list ) + 1, 
+                                              TestHelper_UtilContainer::GetUtilContainerSize( list ) + 1 ) == 0 );
     RETURNLINEIFFAILED( CheckUtilStringAgainstContainer( string, list ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "Container< char >& String::operator=( Container< char > const& container )" ) );
     return 0;
@@ -461,18 +462,18 @@ namespace Test
 
   unsigned const TestHelper_UtilString::String_Addition0()
   {
-    char characters1[] = "This is the first part of the string,",
-          characters2[] = "and this is the second part of the string";
+    char characters1[] = "This is the first part of the string, ",
+          characters2[] = "and this is the second part of the string.";
     unsigned const charactersLen1 = strlen( characters1 ),
-                    charactersLen2 = strlen( characters2 );
+                   charactersLen2 = strlen( characters2 );
     Util::Vector< char > vector;
     vector.PushBackRange( characters1, charactersLen1 );
     vector.PushBackRange( characters2, charactersLen2 );
     Util::String string1( characters1 ),
-                  string2 = string1 + characters2;
+                 string2 = string1 + characters2;
       
     RETURNLINEIFFAILED( CheckUtilStringInit( string2, charactersLen1 + charactersLen2 + 1 ) == 0 );                   
-    RETURNLINEIFFAILED( CheckUtilStringAgainstContainer( string2, vector ) );                   
+    RETURNLINEIFFAILED( CheckUtilStringAgainstContainer( string2, vector ) == 0 );                   
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String String::operator+( char const * const string ) const" ) );
     return 0;
   }
@@ -660,8 +661,8 @@ namespace Test
   
 
   unsigned const TestHelper_UtilString::CheckUtilStringAgainstArray( Util::String const& string, 
-                                                          char const * const compareAgainst, 
-                                                          unsigned const compareAgainstLen )
+                                                                     char const * const compareAgainst, 
+                                                                     unsigned const compareAgainstLen )
   {    
     RETURNLINEIFFAILED( strncmp( string.m_array, compareAgainst, compareAgainstLen ) == 0 );
     RETURNLINEIFFAILED( string.m_array[ compareAgainstLen ] == '\0' );

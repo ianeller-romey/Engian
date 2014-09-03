@@ -1,7 +1,0 @@
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\bin\Debug\CPPHeaderTestFileGenerator_Lib.dll
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\bin\Debug\CPPHeaderTestFileGenerator_Lib.pdb
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\bin\Debug\CPPHeaderParser_Lib.dll
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\bin\Debug\CPPHeaderParser_Lib.pdb
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\obj\Debug\CPPHeaderTestFileGenerator_Lib.csprojResolveAssemblyReference.cache
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\obj\Debug\CPPHeaderTestFileGenerator_Lib.dll
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderTestFileGenerator_Lib\obj\Debug\CPPHeaderTestFileGenerator_Lib.pdb

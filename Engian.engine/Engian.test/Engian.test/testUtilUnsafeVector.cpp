@@ -27,7 +27,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_Constructor0 );
     }
     catch( ... )
     {
@@ -41,7 +41,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_Constructor1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_Constructor1 );
     }
     catch( ... )
     {
@@ -55,7 +55,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_Constructor2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_Constructor2 );
     }
     catch( ... )
     {
@@ -69,7 +69,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_Constructor3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_Constructor3 );
     }
     catch( ... )
     {
@@ -83,7 +83,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_CopyConstructor() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_CopyConstructor );
     }
     catch( ... )
     {
@@ -97,7 +97,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_PushFront() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_PushFront );
     }
     catch( ... )
     {
@@ -111,7 +111,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_PushBackRange0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_PushBackRange0 );
     }
     catch( ... )
     {
@@ -125,7 +125,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_PushBackRange1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_PushBackRange1 );
     }
     catch( ... )
     {
@@ -139,7 +139,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_BasicAssignment0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_BasicAssignment0 );
    }
     catch( ... )
     {
@@ -153,7 +153,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilUnsafeVector::UnsafeVector_BasicAssignment1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilUnsafeVector, UnsafeVector_BasicAssignment1 );
     }
     catch( ... )
     {

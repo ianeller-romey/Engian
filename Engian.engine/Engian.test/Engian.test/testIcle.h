@@ -2,6 +2,8 @@
 #ifndef TEST_ICLE_H
 #define TEST_ICLE_H
 
+#include <cstring>
+
 //#define RUN_UNIT_TESTS_SPEED
 //#define RUN_UNIT_TESTS_MANUAL
 #ifdef RUN_UNIT_TESTS_MANUAL
@@ -25,7 +27,15 @@
     #define STRINGIFY( x ) #x
     #define TOSTRING( x ) STRINGIFY( x )
     #define TEST_ASSERT( value, testName, failedReason ) if( !( value ) ) return TestFailureText( testName, __FILE__, TOSTRING( __LINE__ ), failedReason )
-    #define TEST_ASSERT_EX( value, testName, failedReason, executeIfFailed ) if( !( value ) ) { executeIfFailed; return TestFailureText( testName, __FILE__, TOSTRING( __LINE__ ), failedReason ); }
+    #define TEST_HELPER_FUNCTION_ASSERT( testHelperClass, function ) \
+  int failedAtLine = testHelperClass ## :: ## function ## (); \
+  if( failedAtLine != 0 ) \
+  { \
+    unsigned const strLen = StrLen( #testHelperClass "::" #function " failed at line " ); \
+    char str[] = #testHelperClass "::" #function " failed at line " "           "; \
+    UpdateTestHelperFailureText( str, strLen, failedAtLine ); \
+    return TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), str ); \
+  }
     #define TEST_EXCEPTION TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), "Unknown reason" )
     #define TEST_NOT_IMPLEMENTED TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), "Test not implemented" )
     #define T_FUNC_ARR_DEC( testName ) static UnitTestDictionaryPair UnitTestArray_ ## testName[]
@@ -291,6 +301,8 @@
           static char** MarshalArrayOfStrings( char const * const * const strings, unsigned numStrings );
 
           // test result functions
+          static unsigned const StrLen( char const * const string );
+          static void UpdateTestHelperFailureText( char * const charArray, unsigned charArrayLen, int failedAtLine );
           static char const * const TestFailureText( char const * const testName, char const * const fileName, char const * const lineNumber, char const * const failedReason );
         
           static void Reset();

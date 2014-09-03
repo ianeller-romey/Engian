@@ -20,7 +20,7 @@ namespace Test
     Util::Vector< double > vector;
     vector.PushBack( 1.1 );
     Util::Vector< double >::Iterator itB = vector.Begin(), itE = vector.End();
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< double >, 
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< double >::VectorIteratorImpl, 
                                         "Vector< T >::VectorIteratorImpl::VectorIteratorImpl( T * const tArray )" ) );
     return 0;
   }
@@ -35,7 +35,7 @@ namespace Test
     vector.PushBackRange( structs, number );
     Util::Vector< UnitTestSampleStruct >::Iterator itB = vector.Begin(), itE = vector.End();
     for( ; itB != itE; ++itB ) ;
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< UnitTestSampleStruct >, 
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< UnitTestSampleStruct >::VectorIteratorImpl, 
                                         "void Vector< T >::VectorIteratorImpl::AdvanceValue()" ) );
     return 0;
   }
@@ -51,7 +51,7 @@ namespace Test
     Util::Vector< UnitTestSampleStruct >::Iterator itB = vector.Begin(), itE = vector.End();
     for( unsigned i = 0; itB != itE; ++itB, ++i ) 
       RETURNLINEIFFAILED( itB.Get() == structs[ i ] );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< UnitTestSampleStruct >, 
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< UnitTestSampleStruct >::VectorIteratorImpl, 
                                         "T const& Vector< T >::VectorIteratorImpl::GetValue() const" ) );
     return 0;
   }
@@ -70,11 +70,11 @@ namespace Test
                                       itB2 = vector2.Begin(),
                                       itE2 = vector2.End();
 
-      RETURNLINEIFFAILED( itB1 == itB2 );
-      RETURNLINEIFFAILED( itE1 == itE2 );
+      RETURNLINEIFFAILED( ( itB1 == itB2 ) == false );
+      RETURNLINEIFFAILED( ( itE1 == itE2 ) == false );
 
       for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
-        RETURNLINEIFFAILED( itB1 == itE1 );
+        RETURNLINEIFFAILED( ( itB1 == itE1 ) == false );
 
       Util::Vector< bool >::Iterator itAlt( itB1 );
       RETURNLINEIFFAILED( itB1 == itAlt );
@@ -82,7 +82,7 @@ namespace Test
       for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
         RETURNLINEIFFAILED( itB1 == itAlt );
 
-      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< bool >, 
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< bool >::VectorIteratorImpl, 
                                           "bool const Vector< T >::VectorIteratorImpl::operator==( IteratorImpl const& iterator ) const" ) );
     }
 
@@ -123,7 +123,7 @@ namespace Test
     for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
       RETURNLINEIFFAILED( ( itB1 != itAlt ) == false );
 
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< bool >, 
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< bool >::VectorIteratorImpl, 
                                         "bool const Vector< T >::VectorIteratorImpl::operator!=( IteratorImpl const& iterator ) const" ) );
 
     {
@@ -584,7 +584,7 @@ namespace Test
     RETURNLINEIFFAILED( CheckUtilVectorInit< unsigned char >( vector3, vector1.m_size + vector2.m_size ) == 0 );
     RETURNLINEIFFAILED( vector3.m_array != vector1.m_array && vector3.m_array != vector2.m_array );
     RETURNLINEIFFAILED( CheckUtilVectorAgainstArray< unsigned char >( vector3, vector1.m_array, number1 ) == 0 );
-    RETURNLINEIFFAILED( CheckUtilVectorAgainstArray< unsigned char >( vector3, vector2.m_array, number2 ) == 0 );
+    RETURNLINEIFFAILED( CheckUtilVectorAgainstArray< unsigned char >( vector3, number1, vector2.m_array, number2 ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< unsigned char >, 
                                         "Vector< T > Vector< T >::operator+( Vector< T > const& vector ) const" ) );
     return 0;
@@ -648,11 +648,21 @@ namespace Test
     
   template< typename T >
   unsigned const TestHelper_UtilVector::CheckUtilVectorAgainstArray( Util::Vector< T > const& vector, 
-                                                                      T const * const compareAgainst, 
-                                                                      unsigned const compareAgainstLen )
+                                                                     T const * const compareAgainst, 
+                                                                     unsigned const compareAgainstLen )
   {      
-    for( unsigned i = 0; i < compareAgainstLen; ++i )
-      RETURNLINEIFFAILED( vector.m_array[ i ] == compareAgainst[ i ] );
+    return CheckUtilVectorAgainstArray( vector, 0, compareAgainst, compareAgainstLen );
+  }
+
+    
+  template< typename T >
+  unsigned const TestHelper_UtilVector::CheckUtilVectorAgainstArray( Util::Vector< T > const& vector,
+                                                                     unsigned const vectorStartPos,
+                                                                     T const * const compareAgainst, 
+                                                                     unsigned const compareAgainstLen )
+  {      
+    for( unsigned i = vectorStartPos, j = 0; j < compareAgainstLen; ++i, ++j )
+      RETURNLINEIFFAILED( vector.m_array[ i ] == compareAgainst[ j ] );
     return 0;
   }
   

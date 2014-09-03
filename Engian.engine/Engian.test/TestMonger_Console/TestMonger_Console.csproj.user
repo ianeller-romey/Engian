@@ -3,4 +3,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <StartArguments>-generatedxmlfile "C:\Users\elleri\AppData\Local\Temp\tempTestUtilVector.xml" -runtestsunderumbrellas</StartArguments>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug USE_DFT_LIB|AnyCPU'">
+    <StartArguments>-generatedxmlfile "C:\Users\elleri\AppData\Local\Temp\tempTestUtilVector.xml" -runtestsunderumbrellas</StartArguments>
+  </PropertyGroup>
 </Project>

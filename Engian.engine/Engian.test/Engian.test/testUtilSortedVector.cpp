@@ -31,7 +31,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -45,7 +45,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor1 );
     }
     catch( ... )
     {
@@ -59,7 +59,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor2 );
     }
     catch( ... )
     {
@@ -73,7 +73,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor3 );
     }
     catch( ... )
     {
@@ -87,7 +87,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -101,7 +101,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -115,7 +115,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -129,7 +129,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -143,7 +143,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -157,7 +157,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -171,7 +171,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -185,7 +185,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -199,7 +199,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {
@@ -213,7 +213,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilSortedVector::SortedVector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
     }
     catch( ... )
     {

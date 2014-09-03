@@ -88,7 +88,7 @@ namespace Test
     unsigned const number = 40;
     unsigned short numbers[ number ];
     Util::UnsafeVector< unsigned short > uVector;
-    for( unsigned i = 0; i < number; ++i )
+    for( int i = number - 1; i >= 0; --i )
     {
       numbers[ i ] = (unsigned short)( rand() );
       uVector.PushFront( numbers[ i ] );

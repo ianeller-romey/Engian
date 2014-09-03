@@ -48,7 +48,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Constructor0 );
     }
     catch( ... )
     {
@@ -62,7 +62,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Constructor1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Constructor1 );
     }
     catch( ... )
     {
@@ -76,7 +76,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Constructor2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Constructor2 );
     }
     catch( ... )
     {
@@ -90,7 +90,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Constructor3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Constructor3 );
     }
     catch( ... )
     {
@@ -104,7 +104,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Constructor4() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Constructor4 );
     }
     catch( ... )
     {
@@ -118,7 +118,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_CopyConstructor() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_CopyConstructor );
     }
     catch( ... )
     {
@@ -132,7 +132,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_PushBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_PushBack );
     }
     catch( ... )
     {
@@ -146,7 +146,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_PushBackRange0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_PushBackRange0 );
     }
     catch( ... )
     {
@@ -160,7 +160,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_PushBackRange1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_PushBackRange1 );
     }
     catch( ... )
     {
@@ -174,7 +174,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_PushBackRange2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_PushBackRange2 );
     }
     catch( ... )
     {
@@ -188,7 +188,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_PopBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_PopBack );
     }
     catch( ... )
     {
@@ -202,7 +202,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_GetStrLen() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_GetStrLen );
     }
     catch( ... )
     {
@@ -216,7 +216,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BeginsWith() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BeginsWith );
     }
     catch( ... )
     {
@@ -230,7 +230,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_EndsWith() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_EndsWith );
     }
     catch( ... )
     {
@@ -244,7 +244,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_IsEmpty() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_IsEmpty );
     }
     catch( ... )
     {
@@ -258,7 +258,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Clear() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Clear );
     }
     catch( ... )
     {
@@ -272,7 +272,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BasicAssignment0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BasicAssignment0 );
     }
     catch( ... )
     {
@@ -286,7 +286,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BasicAssignment1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BasicAssignment1 );
     }
     catch( ... )
     {
@@ -300,7 +300,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BasicAssignment2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BasicAssignment2 );
     }
     catch( ... )
     {
@@ -314,7 +314,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BasicAssignment3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BasicAssignment3 );
     }
     catch( ... )
     {
@@ -328,7 +328,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_EqualAndNotEqualTo0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_EqualAndNotEqualTo0 );
     }
     catch( ... )
     {
@@ -342,7 +342,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_EqualAndNotEqualTo1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_EqualAndNotEqualTo1 );
     }
     catch( ... )
     {
@@ -356,7 +356,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_EqualAndNotEqualTo2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_EqualAndNotEqualTo2 );
     }
     catch( ... )
     {
@@ -370,7 +370,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Addition0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Addition0 );
     }
     catch( ... )
     {
@@ -384,7 +384,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Addition1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Addition1 );
     }
     catch( ... )
     {
@@ -398,7 +398,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Addition2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Addition2 );
     }
     catch( ... )
     {
@@ -412,7 +412,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_Addition3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_Addition3 );
     }
     catch( ... )
     {
@@ -426,7 +426,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_AdditionAssignment0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_AdditionAssignment0 );
     }
     catch( ... )
     {
@@ -440,7 +440,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_AdditionAssignment1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_AdditionAssignment1 );
     }
     catch( ... )
     {
@@ -454,7 +454,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_AdditionAssignment2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_AdditionAssignment2 );
     }
     catch( ... )
     {
@@ -468,7 +468,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilString::String_BitwiseLeftShiftIntAndUint() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilString, String_BitwiseLeftShiftIntAndUint );
     }
     catch( ... )
     {

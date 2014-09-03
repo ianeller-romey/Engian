@@ -39,7 +39,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::ListIteratorImpl_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, ListIteratorImpl_Constructor0 );
     }
     catch( ... )
     {
@@ -53,7 +53,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::ListIteratorImpl_AdvanceValue() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, ListIteratorImpl_AdvanceValue );
     }
     catch( ... )
     {
@@ -67,7 +67,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::ListIteratorImpl_GetValue() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, ListIteratorImpl_GetValue );
     }
     catch( ... )
     {
@@ -81,7 +81,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::ListIteratorImpl_EqualTo() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, ListIteratorImpl_EqualTo );
     }
     catch( ... )
     {
@@ -95,7 +95,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::ListIteratorImpl_NotEqualTo() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, ListIteratorImpl_NotEqualTo );
     }
     catch( ... )
     {
@@ -109,7 +109,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Constructor0 );
     }
     catch( ... )
     {
@@ -123,7 +123,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Constructor1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Constructor1 );
     }
     catch( ... )
     {
@@ -137,7 +137,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Constructor2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Constructor2 );
     }
     catch( ... )
     {
@@ -151,7 +151,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_CopyConstructor() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_CopyConstructor );
     }
     catch( ... )
     {
@@ -165,7 +165,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Begin() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Begin );
     }
     catch( ... )
     {
@@ -179,7 +179,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_End() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_End );
     }
     catch( ... )
     {
@@ -193,7 +193,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PushFront() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PushFront );
     }
     catch( ... )
     {
@@ -207,7 +207,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PushBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PushBack );
     }
     catch( ... )
     {
@@ -221,7 +221,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PopFront() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PopFront );
     }
     catch( ... )
     {
@@ -235,7 +235,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PopBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PopBack );
     }
     catch( ... )
     {
@@ -249,7 +249,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PopFirst() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PopFirst );
     }
     catch( ... )
     {
@@ -263,7 +263,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_PopAll() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_PopAll );
     }
     catch( ... )
     {
@@ -277,7 +277,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Contains() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Contains );
     }
     catch( ... )
     {
@@ -291,7 +291,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_BasicAssignment0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_BasicAssignment0 );
     }
     catch( ... )
     {
@@ -305,7 +305,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_BasicAssignment1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_BasicAssignment1 );
     }
     catch( ... )
     {
@@ -319,7 +319,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_Addition() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_Addition );
     }
     catch( ... )
     {
@@ -333,7 +333,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilList::List_AdditionAssignment() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilList, List_AdditionAssignment );
     }
     catch( ... )
     {

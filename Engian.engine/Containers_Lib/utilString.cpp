@@ -104,7 +104,7 @@ namespace Util
     DFT_FUNC_TRACK( "Container< char >& String::operator=( Container< char > const& container )" );
     Deallocate();
     
-    m_capacity = container.GetSize();
+    m_capacity = container.GetSize() + 1;
     m_array = new char[ m_capacity ];
     MakeEmptyString();
     Vector< char >::PushBackRange( container );
@@ -174,7 +174,7 @@ namespace Util
   {
     DFT_FUNC_TRACK( "String String::operator+( char const * const string ) const" );
     String newString( *this );
-    newString.PushBackRange( string, strlen( string ) + 1 );
+    newString.PushBackRange( string, strlen( string ) );
     return newString;
   }
 

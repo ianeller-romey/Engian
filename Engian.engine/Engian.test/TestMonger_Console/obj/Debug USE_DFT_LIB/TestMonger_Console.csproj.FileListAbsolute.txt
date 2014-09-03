@@ -1,0 +1,12 @@
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\TestMonger_Console.exe.config
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\TestMonger_Console.exe
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\TestMonger_Console.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\CPPHeaderTestFileGenerator_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\TestMonger_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\CPPHeaderParser_Lib.dll
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\CPPHeaderTestFileGenerator_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\TestMonger_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\bin\Debug USE_DFT_LIB\CPPHeaderParser_Lib.pdb
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\obj\Debug USE_DFT_LIB\TestMonger_Console.csprojResolveAssemblyReference.cache
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\obj\Debug USE_DFT_LIB\TestMonger_Console.exe
+C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Console\obj\Debug USE_DFT_LIB\TestMonger_Console.pdb

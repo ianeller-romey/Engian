@@ -1,4 +1,0 @@
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderParser_Lib\bin\Debug\CPPHeaderParser_Lib.dll
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderParser_Lib\bin\Debug\CPPHeaderParser_Lib.pdb
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderParser_Lib\obj\Debug\CPPHeaderParser_Lib.dll
-C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\CPPHeaderParser_Lib\obj\Debug\CPPHeaderParser_Lib.pdb

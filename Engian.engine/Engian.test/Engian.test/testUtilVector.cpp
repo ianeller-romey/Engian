@@ -45,7 +45,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::VectorIteratorImpl_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, VectorIteratorImpl_Constructor0 );
     }
     catch( ... )
     {
@@ -59,7 +59,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::VectorIteratorImpl_AdvanceValue() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, VectorIteratorImpl_AdvanceValue );
     }
     catch( ... )
     {
@@ -73,7 +73,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::VectorIteratorImpl_GetValue() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, VectorIteratorImpl_GetValue );
     }
     catch( ... )
     {
@@ -87,7 +87,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::VectorIteratorImpl_EqualTo() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, VectorIteratorImpl_EqualTo );
     }
     catch( ... )
     {
@@ -101,7 +101,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::VectorIteratorImpl_NotEqualTo() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, VectorIteratorImpl_NotEqualTo );
     }
     catch( ... )
     {
@@ -115,7 +115,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Constructor0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Constructor0 );
     }
     catch( ... )
     {
@@ -129,7 +129,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Constructor1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Constructor1 );
     }
     catch( ... )
     {
@@ -143,7 +143,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Constructor2() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Constructor2 );
     }
     catch( ... )
     {
@@ -157,7 +157,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Constructor3() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Constructor3 );
     }
     catch( ... )
     {
@@ -171,7 +171,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_CopyConstructor() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_CopyConstructor );
     }
     catch( ... )
     {
@@ -185,7 +185,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Begin() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Begin );
     }
     catch( ... )
     {
@@ -199,7 +199,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_End() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_End );
     }
     catch( ... )
     {
@@ -213,7 +213,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PushFront() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PushFront );
     }
     catch( ... )
     {
@@ -227,7 +227,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PushBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PushBack );
     }
     catch( ... )
     {
@@ -241,7 +241,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PopFront() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PopFront );
     }
     catch( ... )
     {
@@ -255,7 +255,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PopBack() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PopBack );
     }
     catch( ... )
     {
@@ -269,7 +269,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PopFirst() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PopFirst );
     }
     catch( ... )
     {
@@ -283,7 +283,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_PopAll() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_PopAll );
     }
     catch( ... )
     {
@@ -297,7 +297,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Contains() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Contains );
     }
     catch( ... )
     {
@@ -311,7 +311,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_IsFull() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_IsFull );
     }
     catch( ... )
     {
@@ -325,7 +325,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_GetCapacity() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_GetCapacity );
     }
     catch( ... )
     {
@@ -339,7 +339,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Clear() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Clear );
     }
     catch( ... )
     {
@@ -353,7 +353,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_BasicAssignment0() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_BasicAssignment0 );
     }
     catch( ... )
     {
@@ -367,7 +367,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_BasicAssignment1() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_BasicAssignment1 );
     }
     catch( ... )
     {
@@ -381,7 +381,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_ArraySubscript() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_ArraySubscript );
     }
     catch( ... )
     {
@@ -395,7 +395,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Addition() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Addition );
     }
     catch( ... )
     {
@@ -409,7 +409,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_AdditionAssignment() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_AdditionAssignment );
     }
     catch( ... )
     {
@@ -423,7 +423,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( TestHelper_UtilVector::Vector_Indirection() == 0, name, "" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilVector, Vector_Indirection );
     }
     catch( ... )
     {

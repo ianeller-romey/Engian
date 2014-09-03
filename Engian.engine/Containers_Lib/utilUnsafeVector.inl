@@ -104,7 +104,7 @@ namespace Util
   void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )
   {
     DFT_FUNC_TRACK( "void UnsafeVector< T >::PushBackRange( T const * const tArray, unsigned const size )" );
-    while( ( m_size + size ) >= m_capacity )
+    while( ( m_size + size ) > m_capacity )
       Grow();
     T* copyTo = m_array + m_size;
     memcpy( copyTo, tArray, sizeof( T ) * size );

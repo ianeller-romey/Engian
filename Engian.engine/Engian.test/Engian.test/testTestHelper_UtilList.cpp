@@ -22,7 +22,8 @@ namespace Test
     list.PushBack( 1.1 );
     Util::List< double >::Iterator itB = list.Begin(), itE = list.End();
 
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< double >, "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< double >::ListIteratorImpl, 
+                                        "List< T >::ListIteratorImpl::ListIteratorImpl( ListNode* const listNode )" ) );
     return 0;
   }
 
@@ -36,7 +37,8 @@ namespace Test
     list.PushBackRange( structs, number );
     Util::List< UnitTestSampleStruct >::Iterator itB = list.Begin(), itE = list.End();
     for( ; itB != itE; ++itB ) ;
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >, "void List< T >::ListIteratorImpl::AdvanceValue()" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >::ListIteratorImpl, 
+                                        "void List< T >::ListIteratorImpl::AdvanceValue()" ) );
     return 0;
   }
 
@@ -51,7 +53,8 @@ namespace Test
     Util::List< UnitTestSampleStruct >::Iterator itB = list.Begin(), itE = list.End();
     for( unsigned i = 0; itB != itE; ++itB, ++i ) 
       RETURNLINEIFFAILED( itB.Get() == structs[ i ] );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >, "T const& List< T >::ListIteratorImpl::GetValue() const" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< UnitTestSampleStruct >::ListIteratorImpl, 
+                                        "T const& List< T >::ListIteratorImpl::GetValue() const" ) );
     return 0;
   }
 
@@ -69,16 +72,16 @@ namespace Test
                                     itB2 = list2.Begin(),
                                     itE2 = list2.End();
 
-      RETURNLINEIFFAILED( itB1 == itB2 );
-      RETURNLINEIFFAILED( itE1 == itE2 );
+      RETURNLINEIFFAILED( ( itB1 == itB2 ) == false );
+      RETURNLINEIFFAILED( ( itE1 == itE2 ) == false );
       for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
-        RETURNLINEIFFAILED( itB1 == itE1 );
+        RETURNLINEIFFAILED( ( itB1 == itE1 ) == false );
       Util::List< bool >::Iterator itAlt( itB1 );
       RETURNLINEIFFAILED( itB1 == itAlt );
       for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
         RETURNLINEIFFAILED( itB1 == itAlt )
-      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< bool >, "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" ) );
-      return 0;
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< bool >::ListIteratorImpl, 
+                                          "bool const List< T >::ListIteratorImpl::operator==( IteratorImpl const& iterator ) const" ) );
     }
 
     {
@@ -96,26 +99,28 @@ namespace Test
 
   unsigned const TestHelper_UtilList::ListIteratorImpl_NotEqualTo()
   {
-    unsigned const number = 50;
-    Util::List< bool > list1, list2;
-    bool bools[ number ];
-    list1.PushBackRange( bools, number );
-    list2.PushBackRange( bools, number );
-    Util::List< bool >::Iterator itB1 = list1.Begin(), 
-                                  itE1 = list1.End(),
-                                  itB2 = list2.Begin(),
-                                  itE2 = list2.End();
+    {
+      unsigned const number = 50;
+      Util::List< bool > list1, list2;
+      bool bools[ number ];
+      list1.PushBackRange( bools, number );
+      list2.PushBackRange( bools, number );
+      Util::List< bool >::Iterator itB1 = list1.Begin(), 
+                                    itE1 = list1.End(),
+                                    itB2 = list2.Begin(),
+                                    itE2 = list2.End();
 
-    RETURNLINEIFFAILED( itB1 != itB2 );
-    RETURNLINEIFFAILED( itE1 != itE2 );
-    for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
-      RETURNLINEIFFAILED( itB1 != itE1 );
-    Util::List< bool >::Iterator itAlt( itB1 );
-    RETURNLINEIFFAILED( ( itB1 != itAlt ) == false );
-    for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
+      RETURNLINEIFFAILED( itB1 != itB2 );
+      RETURNLINEIFFAILED( itE1 != itE2 );
+      for( unsigned i = 0; i < number / 2; ++i, ++itB1 )
+        RETURNLINEIFFAILED( itB1 != itE1 );
+      Util::List< bool >::Iterator itAlt( itB1 );
       RETURNLINEIFFAILED( ( itB1 != itAlt ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< bool >, 
-                                        "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" ) );
+      for( unsigned i = number / 2; i < number; ++i, ++itB1, ++itAlt )
+        RETURNLINEIFFAILED( ( itB1 != itAlt ) == false );
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< bool >::ListIteratorImpl, 
+                                          "bool const List< T >::ListIteratorImpl::operator!=( IteratorImpl const& iterator ) const" ) );
+    }
 
     {
       Util::List< int > list;
@@ -216,9 +221,10 @@ namespace Test
     for( unsigned i = 0; i < number; ++i )
       list.PushBack( (char)i );
     {
-      //RETURNLINEIFFAILED( CheckUtilListIteratorAgainstEnd( list ) );
-      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< char >, "Iterator const List< T >::End() const" ) );
-                     
+      Util::List< char >::Iterator end = list.End();
+      // this is kind of a hack-y check, but it IS actually valid
+      RETURNLINEIFFAILED( dynamic_cast< Util::List< char >::ListIteratorImpl* >( list.m_implementations->m_implementation )->m_listNode == list.m_end );
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< char >, "Iterator const List< T >::End() const" ) );               
     }
     RETURNLINEIFFAILED( list.m_implementations == 0 ); 
                    
@@ -227,8 +233,9 @@ namespace Test
     {
       Util::List< short > list;
       Util::List< short >::Iterator itE = list.End();
-      itE.Get();
+      //itE.Get();
     }
+    return 0;
   }
 
 
@@ -310,7 +317,7 @@ namespace Test
     // checking for exceptions
     list.PopBack();
 
-    delete [] testClasses;
+    return 0;
   }
 
 
@@ -559,7 +566,7 @@ namespace Test
       }
       else
       {
-        RETURNLINEIFFAILED( ( i == 0 ) == false );
+        RETURNLINEIFFAILED( i == 0 );
       }
 
       if( node->m_next != list.m_end )
