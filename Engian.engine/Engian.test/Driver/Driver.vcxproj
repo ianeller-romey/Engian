@@ -140,8 +140,10 @@
     <ClInclude Include="..\Engian.test\testTestHelper_UtilList.h" />
     <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedContainer.h" />
     <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedList.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedVector.h" />
     <ClInclude Include="..\Engian.test\testTestHelper_UtilString.h" />
@@ -166,8 +168,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedList.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedVector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -190,8 +194,10 @@
     <ClCompile Include="..\Engian.test\testUnitTestSampleStruct.cpp" />
     <ClCompile Include="..\Engian.test\testUtilList.cpp" />
     <ClCompile Include="..\Engian.test\testUtilSortedList.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Engian.test\testUtilSortedVector.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

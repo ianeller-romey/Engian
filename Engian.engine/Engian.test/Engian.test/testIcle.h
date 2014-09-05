@@ -205,9 +205,7 @@
           static char const * const TestUtilSortedList_SortedList_Constructor0( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Constructor1( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Constructor2( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Constructor3( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_CopyConstructor0( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_CopyConstructor1( char const * const name );
+          static char const * const TestUtilSortedList_SortedList_CopyConstructor( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PushFront( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PushBack( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PopFront( char const * const name );
@@ -217,15 +215,6 @@
           static char const * const TestUtilSortedList_SortedList_Contains( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Clear( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Push( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_NewSortedListNodeTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindInsertionNodeInTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_GetBottomTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_GetNumberOfTiers( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_ClearTiers( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindNewFront( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindNewBack( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Search( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Pop( char const * const name );
           static char const * const TestUtilSortedList_SortedList_BasicAssignment0( char const * const name );
           static char const * const TestUtilSortedList_SortedList_BasicAssignment1( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Addition( char const * const name );

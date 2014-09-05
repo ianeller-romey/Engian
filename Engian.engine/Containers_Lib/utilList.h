@@ -71,6 +71,12 @@ namespace Util
       
 
     protected:
+      ////////
+      // member functions
+      List( ListNode* end );
+
+      ////////
+      // member classes
       struct ListNode
       {
         DFT_FUNC_TRACK_CLASS_DEC;

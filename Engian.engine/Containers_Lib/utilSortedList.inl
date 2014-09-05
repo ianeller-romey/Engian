@@ -24,9 +24,10 @@ namespace Util
 
   template< typename T >
   SortedList< T >::SortedList() :
-    m_tiers( 0 ),
-    List< T >(),
-    SortedContainer< T >()
+    Container< T >(),
+    SortedContainer< T >(),
+    List< T >( new SortedListNode( 0, 0, 0, 0 ) ),
+    m_tiers( 0 )
   {
     DFT_FUNC_TRACK( "SortedList< T >::SortedList()" );
   }
@@ -34,9 +35,10 @@ namespace Util
 
   template< typename T >
   SortedList< T >::SortedList( T const * const tArray, unsigned const size ) :
-    m_tiers( 0 ),
-    List< T >(),
-    SortedContainer< T >()
+    Container< T >(),
+    SortedContainer< T >(),
+    List< T >( new SortedListNode( 0, 0, 0, 0 ) ),
+    m_tiers( 0 )
   {
     DFT_FUNC_TRACK( "SortedList< T >::SortedList( T const * const tArray, unsigned const size )" );
     PushBackRange( tArray, size );
@@ -45,9 +47,10 @@ namespace Util
 
   template< typename T >
   SortedList< T >::SortedList( SortedList< T > const& sortedList ) :
-    m_tiers( 0 ),
-    List< T >(),
-    SortedContainer< T >()
+    Container< T >(),
+    SortedContainer< T >(),
+    List< T >( new SortedListNode( 0, 0, 0, 0 ) ),
+    m_tiers( 0 )
   {
     DFT_FUNC_TRACK( "SortedList< T >::SortedList( SortedList< T > const& sortedList )" );
     PushBackRange( sortedList );
@@ -56,9 +59,10 @@ namespace Util
 
   template< typename T >
   SortedList< T >::SortedList( Container< T > const& container ) :
-    m_tiers( 0 ),
-    List< T >(),
-    SortedContainer< T >()
+    Container< T >(),
+    SortedContainer< T >(),
+    List< T >( new SortedListNode( 0, 0, 0, 0 ) ),
+    m_tiers( 0 )
   {
     DFT_FUNC_TRACK( "SortedList< T >::SortedList( Container< T > const& container )" );
     PushBackRange( container );
@@ -199,7 +203,10 @@ namespace Util
     if( IsEmpty() )
       return;
 
-    ClearTiers( static_cast< SortedListNode* >( m_front ) );
+    while( !IsEmpty() )
+      PopBack();
+    delete m_end;
+    m_end = 0;
     m_front = 0;
     m_back = 0;
     m_tiers = 0;
@@ -217,14 +224,18 @@ namespace Util
     if( possibleTiers > 0 )
     {
       // randomly calculate how many tiers this node will have
-      currentNodesTiers = 1;
-      while( currentNodesTiers < possibleTiers && ( ( 1.0 / log( currentNodesTiers * c_logBase ) ) * 100.0 ) > (float)( rand() % 100 ) )
+      currentNodesTiers = 0;
+      float random = (float)( rand() % 100 );
+      while( currentNodesTiers < possibleTiers && ( ( 1.0 / log( ( currentNodesTiers + 1 ) * c_logBase ) ) * 100.0 ) > random )
         ++currentNodesTiers;
     }
 
     // make sure the front node always has all possible tiers
     if( possibleTiers > m_tiers )
-      NewSortedListNodeTier();
+    {
+      AddSortedListNodeTierToFront();
+      ++m_tiers;
+    }
 
     // allocate space for T and all tiers (including base tier)
     char* memLoc = new char[ sizeof( T ) + ( sizeof( SortedListNode ) * ( currentNodesTiers + 1 ) ) ];
@@ -235,33 +246,52 @@ namespace Util
     bool contains;
     SortedListNode *newPrev,
                    *newNext,
-                   *newNextTier,
                    *node = 0;
 
     // if we're empty, we know we won't have any tiers, and we know we'll need to set m_front and m_back
     if( IsEmpty() )
     {
-      node = new( memLoc + sizeof( T ) ) SortedListNode( 0, 0, newT, 0 );
+      SortedListNode* endNode = static_cast< SortedListNode* >( m_end );
+      node = new( memLoc + sizeof( T ) ) SortedListNode( endNode, endNode, newT, endNode );
       m_back = m_front = node;
     }
     // otherwise, we might have tiers
     else
     {
       // allocate new tiers, from bottom to top
-      for( unsigned i = 0; i <= currentNodesTiers; ++i )
+      SortedListNode* previousTiersNextTier = static_cast< SortedListNode* >( m_end );
+      unsigned i = 0;
+      for( ; i <= currentNodesTiers; ++i )
       {
-        FindInsertionNodeInTier( m_tiers, i, *newT, contains, &newPrev, &newNext, &newNextTier );
-        node = new( memLoc + sizeof( T ) + ( sizeof( SortedListNode ) * i ) ) SortedListNode( newPrev, newNext, newT, newNextTier );
-        if( newPrev != 0 )
+        FindInsertionNodeInTier( m_tiers, i, *newT, contains, &newPrev, &newNext );
+        node = new( memLoc + sizeof( T ) + ( sizeof( SortedListNode ) * i ) ) SortedListNode( newPrev, newNext, newT, previousTiersNextTier );
+        if( newPrev != m_end )
           newPrev->m_next = node;
-        if( newNext != 0 )
+        if( newNext != m_end )
           newNext->m_prev = node;
+        previousTiersNextTier = node;
       }
 
       // should we update our back pointer?
       // this way, we can make sure the back pointer always points to the highest tier, too
       if( m_greaterThanFunc( *( node->m_data ), *( m_back->m_data ) ) )
         m_back = node;
+
+      // should we update our front pointer?
+      // if so, we might need to add some tiers
+      if( m_lessThanFunc( *( node->m_data ), *( m_front->m_data ) ) )
+      {
+        SortedListNode* tempFront = static_cast< SortedListNode* >( m_front );
+        m_front = node;
+        if( currentNodesTiers < m_tiers )
+        {
+          for( unsigned i = currentNodesTiers; i <= m_tiers; ++i )
+          {
+            AddSortedListNodeTierToFront();
+            m_front->m_next = GetBottomTier( tempFront, m_tiers, i + 1 );
+          }
+        }
+      }
     }
 
     ++m_size;
@@ -270,50 +300,88 @@ namespace Util
 
 
   template< typename T >
-  void SortedList< T >::NewSortedListNodeTier()
+  void SortedList< T >::AddSortedListNodeTierToFront()
   {
-    DFT_FUNC_TRACK( "void SortedList< T >::NewSortedListNodeTier()" );
-    SortedListNode  *front = static_cast< SortedListNode* >( m_front ),
-            *newTier = new SortedListNode( 0, 0, front->m_data, front->m_nextTier );
-    front->m_nextTier = newTier;
-    ++m_tiers;
+    DFT_FUNC_TRACK( "void SortedList< T >::AddSortedListNodeTierToFront()" );
+    SortedListNode *front = static_cast< SortedListNode* >( m_front ),
+                   *newTier = new SortedListNode( m_end, m_end, front->m_data, front );
+    m_front = newTier;
   }
     
 
   template< typename T >
-  void SortedList< T >::FindInsertionNodeInTier(  unsigned const topTierLevel,
-                          unsigned const tierToInsert,
-                          T const& t, 
-                          bool& contains, 
-                          SortedListNode** prev, 
-                          SortedListNode** next,
-                          SortedListNode** nextTier ) const
+  void SortedList< T >::FindInsertionNodeInTier( unsigned const topTierLevel,
+                                                 unsigned const tierToInsert,
+                                                 T const& t, 
+                                                 bool& contains, 
+                                                 SortedListNode** prev, 
+                                                 SortedListNode** next ) const
   {
-    DFT_FUNC_TRACK( "void SortedList< T >::FindInsertionNodeInTier(  unsigned const topTierLevel, unsigned const tierToInsert, T const& t, bool& contains, SortedListNode** prev, SortedListNode** next, SortedListNode** nextTier ) const" );
+    DFT_FUNC_TRACK( "void SortedList< T >::FindInsertionNodeInTier( unsigned const topTierLevel, unsigned const tierToInsert, T const& t, bool& contains, SortedListNode** prev, SortedListNode** next, SortedListNode** nextTier ) const" );
     SortedListNode* pointer = static_cast< SortedListNode* >( m_front );
-    unsigned tier = topTierLevel;
+    int tier = topTierLevel;
 
-    while( pointer->m_next != 0 )
+    if( pointer->m_next == m_end && tier != tierToInsert )
+    {
+      pointer = pointer->m_nextTier;
+      --tier;
+    }
+
+    while( pointer != m_end )
     {
       // if the current node's data is less than the data to be inserted, advance
       if( m_lessThanFunc( *( pointer->m_data ), t ) )
-        pointer = static_cast< SortedListNode* >( pointer->m_next );
+      {
+        // if and we're at the end ...
+        if( pointer->m_next == m_end )
+        {
+          // if we're on the tier into which we're inserting, we're done
+          if( tier == tierToInsert )
+          {
+            *prev = pointer;
+            *next = static_cast< SortedListNode* >( pointer->m_next );
+            return;
+          }
+          // if we're above the tier into which we're inserting, move down a tier
+          else
+          {
+            pointer = pointer->m_nextTier;
+            --tier;
+          }
+        }
+        // if we're not at the end, just move along to the next
+        else
+        {
+          pointer = static_cast< SortedListNode* >( pointer->m_next );
+        }
+      }
       // if the current node's data is more than the data to be inserted ...
       else if( m_greaterThanFunc( *( pointer->m_data ), t ) )
       {
-        // if we're not on the bottom tier, go back a node and go down a tier
-        // NOTE: second condition SHOULD be redundant, and can HOPEFULLY be removed after testing
-        if( --tier > tierToInsert && pointer->m_nextTier != 0 )
-        {
-          pointer = static_cast< SortedListNode* >( pointer->m_prev )->m_nextTier;
-        }
-        // otherwise, if we are, return the current and previous nodes
-        else
+        // if we're the very first node in the list, we know we don't need to search further, so just get the 
+        // tier we need to insert and return
+        if( pointer->m_prev == m_end )
         {
           *prev = static_cast< SortedListNode* >( pointer->m_prev );
-          *next = pointer;
-          *nextTier = pointer->m_nextTier;
+          *next = GetBottomTier( pointer, tier, tierToInsert );
           return;
+        }
+        // if we're not the very first node in the list ...
+        else
+        {
+          // if we're above the tier into which we want to insert, go back a node and down a tier
+          if( tier > tierToInsert )
+          {
+            pointer = static_cast< SortedListNode* >( pointer->m_prev )->m_nextTier;
+            --tier;
+          }
+          // if we're at the tier into which we want to insert, we're done
+          else
+          {
+            *prev = static_cast< SortedListNode* >( pointer->m_prev );
+            *next = pointer;
+            return;
+          }
         }
       }
       // if the current node's data is equal to the data to be inserted, return the bottom tier of the current node
@@ -324,29 +392,11 @@ namespace Util
         pointer = GetBottomTier( pointer, tier, tierToInsert );
         *prev = static_cast< SortedListNode* >( pointer->m_prev );
         *next = pointer;
-        *nextTier = pointer->m_nextTier;
         return;
       }
     }
 
-    // if the very last node's data is less than the data to be inserted,
-    // return the last node as the new previous and the last node's m_next (0) as the new next
-    if( m_lessThanFunc( *( pointer->m_data ), t ) )
-    {
-      *prev = pointer;
-      *next = static_cast< SortedListNode* >( pointer->m_next );
-    }
-    // if the very last node's data is greater than or equal to the data to be inserted,
-    // return the last node's m_prev as the new previous and the last node as the new next
-    else
-    {
-      if( m_equalityFunc( *( pointer->m_data ), t ) )
-        contains = true;
-      
-      *prev = static_cast< SortedListNode* >( pointer->m_prev );
-      *next = pointer;
-    }
-    *nextTier = pointer->m_nextTier;
+    throw; // TODO: Throw something
   }
   
 
@@ -356,7 +406,7 @@ namespace Util
     DFT_FUNC_TRACK( "unsigned const SortedList< T >::GetNumberOfTiers( SortedListNode const * const topTier ) const" );
     unsigned number = 0;
     SortedListNode const * node = topTier;
-    for( ; node->m_nextTier != 0; node = node->m_nextTier )
+    for( ; node->m_nextTier != m_end; node = node->m_nextTier )
       ++number;
     return number;
   }
@@ -366,17 +416,21 @@ namespace Util
   void SortedList< T >::ClearTiers( SortedListNode const * topTier ) const
   {
     DFT_FUNC_TRACK( "void SortedList< T >::ClearTiers( SortedListNode const * topTier ) const" );
-    while( topTier != 0 )
+    // the data pointer is the allocation pointer, so deleting that will take care of all the tiers
+    // since we allocated everything as one big array
+    char* forDelete = (char*)( topTier->m_data );
+    while( topTier != m_end )
     {
-      if( topTier->m_prev != 0 )
+      if( topTier->m_prev != m_end )
         topTier->m_prev->m_next = topTier->m_next;
-      if( topTier->m_next != 0 )
+      if( topTier->m_next != m_end )
         topTier->m_next->m_prev = topTier->m_prev;
 
       SortedListNode const * temp = topTier;
       topTier = topTier->m_nextTier;
-      delete temp;
+      temp->~SortedListNode();
     }
+    delete forDelete;
   }
 
 
@@ -384,9 +438,9 @@ namespace Util
   bool const SortedList< T >::Search( SortedListNode const** startIndex, T const& t ) const
   {
     DFT_FUNC_TRACK( "bool const SortedList< T >::Search( SortedListNode const** startIndex, T const& t ) const" );
-    SortedListNode *prev, *next, *nextTier;
+    SortedListNode *prev, *next;
     bool contains = false;
-    FindInsertionNodeInTier( m_tiers, 0, t, contains, &prev, &next, &nextTier );
+    FindInsertionNodeInTier( m_tiers, 0, t, contains, &prev, &next );
     if( contains )
       *startIndex = next;
     return contains;
@@ -399,9 +453,15 @@ namespace Util
     DFT_FUNC_TRACK( "void SortedList< T >::Pop( SortedListNode const * const sortedListNode )" );
     if( sortedListNode == m_front )
     {
+      SortedListNode* tempFront = static_cast< SortedListNode* >( m_front );
       m_front = FindNewFront();
-      while( GetNumberOfTiers( static_cast< SortedListNode* >( m_front ) ) < m_tiers )
-        NewSortedListNodeTier();
+      unsigned numberOfTiers = GetNumberOfTiers( static_cast< SortedListNode* >( m_front ) );
+      while( numberOfTiers <= m_tiers )
+      {
+        AddSortedListNodeTierToFront();
+        m_front->m_next = GetBottomTier( tempFront, m_tiers, numberOfTiers )->m_next;
+        ++numberOfTiers;
+      }
     }
     if( sortedListNode == m_back )
       m_back = FindNewBack();

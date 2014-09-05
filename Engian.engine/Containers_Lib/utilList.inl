@@ -120,6 +120,17 @@ namespace Util
 
     PushBackRange( container );
   }
+      
+
+  template< typename T >
+  List< T >::List( ListNode* end ) :
+    Container< T >(),
+    m_end( end ), 
+    m_front( m_end ),
+    m_back( m_end )
+  {
+    DFT_FUNC_TRACK( "List< T >::List( ListNode* end )" );
+  }
 
 
   template< typename T >

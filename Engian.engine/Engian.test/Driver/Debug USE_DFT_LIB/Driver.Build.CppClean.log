@@ -7,7 +7,6 @@ c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\driver.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\vc110.pdb
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilsortedcontainer.obj
-c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilsortedvector.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilstring.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilunsafevector.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilvector.obj
@@ -15,9 +14,8 @@ c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testutilstring.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testutilunsafevector.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testutilvector.obj
-c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\debug use_dft_lib\driver.ilk
-c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\debug use_dft_lib\driver.exe
-c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\debug use_dft_lib\driver.pdb
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testtesthelper_utilsortedvector.obj
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\testutilsortedlist.obj
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\cl.command.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\cl.read.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\cl.write.1.tlog
@@ -25,7 +23,14 @@ c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link-cvtres.write.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link-rc.read.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link-rc.write.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492-cvtres.read.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492-cvtres.write.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492-rc.read.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492-rc.write.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492.read.1.tlog
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.21492.write.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.command.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.read.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\link.write.1.tlog
 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\driver\debug use_dft_lib\vc110.idb
+c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\debug use_dft_lib\driver.pdb

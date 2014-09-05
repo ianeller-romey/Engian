@@ -37,6 +37,7 @@ namespace Util
       SortedContainer( EqualityFunc const equalityFunc = TemplateComparisonFunctions< T >::DefaultEquals, 
                        GreaterThanFunc const greaterThanFunc = TemplateComparisonFunctions< T >::DefaultGreaterThan, 
                        LessThanFunc const lessThanFunc = TemplateComparisonFunctions< T >::DefaultLessThan ) :
+        Container< T >(),
         m_equalityFunc( equalityFunc ),
         m_greaterThanFunc( greaterThanFunc ),
         m_lessThanFunc( lessThanFunc )

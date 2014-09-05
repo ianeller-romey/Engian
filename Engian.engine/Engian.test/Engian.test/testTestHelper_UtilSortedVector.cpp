@@ -38,6 +38,7 @@ namespace Test
     RETURNLINEIFFAILED( CheckUtilSortedVectorInit< int >( sVector, number, 0 ) == 0 );
     RETURNLINEIFFAILED( CheckUtilSortedVector< int >( sVector ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< int >, "SortedVector< T >::SortedVector()" ) );
+    return 0;
   }
 
 
@@ -55,7 +56,8 @@ namespace Test
     RETURNLINEIFFAILED( CheckUtilSortedVector< UnitTestSampleClass >( sVector ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< UnitTestSampleClass >, 
                                         "SortedVector< T >::SortedVector( T const * const tArray, unsigned const size )" ) );
-    }
+    return 0;
+  }
 
 
   unsigned const TestHelper_UtilSortedVector::SortedVector_Constructor3()
@@ -70,6 +72,7 @@ namespace Test
                                                            TestHelper_UtilContainer::GetUtilContainerSize< char >( string ) ) == 0 );
     RETURNLINEIFFAILED( CheckUtilSortedVector< char >( sVector ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< char >, "SortedVector< T >::SortedVector( Container< T > const& container )" ) );
+    return 0;
   }
 
 
@@ -194,7 +197,6 @@ namespace Test
 
   unsigned const TestHelper_UtilSortedVector::SortedVector_BasicAssignment1()
   {
-    /*
     unsigned const number1 = 500, number2 = 200;
     float numbers1[ number1 ], numbers2[ number2 ];
     for( unsigned i = 0; i < number1; ++i )
@@ -210,7 +212,6 @@ namespace Test
     RETURNLINEIFFAILED( CheckUtilSortedVectorAgainstArray< float >( sVector2, sVector1.m_array, sVector1.m_size ) == 0 )
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< float >, 
                                         "SortedVector< T >& SortedVector< T >::operator=( SortedVector< T > const& sortedVector )" ) );
-    */
     return 0;
   }
 
@@ -253,7 +254,7 @@ namespace Test
       numbers2[ i ] = rand();
     }
     Util::SortedVector< int > sVector1( numbers1, number ),
-                               sVector2( numbers2, number );
+                              sVector2( numbers2, number );
     
     unsigned const oldSize = sVector2.m_size;
     sVector2 += sVector1;
@@ -270,8 +271,10 @@ namespace Test
   template< typename T >
   unsigned const TestHelper_UtilSortedVector::CheckUtilSortedVector( Util::SortedVector< T > const& sVector )
   {
+    if( sVector.m_size == 0 ) 
+      return 0;
     for( unsigned i = 0, j = sVector.m_size - 1; i < j; ++i )
-      RETURNLINEIFFAILED( sVector.m_array[ i ] < sVector.m_array[ i + 1 ] );
+      RETURNLINEIFFAILED( sVector.m_array[ i ] <= sVector.m_array[ i + 1 ] );
     return 0;
   }
      

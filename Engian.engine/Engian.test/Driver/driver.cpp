@@ -7,12 +7,7 @@ void main()
 {
   char const * output;
 
-  Test::UnitTestChassis::TestUtilString_String_Constructor4("");
-  Test::UnitTestChassis::TestUtilString_String_CopyConstructor("");
-  Test::UnitTestChassis::TestUtilString_String_PopBack("");
-  Test::UnitTestChassis::TestUtilString_String_Clear("");
-  Test::UnitTestChassis::TestUtilString_String_BasicAssignment3("");
-  Test::UnitTestChassis::TestUtilString_String_Addition0("");
+  Test::UnitTestChassis::TestUtilSortedList_SortedList_CopyConstructor("");
 
 
   //output = Test::UnitTestChassis::TestUtilVector_Vector_Constructor0( "" );
