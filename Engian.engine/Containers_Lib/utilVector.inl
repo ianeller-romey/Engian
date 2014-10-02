@@ -112,10 +112,7 @@ namespace Util
   Vector< T >& Vector< T >::operator=( Vector< T > const& vector )
   {
     DFT_FUNC_TRACK( "Vector< T >& Vector< T >::operator=( Vector< T > const& vector )" );
-    Clear();
-
-    m_capacity = vector.GetCapacity();
-    m_array = new T[ m_capacity ];
+    Clear( vector.GetCapacity() );
     PushBackRange( *vector, vector.GetSize() );
 
     return *this;
@@ -126,9 +123,7 @@ namespace Util
   Container< T >& Vector< T >::operator=( Container< T > const& container )
   {
     DFT_FUNC_TRACK( "Container< T >& Vector< T >::operator=( Container< T > const& container )" );
-    Clear();
-
-    m_capacity = container.GetSize();
+    Clear( container.GetSize() );
     m_array = new T[ m_capacity ];
     PushBackRange( container );
 
@@ -140,7 +135,7 @@ namespace Util
   Vector< T >::~Vector()
   {
     DFT_FUNC_TRACK( "Vector< T >::~Vector()" );
-    Clear();
+    Deallocate();
   }
 
     
@@ -282,13 +277,22 @@ namespace Util
   void Vector< T >::Clear()
   {
     DFT_FUNC_TRACK( "void Vector< T >::Clear()" );
+    Clear( c_defaultCapacity );
+  }
+  
+      
+  template< typename T >
+  void Vector< T >::Clear( unsigned const newCapacity )
+  {
+    DFT_FUNC_TRACK( "void Vector< T >::Clear( unsigned const newCapacity )" );
     if( m_array != 0 )
     {
       delete[] m_array;
       m_array = 0;
     }
-    m_capacity = 0;
+    m_capacity = newCapacity;
     m_size = 0;
+    m_array = new T[ m_capacity ];
     InvalidateAllIteratorImplementations();
   }
 
@@ -320,6 +324,21 @@ namespace Util
 
   
   template< typename T >
+  void Vector< T >::Deallocate()
+  {
+    DFT_FUNC_TRACK( "void Vector< T >::Deallocate()" );
+    if( m_array != 0 )
+    {
+      delete[] m_array;
+      m_array = 0;
+    }
+    m_capacity = 0;
+    m_size = 0;
+    InvalidateAllIteratorImplementations();
+  }
+
+  
+  template< typename T >
   bool const Vector< T >::Search( unsigned& startIndex, T const& t ) const
   {
     DFT_FUNC_TRACK( "bool const Vector< T >::Search( unsigned& startIndex, T const& t ) const" );
@@ -341,7 +360,5 @@ namespace Util
       m_array[ i ] = m_array[ i + 1 ];
     PopBack();
   }
-
-  //template class Vector< int >;
 
 }

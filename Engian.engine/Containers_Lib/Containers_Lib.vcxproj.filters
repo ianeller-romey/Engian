@@ -50,9 +50,6 @@
     <ClInclude Include="utilList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utilSortedContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="utilSortedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -73,6 +70,9 @@
     </ClInclude>
     <ClInclude Include="MurmurHash3.h">
       <Filter>Header Files\Murmur3</Filter>
+    </ClInclude>
+    <ClInclude Include="utilSorter.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

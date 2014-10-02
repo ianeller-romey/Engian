@@ -169,9 +169,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="testTestHelper_UtilList.h" />
-    <ClInclude Include="testTestHelper_UtilSortedContainer.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
+    <ClInclude Include="testTestHelper_UtilSorter.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="testTestHelper_UtilSortedList.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -213,9 +215,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="testTestHelper_UtilList.cpp" />
-    <ClCompile Include="testTestHelper_UtilSortedContainer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">true</ExcludedFromBuild>
+    <ClCompile Include="testTestHelper_UtilSorter.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release USE_DFT_LIB|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="testTestHelper_UtilSortedList.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

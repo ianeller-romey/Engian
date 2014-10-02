@@ -91,7 +91,6 @@ namespace Util
     m_back( m_end )
   {
     DFT_FUNC_TRACK( "List< T >::List( T const * const tArray, unsigned const size )" );
-
     PushBackRange( tArray, size );
   }
 
@@ -104,7 +103,6 @@ namespace Util
     m_back( m_end )
   {
     DFT_FUNC_TRACK( "List< T >::List( List< T > const& list )" );
-
     PushBackRange( list );
   }
 
@@ -117,7 +115,6 @@ namespace Util
     m_back( m_end )
   {
     DFT_FUNC_TRACK( "List< T >::List( Container< T > const& container )" );
-
     PushBackRange( container );
   }
       
@@ -137,7 +134,6 @@ namespace Util
   List< T >& List< T >::operator=( List< T > const& list )
   {
     DFT_FUNC_TRACK( "List< T >& List< T >::operator=( List< T > const& list )" );
-
     Clear();
 
     PushBackRange( list );
@@ -149,7 +145,6 @@ namespace Util
   Container< T >& List< T >::operator=( Container< T > const& container )
   {
     DFT_FUNC_TRACK( "Container< T >& List< T >::operator=( Container< T > const& container )" );
-
     Clear();
 
     PushBackRange( container );
@@ -161,9 +156,7 @@ namespace Util
   List< T >::~List()
   {
     DFT_FUNC_TRACK( "List< T >::~List()" );
-
-    Clear();
-    delete m_end;
+    Deallocate();
   }
 
 
@@ -171,7 +164,6 @@ namespace Util
   List< T > List< T >::operator+( List< T > const& list ) const
   {
     DFT_FUNC_TRACK( "List< T > List< T >::operator+( List< T > const& list ) const" );
-
     List< T > newList( *this );
     newList.PushBackRange( list );
     return newList;
@@ -181,8 +173,7 @@ namespace Util
   template< typename T >
   List< T >& List< T >::operator+=( List< T > const& list )
   {
-    DFT_FUNC_TRACK( "List< T >& List< T >::operator+=( List< T > const& list )" );
-      
+    DFT_FUNC_TRACK( "List< T >& List< T >::operator+=( List< T > const& list )" );      
     PushBackRange( list );
     return *this;
   }
@@ -192,7 +183,6 @@ namespace Util
   void List< T >::PushFront( T const& t )
   {
     DFT_FUNC_TRACK( "void List< T >::PushFront( T const& t )" );
-
     char* memLoc = new char[ sizeof( ListNode ) + sizeof( T ) ];
 
     T* newT = new( memLoc + sizeof( ListNode ) ) T( t );
@@ -212,7 +202,6 @@ namespace Util
   void List< T >::PushBack( T const& t )
   {
     DFT_FUNC_TRACK( "void List< T >::PushBack( T const& t )" );
-
     char* memLoc = new char[ sizeof( ListNode ) + sizeof( T ) ];
     
     T* newT = new( memLoc + sizeof( ListNode ) ) T( t );
@@ -232,7 +221,6 @@ namespace Util
   void List< T >::PopFront()
   {
     DFT_FUNC_TRACK( "void List< T >::PopFront()" );
-
     if( IsEmpty() )
       return;
 
@@ -245,7 +233,6 @@ namespace Util
   void List< T >::PopBack()
   {
     DFT_FUNC_TRACK( "void List< T >::PopBack()" );
-
     if( IsEmpty() )
       return;
 
@@ -258,7 +245,6 @@ namespace Util
   void List< T >::PopFirst( T const& t )
   {
     DFT_FUNC_TRACK( "void List< T >::PopFirst( T const& t )" );
-
     if( IsEmpty() )
       return;
 
@@ -272,7 +258,6 @@ namespace Util
   void List< T >::PopAll( T const& t )
   {
     DFT_FUNC_TRACK( "void List< T >::PopAll( T const& t )" );
-
     if( IsEmpty() )
       return;
 
@@ -292,9 +277,19 @@ namespace Util
   bool const List< T >::Contains( T const& t ) const
   {
     DFT_FUNC_TRACK( "bool const List< T >::Contains( T const& t ) const" );
-
     ListNode const * temp = m_front;
     return Search( &temp, t );
+  }
+
+
+  template< typename T >
+  void List< T >::Deallocate()
+  {
+    DFT_FUNC_TRACK( "bool const List< T >::Contains( T const& t ) const" );
+    Clear();
+    delete m_end;
+    m_front = m_back = m_end = 0;
+    InvalidateAllIteratorImplementations();
   }
 
   
@@ -302,7 +297,6 @@ namespace Util
   bool const List< T >::Search( ListNode const** startIndex, T const& t ) const
   {
     DFT_FUNC_TRACK( "bool const List< T >::Search( ListNode const** startIndex, T const& t ) const" );
-
     while( ( *startIndex ) != m_end && *( ( *startIndex )->m_data ) != t )
       ( *startIndex ) = ( *startIndex )->m_next;
 
@@ -314,7 +308,6 @@ namespace Util
   void List< T >::Pop( ListNode const * const listNode )
   {
     DFT_FUNC_TRACK( "void List< T >::Pop( ListNode const * const listNode )" );
-
     if( listNode->m_prev != m_end )
       listNode->m_prev->m_next = listNode->m_next;
     if( listNode->m_next != m_end )
@@ -333,7 +326,5 @@ namespace Util
 
     InvalidateAllIteratorImplementations();
   }
-
-  //template class List< int >;
 
 }

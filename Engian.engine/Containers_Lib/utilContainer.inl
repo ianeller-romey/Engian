@@ -267,8 +267,12 @@ namespace Util
   {
     DFT_FUNC_TRACK( "void Container< T >::PushBackRange( Container< T > const& container )" );
 
+    int i = 0;
     for( Iterator itB = container.Begin(), itE = container.End(); itB != itE; ++itB )
+    {
       PushBack( *itB );
+      ++i;
+    }
     InvalidateAllIteratorImplementations();
   }
 
@@ -307,6 +311,8 @@ namespace Util
   void Container< T >::Clear()
   {
     DFT_FUNC_TRACK( "void Container< T >::Clear()" );
+    if( IsEmpty() )
+      return;
 
     while( !IsEmpty() )
       PopBack();

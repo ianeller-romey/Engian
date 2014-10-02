@@ -21,7 +21,6 @@ namespace Util
     
   template< typename T >
   UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size ) :
-    Container< T >(),
     Vector< T >( size )
   {
     DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( T const * const tArray, unsigned const size )" );
@@ -31,7 +30,6 @@ namespace Util
     
   template< typename T >
   UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector ) :
-    Container< T >(),
     Vector< T >( uVector.m_capacity )
   {
     DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( UnsafeVector< T > const& uVector )" );
@@ -41,7 +39,6 @@ namespace Util
     
   template< typename T >
   UnsafeVector< T >::UnsafeVector( Container< T > const& container ) :
-    Container< T >(),
     Vector< T >( container.GetSize() )
   {
     DFT_FUNC_TRACK( "UnsafeVector< T >::UnsafeVector( Container< T > const& container )" );
@@ -83,7 +80,7 @@ namespace Util
   UnsafeVector< T >::~UnsafeVector()
   {
     DFT_FUNC_TRACK( "UnsafeVector< T >::~UnsafeVector()" );
-    Clear();
+    Deallocate();
   }
 
     
@@ -146,7 +143,5 @@ namespace Util
     m_array[ --m_size ].~T();
     InvalidateAllIteratorImplementations();
   }
-
-  //template class UnsafeVector< int >;
-
+  
 }

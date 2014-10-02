@@ -32,7 +32,7 @@
     <ClInclude Include="utilHashFunctions.h" />
     <ClInclude Include="utilHashTable.h" />
     <ClInclude Include="utilList.h" />
-    <ClInclude Include="utilSortedContainer.h" />
+    <ClInclude Include="utilSorter.h" />
     <ClInclude Include="utilSortedList.h" />
     <ClInclude Include="utilSortedVector.h" />
     <ClInclude Include="utilString.h" />

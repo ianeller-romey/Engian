@@ -22,7 +22,7 @@ namespace Util
 {
 
   template< typename T >
-  class Vector : public virtual Container< T >
+  class Vector : public Container< T >
   {
     public:
       //DFT_FUNC_TRACK_CLASS_DEC;
@@ -73,6 +73,7 @@ namespace Util
       virtual unsigned const GetCapacity() const;
 
       virtual void Clear();
+      virtual void Clear( unsigned const newCapacity );
 
       
     protected:
@@ -135,6 +136,8 @@ namespace Util
       // member functions
       virtual void CheckAndGrow();
       virtual void Grow();
+
+      virtual void Deallocate();
 
       virtual bool const Search( unsigned& startIndex, T const& t ) const;
       virtual void ShiftAndPop( unsigned const startIndex );

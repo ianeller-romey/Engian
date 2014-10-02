@@ -78,6 +78,7 @@ namespace Util
       virtual bool const IsEmpty() const;
 
       virtual void Clear();
+      virtual void Clear( unsigned const newCapacity );
 
 
     protected:

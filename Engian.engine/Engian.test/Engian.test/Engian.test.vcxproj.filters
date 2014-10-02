@@ -30,9 +30,6 @@
     <ClInclude Include="testTestHelper_UtilList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="testTestHelper_UtilSortedContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="testTestHelper_UtilSortedList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,6 +49,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="testUnitTestSampleClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="testTestHelper_UtilSorter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,9 +92,6 @@
     <ClCompile Include="testTestHelper_UtilList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="testTestHelper_UtilSortedContainer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="testTestHelper_UtilSortedList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,6 +111,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="testUnitTestSampleClass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="testTestHelper_UtilSorter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

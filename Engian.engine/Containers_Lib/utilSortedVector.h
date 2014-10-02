@@ -4,7 +4,7 @@
 
 #include "debugForTestDefines.h"
 
-#include "utilSortedContainer.h"
+#include "utilSorter.h"
 #include "utilVector.h"
 
 
@@ -23,7 +23,7 @@ namespace Util
 {
 
   template< typename T >
-  class SortedVector : public SortedContainer< T >, public Vector< T >
+  class SortedVector : public Sorter< T >, public Vector< T >
   {
     public:
       //DFT_FUNC_TRACK_CLASS_DEF;
@@ -40,7 +40,6 @@ namespace Util
       SortedVector( Container< T > const& container );
       virtual ~SortedVector();
       virtual SortedVector< T >& operator=( SortedVector< T > const& sortedVector );
-      virtual SortedContainer< T >& operator=( SortedContainer< T > const& sortedContainer );
 
       virtual SortedVector< T > operator+( SortedVector< T > const& vector ) const;
       virtual SortedVector< T >& operator+=( SortedVector< T > const& vector );

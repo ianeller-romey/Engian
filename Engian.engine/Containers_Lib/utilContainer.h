@@ -107,6 +107,8 @@ namespace Util
 
       void InvalidateAllIteratorImplementations();
 
+      virtual void Deallocate() = 0;
+
       unsigned m_size;
       mutable IteratorImplNode* m_implementations;
 

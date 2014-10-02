@@ -1,104 +1,182 @@
-﻿Build started 9/4/2014 12:33:03 PM.
+﻿Build started 9/8/2014 9:51:29 AM.
      1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Engian.test\Engian.test.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilSortedList.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilList.cpp
+         testTestHelper_UtilList.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(91): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(129): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(424): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(424): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(425): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(425): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(428): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(428): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(429): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(429): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(561): warning C4018: '<' : signed/unsigned mismatch
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(155) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstArray<char>(const Util::List<T> &,const T *,const unsigned int,const int)' being compiled
+                 with
+                 [
+                     T=char
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(608): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=float
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(185) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstContainer<float>(const Util::List<T> &,const Util::Container<T> &)' being compiled
+                 with
+                 [
+                     T=float
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(608): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utillist.cpp(447) : see reference to function template instantiation 'const unsigned int Test::TestHelper_UtilList::CheckUtilListAgainstContainer<int>(const Util::List<T> &,const Util::Container<T> &)' being compiled
+                 with
+                 [
+                     T=int
+                 ]
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D WIN32 /D _DEBUG /D _WINDOWS /D _WINDLL /D _USRDLL /D TESTICLE_EXPORTS /D RUN_UNIT_TESTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt testTestHelper_UtilSortedList.cpp testTestHelper_UtilSortedVector.cpp testTestHelper_UtilString.cpp testTestHelper_UtilUnsafeVector.cpp testTestHelper_UtilVector.cpp testUtilSortedList.cpp testUtilVector.cpp
+         testUtilVector.cpp
+         testTestHelper_UtilVector.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(93): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(133): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
+                 with
+                 [
+                     T=int
+                 ]
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilcontainer.h(123) : see declaration of 'Util::Container<T>::Iterator'
+                 with
+                 [
+                     T=int
+                 ]
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4309: 'argument' : truncation of constant value
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4305: 'argument' : truncation from '__int64' to 'const long'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4309: 'argument' : truncation of constant value
+         testTestHelper_UtilUnsafeVector.cpp
+         testTestHelper_UtilString.cpp
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(217): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(223): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(227): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(237): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(252): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(268): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(274): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(278): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(288): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(303): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(400): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(404): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(420): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(428): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(449): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(458): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(621): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilstring.cpp(634): warning C4002: too many actual parameters for macro 'DFT_FUNC_CHECK'
+         testTestHelper_UtilSortedVector.cpp
          testTestHelper_UtilSortedList.cpp
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(41): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(45): warning C4018: '>' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(207): warning C4244: 'initializing' : conversion from 'const float' to 'unsigned int', possible loss of data
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(204) : while compiling class template member function 'void Util::SortedList<T>::Push(const T &)'
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(110) : see reference to function template instantiation 'void Util::SortedList<T>::Push(const T &)' being compiled
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(18) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(36) : while compiling class template member function 'Util::SortedList<T>::SortedList(const T *const ,const unsigned int)'
                  with
                  [
                      T=int
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(72) : see reference to function template instantiation 'Util::SortedList<T>::SortedList(const T *const ,const unsigned int)' being compiled
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(55) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
                  with
                  [
                      T=int
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(358): warning C4018: '>' : signed/unsigned mismatch
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(304) : while compiling class template member function 'void Util::SortedList<T>::FindInsertionNodeInTier(const unsigned int,const unsigned int,const T &,bool &,Util::SortedList<T>::SortedListNode **,Util::SortedList<T>::SortedListNode **) const'
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(251) : see reference to function template instantiation 'void Util::SortedList<T>::FindInsertionNodeInTier(const unsigned int,const unsigned int,const T &,bool &,Util::SortedList<T>::SortedListNode **,Util::SortedList<T>::SortedListNode **) const' being compiled
                  with
                  [
                      T=int
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(37) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(140): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(215): warning C4244: 'initializing' : conversion from 'const float' to 'unsigned int', possible loss of data
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(212) : while compiling class template member function 'void Util::SortedList<T>::Push(const T &)'
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(17) : while compiling class template member function 'Util::SortedList<T>::SortedListNode::SortedListNode(Util::List<T>::ListNode *,Util::List<T>::ListNode *,T *,Util::SortedList<T>::SortedListNode *)'
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(121) : see reference to function template instantiation 'void Util::SortedList<T>::Push(const T &)' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(40) : see reference to function template instantiation 'Util::SortedList<T>::SortedListNode::SortedListNode(Util::List<T>::ListNode *,Util::List<T>::ListNode *,T *,Util::SortedList<T>::SortedListNode *)' being compiled
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(26) : while compiling class template member function 'Util::SortedList<T>::SortedList(void)'
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(38) : see reference to class template instantiation 'Util::SortedList<T>::SortedListNode' being compiled
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(18) : see reference to function template instantiation 'Util::SortedList<T>::SortedList(void)' being compiled
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(18) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
-                 with
-                 [
-                     T=int
-                 ]
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         testUtilSortedList.cpp
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1137,5): warning MSB8012: TargetPath(C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Engian.test.dll) does not match the Linker's OutputFile property value (C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Engian.test.x86.Debug USE_DFT_LIB.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(1139,5): warning MSB8012: TargetName(Engian.test) does not match the Linker's OutputFile property value (Engian.test.x86.Debug USE_DFT_LIB). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
        Link:
@@ -128,4 +206,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.50
+Time Elapsed 00:00:03.32

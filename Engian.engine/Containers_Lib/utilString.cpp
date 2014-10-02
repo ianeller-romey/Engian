@@ -410,11 +410,23 @@ namespace Util
   }
 
 
+  void String::Clear( unsigned const newCapacity )
+  {
+    DFT_FUNC_TRACK( "void String::Clear( unsigned const newCapacity )" );
+    if( m_array != 0 )
+      delete m_array;
+    m_capacity = newCapacity;
+    m_array = new char[ m_capacity ];
+    MakeEmptyString();
+  }
+
+
   void String::MakeEmptyString()
   {
     DFT_FUNC_TRACK( "void String::MakeEmptyString()" );
     m_array[ 0 ] = '\0';
     m_size = 1;
+    InvalidateAllIteratorImplementations();
   }
   
       

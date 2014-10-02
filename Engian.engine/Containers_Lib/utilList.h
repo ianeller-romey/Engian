@@ -22,7 +22,7 @@ namespace Util
 {
 
   template< typename T >
-  class List : public virtual Container< T >
+  class List : public Container< T >
   {
     protected:
       struct ListNode;
@@ -74,6 +74,8 @@ namespace Util
       ////////
       // member functions
       List( ListNode* end );
+
+      virtual void Deallocate();
 
       ////////
       // member classes

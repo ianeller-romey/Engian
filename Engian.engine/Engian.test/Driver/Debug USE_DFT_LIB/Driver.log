@@ -1,157 +1,27 @@
-﻿Build started 9/5/2014 3:54:45 PM.
+﻿Build started 10/2/2014 3:19:57 PM.
      1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Driver\Driver.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib\ /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Driver\..\Engian.test\ /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testTestHelper_UtilSortedList.cpp
          testTestHelper_UtilSortedList.cpp
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(41): warning C4018: '>' : signed/unsigned mismatch
      1>c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(45): warning C4018: '>' : signed/unsigned mismatch
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
+     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(340): warning C4244: 'initializing' : conversion from 'const float' to 'unsigned int', possible loss of data
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(337) : while compiling class template member function 'const unsigned int Util::SortedList<T>::CalculateRandomNumberOfTiers(void) const'
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(221) : see reference to function template instantiation 'const unsigned int Util::SortedList<T>::CalculateRandomNumberOfTiers(void) const' being compiled
                  with
                  [
                      T=int
                  ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(55) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(49) : while compiling class template member function 'Util::SortedList<T>::SortedList(const Util::SortedList<T> &)'
                  with
                  [
                      T=int
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
-                 with
-                 [
-                     T=int
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
-                 with
-                 [
-                     T=int
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(88) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
-                 with
-                 [
-                     T=Test::UnitTestSampleClass
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
-                 with
-                 [
-                     T=char
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
-                 with
-                 [
-                     T=char
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(107) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
-                 with
-                 [
-                     T=char
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
-                 with
-                 [
-                     T=char
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
-                 with
-                 [
-                     T=char
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
-                 with
-                 [
-                     T=char
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
-                 with
-                 [
-                     T=char
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::operator =' via dominance
-                 with
-                 [
-                     T=double
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(39) : see declaration of 'Util::List<T>::operator ='
-                 with
-                 [
-                     T=double
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\engian.test\engian.test\testtesthelper_utilsortedlist.cpp(124) : see reference to class template instantiation 'Util::SortedList<T>' being compiled
-                 with
-                 [
-                     T=double
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::Begin' via dominance
-                 with
-                 [
-                     T=double
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(43) : see declaration of 'Util::List<T>::Begin'
-                 with
-                 [
-                     T=double
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.h(136): warning C4250: 'Util::SortedList<T>' : inherits 'Util::List<T>::Util::List<T>::End' via dominance
-                 with
-                 [
-                     T=double
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utillist.h(52) : see declaration of 'Util::List<T>::End'
-                 with
-                 [
-                     T=double
-                 ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(222): warning C4244: 'initializing' : conversion from 'const float' to 'unsigned int', possible loss of data
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(219) : while compiling class template member function 'void Util::SortedList<T>::Push(const T &)'
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(125) : see reference to function template instantiation 'void Util::SortedList<T>::Push(const T &)' being compiled
+                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(95) : see reference to function template instantiation 'Util::SortedList<T>::SortedList(const Util::SortedList<T> &)' being compiled
                  with
                  [
                      T=int
@@ -171,41 +41,15 @@
                  [
                      T=int
                  ]
-     1>c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(373): warning C4018: '>' : signed/unsigned mismatch
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(319) : while compiling class template member function 'void Util::SortedList<T>::FindInsertionNodeInTier(const unsigned int,const unsigned int,const T &,bool &,Util::SortedList<T>::SortedListNode **,Util::SortedList<T>::SortedListNode **) const'
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(266) : see reference to function template instantiation 'void Util::SortedList<T>::FindInsertionNodeInTier(const unsigned int,const unsigned int,const T &,bool &,Util::SortedList<T>::SortedListNode **,Util::SortedList<T>::SortedListNode **) const' being compiled
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(17) : while compiling class template member function 'Util::SortedList<T>::SortedListNode::SortedListNode(Util::List<T>::ListNode *,Util::List<T>::ListNode *,T *,Util::SortedList<T>::SortedListNode *)'
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(42) : see reference to function template instantiation 'Util::SortedList<T>::SortedListNode::SortedListNode(Util::List<T>::ListNode *,Util::List<T>::ListNode *,T *,Util::SortedList<T>::SortedListNode *)' being compiled
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\programs\test\engian\engian.engine\containers_lib\utilsortedlist.inl(40) : see reference to class template instantiation 'Util::SortedList<T>::SortedListNode' being compiled
-                 with
-                 [
-                     T=int
-                 ]
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.exe" /INCREMENTAL /NOLOGO "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Debug USE_DFT_LIB\Containers_Lib.x86.Debug USE_DFT_LIB.lib" "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\..\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.lib" /MACHINE:X86 "Debug USE_DFT_LIB\testTestHelper_UtilContainer.obj"
          "Debug USE_DFT_LIB\testTestHelper_UtilList.obj"
+         "Debug USE_DFT_LIB\testTestHelper_UtilSorter.obj"
          "Debug USE_DFT_LIB\testUnitTestChassis.obj"
          "Debug USE_DFT_LIB\testUnitTestSampleClass.obj"
          "Debug USE_DFT_LIB\testUnitTestSampleStruct.obj"
          "Debug USE_DFT_LIB\testUtilList.obj"
          "Debug USE_DFT_LIB\driver.obj"
-         "Debug USE_DFT_LIB\testTestHelper_UtilSortedContainer.obj"
          "Debug USE_DFT_LIB\testTestHelper_UtilSortedList.obj"
          "Debug USE_DFT_LIB\testTestHelper_UtilSortedVector.obj"
          "Debug USE_DFT_LIB\testTestHelper_UtilString.obj"
@@ -221,4 +65,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.59
+Time Elapsed 00:00:01.17

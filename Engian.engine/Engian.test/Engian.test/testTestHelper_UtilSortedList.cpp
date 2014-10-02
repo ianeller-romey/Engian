@@ -117,15 +117,39 @@ namespace Test
 
   unsigned const TestHelper_UtilSortedList::SortedList_CopyConstructor()
   {
-    unsigned const number = 1234;
+    unsigned const number = 100;
     double doubles[ number ];
     for( unsigned i = 0; i < number; ++i )
-      doubles[ i ] = (double)rand();
+      doubles[ i ] = number - i;//(double)rand();
+    //doubles[ 75 ] = 45;
     Util::SortedList< double > sList1( doubles, number ),
                                sList2( sList1 );
+    {
+      Util::SortedList< double >::Iterator itB = sList1.Begin(),
+                                           itE = sList1.End();
+      unsigned i = 0;
+      while( itB != itE )
+      {
+        ++i;
+        ++itB;
+      }
+
+      Util::SortedList< double >::SortedListNode *nodeFront = 
+        sList1.GetBottomTier( static_cast< Util::SortedList< double >::SortedListNode* >( sList1.m_front ),
+                              sList1.m_tiers,
+                              0 ),
+                                                  *nodeEnd = 
+        static_cast< Util::SortedList< double >::SortedListNode* >( sList1.m_end );
+      unsigned j = 0;
+      while( nodeFront != nodeEnd )
+      {
+        ++j;
+        nodeFront = static_cast< Util::SortedList< double >::SortedListNode* >( nodeFront->m_next );
+      }
+    }
     RETURNLINEIFFAILED( CheckUtilSortedListFrontAndBack< double >( sList2, sList1.m_size, true ) == 0 );
     RETURNLINEIFFAILED( CheckUtilSortedList< double >( sList2 ) == 0 );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedList< double >, "SortedList< T >::SortedList( SortedList const& sortedList )" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedList< double >, "SortedList< T >::SortedList( SortedList< T > const& sortedList )" ) );
     WriteSortedList< double >( sList2 );
     return 0;
   }
@@ -209,11 +233,11 @@ namespace Test
     if( sList.m_size == 0 ) 
       return 0;
 
-    Util::SortedList< T >::SortedListNode* frontNode = dynamic_cast< Util::SortedList< T >::SortedListNode* >( sList.m_front );
-    RETURNLINEIFFAILED( frontNode );
-    while( frontNode != sList.m_end )
+    Util::SortedList< T >::SortedListNode* headNode = sList.m_head;
+    RETURNLINEIFFAILED( headNode );
+    while( headNode != sList.m_end )
     {
-      Util::SortedList< T >::SortedListNode* node = frontNode;
+      Util::SortedList< T >::SortedListNode* node = static_cast< Util::SortedList< T >::SortedListNode* >( headNode->m_next );
       while( node->m_next != sList.m_end )
       {
         RETURNLINEIFFAILED( *( node->m_data ) <= *( node->m_next->m_data ) );
@@ -226,7 +250,7 @@ namespace Test
         node = dynamic_cast< Util::SortedList< T >::SortedListNode* >( node->m_next );
         RETURNLINEIFFAILED( node );
       }
-      frontNode = frontNode->m_nextTier;
+      headNode = headNode->m_nextTier;
     }
     return 0;
   }
@@ -263,9 +287,11 @@ namespace Test
     RETURNLINEIFFAILED( sList.m_end->m_data == 0 );
     RETURNLINEIFFAILED( sList.m_front != 0 );
     RETURNLINEIFFAILED( sList.m_back != 0 );
+    RETURNLINEIFFAILED( sList.m_head != 0 );
+    RETURNLINEIFFAILED( sList.m_head->m_data == 0 );
+    RETURNLINEIFFAILED( sList.m_head->m_prev == sList.m_end );
 
-    Util::SortedList< T >::SortedListNode* node = dynamic_cast< Util::SortedList< T >::SortedListNode* >( sList.m_front );
-    RETURNLINEIFFAILED( node );
+    Util::SortedList< T >::SortedListNode* node = sList.m_head;
     unsigned calculatedTiers = 0;
     while( node != sList.m_end )
     {
@@ -286,7 +312,7 @@ namespace Test
     if( endCheck )
     {
       RETURNLINEIFFAILED( sList.m_front != sList.m_end );
-      RETURNLINEIFFAILED( sList.m_front->m_prev == sList.m_end );
+      RETURNLINEIFFAILED( sList.m_front->m_prev != sList.m_end );
       RETURNLINEIFFAILED( sList.m_back != sList.m_end );
       RETURNLINEIFFAILED( sList.m_back->m_next == sList.m_end ); 
     }
@@ -297,7 +323,7 @@ namespace Test
   template< typename T >
   void TestHelper_UtilSortedList::WriteSortedList( Util::SortedList< T > const& sList )
   {
-    Util::SortedList< T >::SortedListNode* frontNode = static_cast< Util::SortedList< T >::SortedListNode* >( sList.m_front );
+    Util::SortedList< T >::SortedListNode* headNode = sList.m_head;
 
     char top[] = ";---           ---";
     char mid[] = ";|--           --|";
@@ -312,7 +338,7 @@ namespace Test
     std::ofstream output( "C:\\Users\\elleri\\Documents\\TestManager\\sampleoutput.txt", std::ofstream::out );
     for( int i = sList.m_tiers; i >= 0; --i )
     {
-      Util::SortedList< T >::SortedListNode* node = frontNode;
+      Util::SortedList< T >::SortedListNode* node = headNode;
       while( node != sList.m_end && node )
       {
         WriteSortedListString( output,
@@ -323,7 +349,7 @@ namespace Test
       }
       output << '\n';
 
-      node = frontNode;
+      node = headNode;
       while( node != sList .m_end && node )
       {
         WriteSortedListString( output,
@@ -334,7 +360,7 @@ namespace Test
       }
       output << '\n';
 
-      node = frontNode;
+      node = headNode;
       while( node != sList .m_end && node )
       {
         WriteSortedListString( output,
@@ -345,7 +371,7 @@ namespace Test
       }
       output << '\n';
 
-      node = frontNode;
+      node = headNode;
       while( node != sList .m_end && node )
       {
         WriteSortedListString( output,
@@ -356,7 +382,7 @@ namespace Test
       }
       output << '\n';
 
-      node = frontNode;
+      node = headNode;
       while( node != sList .m_end && node )
       {
         WriteSortedListString( output,
@@ -367,7 +393,7 @@ namespace Test
       }
       output << '\n';
 
-      node = frontNode;
+      node = headNode;
       while( node != sList .m_end && node )
       {
         WriteSortedListString( output,
@@ -378,7 +404,7 @@ namespace Test
       }
       output << '\n';
 
-      frontNode = frontNode->m_nextTier;
+      headNode = headNode->m_nextTier;
     }
     output.close();
   }

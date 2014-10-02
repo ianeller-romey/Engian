@@ -5,7 +5,7 @@ namespace Util
   template< typename T >
   SortedVector< T >::SortedVector() :
     Vector< T >(),
-    SortedContainer< T >()
+    Sorter< T >()
   {
     DFT_FUNC_TRACK( "SortedVector< T >::SortedVector()" );
   }
@@ -14,7 +14,7 @@ namespace Util
   template< typename T >
   SortedVector< T >::SortedVector( unsigned const capacity ) :
     Vector< T >( capacity ),
-    SortedContainer< T >()
+    Sorter< T >()
   {
     DFT_FUNC_TRACK( "SortedVector< T >::SortedVector( unsigned const capacity )" );
   }
@@ -23,7 +23,7 @@ namespace Util
   template< typename T >
   SortedVector< T >::SortedVector( T const * const tArray, unsigned const size ) :
     Vector< T >( tArray, size ),
-    SortedContainer< T >()
+    Sorter< T >()
   {
     DFT_FUNC_TRACK( "SortedVector< T >::SortedVector( T const * const tArray, unsigned const size )" );
     QuickSort( m_array, 0, m_size - 1 );
@@ -68,21 +68,6 @@ namespace Util
     m_array = new T[ m_capacity ];
     for( unsigned i = 0, j = sortedVector.GetSize(); i < j; ++i )
       PushBack( sortedVector[ i ] );
-
-    return *this;
-  }
-
-    
-  template< typename T >
-  SortedContainer< T >& SortedVector< T >::operator=( SortedContainer< T > const& sortedContainer )
-  {
-    DFT_FUNC_TRACK( "SortedContainer< T >& SortedVector< T >::operator=( SortedContainer< T > const& sortedContainer )" );
-    Clear();
-
-    m_capacity = sortedContainer.GetSize();
-    m_array = new T[ m_capacity ];
-    for( Iterator itB = sortedContainer.Begin(), itE = sortedContainer.End(); itB != itE; ++itB )
-      PushBack( itB.Get() );
 
     return *this;
   }

@@ -53,9 +53,6 @@
     <ClCompile Include="..\Engian.test\testTestHelper_UtilList.cpp">
       <Filter>Source Files\Engian.test</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedContainer.cpp">
-      <Filter>Source Files\Engian.test</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engian.test\testTestHelper_UtilSortedList.cpp">
       <Filter>Source Files\Engian.test</Filter>
     </ClCompile>
@@ -77,6 +74,9 @@
     <ClCompile Include="..\Engian.test\testUnitTestSampleStruct.cpp">
       <Filter>Source Files\Engian.test</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engian.test\testTestHelper_UtilSorter.cpp">
+      <Filter>Source Files\Engian.test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engian.test\testIcle.h">
@@ -92,9 +92,6 @@
       <Filter>Header Files\Engian.test</Filter>
     </ClInclude>
     <ClInclude Include="..\Engian.test\testTestHelper_UtilList.h">
-      <Filter>Header Files\Engian.test</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedContainer.h">
       <Filter>Header Files\Engian.test</Filter>
     </ClInclude>
     <ClInclude Include="..\Engian.test\testTestHelper_UtilSortedList.h">
@@ -116,6 +113,9 @@
       <Filter>Header Files\Engian.test</Filter>
     </ClInclude>
     <ClInclude Include="..\Engian.test\testUnitTestSampleStruct.h">
+      <Filter>Header Files\Engian.test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engian.test\testTestHelper_UtilSorter.h">
       <Filter>Header Files\Engian.test</Filter>
     </ClInclude>
   </ItemGroup>

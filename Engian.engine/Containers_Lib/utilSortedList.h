@@ -4,7 +4,7 @@
 
 #include "debugForTestDefines.h"
 
-#include "utilSortedContainer.h"
+#include "utilSorter.h"
 #include "utilList.h"
 
 
@@ -23,7 +23,7 @@ namespace Util
 {
 
   template< typename T >
-  class SortedList : public SortedContainer< T >, public List< T >
+  class SortedList : public Sorter< T >, public List< T >
   {
     public:
       typedef bool const (*EqualityFunc) ( T const&, T const& );
@@ -38,8 +38,24 @@ namespace Util
       SortedList( SortedList< T > const& sortedList );
       SortedList( Container< T > const& container );
       virtual ~SortedList();
-      virtual SortedList< T >& operator=( SortedList< T > const& sortedList );
-      virtual SortedContainer< T >& operator=( SortedContainer< T > const& sortedContainer );
+      virtual SortedList< T >& operator=( SortedList< T > const& sortedList );        
+
+      virtual Iterator Begin() const
+      {
+        DFT_FUNC_TRACK( "Iterator SortedList< T >::Begin() const" );
+
+        ListIteratorImpl* iter = new ListIteratorImpl( GetBottomTier( static_cast< SortedListNode* >( m_front ), m_tiers, 0 ) );
+        return CreateIteratorFromImplementation( iter );
+      }
+
+
+      virtual Iterator const End() const
+      {
+        DFT_FUNC_TRACK( "Iterator const SortedList< T >::End() const" );
+
+        ListIteratorImpl* iter = new ListIteratorImpl( m_end );
+        return CreateIteratorFromImplementation( iter );
+      }
 
       virtual SortedList< T > operator+( SortedList< T > const& list ) const;
       virtual SortedList< T >& operator+=( SortedList< T > const& list );
@@ -51,8 +67,6 @@ namespace Util
       virtual void PopFirst( T const& t );
       virtual void PopAll( T const& t );
       virtual bool const Contains( T const& t ) const;
-
-      virtual void Clear();
 
 
     protected:
@@ -74,59 +88,97 @@ namespace Util
       ////////
       // member functions
       void Push( T const& t );
-      void AddSortedListNodeTierToFront();
 
-      void FindInsertionNodeInTier( unsigned const topTierLevel, unsigned const tierToInsert, T const& t, bool& contains, SortedListNode** prev, SortedListNode** next ) const;
+      void AddTierToHead();
+      unsigned const CalculateRandomNumberOfTiers() const;
+
+      void FindInsertionNodeInTier( SortedListNode* startTier,
+                                    unsigned const startTierNumber, 
+                                    unsigned const tierToInsert, 
+                                    T const& t, 
+                                    bool& contains, 
+                                    SortedListNode** prev, 
+                                    SortedListNode** next ) const;
       
       SortedListNode* GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::GetBottomTier( SortedListNode* const topTier, unsigned const topTierLevel, unsigned const bottomTierLevel ) const" );
         SortedListNode* bottom = topTier;
-        // NOTE: second condition SHOULD be redundant, and can HOPEFULLY be removed after testing
-        for( unsigned i = topTierLevel; i > bottomTierLevel; --i )
-          bottom = bottom->m_nextTier;
+        if( bottomTierLevel == 0 )
+        {
+          while( bottom->m_nextTier != m_end )
+            bottom = bottom->m_nextTier;
+        }
+        else
+        {
+          for( unsigned i = topTierLevel; i > bottomTierLevel; --i )
+            bottom = bottom->m_nextTier;
+        }
         return static_cast< SortedListNode* >( bottom );
       }
 
       unsigned const GetNumberOfTiers( SortedListNode const * const topTier ) const;
 
       void ClearTiers( SortedListNode const * topTier ) const;
-      
+
       SortedListNode* FindNewFront() const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewFront() const" );
-        SortedListNode* node = static_cast< SortedListNode* >( m_front );
-        while( node->m_next == m_end && node != m_end )
-          node = node->m_nextTier;
-        return ( node == m_end ) ? static_cast< SortedListNode* >( m_end ) : static_cast< SortedListNode* >( node->m_next );
+        SortedListNode *node = dynamic_cast< SortedListNode* >( m_head ),
+                       *temp;
+        for( unsigned i = m_tiers; i > 0; --i )
+        {
+          // if every tier's m_prev pointer is m_head, then this is the very first node
+          for( temp = static_cast< SortedListNode* >( node->m_next ); temp != m_end; temp = temp->m_nextTier )
+          {
+            if( temp->m_prev->m_prev != m_end )
+              break;
+          }
+          // if we made it past the bottom tier, this is our new front pointer
+          if( temp == m_end )
+            return static_cast< SortedListNode* >( node->m_next );
+          // otherwise, move down a tier and start over
+          else
+            node = node->m_nextTier;
+        }
+        return static_cast< SortedListNode* >( m_end );
       }
 
 
       SortedListNode* FindNewBack() const
       {
         DFT_FUNC_TRACK( "SortedListNode* SortedList< T >::FindNewBack() const" );
-        SortedListNode *node = dynamic_cast< SortedListNode* >( m_front ),
+        SortedListNode *node = dynamic_cast< SortedListNode* >( m_head ),
                        *temp;
         while( node != m_end )
         {
-          // if every tier's m_next pointer is null, then this is the very last node
+          // walk to the end of this tier
+          while( node->m_next != m_end )
+            node = static_cast< SortedListNode* >( node->m_next );
+
+          // if every tier's m_next pointer is m_end, then this is the very last node
           for( temp = node; temp != m_end; temp = temp->m_nextTier )
           {
             if( temp->m_next != m_end )
               break;
           }
-          // if we're at the end of the tier, move down to the next tier
-          if( node->m_next == m_end && node->m_nextTier != m_end )
+          // if we made it past the bottom tier, this is our new back pointer
+          if( temp == m_end )
+            return node;
+          // otherwise, move down a tier and start over
+          else
             node = node->m_nextTier;
-          node = static_cast< SortedListNode* >( node->m_next );
         }
         return static_cast< SortedListNode* >( m_end );
       }
 
+      virtual void Deallocate();
+
       ////////
       // member variable
-      unsigned m_tiers;
       static float const c_logBase;
+      unsigned m_tiers;
+      SortedListNode* m_head;
 
 
     private:
