@@ -2,3 +2,8 @@ C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMon
 C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\bin\Debug USE_DFT_LIB\TestMonger_Lib.pdb
 C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug USE_DFT_LIB\TestMonger_Lib.dll
 C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug USE_DFT_LIB\TestMonger_Lib.pdb
+C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\TestMonger_Lib\bin\Debug USE_DFT_LIB\TestMonger_Lib.dll
+C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\TestMonger_Lib\bin\Debug USE_DFT_LIB\TestMonger_Lib.pdb
+C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug USE_DFT_LIB\TestMonger_Lib.csprojResolveAssemblyReference.cache
+C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug USE_DFT_LIB\TestMonger_Lib.dll
+C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\TestMonger_Lib\obj\Debug USE_DFT_LIB\TestMonger_Lib.pdb

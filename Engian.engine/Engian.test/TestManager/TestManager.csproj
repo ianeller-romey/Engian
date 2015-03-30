@@ -73,9 +73,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TabItem_AddExistingTestFile.cs" />
     <Compile Include="TabItem_GenerateTestFile.cs" />
     <Compile Include="TabItem_TestMonger.cs" />
     <Compile Include="TabItem_TestUmbrella.cs" />
+    <Compile Include="TabItem_UpdateTestFileTab.cs" />
     <Compile Include="Window_TestResults.cs" />
     <Compile Include="Window_TextBox.cs" />
     <Page Include="MainWindow.xaml">

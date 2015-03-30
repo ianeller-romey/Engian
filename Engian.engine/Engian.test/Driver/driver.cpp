@@ -7,6 +7,8 @@ void main()
 {
   char const * output;
 
+  Test::UnitTestChassis::TestUtilVector_Vector_Clear("");
+
   Test::UnitTestChassis::TestUtilSortedList_SortedList_CopyConstructor("");
 
 

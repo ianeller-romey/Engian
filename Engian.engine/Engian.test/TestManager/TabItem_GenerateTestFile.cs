@@ -24,15 +24,11 @@ using CPPHeaderTestFileGenerator_Lib;
 namespace TestManager
 {
 
-    public class TabItem_GenerateTestFile : TabItem
+    public class TabItem_GenerateTestFile : TabItem_UpdateTestFileTab
     {
 
         #region MEMBER FIELDS
 
-        readonly string m_generatedXmlFile;
-        List<GeneratedTestFileInfo> m_generatedTestFiles = new List<GeneratedTestFileInfo>();
-
-        ListView m_listView_parsedHeaders;
         TextBox m_textBox_headerToParse;
         Button m_button_findHeaderToParse;
         Button m_button_generateTestFile;
@@ -76,9 +72,9 @@ namespace TestManager
 
         #region Public Functionality
 
-        public TabItem_GenerateTestFile(string generatedXmlFile, Window parent)
+        public TabItem_GenerateTestFile(string generatedXmlFile, Window parent) :
+            base(generatedXmlFile)
         {
-            m_generatedXmlFile = generatedXmlFile;
             GetListOfGeneratedTestFiles();
 
             m_parent = parent;
@@ -108,12 +104,6 @@ namespace TestManager
                 );
             Process testFileGenerator = Process.Start(processStartInfo);
             testFileGenerator.WaitForExit();
-        }
-
-        private void GetListOfGeneratedTestFiles()
-        {
-            m_generatedTestFiles.Clear();
-            m_generatedTestFiles = CPPHeaderTestFileGenerator_Console.ProgramManager.GetListOfGeneratedFilesFromXML(m_generatedXmlFile);
         }
 
         private void CreateControls()
@@ -180,8 +170,8 @@ namespace TestManager
                         if (!string.IsNullOrWhiteSpace(chassisFile))
                         {
                             GenerateTestFile(headerFile, testName, testFile, chassisFile);
-                            GetListOfGeneratedTestFiles();
-                            m_listView_parsedHeaders.ItemsSource = m_generatedTestFiles;
+                            RaiseUpdatedTestFileEvent();
+                            m_textBox_headerToParse.Clear();
                         }
                     }
                 }

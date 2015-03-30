@@ -1,13 +1,13 @@
-﻿Build started 9/3/2014 2:24:24 PM.
-     1>Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib\DebugForTest_Lib.vcxproj" on node 2 (Build target(s)).
+﻿Build started 3/20/2015 4:42:56 PM.
+     1>Project "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\DebugForTest_Lib\DebugForTest_Lib.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt debugForTestFunctionTracker.cpp
          debugForTestFunctionTracker.cpp
        Lib:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib" /NOLOGO "Debug USE_DFT_LIB\debugForTestFunctionTracker.obj"
-         DebugForTest_Lib.vcxproj -> C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib
-     1>Done Building Project "C:\Users\elleri\Documents\Programs\Test\Engian\Engian.engine\DebugForTest_Lib\DebugForTest_Lib.vcxproj" (Build target(s)).
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\Lib.exe /OUT:"C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib" /NOLOGO "Debug USE_DFT_LIB\debugForTestFunctionTracker.obj"
+         DebugForTest_Lib.vcxproj -> C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib
+     1>Done Building Project "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\DebugForTest_Lib\DebugForTest_Lib.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.44
+Time Elapsed 00:00:00.42

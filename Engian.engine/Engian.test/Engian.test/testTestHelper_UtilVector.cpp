@@ -500,10 +500,7 @@ namespace Test
 
     vector.Clear();
       
-    RETURNLINEIFFAILED( vector.m_array == 0 );
-    RETURNLINEIFFAILED( vector.m_size == 0 );
-    RETURNLINEIFFAILED( vector.m_capacity == 0 );
-    RETURNLINEIFFAILED( vector.m_implementations == 0 );   
+    RETURNLINEIFFAILED( CheckUtilVectorInit< Util::List< UnitTestSampleStruct > >( vector, Util::Vector< Util::List< UnitTestSampleStruct > >::c_defaultCapacity, 0 ) == 0 ); 
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< Util::List< UnitTestSampleStruct > >, "void Vector< T >::Clear()" ) );
     return 0;
   }

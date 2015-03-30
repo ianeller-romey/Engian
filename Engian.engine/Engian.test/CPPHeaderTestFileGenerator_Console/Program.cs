@@ -120,16 +120,18 @@ namespace CPPHeaderTestFileGenerator_Console
             else if (parsedArguments.ContainsKey("headerfile") &&
                 parsedArguments.ContainsKey("testname") &&
                 parsedArguments.ContainsKey("testfile") &&
-                parsedArguments.ContainsKey("generatedxmlfile") &&
-                parsedArguments.ContainsKey("chassisfile"))
+                parsedArguments.ContainsKey("generatedxmlfile"))
+            {
+                string chassisFile = (parsedArguments.ContainsKey("chassisfile")) ? parsedArguments["chassisfile"].FirstOrDefault() : null;
                 ParseHeader
                 (
-                    parsedArguments["headerfile"].First(),
-                    parsedArguments["testname"].First(),
-                    parsedArguments["testfile"].First(),
-                    parsedArguments["generatedxmlfile"].First(),
-                    parsedArguments["chassisfile"].First()
+                    parsedArguments["headerfile"].FirstOrDefault(),
+                    parsedArguments["testname"].FirstOrDefault(),
+                    parsedArguments["testfile"].FirstOrDefault(),
+                    parsedArguments["generatedxmlfile"].FirstOrDefault(),
+                    chassisFile
                 );
+            }
         }
 
         private static void DisplayHelp()
@@ -167,14 +169,18 @@ namespace CPPHeaderTestFileGenerator_Console
                     Path.GetFileName(testFile),
                     Path.GetDirectoryName(testFile)
                 );
-            TestFileGenerator.StringsUsedInTestFileGeneration strings = new TestFileGenerator.StringsUsedInTestFileGeneration();
+
+            if (!string.IsNullOrEmpty(chassisFile))
             {
-                Type stringsType = strings.GetType();
-                foreach (PropertyInfo property in stringsType.GetProperties())
-                    property.SetValue(strings, TestFileGenerator.UnescapeCodes(ConfigurationManager.AppSettings[string.Format("{0}_{1}", stringsType.Name, property.Name)]));
+                TestFileGenerator.StringsUsedInTestFileGeneration strings = new TestFileGenerator.StringsUsedInTestFileGeneration();
+                {
+                    Type stringsType = strings.GetType();
+                    foreach (PropertyInfo property in stringsType.GetProperties())
+                        property.SetValue(strings, TestFileGenerator.UnescapeCodes(ConfigurationManager.AppSettings[string.Format("{0}_{1}", stringsType.Name, property.Name)]));
+                }
+                List<ClassDefinition> classes = CPPParser.Parse(headerFile);
+                TestFileGenerator.GenerateTestFileAndUpdateChassisFile(info, strings, classes, chassisFile);
             }
-            List<ClassDefinition> classes = CPPParser.Parse(headerFile);
-            TestFileGenerator.GenerateTestFileAndUpdateChassisFile(info, strings, classes, chassisFile);
 
             GeneratedTestFileList list = GeneratedTestFileList.Deserialize(generatedXmlFile);
             list.GeneratedTestFiles.Add(info);

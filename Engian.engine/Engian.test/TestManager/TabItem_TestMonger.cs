@@ -42,8 +42,16 @@ namespace TestManager
         public TabItem_TestMonger(string generatedXmlFile, Window parent)
         {
             m_generatedXmlFile = generatedXmlFile;
+            m_parent = parent;
 
             GetListOfTestUmbrellas();
+        }
+
+        public void GetListOfTestUmbrellas()
+        {
+            m_testUmbrellas.Clear();
+            m_testUmbrellas = TestMonger_Console.ProgramManager.GetListOfTestUmbrellasFromXML(m_generatedXmlFile);
+
             CreateControls();
         }
 
@@ -65,12 +73,6 @@ namespace TestManager
         {
             TabItem_TestUmbrella testList = new TabItem_TestUmbrella(testUmbrella, m_parent);
             m_tabControl_testLists.Items.Add(testList);
-        }
-
-        private void GetListOfTestUmbrellas()
-        {
-            m_testUmbrellas.Clear();
-            m_testUmbrellas = TestMonger_Console.ProgramManager.GetListOfTestUmbrellasFromXML(m_generatedXmlFile);
         }
 
         #endregion

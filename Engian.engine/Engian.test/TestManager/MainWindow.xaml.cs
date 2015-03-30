@@ -30,6 +30,11 @@ namespace TestManager
             s_saveDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "TestManager"),
             s_generatedTestFileList = Path.Combine(s_saveDir, "GeneratedTestFileList.xml");
 
+        TabItem_UpdateTestFileTab 
+            tabItem_headerParser,
+            tabItem_testFileUpdater;
+        TabItem_TestMonger tabItem_testMonger;
+
         #endregion
 
 
@@ -56,22 +61,38 @@ namespace TestManager
 
         private void CreateControls()
         {
-            TabItem 
-                tabItem_headerParser =
-                    new TabItem_GenerateTestFile(s_generatedTestFileList, this)
-                    {
-                        Header = "Test File Generator"
-                    },
-                tabItem_testMonger =
-                    new TabItem_TestMonger(s_generatedTestFileList, this)
-                    {
-                        Header = "Test Monger"
-                    };
+            tabItem_headerParser =
+                new TabItem_GenerateTestFile(s_generatedTestFileList, this)
+                {
+                    Header = "Test File Generator"
+                };
+            tabItem_testFileUpdater =
+                new TabItem_AddExistingTestFile(s_generatedTestFileList, this)
+                {
+                    Header = "Test File Updater"
+                };
+            tabItem_testMonger =
+                new TabItem_TestMonger(s_generatedTestFileList, this)
+                {
+                    Header = "Test Monger"
+                };
+
+            tabItem_headerParser.UpdateTestFile += UpdateTestFileTabs;
+            tabItem_testFileUpdater.UpdateTestFile += UpdateTestFileTabs;
+
             TabControl tabControl_Main = new TabControl();
             tabControl_Main.Items.Add(tabItem_headerParser);
+            tabControl_Main.Items.Add(tabItem_testFileUpdater);
             tabControl_Main.Items.Add(tabItem_testMonger);
 
             Content = tabControl_Main;
+        }
+
+        private void UpdateTestFileTabs(object sender, RoutedEventArgs e)
+        {
+            tabItem_headerParser.GetListOfGeneratedTestFiles();
+            tabItem_testFileUpdater.GetListOfGeneratedTestFiles();
+            tabItem_testMonger.GetListOfTestUmbrellas();
         }
 
         #endregion
