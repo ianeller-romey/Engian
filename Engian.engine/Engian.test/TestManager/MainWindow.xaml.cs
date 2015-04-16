@@ -92,7 +92,7 @@ namespace TestManager
         {
             tabItem_headerParser.GetListOfGeneratedTestFiles();
             tabItem_testFileUpdater.GetListOfGeneratedTestFiles();
-            tabItem_testMonger.GetListOfTestUmbrellas();
+            //tabItem_testMonger.GetListOfTestUmbrellas();
         }
 
         #endregion

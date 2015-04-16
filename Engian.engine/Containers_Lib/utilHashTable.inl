@@ -15,28 +15,30 @@ namespace Util
   HashTable< T, KEY >::KeyedIterator::KeyedIterator( KeyedIterator const& iterator ) :
     Iterator( iterator.m_implementation, iterator.m_parentsIterators )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::KeyedIterator::KeyedIterator( KeyedIterator const& iterator )" );
   }
 
 
   template< typename T, typename KEY >
   HashTable< T, KEY >::KeyedIterator::~KeyedIterator()
   {
-    Container< T >::Iterator::~Iterator();
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::KeyedIterator::~KeyedIterator()" );
   }
 
 
   template< typename T, typename KEY >
   KEY const& HashTable< T, KEY >::KeyedIterator::Key() const
   {
+    DFT_FUNC_TRACK( "KEY const& HashTable< T, KEY >::KeyedIterator::Key() const)" );
     return static_cast< HashTableIteratorImpl* >( m_implementation )->Key();
   }
   
 
   template< typename T, typename KEY >
-  HashTable< T, KEY >::KeyedIterator::KeyedIterator(  IteratorImpl* implementation, 
-                            IteratorImplNode** parentList ) :
+  HashTable< T, KEY >::KeyedIterator::KeyedIterator(  IteratorImpl* implementation, IteratorImplNode** parentList ) :
     Iterator( implementation, parentList )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::KeyedIterator::KeyedIterator(  IteratorImpl* implementation, IteratorImplNode** parentList )" );
   }
         
 
@@ -46,12 +48,14 @@ namespace Util
     m_data( data ),
     m_key( key )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTableNode::HashTableNode( HashTableNode* next, T* data, KEY const& key )" );
   }
 
       
   template< typename T, typename KEY >
   HashTable< T, KEY >::HashTableNode::~HashTableNode()
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTableNode::~HashTableNode()" );
   }
 
       
@@ -63,6 +67,7 @@ namespace Util
     m_currentBucketIndex( 0 ),
     m_currentBucketNode( 0 )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTableIteratorImpl::HashTableIteratorImpl( HashTableNode** buckets, unsigned const numberOfBuckets )" );
     // m_buckets will be 0 if this is an .End() or .KeyedEnd() iterator
     // if m_buckets is not 0, but the first bucket is, walk forward until we find the first non-0 bucket
     if( m_buckets != 0 && m_buckets[ m_currentBucketIndex ] == 0 )
@@ -87,18 +92,21 @@ namespace Util
     m_currentBucketIndex( other.m_currentBucketIndex ),
     m_currentBucketNode( other.m_currentBucketNode )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTableIteratorImpl::HashTableIteratorImpl( HashTableIteratorImpl const& other )" );
   }
 
   
   template< typename T, typename KEY >
   HashTable< T, KEY >::HashTableIteratorImpl::~HashTableIteratorImpl()
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTableIteratorImpl::~HashTableIteratorImpl()" );
   }
   
 
   template< typename T, typename KEY >
   KEY const& HashTable< T, KEY >::HashTableIteratorImpl::Key() const
   {
+    DFT_FUNC_TRACK( "KEY const& HashTable< T, KEY >::HashTableIteratorImpl::Key() const" );
     if( !m_valid )
       throw c_exception_invalidatedContainer;
 
@@ -109,6 +117,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::HashTableIteratorImpl::AdvanceValue()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::HashTableIteratorImpl::AdvanceValue()" );
     if( m_currentBucketNode->m_next != 0 )
       m_currentBucketNode = m_currentBucketNode->m_next;
     else
@@ -129,6 +138,7 @@ namespace Util
   template< typename T, typename KEY >
   T const& HashTable< T, KEY >::HashTableIteratorImpl::GetValue() const
   {
+    DFT_FUNC_TRACK( "T const& HashTable< T, KEY >::HashTableIteratorImpl::GetValue() const" );
     return *( m_currentBucketNode->m_data );
   }
   
@@ -136,6 +146,7 @@ namespace Util
   template< typename T, typename KEY >
   KEY const& HashTable< T, KEY >::HashTableIteratorImpl::GetKey() const
   {
+    DFT_FUNC_TRACK( "KEY const& HashTable< T, KEY >::HashTableIteratorImpl::GetKey() const" );
     return m_currentBucketNode->m_key;
   }
   
@@ -155,6 +166,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( Hash::FastHash )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable()" );
   }
 
 
@@ -165,6 +177,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( Hash::FastHash )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( T const * const tArray, unsigned const size )" );
     PushBackRange( tArray, size );
   }
 
@@ -176,6 +189,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( Hash::FastHash )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( HashTable< T, KEY > const& hashTable )" );
     for( KeyedIterator kitB = hashTable.KeyedBegin(), kitE = hashTable.KeyedEnd(); kitB != kitE; ++kitB )
       Push( kitB.Get(), kitB.Key() );
   }
@@ -188,6 +202,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( Hash::FastHash )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( Container< T > const& container )" );
     for( Iterator itB = container.Begin(), itE = container.End(); itB != itE; ++itB )
       PushBack( itB.Get() );
   }
@@ -200,6 +215,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( hashFunc )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( HashFunc hashFunc )" );
   }
 
 
@@ -210,6 +226,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( hashFunc )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( T const * const tArray, unsigned const size, HashFunc hashFunc )" );
     PushBackRange( tArray, size );
   }
 
@@ -221,6 +238,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( hashFunc )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( HashTable< T, KEY > const& hashTable, HashFunc hashFunc )" );
     for( KeyedIterator kitB = hashTable.KeyedBegin(), kitE = hashTable.KeyedEnd(); kitB != kitE; ++kitB )
       Push( kitB.Get(), kitB.Key() );
   }
@@ -233,6 +251,7 @@ namespace Util
     m_buckets( new HashTableNode*[ m_capacity ]() ),
     m_hashFunc( hashFunc )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::HashTable( Container< T > const& container, HashFunc hashFunc )" );
     for( Iterator itB = container.Begin(), itE = container.End(); itB != itE; ++itB )
       PushBack( itB.Get() );
   }
@@ -241,6 +260,7 @@ namespace Util
   template< typename T, typename KEY >
   HashTable< T, KEY >& HashTable< T, KEY >::operator=( HashTable< T, KEY > const& hashTable )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >& HashTable< T, KEY >::operator=( HashTable< T, KEY > const& hashTable )" );
     Clear();
 
     m_capacity = hashTable.GetCapacity();
@@ -257,6 +277,7 @@ namespace Util
   template< typename T, typename KEY >
   Container< T >& HashTable< T, KEY >::operator=( Container< T > const& container )
   {
+    DFT_FUNC_TRACK( "Container< T >& HashTable< T, KEY >::operator=( Container< T > const& container )" );
     Clear();
 
     m_capacity = container.GetSize();
@@ -273,6 +294,7 @@ namespace Util
   template< typename T, typename KEY >
   HashTable< T, KEY >::~HashTable()
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >::~HashTable()" );
     Clear();
   }
 
@@ -280,6 +302,7 @@ namespace Util
   template< typename T, typename KEY >
   T& HashTable< T, KEY >::operator[]( KEY const& key ) const
   {
+    DFT_FUNC_TRACK( "T& HashTable< T, KEY >::operator[]( KEY const& key ) const" );
     unsigned const index = m_hashFunc( &key, m_capacity );
     HashTableNode* node = m_buckets[ index ];
     while( node != 0 && node->m_key != key )
@@ -295,6 +318,7 @@ namespace Util
   template< typename T, typename KEY >
   HashTable< T, KEY > HashTable< T, KEY >::operator+( HashTable< T, KEY > const& hashTable ) const
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY > HashTable< T, KEY >::operator+( HashTable< T, KEY > const& hashTable ) const" );
     HashTable< T, KEY > newTable( *this );
     
     for( KeyedIterator kitB = hashTable.KeyedBegin(), kitE = hashTable.KeyedEnd(); kitB != kitE; ++kitB )
@@ -307,6 +331,7 @@ namespace Util
   template< typename T, typename KEY >
   HashTable< T, KEY >& HashTable< T, KEY >::operator+=( HashTable< T, KEY > const& hashTable )
   {
+    DFT_FUNC_TRACK( "HashTable< T, KEY >& HashTable< T, KEY >::operator+=( HashTable< T, KEY > const& hashTable )" );
     for( KeyedIterator kitB = hashTable.KeyedBegin(), kitE = hashTable.KeyedEnd(); kitB != kitE; ++kitB )
       Push( kitB.Get(), kitB.Key() );
 
@@ -317,6 +342,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PushFront( T const& t )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PushFront( T const& t )" );
     unsigned tAddress = (unsigned)( &t );
     KEY key( tAddress );
     Push( t, key );
@@ -326,6 +352,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PushBack( T const& t )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PushBack( T const& t )" );
     unsigned tAddress = (unsigned)( &t );
     KEY key( tAddress );
     Push( t, key );
@@ -335,6 +362,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::Push( T const& t, KEY const& key )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Push( T const& t, KEY const& key )" );
     CheckAndGrow();
     Push( t, &key, m_buckets, m_capacity );
     ++m_size;
@@ -345,6 +373,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PopFront()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PopFront()" );
     if( IsEmpty() )
       return;
 
@@ -363,6 +392,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PopBack()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PopBack()" );
     if( IsEmpty() )
       return;
 
@@ -386,6 +416,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PopFirst( T const& t )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PopFirst( T const& t )" );
     if( IsEmpty() )
       return;
 
@@ -413,6 +444,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::PopAll( T const& t )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::PopAll( T const& t )" );
     if( IsEmpty() )
       return;
 
@@ -439,6 +471,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::Pop( KEY const& key )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Pop( KEY const& key )" );
     unsigned const index = m_hashFunc( &key, m_capacity );
 
     HashTableNode  *node = m_buckets[ index ],
@@ -467,6 +500,7 @@ namespace Util
   template< typename T, typename KEY >
   Vector< KEY > HashTable< T, KEY >::GetKeys() const
   {
+    DFT_FUNC_TRACK( "Vector< KEY > HashTable< T, KEY >::GetKeys() const" );
     Vector< KEY > vectorOfKeys( GetSize() );
     for( KeyedIterator kitB = KeyedBegin(), kitE = KeyedEnd(); kitB != kitE; ++kitB )
       vectorOfKeys.PushBack( kitB.Key() );
@@ -477,6 +511,7 @@ namespace Util
   template< typename T, typename KEY >
   unsigned const HashTable< T, KEY >::GetCapacity() const
   {
+    DFT_FUNC_TRACK( "unsigned const HashTable< T, KEY >::GetCapacity() const" );
     return m_capacity;
   }
 
@@ -484,14 +519,20 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::Clear()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Clear()" );
     Clear( m_buckets, m_capacity );
+
     m_size = 0;
+    m_capacity = c_defaultCapacity;
+    m_buckets = new HashTableNode*[ m_capacity ];
+    memset( m_buckets, 0, m_capacity * sizeof( HashTableNode* ) );
   }
 
       
   template< typename T, typename KEY >
   void HashTable< T, KEY >::Push( T const& t, void const * const key, HashTableNode** const buckets, unsigned const bucketArraySize )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Push( T const& t, void const * const key, HashTableNode** const buckets, unsigned const bucketArraySize )" );
     KEY const* keyPointer = static_cast< KEY const* >( key );
     for( KeyedIterator kitB = KeyedBegin(), kitE = KeyedEnd(); kitB != kitE; ++kitB )
       if( kitB.Key() == *keyPointer )
@@ -511,6 +552,7 @@ namespace Util
   template< typename T, typename KEY >
   void HashTable< T, KEY >::CheckAndGrow()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::CheckAndGrow()" );
     if( ( (float)m_size / (float)m_capacity ) > c_growRatio )
       Grow();
   }
@@ -519,6 +561,7 @@ namespace Util
   template< typename T , typename KEY >
   void HashTable< T, KEY >::Grow()
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Grow()" );
     unsigned tempCapacity = ( m_capacity != 0 ) ? ( unsigned )( ( float )m_capacity * c_growMultiplier ) : c_defaultCapacity;
     HashTableNode** tempArray = new HashTableNode*[ tempCapacity ];
 
@@ -532,9 +575,12 @@ namespace Util
   }
 
       
+  // We use this internal Clear() function both when the public Clear() function is called, and when we delete the old buckets when the hash table needs to grow.
+  // Because of this, we assume that the calling functions will be responsible for reassigning m_buckets, m_capacity, and m_size.
   template< typename T, typename KEY >
   void HashTable< T, KEY >::Clear( HashTableNode**& buckets, unsigned& bucketArraySize )
   {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Clear( HashTableNode**& buckets, unsigned& bucketArraySize )" );
     HashTableNode* node = 0;
     for( unsigned i = 0; i < bucketArraySize; ++i )
     {
@@ -556,6 +602,13 @@ namespace Util
     InvalidateAllIteratorImplementations();
   }
 
-  //template class HashTable< int, int >;
+  
+  template< typename T, typename KEY >
+  void HashTable< T, KEY >::Deallocate()
+  {
+    DFT_FUNC_TRACK( "void HashTable< T, KEY >::Deallocate()" );
+    Clear( m_buckets, m_capacity );
+    m_size = 0;
+  }
 
 }

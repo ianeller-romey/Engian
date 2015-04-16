@@ -1,13 +1,14 @@
 
+#ifndef TEST_ICLE_H
+#define TEST_ICLE_H
+
+#include <cstring>
+
 //#define RUN_UNIT_TESTS_SPEED
 //#define RUN_UNIT_TESTS_MANUAL
 #ifdef RUN_UNIT_TESTS_MANUAL
   #define RUN_UNIT_TESTS
 #endif
-
-#ifndef TEST_ICLE_H
-#define TEST_ICLE_H
-
 
 #ifdef RUN_UNIT_TESTS
   
@@ -20,21 +21,21 @@
       #endif
     #else
       #define TESTICLE_API
-    #endif  
-  
-    // Helper defines for classes being tested
-    #define TESTCHASSISFRIEND friend class Test::UnitTestChassis;
-    #ifndef RUN_UNIT_TESTS_SPEED
-      #define TRACKTESTCALL( test ) Test::UnitTestChassis::TrackTestCall( test )
-    #else
-      #define TRACKTESTCALL( test )
     #endif
 
     // Helper defines for test chassis
     #define STRINGIFY( x ) #x
     #define TOSTRING( x ) STRINGIFY( x )
     #define TEST_ASSERT( value, testName, failedReason ) if( !( value ) ) return TestFailureText( testName, __FILE__, TOSTRING( __LINE__ ), failedReason )
-    #define TEST_ASSERT_EX( value, testName, failedReason, executeIfFailed ) if( !( value ) ) { executeIfFailed; return TestFailureText( testName, __FILE__, TOSTRING( __LINE__ ), failedReason ); }
+    #define TEST_HELPER_FUNCTION_ASSERT( testHelperClass, function ) \
+  int failedAtLine = testHelperClass ## :: ## function ## (); \
+  if( failedAtLine != 0 ) \
+  { \
+    unsigned const strLen = StrLen( #testHelperClass "::" #function " failed at line " ); \
+    char str[] = #testHelperClass "::" #function " failed at line " "           "; \
+    UpdateTestHelperFailureText( str, strLen, failedAtLine ); \
+    return TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), str ); \
+  }
     #define TEST_EXCEPTION TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), "Unknown reason" )
     #define TEST_NOT_IMPLEMENTED TestFailureText( name, __FILE__, TOSTRING( __LINE__ ), "Test not implemented" )
     #define T_FUNC_ARR_DEC( testName ) static UnitTestDictionaryPair UnitTestArray_ ## testName[]
@@ -55,59 +56,11 @@
             UnitTestDictionaryPair( char const * const (*function) ( char const * const ), char const * const name );
           };
 
-          struct UnitTestSampleStruct
-          {
-            mutable unsigned* m_referenceCount;
-            static unsigned s_numberOfDeletes;
-
-            int m_int1,
-              m_int2,
-              m_int3;
-            double m_doubles[ 5 ];
-
-            UnitTestSampleStruct();
-            UnitTestSampleStruct( int int1, int int2, int int3, double* doubles );
-            UnitTestSampleStruct( UnitTestSampleStruct const& other );
-            UnitTestSampleStruct& operator=( UnitTestSampleStruct const& other );
-            ~UnitTestSampleStruct();
-
-            bool const operator==( UnitTestSampleStruct const& other ) const;
-            bool const operator!=( UnitTestSampleStruct const& other ) const;
-
-            static UnitTestSampleStruct* CreateABunch( unsigned bunch );
-          };
-
-          class UnitTestSampleClass
-          {
-            private:
-              char* m_string;
-              int m_int;
-              UnitTestSampleStruct m_struct;
-
-
-            public:
-              UnitTestSampleClass();
-              UnitTestSampleClass( char const * const string, int i, UnitTestSampleStruct utss );
-              UnitTestSampleClass( UnitTestSampleClass const& other );
-              UnitTestSampleClass& operator=( UnitTestSampleClass const& other );
-              ~UnitTestSampleClass();
-
-              bool const operator==( UnitTestSampleClass const& other ) const;
-              bool const operator!=( UnitTestSampleClass const& other ) const;
-
-              static UnitTestSampleClass* CreateABunch( unsigned bunch );
-
-              mutable unsigned* m_referenceCount;
-              static unsigned s_numberOfDeletes;
-
-          };
-
 /* BEGINNING OF UNIT TEST FUNCTIONS */
 
           /***
           **** UNIT TESTS: TestUtilVector
           ***/
-          static char const * const TestUtilList_Helper_List( ... );
           T_FUNC_ARR_DEC( TestUtilVector );
           static char const * const TestUtilVector_VectorIteratorImpl_Constructor0( char const * const name );
           static char const * const TestUtilVector_VectorIteratorImpl_AdvanceValue( char const * const name );
@@ -143,14 +96,6 @@
           /***
           **** UNIT TESTS: TestUtilList
           ***/
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckEmptyList( void* check );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListFrontAndBack( void* check, unsigned const size, bool endCheck );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListAgainstArray( HELPER* compareAgainst, unsigned const arraySize, int const incr, void* compareFrom );
-          template< typename HELPER >
-          static char const * const TestUtilList_Helper_CheckListAgainstContainer( void* compareAgainst, void* compareFrom );
           T_FUNC_ARR_DEC( TestUtilList );
           static char const * const TestUtilList_ListIteratorImpl_Constructor0( char const * const name );
           static char const * const TestUtilList_ListIteratorImpl_AdvanceValue( char const * const name );
@@ -197,8 +142,6 @@
           /***
           **** UNIT TESTS: TestUtilString
           ***/
-          static char const * const TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst );
-          static char const * const TestUtilString_Helper_CheckStringAgainstArray( void* check, char const * const compareAgainst, unsigned const compareAgainstLen );
           T_FUNC_ARR_DEC( TestUtilString );
           static char const * const TestUtilString_String_Constructor0( char const * const name );
           static char const * const TestUtilString_String_Constructor1( char const * const name );
@@ -209,24 +152,28 @@
           static char const * const TestUtilString_String_PushBack( char const * const name );
           static char const * const TestUtilString_String_PushBackRange0( char const * const name );
           static char const * const TestUtilString_String_PushBackRange1( char const * const name );
+          static char const * const TestUtilString_String_PushBackRange2( char const * const name );
           static char const * const TestUtilString_String_PopBack( char const * const name );
           static char const * const TestUtilString_String_GetStrLen( char const * const name );
           static char const * const TestUtilString_String_BeginsWith( char const * const name );
           static char const * const TestUtilString_String_EndsWith( char const * const name );
+          static char const * const TestUtilString_String_IsEmpty( char const * const name );
+          static char const * const TestUtilString_String_Clear( char const * const name );
           static char const * const TestUtilString_String_BasicAssignment0( char const * const name );
           static char const * const TestUtilString_String_BasicAssignment1( char const * const name );
           static char const * const TestUtilString_String_BasicAssignment2( char const * const name );
-          static char const * const TestUtilString_String_EqualTo( char const * const name );
-          static char const * const TestUtilString_String_NotEqualTo( char const * const name );
+          static char const * const TestUtilString_String_BasicAssignment3( char const * const name );
+          static char const * const TestUtilString_String_EqualAndNotEqualTo0( char const * const name );
+          static char const * const TestUtilString_String_EqualAndNotEqualTo1( char const * const name );
+          static char const * const TestUtilString_String_EqualAndNotEqualTo2( char const * const name );
           static char const * const TestUtilString_String_Addition0( char const * const name );
           static char const * const TestUtilString_String_Addition1( char const * const name );
+          static char const * const TestUtilString_String_Addition2( char const * const name );
+          static char const * const TestUtilString_String_Addition3( char const * const name );
           static char const * const TestUtilString_String_AdditionAssignment0( char const * const name );
           static char const * const TestUtilString_String_AdditionAssignment1( char const * const name );
-          static char const * const TestUtilString_String_BitwiseLeftShift0( char const * const name );
-          static char const * const TestUtilString_String_BitwiseLeftShift1( char const * const name );
-          static char const * const TestUtilString_String_Indirection0( char const * const name );
-          static char const * const TestUtilString_String_Indirection1( char const * const name );
-          static char const * const TestUtilString_String_Conversion( char const * const name );
+          static char const * const TestUtilString_String_AdditionAssignment2( char const * const name );
+          static char const * const TestUtilString_String_BitwiseLeftShiftIntAndUint( char const * const name );
           /***/
 
 
@@ -244,9 +191,6 @@
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange0( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange1( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Search( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_ShiftAndPush( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_FindInsertionIndex( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_QuickSort( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_BasicAssignment0( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_BasicAssignment1( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Addition( char const * const name );
@@ -261,9 +205,7 @@
           static char const * const TestUtilSortedList_SortedList_Constructor0( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Constructor1( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Constructor2( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Constructor3( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_CopyConstructor0( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_CopyConstructor1( char const * const name );
+          static char const * const TestUtilSortedList_SortedList_CopyConstructor( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PushFront( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PushBack( char const * const name );
           static char const * const TestUtilSortedList_SortedList_PopFront( char const * const name );
@@ -273,75 +215,10 @@
           static char const * const TestUtilSortedList_SortedList_Contains( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Clear( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Push( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_NewSortedListNodeTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindInsertionNodeInTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_GetBottomTier( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_GetNumberOfTiers( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_ClearTiers( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindNewFront( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_FindNewBack( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Search( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Pop( char const * const name );
           static char const * const TestUtilSortedList_SortedList_BasicAssignment0( char const * const name );
           static char const * const TestUtilSortedList_SortedList_BasicAssignment1( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Addition( char const * const name );
           static char const * const TestUtilSortedList_SortedList_AdditionAssignment( char const * const name );
-          /***/
-
-
-          /***
-          **** UNIT TESTS: TestUtilString
-          ***/
-          T_FUNC_ARR_DEC( TestUtilString );
-          static char const * const TestUtilString_String_Constructor0( char const * const name );
-          static char const * const TestUtilString_String_Constructor1( char const * const name );
-          static char const * const TestUtilString_String_Constructor2( char const * const name );
-          static char const * const TestUtilString_String_Constructor3( char const * const name );
-          static char const * const TestUtilString_String_Constructor4( char const * const name );
-          static char const * const TestUtilString_String_Constructor5( char const * const name );
-          static char const * const TestUtilString_String_Constructor6( char const * const name );
-          static char const * const TestUtilString_String_CopyConstructor( char const * const name );
-          static char const * const TestUtilString_String_PushBack( char const * const name );
-          static char const * const TestUtilString_String_PushBackRange0( char const * const name );
-          static char const * const TestUtilString_String_PushBackRange1( char const * const name );
-          static char const * const TestUtilString_String_PushBackRange2( char const * const name );
-          static char const * const TestUtilString_String_PopBack( char const * const name );
-          static char const * const TestUtilString_String_GetStrLen( char const * const name );
-          static char const * const TestUtilString_String_BeginsWith0( char const * const name );
-          static char const * const TestUtilString_String_BeginsWith1( char const * const name );
-          static char const * const TestUtilString_String_BeginsWith2( char const * const name );
-          static char const * const TestUtilString_String_BeginsWith3( char const * const name );
-          static char const * const TestUtilString_String_BeginsWith4( char const * const name );
-          static char const * const TestUtilString_String_EndsWith0( char const * const name );
-          static char const * const TestUtilString_String_EndsWith1( char const * const name );
-          static char const * const TestUtilString_String_EndsWith2( char const * const name );
-          static char const * const TestUtilString_String_EndsWith3( char const * const name );
-          static char const * const TestUtilString_String_EndsWith4( char const * const name );
-          static char const * const TestUtilString_String_IsEmpty( char const * const name );
-          static char const * const TestUtilString_String_Clear( char const * const name );
-          static char const * const TestUtilString_String_MakeEmptyString( char const * const name );
-          static char const * const TestUtilString_String_Deallocate( char const * const name );
-          static char const * const TestUtilString_String_BasicAssignment0( char const * const name );
-          static char const * const TestUtilString_String_BasicAssignment1( char const * const name );
-          static char const * const TestUtilString_String_BasicAssignment2( char const * const name );
-          static char const * const TestUtilString_String_BasicAssignment3( char const * const name );
-          static char const * const TestUtilString_String_EqualTo0( char const * const name );
-          static char const * const TestUtilString_String_EqualTo1( char const * const name );
-          static char const * const TestUtilString_String_EqualTo2( char const * const name );
-          static char const * const TestUtilString_String_NotEqualTo0( char const * const name );
-          static char const * const TestUtilString_String_NotEqualTo1( char const * const name );
-          static char const * const TestUtilString_String_NotEqualTo2( char const * const name );
-          static char const * const TestUtilString_String_Addition0( char const * const name );
-          static char const * const TestUtilString_String_Addition1( char const * const name );
-          static char const * const TestUtilString_String_Addition2( char const * const name );
-          static char const * const TestUtilString_String_Addition3( char const * const name );
-          static char const * const TestUtilString_String_AdditionAssignment0( char const * const name );
-          static char const * const TestUtilString_String_AdditionAssignment1( char const * const name );
-          static char const * const TestUtilString_String_AdditionAssignment2( char const * const name );
-          static char const * const TestUtilString_String_BitwiseLeftShift0( char const * const name );
-          static char const * const TestUtilString_String_BitwiseLeftShift1( char const * const name );
-          static char const * const TestUtilString_String_Indirection0( char const * const name );
-          static char const * const TestUtilString_String_Indirection1( char const * const name );
           /***/
 
 /* END OF UNIT TEST FUNCTIONS */
@@ -357,11 +234,10 @@
           static char** MarshalArrayOfStrings( char const * const * const strings, unsigned numStrings );
 
           // test result functions
+          static unsigned const StrLen( char const * const string );
+          static void UpdateTestHelperFailureText( char * const charArray, unsigned charArrayLen, int failedAtLine );
           static char const * const TestFailureText( char const * const testName, char const * const fileName, char const * const lineNumber, char const * const failedReason );
         
-          static void TrackTestCall( char const * const testName );
-          static bool const CheckTestCall( char const * const testName, bool clear = false );
-          static void ClearTestCalls();
           static void Reset();
 
       };
@@ -369,10 +245,6 @@
     }
 
 #else
-
-// Helper defines for classes being tested
-#define TRACKTESTCALL( test )
-#define TESTCHASSISFRIEND
 
 #endif
 

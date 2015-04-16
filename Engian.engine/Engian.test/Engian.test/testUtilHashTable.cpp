@@ -5,8 +5,6 @@
 
 #include "utilHashTable.h"
 
-#include "testTestHelper_UtilHashTable.h"
-
 
 namespace Test
 {
@@ -21,6 +19,7 @@ namespace Test
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_Constructor0 ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_Constructor1 ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_CopyConstructor ),
+    T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_Clone ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_Key ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_AdvanceValue ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTableIteratorImpl_GetValue ),
@@ -55,6 +54,7 @@ namespace Test
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_Clear1 ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_CheckAndGrow ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_Grow ),
+    T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_Deallocate ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_CreateKeyedIteratorFromImplementation ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_BasicAssignment0 ),
     T_FUNC_ARR_DEF( TestUtilHashTable_HashTable_BasicAssignment1 ),
@@ -67,7 +67,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_CopyConstructor );
     }
     catch( ... )
     {
@@ -81,7 +81,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_Constructor0 );
     }
     catch( ... )
     {
@@ -95,7 +95,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_Constructor1 );
     }
     catch( ... )
     {
@@ -109,7 +109,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_Key" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_Key );
     }
     catch( ... )
     {
@@ -123,7 +123,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_PrefixIncrement" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_PrefixIncrement );
     }
     catch( ... )
     {
@@ -137,7 +137,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_KeyedIterator_BasicAssignment" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, KeyedIterator_BasicAssignment );
     }
     catch( ... )
     {
@@ -151,7 +151,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_Constructor0 );
     }
     catch( ... )
     {
@@ -165,7 +165,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_Constructor1 );
     }
     catch( ... )
     {
@@ -179,7 +179,21 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_CopyConstructor );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilHashTable_HashTableIteratorImpl_Clone( char const * const name )
+  {
+    try
+    {
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_Clone );
     }
     catch( ... )
     {
@@ -193,7 +207,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_Key" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_Key );
     }
     catch( ... )
     {
@@ -207,7 +221,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_AdvanceValue" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_AdvanceValue );
     }
     catch( ... )
     {
@@ -221,7 +235,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_GetValue" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_GetValue );
     }
     catch( ... )
     {
@@ -235,7 +249,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_GetKey" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_GetKey );
     }
     catch( ... )
     {
@@ -249,7 +263,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_EqualTo" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_EqualTo );
     }
     catch( ... )
     {
@@ -263,7 +277,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_NotEqualTo" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_NotEqualTo );
     }
     catch( ... )
     {
@@ -277,7 +291,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTableIteratorImpl_BasicAssignment" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTableIteratorImpl_BasicAssignment );
     }
     catch( ... )
     {
@@ -291,7 +305,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor0 );
     }
     catch( ... )
     {
@@ -305,7 +319,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor1 );
     }
     catch( ... )
     {
@@ -319,7 +333,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor2" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor2 );
     }
     catch( ... )
     {
@@ -333,7 +347,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor3" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor3 );
     }
     catch( ... )
     {
@@ -347,7 +361,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor4" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor4 );
     }
     catch( ... )
     {
@@ -361,7 +375,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor5" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor5 );
     }
     catch( ... )
     {
@@ -375,7 +389,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Constructor6" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Constructor6 );
     }
     catch( ... )
     {
@@ -389,7 +403,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_CopyConstructor" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_CopyConstructor );
     }
     catch( ... )
     {
@@ -403,7 +417,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Begin" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Begin );
     }
     catch( ... )
     {
@@ -417,7 +431,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_End" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_End );
     }
     catch( ... )
     {
@@ -431,7 +445,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_KeyedBegin" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_KeyedBegin );
     }
     catch( ... )
     {
@@ -445,7 +459,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_KeyedEnd" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_KeyedEnd );
     }
     catch( ... )
     {
@@ -459,7 +473,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PushFront" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PushFront );
     }
     catch( ... )
     {
@@ -473,7 +487,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PushBack" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PushBack );
     }
     catch( ... )
     {
@@ -487,7 +501,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Push0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Push0 );
     }
     catch( ... )
     {
@@ -501,7 +515,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Push1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Push1 );
     }
     catch( ... )
     {
@@ -515,7 +529,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PopFront" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PopFront );
     }
     catch( ... )
     {
@@ -529,7 +543,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PopBack" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PopBack );
     }
     catch( ... )
     {
@@ -543,7 +557,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PopFirst" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PopFirst );
     }
     catch( ... )
     {
@@ -557,7 +571,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_PopAll" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_PopAll );
     }
     catch( ... )
     {
@@ -571,7 +585,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Pop" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Pop );
     }
     catch( ... )
     {
@@ -585,7 +599,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_GetKeys" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_GetKeys );
     }
     catch( ... )
     {
@@ -599,7 +613,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_GetCapacity" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_GetCapacity );
     }
     catch( ... )
     {
@@ -613,7 +627,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Clear0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Clear0 );
     }
     catch( ... )
     {
@@ -627,7 +641,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Clear1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Clear1 );
     }
     catch( ... )
     {
@@ -641,7 +655,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_CheckAndGrow" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_CheckAndGrow );
     }
     catch( ... )
     {
@@ -655,7 +669,21 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Grow" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Grow );
+    }
+    catch( ... )
+    {
+      return TEST_EXCEPTION;
+    }
+    return 0;
+  }
+
+
+  char const * const UnitTestChassis::TestUtilHashTable_HashTable_Deallocate( char const * const name )
+  {
+    try
+    {
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Deallocate );
     }
     catch( ... )
     {
@@ -669,7 +697,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_CreateKeyedIteratorFromImplementation" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_CreateKeyedIteratorFromImplementation );
     }
     catch( ... )
     {
@@ -683,7 +711,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_BasicAssignment0" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_BasicAssignment0 );
     }
     catch( ... )
     {
@@ -697,7 +725,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_BasicAssignment1" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_BasicAssignment1 );
     }
     catch( ... )
     {
@@ -711,7 +739,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_ArraySubscript" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_ArraySubscript );
     }
     catch( ... )
     {
@@ -725,7 +753,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_Addition" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_Addition );
     }
     catch( ... )
     {
@@ -739,7 +767,7 @@ namespace Test
   {
     try
     {
-      TEST_ASSERT( DFT_FUNC_CHECK( Util::HashTable< int _COMMA int >, "TestUtilHashTable_HashTable_AdditionAssignment" ), name, "Appropriate function was not called" );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilHashTable, HashTable_AdditionAssignment );
     }
     catch( ... )
     {

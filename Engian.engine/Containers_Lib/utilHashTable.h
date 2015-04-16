@@ -48,6 +48,7 @@ namespace Util
             
           KeyedIterator& operator++()
           {
+            DFT_FUNC_TRACK( "void Vector< T >::Deallocate()" );
             ++( *m_implementation );
             return *this;
           }
@@ -213,6 +214,8 @@ namespace Util
       virtual void CheckAndGrow();
       virtual void Grow();
       void Clear( HashTableNode**& buckets, unsigned& bucketArraySize );
+
+      virtual void Deallocate();
       
       KeyedIterator CreateKeyedIteratorFromImplementation( IteratorImpl* const implementation ) const
       {    

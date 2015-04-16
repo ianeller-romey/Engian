@@ -1,36 +1,23 @@
-﻿Build started 3/27/2015 4:58:38 PM.
+﻿Build started 3/31/2015 12:15:23 PM.
      1>Project "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Driver\Driver.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Driver\..\Engian.test\ /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testTestHelper_UtilVector.cpp
-         testTestHelper_UtilVector.cpp
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(93): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\engian\engian\engian.engine\containers_lib\utilcontainer.h(125) : see declaration of 'Util::Container<T>::Iterator'
-                 with
-                 [
-                     T=int
-                 ]
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(133): warning C4620: no postfix form of 'operator ++' found for type 'Util::Container<T>::Iterator', using prefix form
-                 with
-                 [
-                     T=int
-                 ]
-                 c:\users\elleri\documents\engian\engian\engian.engine\containers_lib\utilcontainer.h(125) : see declaration of 'Util::Container<T>::Iterator'
-                 with
-                 [
-                     T=int
-                 ]
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4305: 'argument' : truncation from '__int64' to 'const long'
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(435): warning C4309: 'argument' : truncation of constant value
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4305: 'argument' : truncation from '__int64' to 'const long'
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(436): warning C4309: 'argument' : truncation of constant value
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4305: 'argument' : truncation from '__int64' to 'const long'
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(439): warning C4309: 'argument' : truncation of constant value
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4305: 'argument' : truncation from '__int64' to 'const long'
-     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testtesthelper_utilvector.cpp(440): warning C4309: 'argument' : truncation of constant value
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Driver\..\Engian.test\ /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testUnitTestChassis.cpp ..\Engian.test\testUtilList.cpp driver.cpp
+         testUnitTestChassis.cpp
+     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(26): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(45): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(47): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\elleri\documents\engian\engian\engian.engine\engian.test\engian.test\testunittestchassis.cpp(60): warning C4018: '<' : signed/unsigned mismatch
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         driver.cpp
+         testUtilList.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\DebugForTest_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\Containers_Lib\ /IC:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Driver\..\Engian.test\ /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D USE_DFT_LIB /D RUN_UNIT_TESTS_MANUAL /D _MBCS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug USE_DFT_LIB\\" /Fd"Debug USE_DFT_LIB\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\Engian.test\testUtilSortedList.cpp ..\Engian.test\testUtilSortedVector.cpp ..\Engian.test\testUtilString.cpp ..\Engian.test\testUtilUnsafeVector.cpp ..\Engian.test\testUtilVector.cpp
+         Skipping... (no relevant changes detected)
+         testUtilVector.cpp
+         testUtilUnsafeVector.cpp
+         testUtilString.cpp
+         testUtilSortedVector.cpp
+         testUtilSortedList.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.exe" /INCREMENTAL /NOLOGO "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\Debug USE_DFT_LIB\Containers_Lib.x86.Debug USE_DFT_LIB.lib" "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\..\Debug USE_DFT_LIB\DebugForTest_Lib.x86.Debug USE_DFT_LIB.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.lib" /MACHINE:X86 "Debug USE_DFT_LIB\testTestHelper_UtilContainer.obj"
          "Debug USE_DFT_LIB\testTestHelper_UtilList.obj"
@@ -50,10 +37,9 @@
          "Debug USE_DFT_LIB\testUtilString.obj"
          "Debug USE_DFT_LIB\testUtilUnsafeVector.obj"
          "Debug USE_DFT_LIB\testUtilVector.obj"
-     1>Containers_Lib.x86.Debug USE_DFT_LIB.lib(debugForTestFunctionTracker.obj) : warning LNK4099: PDB 'vc110.pdb' was not found with 'Containers_Lib.x86.Debug USE_DFT_LIB.lib(debugForTestFunctionTracker.obj)' or at 'C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\vc110.pdb'; linking object as if no debug info
          Driver.vcxproj -> C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Debug USE_DFT_LIB\Driver.exe
      1>Done Building Project "C:\Users\Elleri\Documents\Engian\Engian\Engian.engine\Engian.test\Driver\Driver.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.42
+Time Elapsed 00:00:03.16
