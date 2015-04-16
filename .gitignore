@@ -1,0 +1,12 @@
+*.suo
+*.suo
+Engian.engine/Engian.research/Debug/Lua_Research.exe
+*.ilk
+Engian.engine/Engian.research/Debug/Lua_Research.pdb
+*.obj
+*.tlog
+Engian.engine/Engian.research/Lua_Research/Debug/Lua_Research.Build.CppClean.log
+*.lastbuildstate
+*.idb
+Engian.engine/Engian.research/Lua_Research/Debug/vc110.pdb
+*.filters
