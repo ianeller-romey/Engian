@@ -1,0 +1,7 @@
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\TBGINTBdb.dacpac
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\Model.xml
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\refactor.xml
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\postdeploy.sql
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\predeploy.sql
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\_5.55db.dll
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\_5.55db.pdb

@@ -10,3 +10,8 @@ Engian.engine/Engian.research/Lua_Research/Debug/Lua_Research.Build.CppClean.log
 *.idb
 Engian.engine/Engian.research/Lua_Research/Debug/vc110.pdb
 *.filters
+*.user
+*.cache
+TBGINTB/TBGINTB_Framework/TBGINTB_Framework/obj/Debug/JavaScriptFSM.dll
+TBGINTB/TBGINTB_Framework/TBGINTB_Framework/obj/Debug/JavaScriptFSM.pdb
+TBGINTB/TBGINTB_Framework/TBGINTB_Framework/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs

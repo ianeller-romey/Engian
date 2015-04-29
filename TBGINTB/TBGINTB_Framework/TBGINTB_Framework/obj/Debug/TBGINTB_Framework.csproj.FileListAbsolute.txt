@@ -1,0 +1,5 @@
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTB_Framework\bin\JavaScriptFSM.dll
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTB_Framework\bin\JavaScriptFSM.pdb
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTB_Framework\obj\Debug\TBGINTB_Framework.csprojResolveAssemblyReference.cache
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTB_Framework\obj\Debug\JavaScriptFSM.dll
+C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTB_Framework\obj\Debug\JavaScriptFSM.pdb
