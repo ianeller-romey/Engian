@@ -15,7 +15,7 @@ var Engine = function () {
     this._verbTables["W"].length = 1;
 };
 
-Engine.prototype.getverbType = function (str) {
+Engine.prototype.getVerbType = function (str) {
     var char = str[0].toUpperCase();
     var verbTable = this._verbTables[char];
     if (verbTable === undefined) {
@@ -31,7 +31,7 @@ Engine.prototype.getverbType = function (str) {
 };
 
 Engine.prototype.parse = function (str) {
-    var verb = this.getverbType(str);
+    var verb = this.getVerbType(str);
     if (verb === false) {
         return false;
     }
