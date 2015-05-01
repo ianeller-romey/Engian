@@ -13,8 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -------------------------------------------------*/
 html {
-    min-height: 100%;
     position: relative;
+    min-height: 100%;
 }
 
 body {
@@ -36,12 +36,12 @@ body {
     width: 640px;
     height:100%;
     min-height: 530px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
     background-color: black;
     overflow: hidden;
 }
@@ -55,47 +55,56 @@ body {
     position: relative;
     top: 0;
     height: 100%;
+}
+
+    #interface:hover #gradient {
+        top: -13px;
+        height: 10px;
+    }
+
+#gradient {
+    position: relative;
+    top: 0;
+    height: 0px;
+    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+}
+
+#paragraphs {
     padding-left: 10px;
     padding-right: 10px;
-    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,1) 2.5%, rgba(0,0,0,1) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(2.5%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,1))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 2.5%,rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 2.5%,rgba(0,0,0,1) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 2.5%,rgba(0,0,0,1) 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 2.5%,rgba(0,0,0,1) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+    cursor: default;
 }
 
-    #interface:hover {
-        top: -80px;
-    }
-
-    #interface:hover #action {
-        height: auto;
-        visibility: visible;
-        opacity: 1.0;
-        margin-top: 60px;
-        margin-bottom: 30px;
-        padding-top: 40px;
-    }
-
-#action {
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 0px;
-    width: 80%;
-    height: 20px;
-    visibility: hidden;
-    opacity: 0.0;
-    font-family: 'Courier New';
-    font-size: large;
-    font-weight: bold;
+#verbList {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    display: inline;
+    background-color: dimgray;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
+    -webkit-box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
 }
 
-#user-input {
-    text-wrap: normal;
-    word-wrap: break-word;
+#verbList:empty {
+    width: 0px;
+    height: 0px;
+    padding: 0px;
+    display: none;
 }
+
 
 .center {
     margin-left: auto;
@@ -110,6 +119,25 @@ body {
     transition: all 150ms linear;
 }
 
-.textParagraph:hover {
-    text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
+.unParagraph {
+    line-height: 140%;
+    letter-spacing: 1px;
+    font-family: Georgia;
+    font-size: large;
 }
+
+    .unParagraph:hover {
+        text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
+    }
+
+.verb {
+    margin: 5px 15px 5px 15px;
+    font-family: 'Courier New';
+    font-size: x-large;
+    font-weight: bold;
+    cursor: default;
+}
+
+    .verb:hover {
+        text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
+    }
