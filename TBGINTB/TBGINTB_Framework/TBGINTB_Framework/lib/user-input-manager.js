@@ -26,6 +26,7 @@
 
 var VerbList = function(idOfVerbList){
     this.verbListElem = $(idOfVerbList);
+    this.verbListElemX = $(idOfVerbList + "X");
     this.interfaceElem = this.verbListElem.parent("div");
     this.states = {
         closed: 0,
@@ -34,6 +35,11 @@ var VerbList = function(idOfVerbList){
     };
     this.state = this.states.closed;
     this.actionQueue = new ActionQueue(3);
+
+    var that = this;
+    this.verbListElemX.click(function () {
+        that.close();
+    });
 };
 
 VerbList.prototype.openExec = function(clientX, clientY) {
@@ -50,9 +56,6 @@ VerbList.prototype.openExec = function(clientX, clientY) {
         var div = $(document.createElement("div"));
         div.addClass("verb");
         div.text("TEST");
-        div.click(function () {
-            that.close();
-        });
         this.verbListElem.append(div);
     }
 
@@ -67,12 +70,19 @@ VerbList.prototype.openExec = function(clientX, clientY) {
             that.verbListElem.animate({
                 padding: 10
             }, 50, function () {
-                if (that.actionQueue.isEmpty()) {
-                    that.state = that.states.open;
-                }
-                else {
-                    that.update();
-                }
+                that.verbListElemX.css({
+                    display: "inline"
+                });
+                that.verbListElemX.animate({
+                    opacity: 1
+                }, 25, function () {
+                    if (that.actionQueue.isEmpty()) {
+                        that.state = that.states.open;
+                    }
+                    else {
+                        that.update();
+                    }
+                });
             });
         });
     });
@@ -86,22 +96,32 @@ VerbList.prototype.closeExec = function() {
     var that = this;
 
     // animate closing in reverse order
-    this.verbListElem.animate({
-        height: 0
-    }, 50, function () {
+    this.verbListElemX.animate({
+        opacity: 0
+    }, 25, function () {
+        that.verbListElemX.css({
+            display: "none"
+        });
         that.verbListElem.animate({
-            width: 0
+            height: 0
         }, 50, function () {
+            // remove the verbs after animating down the height, and
+            // before anything else, since we see weird artifacts if we
+            // remove them last
+            $(".verb").remove();
             that.verbListElem.animate({
-                padding: 0
+                width: 0
             }, 50, function () {
-                that.verbListElem.empty();
-                if (that.actionQueue.isEmpty()) {
-                    that.state = that.states.closed;
-                }
-                else {
-                    that.update();
-                }
+                that.verbListElem.animate({
+                    padding: 0
+                }, 50, function () {
+                    if (that.actionQueue.isEmpty()) {
+                        that.state = that.states.closed;
+                    }
+                    else {
+                        that.update();
+                    }
+                });
             });
         });
     });
