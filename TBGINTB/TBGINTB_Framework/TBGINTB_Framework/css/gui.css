@@ -43,7 +43,7 @@ body {
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
     background-color: black;
-    overflow: hidden;
+    overflow: visible;
 }
 
 #location {

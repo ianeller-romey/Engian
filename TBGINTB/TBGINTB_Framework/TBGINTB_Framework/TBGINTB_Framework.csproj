@@ -57,8 +57,9 @@
     <Reference Include="System.EnterpriseServices" />-->
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\action-queue.js" />
     <Content Include="lib\engine.js" />
-    <Content Include="lib\user-input.js" />
+    <Content Include="lib\user-input-manager.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
