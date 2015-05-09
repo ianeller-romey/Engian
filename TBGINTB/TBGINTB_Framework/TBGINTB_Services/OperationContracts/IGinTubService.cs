@@ -15,6 +15,11 @@ namespace GinTub.Services.OperationContracts
     public interface IGinTubService
     {
         [OperationContract]
-        DataContracts.RoomData GetRoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime);
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "RoomDataInitialLoad")]
+        DataContracts.RoomData RoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime);
     }
 }

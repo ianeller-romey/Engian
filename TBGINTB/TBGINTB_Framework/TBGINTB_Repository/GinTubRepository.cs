@@ -62,7 +62,7 @@ namespace GinTub.Repository
                 Id = 1,
                 Area = 1,
                 State = 1,
-                Location = "",
+                Location = "http://capitalcitiesusa.org/wp-content/uploads/2012/07/01-Rainy-car-window.jpg",
                 X = 0,
                 Y = 0,
                 Z = 0,

@@ -165,8 +165,8 @@ VerbList.prototype.continueUpdating = function () {
     this.actionQueue.pop();
 };
 
-var UserInputManager = function () {
-    this.verbList = new VerbList("#verbList");
+var UserInputManager = function (verbListId) {
+    this.verbList = new VerbList(verbListId);
 };
 
 UserInputManager.prototype.openVerbList = function (clientX, clientY) {

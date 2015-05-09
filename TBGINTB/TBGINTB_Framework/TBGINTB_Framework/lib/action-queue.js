@@ -21,8 +21,9 @@ ActionQueue.prototype.push = function (caller, called, params) {
 };
 
 ActionQueue.prototype.pop = function () {
-    if (this.queue.length === 0)
+    if (this.queue.length === 0) {
         return;
+    }
     var action = this.queue[0];
     action.toCall.apply(action.calledBy, action.calledWith);
     this.queue = this.queue.slice(1, this.queue.length);

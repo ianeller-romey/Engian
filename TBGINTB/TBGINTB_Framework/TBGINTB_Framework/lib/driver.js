@@ -1,7 +1,11 @@
 ﻿
 $(document).ready(function init() { // on initialization ...
-    var userInputManager = new UserInputManager();
-    var engine = new Engine();
+    var now = new Date();
+    
+    var servicesEngine = new ServicesEngine();
+    var interfaceManager = new InterfaceManager("#location", "#paragraphs");
+    var userInputManager = new UserInputManager("#verbList");
+    servicesEngine.loadRoom("67646381-0CCA-46EC-9028-A5C2920E97A4", 1, 2, 3, 4, now.toMSJSON());
         
     var textParagraphClasses = $(".unParagraph");
     $.each(textParagraphClasses, function (i, textParagraph) {

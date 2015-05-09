@@ -27,12 +27,7 @@ namespace GinTub.Services
             Mapper.CreateMap<Repository.RoomDataInitialLoad.RoomData, RoomData>();
         }
 
-        [WebInvoke(Method = "POST",
-        BodyStyle=WebMessageBodyStyle.Wrapped,
-        RequestFormat=WebMessageFormat.Json,
-        ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "RoomDataInitialLoad")]
-        public RoomData GetRoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime)
+        public RoomData RoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime)
         {
             return Mapper.Engine.Map<RoomData>(
                 _repository.GetRoomDataInitialLoad(playerId, area, x, y, z, currentTime));
