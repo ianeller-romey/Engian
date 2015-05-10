@@ -78,6 +78,37 @@ CREATE TABLE [dbo].[Results] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id]),
 	[ResultSourceType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultSourceTypes]([Id]),
-	[Source] int NULL,
+	[Source] int NOT NULL,
 	[JSONData] varchar(MAX) NULL
 )
+
+CREATE TABLE [dbo].[RequirementSourceTypes] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL
+)
+
+CREATE TABLE [dbo].[Requirements] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id]),
+	[RequirementSourceType] int FOREIGN KEY REFERENCES [dbo].[RequirementSourceTypes]([Id]),
+	[Requirement] int NOT NULL
+)
+
+CREATE TABLE [dbo].[Messages] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Text] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[MessageChoices] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Message] int FOREIGN KEY REFERENCES [dbo].[Messages]([Id]),
+	[Text] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[MessageChoiceOutcomes] (
+	[MessageChoice] int FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id]),
+	[Result] int NULL
+)
+
+CREATE TABLE [dbo].[Players] (
+	[Email] varchar -- TODO: Break emails into fancy domain-specific table bullshit
