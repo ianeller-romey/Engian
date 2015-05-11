@@ -110,5 +110,37 @@ CREATE TABLE [dbo].[MessageChoiceOutcomes] (
 	[Result] int NULL
 )
 
+CREATE TABLE [dbo].[EmailUserNames] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[UserName] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[EmailDomainNames] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[DomainName] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[EmailDomains] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Domain] varchar(MAX) NOT NULL
+)
+
 CREATE TABLE [dbo].[Players] (
-	[Email] varchar -- TODO: Break emails into fancy domain-specific table bullshit
+	[EmailUserName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailUserNames]([Id]),
+	[EmailDomainName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomainNames]([Id]),
+	[EmailDomain] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomains]([Id]),
+	[Password] varchar(MAX) NOT NULL,
+	[Id] uniqueidentifier NOT NULL PRIMARY KEY
+)
+
+CREATE TABLE [dbo].[PlayerRoomStates] (
+	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
+	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
+	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id])
+)
+
+CREATE TABLE [dbo].[PlayerParagraphStates] (
+	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
+	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
+	[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id])
+)
