@@ -28,23 +28,20 @@ CREATE TABLE [dbo].[RoomStates] (
 )
 
 CREATE TABLE [dbo].[Paragraphs] (
-	[Id] int PRIMARY KEY IDENTITY,
+	[Id] int IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id])
-)
-
-CREATE TABLE [dbo].[ParagraphStates] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
-	[State] int NOT NULL
+	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
+	[State] int NOT NULL,
+	CONSTRAINT PK__ParagraphsID__COMPOSITE PRIMARY KEY ([Id],[State])
 )
 
 CREATE TABLE [dbo].[Nouns] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
-	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
-	[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id])
+	[Paragraph] int NOT NULL,
+	[ParagraphState] int NOT NULL,
+	FOREIGN KEY ([Paragraph], [ParagraphState]) REFERENCES [dbo].[Paragraphs]([Id], [State])
 )
 
 CREATE TABLE [dbo].[VerbTypes] (
@@ -106,8 +103,9 @@ CREATE TABLE [dbo].[MessageChoices] (
 )
 
 CREATE TABLE [dbo].[MessageChoiceOutcomes] (
+	[Id] int PRIMARY KEY IDENTITY,
 	[MessageChoice] int FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id]),
-	[Result] int NULL
+	[Result] int NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id])
 )
 
 CREATE TABLE [dbo].[EmailUserNames] (
@@ -141,6 +139,42 @@ CREATE TABLE [dbo].[PlayerRoomStates] (
 
 CREATE TABLE [dbo].[PlayerParagraphStates] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
-	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
-	[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id])
+	[Paragraph] int NOT NULL,
+	[ParagraphState] int NOT NULL,
+	FOREIGN KEY ([Paragraph], [ParagraphState]) REFERENCES [dbo].[Paragraphs]([Id], [State])
+)
+
+CREATE TABLE [dbo].[Items] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[PlayerInventory] (
+	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
+	[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
+	[Active] bit NOT NULL
+)
+
+CREATE TABLE [dbo].[Events] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[PlayerHistory] (
+	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
+	[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id])
+)
+
+CREATE TABLE [dbo].[Characters] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[PlayerParty] (
+	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
+	[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[characters]([Id]),
+	[Active] bit NOT NULL
 )

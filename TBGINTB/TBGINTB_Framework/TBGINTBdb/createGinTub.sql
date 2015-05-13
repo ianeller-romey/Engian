@@ -1,0 +1,25 @@
+USE [master]
+GO
+
+IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'GinTub')
+BEGIN
+	ALTER DATABASE [GinTub] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+	DROP DATABASE [GinTub]
+END
+
+USE [master]
+GO
+
+CREATE DATABASE [GinTub] ON  PRIMARY 
+( NAME = N'GinTub', FILENAME = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\GinTub.mdf' , SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'GinTub_log', FILENAME = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\GinTub_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+
+ALTER DATABASE [GinTub] SET COMPATIBILITY_LEVEL = 100
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [GinTub].[dbo].[sp_fulltext_database] @action = 'enable'
+end
