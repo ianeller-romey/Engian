@@ -128,20 +128,23 @@ CREATE TABLE [dbo].[Players] (
 	[EmailDomainName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomainNames]([Id]),
 	[EmailDomain] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomains]([Id]),
 	[Password] varchar(MAX) NOT NULL,
-	[Id] uniqueidentifier NOT NULL PRIMARY KEY
+	[Id] uniqueidentifier NOT NULL PRIMARY KEY,
+	[LastCheckpoint] datetime NOT NULL
 )
 
 CREATE TABLE [dbo].[PlayerRoomStates] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id])
+	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
+	[CheckpointDate] datetime NOT NULL
 )
 
 CREATE TABLE [dbo].[PlayerParagraphStates] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Paragraph] int NOT NULL,
 	[ParagraphState] int NOT NULL,
-	FOREIGN KEY ([Paragraph], [ParagraphState]) REFERENCES [dbo].[Paragraphs]([Id], [State])
+	FOREIGN KEY ([Paragraph], [ParagraphState]) REFERENCES [dbo].[Paragraphs]([Id], [State]),
+	[CheckpointDate] datetime NOT NULL
 )
 
 CREATE TABLE [dbo].[Items] (
@@ -153,7 +156,8 @@ CREATE TABLE [dbo].[Items] (
 CREATE TABLE [dbo].[PlayerInventory] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
-	[Active] bit NOT NULL
+	[Active] bit NOT NULL,
+	[CheckpointDate] datetime NOT NULL
 )
 
 CREATE TABLE [dbo].[Events] (
@@ -164,7 +168,8 @@ CREATE TABLE [dbo].[Events] (
 
 CREATE TABLE [dbo].[PlayerHistory] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
-	[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id])
+	[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
+	[CheckpointDate] datetime NOT NULL
 )
 
 CREATE TABLE [dbo].[Characters] (
@@ -176,5 +181,6 @@ CREATE TABLE [dbo].[Characters] (
 CREATE TABLE [dbo].[PlayerParty] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[characters]([Id]),
-	[Active] bit NOT NULL
+	[Active] bit NOT NULL,
+	[CheckpointDate] datetime NOT NULL
 )

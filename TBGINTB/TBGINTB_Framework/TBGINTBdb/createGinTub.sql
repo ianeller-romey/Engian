@@ -1,25 +1,36 @@
 USE [master]
-GO
 
-IF  EXISTS (SELECT name FROM sys.databases WHERE name = N'GinTub')
-BEGIN
-	ALTER DATABASE [GinTub] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
-	DROP DATABASE [GinTub]
-END
+-- Since we can't use parameters in the call to CREATE DATABASE, and since I'll probably want to create the .mdf files in different locations
+-- depending on which machine I'm on, we're going to dynamically build all the calls necessary to drop and create the database for the sake of
+-- consistency
+DECLARE @databaseName varchar(MAX)
+SELECT @databaseName = N'GinTub'
 
-USE [master]
-GO
+-- If the database exists, drop it
+DECLARE @dropDatabaseExec nvarchar(MAX)
+SELECT @dropDatabaseExec = 'IF  EXISTS (SELECT [name] FROM [sys].[databases] WHERE [name] = ''' + @databaseName + ''') ' +
+	'BEGIN ' + 
+	'ALTER DATABASE [' + @databaseName + '] SET SINGLE_USER WITH ROLLBACK IMMEDIATE ' +
+	'DROP DATABASE [' + @databaseName + '] ' +
+	'END'
+EXECUTE sp_executesql @dropDatabaseExec
 
-CREATE DATABASE [GinTub] ON  PRIMARY 
-( NAME = N'GinTub', FILENAME = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\GinTub.mdf' , SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = N'GinTub_log', FILENAME = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\GinTub_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
-GO
+-- Create the database anew
+DECLARE @mdfFileDirectory varchar(MAX)
+SELECT @mdfFileDirectory = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\'
 
-ALTER DATABASE [GinTub] SET COMPATIBILITY_LEVEL = 100
-GO
+DECLARE @mdfFileName varchar(MAX)
+DECLARE @mdfLogFileName varchar(MAX)
 
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [GinTub].[dbo].[sp_fulltext_database] @action = 'enable'
-end
+SELECT @mdfFileName = @mdfFileDirectory + @databaseName + N'.mdf', 
+	   @mdfLogFileName = @mdfFileDirectory + @databaseName + N'_log.ldf'
+
+DECLARE @createDatabaseExec nvarchar(MAX)
+SELECT @createDatabaseExec = N'CREATE DATABASE [' + @databaseName + '] ON PRIMARY ' +
+	'(NAME = ''' + @databaseName + ''', FILENAME = ''' + @mdfFileName + ''', SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB) LOG ON ' +
+	'(NAME = ''' + @databaseName + '_log'', FILENAME = ''' + @mdfLogFileName + ''' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%) ' +
+	--'GO ' +
+	'ALTER DATABASE [' + @databaseName + '] SET COMPATIBILITY_LEVEL = 100 ' + 
+	--'GO ' +
+	'IF (1 = FULLTEXTSERVICEPROPERTY(''IsFullTextInstalled'')) BEGIN EXEC [' + @databaseName + '].[dbo].[sp_fulltext_database] @action = ''enable'' END'
+EXECUTE sp_executesql @createDatabaseExec

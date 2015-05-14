@@ -1,10 +1,5 @@
 USE [GinTub]
 
-IF NOT EXISTS (SELECT schema_name FROM information_schema.schemata WHERE schema_name = 'dev' ) 
-BEGIN
-	EXEC sp_executesql N'CREATE SCHEMA dev'
-END
-
 SET ANSI_NULLS ON
 GO
 
@@ -15,7 +10,7 @@ GO
 /*Area*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddArea] AS SELECT 1')
 GO
 -- =============================================
@@ -39,7 +34,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateArea] AS SELECT 1')
 GO
 -- =============================================
@@ -63,11 +58,66 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetArea] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/14/2015
+-- Description:	Gets data about an Area record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetArea]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT a.[Id],
+		   a.[Name],
+		   ISNULL(MAX(r.[X]), 0) as [MaxX],
+		   ISNULL(MIN(r.[X]), 0) as [MinX],
+		   ISNULL(MAX(r.[Y]), 0) as [MaxY],
+		   ISNULL(MIN(r.[Y]), 0) as [MinY],
+		   ISNULL(MAX(r.[Z]), 0) as [MaxZ],
+		   ISNULL(MIN(r.[Z]), 0) as [MinZ],
+		   COUNT(r.[Id]) as [NumRooms]
+	FROM [dbo].[Areas] a
+	INNER JOIN [dbo].[Rooms] r
+	ON r.[Area] = a.[Id]
+	WHERE a.[Id] = @id
+	GROUP BY a.[Id], a.[Name]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllAreas] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/14/2015
+-- Description:	Gets the Id and Name fields of all Area records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllAreas]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT *
+	FROM [dbo].[Areas]
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Location*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddLocation] AS SELECT 1')
 GO
 -- =============================================
@@ -91,7 +141,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateLocation] AS SELECT 1')
 GO
 -- =============================================
@@ -119,7 +169,7 @@ GO
 /*Room*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddRoom] AS SELECT 1')
 GO
 -- =============================================
@@ -147,7 +197,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRoom] AS SELECT 1')
 GO
 -- =============================================
@@ -179,7 +229,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ShiftRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ShiftRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_ShiftRoom] AS SELECT 1')
 GO
 -- =============================================
@@ -207,11 +257,34 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomsInArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomsInArea] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/14/2015
+-- Description:	Gets all Area records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllRoomsInArea]
+	@area int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT *
+	FROM [dbo].[Rooms]
+	WHERE [Area] = @area
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*RoomState********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddRoomState] AS SELECT 1')
 GO
 -- =============================================
@@ -238,7 +311,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRoomState] AS SELECT 1')
 GO
 -- =============================================
@@ -272,7 +345,7 @@ GO
 /*Paragraph********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraph] AS SELECT 1')
 GO
 -- =============================================
@@ -298,7 +371,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraph] AS SELECT 1')
 GO
 -- =============================================
@@ -331,7 +404,7 @@ GO
 /*Noun*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddNoun] AS SELECT 1')
 GO
 -- =============================================
@@ -371,7 +444,7 @@ GO
 /*VerbType*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddVerbType] AS SELECT 1')
 GO
 -- =============================================
@@ -395,7 +468,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateVerbType] AS SELECT 1')
 GO
 -- =============================================
@@ -423,7 +496,7 @@ GO
 /*Verb*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddVerb] AS SELECT 1')
 GO
 -- =============================================
@@ -448,7 +521,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateVerb] AS SELECT 1')
 GO
 -- =============================================
@@ -478,7 +551,7 @@ GO
 /*Action***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddAction] AS SELECT 1')
 GO
 -- =============================================
@@ -503,7 +576,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateAction] AS SELECT 1')
 GO
 -- =============================================
@@ -533,7 +606,7 @@ GO
 /*ResultSourceType*************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddResultSourceType] AS SELECT 1')
 GO
 -- =============================================
@@ -557,7 +630,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultSourceType] AS SELECT 1')
 GO
 -- =============================================
@@ -585,7 +658,7 @@ GO
 /*ResultType*******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddResultType] AS SELECT 1')
 GO
 -- =============================================
@@ -609,7 +682,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultType] AS SELECT 1')
 GO
 -- =============================================
@@ -637,7 +710,7 @@ GO
 /*Result***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddResult] AS SELECT 1')
 GO
 -- =============================================
@@ -664,7 +737,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResult] AS SELECT 1')
 GO
 -- =============================================
@@ -698,7 +771,7 @@ GO
 /*RequirementSourceType********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddRequirementSourceType] AS SELECT 1')
 GO
 -- =============================================
@@ -722,7 +795,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRequirementSourceType] AS SELECT 1')
 GO
 -- =============================================
@@ -750,7 +823,7 @@ GO
 /*Requirement******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_AddRequirement] AS SELECT 1')
 GO
 -- =============================================
@@ -777,7 +850,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRequirement] AS SELECT 1')
 GO
 -- =============================================
@@ -810,7 +883,7 @@ GO
 /*Message**********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddMessage] AS SELECT 1')
 GO
 -- =============================================
@@ -834,7 +907,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessage] AS SELECT 1')
 GO
 -- =============================================
@@ -862,7 +935,7 @@ GO
 /*MessageChoice****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoice] AS SELECT 1')
 GO
 -- =============================================
@@ -887,7 +960,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessageChoice] AS SELECT 1')
 GO
 -- =============================================
@@ -915,7 +988,7 @@ GO
 /*MessageChoiceOutcome*********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoiceOutcome] AS SELECT 1')
 GO
 -- =============================================
@@ -940,7 +1013,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessageChoiceOutcome] AS SELECT 1')
 GO
 -- =============================================
@@ -968,7 +1041,7 @@ GO
 /*Item*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddItem] AS SELECT 1')
 GO
 -- =============================================
@@ -993,7 +1066,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateItem] AS SELECT 1')
 GO
 -- =============================================
@@ -1023,7 +1096,7 @@ GO
 /*PlayerInventory**************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerInventory] AS SELECT 1')
 GO
 -- =============================================
@@ -1049,7 +1122,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdatePlayerInventory] AS SELECT 1')
 GO
 -- =============================================
@@ -1078,7 +1151,7 @@ GO
 /*Event************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddEvent] AS SELECT 1')
 GO
 -- =============================================
@@ -1107,7 +1180,7 @@ GO
 /*PlayerHistory****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEvent] AS SELECT 1')
 GO
 -- =============================================
@@ -1133,7 +1206,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerHistory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerHistory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerHistory] AS SELECT 1')
 GO
 -- =============================================
@@ -1162,7 +1235,7 @@ GO
 /*Character********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddCharacter] AS SELECT 1')
 GO
 -- =============================================
@@ -1187,7 +1260,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateCharacter] AS SELECT 1')
 GO
 -- =============================================
@@ -1217,7 +1290,7 @@ GO
 /*PlayerParty******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerParty] AS SELECT 1')
 GO
 -- =============================================
@@ -1243,7 +1316,7 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdatePlayerParty] AS SELECT 1')
 GO
 -- =============================================
@@ -1272,7 +1345,7 @@ GO
 /*Player***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddPlayer] AS SELECT 1')
 GO
 -- =============================================
