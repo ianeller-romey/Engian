@@ -772,5 +772,19 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetArea_Result>("dev_GetArea", idParameter);
         }
+    
+        public virtual int dev_DeleteAllAreas()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllAreas");
+        }
+    
+        public virtual ObjectResult<dev_GetRoom_Result> dev_GetRoom(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
+        }
     }
 }

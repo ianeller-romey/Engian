@@ -31,7 +31,7 @@ CREATE TABLE [dbo].[Paragraphs] (
 	[Id] int IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
+	[RoomState] int NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
 	[State] int NOT NULL,
 	CONSTRAINT PK__ParagraphsID__COMPOSITE PRIMARY KEY ([Id],[State])
 )

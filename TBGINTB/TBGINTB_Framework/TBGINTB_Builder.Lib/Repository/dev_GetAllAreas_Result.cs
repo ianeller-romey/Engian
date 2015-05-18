@@ -15,12 +15,5 @@ namespace TBGINTB_Builder.Lib.Repository
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<int> MaxX { get; set; }
-        public Nullable<int> MinX { get; set; }
-        public Nullable<int> MaxY { get; set; }
-        public Nullable<int> MinY { get; set; }
-        public Nullable<int> MaxZ { get; set; }
-        public Nullable<int> MinZ { get; set; }
-        public Nullable<int> NumRooms { get; set; }
     }
 }

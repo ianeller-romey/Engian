@@ -84,7 +84,7 @@ BEGIN
 		   ISNULL(MIN(r.[Z]), 0) as [MinZ],
 		   COUNT(r.[Id]) as [NumRooms]
 	FROM [dbo].[Areas] a
-	INNER JOIN [dbo].[Rooms] r
+	LEFT JOIN [dbo].[Rooms] r
 	ON r.[Area] = a.[Id]
 	WHERE a.[Id] = @id
 	GROUP BY a.[Id], a.[Name]
@@ -107,8 +107,31 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT *
+	SELECT [Id],
+		   [Name]
 	FROM [dbo].[Areas]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllAreas] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/15/2015
+-- Description:	Deletes all Area records and resets the seed
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllAreas]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE FROM [dbo].[Areas]
+
+	DBCC CHECKIDENT ('[dbo].[Areas]', RESEED, 0)
 
 END
 GO
@@ -273,9 +296,42 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT *
+	SELECT r.[Id],
+		   r.[Name],
+		   r.[X],
+		   r.[Y],
+		   r.[Z],
+		   r.[Area]
 	FROM [dbo].[Rooms]
 	WHERE [Area] = @area
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/15/2015
+-- Description:	Gets data about an Room record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetRoom]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [X],
+		   [Y],
+		   [Z],
+		   [Area]
+	FROM [dbo].[Rooms]
+	WHERE [Id] = @id
 
 END
 GO

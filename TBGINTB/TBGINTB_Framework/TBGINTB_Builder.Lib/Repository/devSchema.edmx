@@ -108,11 +108,15 @@
         <Function Name="dev_AddVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="dev_DeleteAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllRoomsInArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="area" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ShiftRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -455,18 +459,15 @@
           <FunctionImport Name="dev_GetArea" ReturnType="Collection(GinTubModel.dev_GetArea_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllAreas" />
+          <FunctionImport Name="dev_GetRoom" ReturnType="Collection(GinTubModel.dev_GetRoom_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="Int32" Name="MaxX" Nullable="true" />
-          <Property Type="Int32" Name="MinX" Nullable="true" />
-          <Property Type="Int32" Name="MaxY" Nullable="true" />
-          <Property Type="Int32" Name="MinY" Nullable="true" />
-          <Property Type="Int32" Name="MaxZ" Nullable="true" />
-          <Property Type="Int32" Name="MinZ" Nullable="true" />
-          <Property Type="Int32" Name="NumRooms" Nullable="true" />
-        </ComplexType>
+          </ComplexType>
         <ComplexType Name="dev_GetAllRoomsInArea_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
@@ -485,6 +486,14 @@
           <Property Type="Int32" Name="MaxZ" Nullable="false" />
           <Property Type="Int32" Name="MinZ" Nullable="false" />
           <Property Type="Int32" Name="NumRooms" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="dev_GetRoom_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="X" Nullable="false" />
+          <Property Type="Int32" Name="Y" Nullable="false" />
+          <Property Type="Int32" Name="Z" Nullable="false" />
+          <Property Type="Int32" Name="Area" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -543,14 +552,7 @@
               <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllAreas_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="MaxX" ColumnName="MaxX" />
-                <ScalarProperty Name="MinX" ColumnName="MinX" />
-                <ScalarProperty Name="MaxY" ColumnName="MaxY" />
-                <ScalarProperty Name="MinY" ColumnName="MinY" />
-                <ScalarProperty Name="MaxZ" ColumnName="MaxZ" />
-                <ScalarProperty Name="MinZ" ColumnName="MinZ" />
-                <ScalarProperty Name="NumRooms" ColumnName="NumRooms" />
-              </ComplexTypeMapping>
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="dev_GetAllRoomsInArea" FunctionName="GinTubModel.Store.dev_GetAllRoomsInArea">
@@ -577,6 +579,19 @@
                 <ScalarProperty Name="MaxZ" ColumnName="MaxZ" />
                 <ScalarProperty Name="MinZ" ColumnName="MinZ" />
                 <ScalarProperty Name="NumRooms" ColumnName="NumRooms" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllAreas" FunctionName="GinTubModel.Store.dev_DeleteAllAreas" />
+          <FunctionImportMapping FunctionImportName="dev_GetRoom" FunctionName="GinTubModel.Store.dev_GetRoom">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoom_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

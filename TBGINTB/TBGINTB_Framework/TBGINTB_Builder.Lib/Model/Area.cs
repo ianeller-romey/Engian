@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 namespace TBGINTB_Builder.Lib.Model
 {
     [DataContract]
-    public class Area : ObservablePropertiesObject
+    class Area
     {
         int m_id;
         string m_name;
@@ -19,7 +18,6 @@ namespace TBGINTB_Builder.Lib.Model
         int m_maxY, m_minY;
         int m_maxZ, m_minZ;
         int m_numRooms;
-        ObservableCollection<Room> m_rooms = new ObservableCollection<Room>();
 
         [DataMember]
         public int Id 
@@ -28,10 +26,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_id != value)
-                {
                     m_id = value;
-                    NotifyPropertyChanged("Id");
-                }
             }
         }
 
@@ -42,10 +37,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_name != value)
-                {
                     m_name = value;
-                    NotifyPropertyChanged("Name");
-                }
             }
         }
 
@@ -55,10 +47,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_maxX != value)
-                {
                     m_maxX = value;
-                    NotifyPropertyChanged("MaxX");
-                }
             }
         }
 
@@ -68,10 +57,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_minX != value)
-                {
                     m_minX = value;
-                    NotifyPropertyChanged("MinX");
-                }
             }
         }
 
@@ -81,10 +67,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_maxY != value)
-                {
                     m_maxY = value;
-                    NotifyPropertyChanged("MaxY");
-                }
             }
         }
 
@@ -94,10 +77,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_minY != value)
-                {
                     m_minY = value;
-                    NotifyPropertyChanged("MinY");
-                }
             }
         }
 
@@ -107,10 +87,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_maxZ != value)
-                {
                     m_maxZ = value;
-                    NotifyPropertyChanged("MaxZ");
-                }
             }
         }
 
@@ -120,10 +97,7 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_minZ != value)
-                {
                     m_minZ = value;
-                    NotifyPropertyChanged("MinZ");
-                }
             }
         }
 
@@ -133,17 +107,8 @@ namespace TBGINTB_Builder.Lib.Model
             private set
             {
                 if (m_numRooms != value)
-                {
                     m_numRooms = value;
-                    NotifyPropertyChanged("NumRooms");
-                }
             }
-        }
-
-        [DataMember]
-        public ObservableCollection<Room> Rooms
-        {
-            get { return m_rooms; }
         }
 
     }

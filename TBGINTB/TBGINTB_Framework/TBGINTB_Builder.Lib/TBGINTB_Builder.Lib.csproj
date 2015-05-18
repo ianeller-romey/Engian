@@ -54,8 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="Model\Area.cs" />
-    <Compile Include="BuilderController.cs" />
+    <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Repository\devSchema.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -80,9 +81,11 @@
     <Compile Include="Repository\dev_GetArea_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ObservablePropertiesObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Room.cs" />
+    <Compile Include="Repository\dev_GetRoom_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Repository\devSchema.edmx">
