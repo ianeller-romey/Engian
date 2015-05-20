@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using TBGINTB_Builder.Controls;
+using TBGINTB_Builder.BuilderControls;
+using TBGINTB_Builder.HelperControls;
+using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
-
-using IANWork;
 
 
 namespace TBGINTB_Builder
@@ -25,7 +25,7 @@ namespace TBGINTB_Builder
     {
         #region MEMBER FIELDS
 
-        TabControl m_tabControl_areas;
+        TabControl m_tabControl_controls;
         MenuItem m_menuItem_selectArea;
 
         #endregion
@@ -37,7 +37,6 @@ namespace TBGINTB_Builder
 
         public MainWindow()
         {
-            IW.Init(IW.DefaultTextBoxWidth, IW.DefaultButtonWidth, IW.DefaultComboBoxWidth, Brushes.Gray, Brushes.Black);
             InitializeComponent();
             Content = CreateControls();
             CreateGinTubManager();
@@ -70,16 +69,17 @@ namespace TBGINTB_Builder
 
             ////////
             // tab control
-            m_tabControl_areas = new TabControl();
-            m_tabControl_areas.Items.Add(new TabItem_Area());
+            m_tabControl_controls = new TabControl();
+            m_tabControl_controls.Items.Add(new TabItem_Area());
+            m_tabControl_controls.Items.Add(new TabItem_Locations());
 
             ////////
             // grid
             Grid grid_main = new Grid();
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
-            IW.SetGridRowColumn(grid_main, dockPanel_main, 0, -1);
-            IW.SetGridRowColumn(grid_main, m_tabControl_areas, 1, -1);
+            grid_main.SetGridRowColumn(dockPanel_main, 0, 0);
+            grid_main.SetGridRowColumn(m_tabControl_controls, 1, 0);
 
             return grid_main;
         }
@@ -90,11 +90,12 @@ namespace TBGINTB_Builder
             GinTubBuilderManager.AreaAdded += GinTubBuilderManager_AreaAdded;
 
             GinTubBuilderManager.LoadAllAreas();
+            GinTubBuilderManager.LoadAllLocations();
         }
 
         private void AddArea(object sender, RoutedEventArgs e)
         {
-            Window_TextBoxEntry window = new Window_TextBoxEntry("Area name", "");
+            Window_TextEntry window = new Window_TextEntry("Area Name", "");
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddArea(window.Text);

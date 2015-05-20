@@ -149,15 +149,16 @@ GO
 -- Description:	Adds a Location record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddLocation]
-	@location varchar(MAX)
+	@name varchar(500),
+	@locationfile varchar(MAX)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Locations] ([Location])
-	VALUES (@location)
+	INSERT INTO [dbo].[Locations] ([Name], [LocationFile])
+	VALUES (@name, @locationfile)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -174,7 +175,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateLocation]
 	@id int,
-	@location varchar(MAX)
+	@name varchar(500),
+	@locationfile varchar(MAX)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -182,8 +184,57 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Locations] 
-	SET	[Location] = ISNULL(@location, [Location])
+	SET	[Name] = ISNULL(@name, [Name]),
+		[LocationFile] = ISNULL(@locationfile, [LocationFile])
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetLocation] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/20/2015
+-- Description:	Gets data about an Location record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetLocation]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [LocationFile]
+	FROM [dbo].[Locations]
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllLocations] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/20/2015
+-- Description:	Gets the Id and Location fields of all Location records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllLocations]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [LocationFile]
+	FROM [dbo].[Locations]
 
 END
 GO
@@ -448,7 +499,7 @@ BEGIN
 		   [State],
 		   [Location],
 		   [Time]
-	FROM [dbo].[Rooms]
+	FROM [dbo].[RoomStates]
 	WHERE [Room] = @room
 
 END

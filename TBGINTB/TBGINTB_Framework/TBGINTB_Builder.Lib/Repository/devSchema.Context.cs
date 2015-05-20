@@ -89,13 +89,17 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddItem", nameParameter, descriptionParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddLocation(string location)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddLocation(string name, string locationfile)
         {
-            var locationParameter = location != null ?
-                new ObjectParameter("location", location) :
-                new ObjectParameter("location", typeof(string));
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddLocation", locationParameter);
+            var locationfileParameter = locationfile != null ?
+                new ObjectParameter("locationfile", locationfile) :
+                new ObjectParameter("locationfile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddLocation", nameParameter, locationfileParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddMessage(string text)
@@ -470,17 +474,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateItem", idParameter, nameParameter, descriptionParameter);
         }
     
-        public virtual int dev_UpdateLocation(Nullable<int> id, string location)
+        public virtual int dev_UpdateLocation(Nullable<int> id, string name, string locationfile)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var locationParameter = location != null ?
-                new ObjectParameter("location", location) :
-                new ObjectParameter("location", typeof(string));
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateLocation", idParameter, locationParameter);
+            var locationfileParameter = locationfile != null ?
+                new ObjectParameter("locationfile", locationfile) :
+                new ObjectParameter("locationfile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateLocation", idParameter, nameParameter, locationfileParameter);
         }
     
         public virtual int dev_UpdateMessage(Nullable<int> id, string text)
@@ -798,6 +806,29 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("z", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInAreaOnFloor_Result>("dev_GetAllRoomsInAreaOnFloor", areaParameter, zParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllLocations_Result> dev_GetAllLocations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllLocations_Result>("dev_GetAllLocations");
+        }
+    
+        public virtual ObjectResult<dev_GetAllRoomStatesForRoom_Result> dev_GetAllRoomStatesForRoom(Nullable<int> room)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomStatesForRoom_Result>("dev_GetAllRoomStatesForRoom", roomParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetLocation_Result> dev_GetLocation(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetLocation_Result>("dev_GetLocation", idParameter);
         }
     }
 }

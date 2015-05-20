@@ -7,7 +7,8 @@ CREATE TABLE [dbo].[Areas] (
 
 CREATE TABLE [dbo].[Locations] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[Location] varchar(MAX) NOT NULL
+	[Name] varchar(500) NOT NULL,
+	[LocationFile] varchar(MAX) NOT NULL
 )
 
 CREATE TABLE [dbo].[Rooms] (
@@ -24,7 +25,7 @@ CREATE TABLE [dbo].[RoomStates] (
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
 	[State] int NOT NULL,
 	[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id]),
-	[Time] datetime NULL
+	[Time] time NULL
 )
 
 CREATE TABLE [dbo].[Paragraphs] (

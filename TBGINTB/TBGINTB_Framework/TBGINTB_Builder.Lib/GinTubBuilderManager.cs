@@ -97,6 +97,63 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
+        #region Locations
+
+        public class LocationEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string LocationFile { get; set; }
+            public LocationEventArgs(int id, string name, string locationFile)
+            {
+                Id = id;
+                Name = name;
+                LocationFile = locationFile;
+            }
+        }
+
+
+        public class LocationAddedEventArgs : LocationEventArgs
+        {
+            public LocationAddedEventArgs(int id, string name, string locationFile) : base(id, name, locationFile) { }
+        }
+        public delegate void LocationAddedEventHandler(object sender, LocationAddedEventArgs args);
+        public static event LocationAddedEventHandler LocationAdded;
+        private static void OnLocationAdded(Location Location)
+        {
+            if (LocationAdded != null)
+                LocationAdded(typeof(GinTubBuilderManager), new LocationAddedEventArgs(Location.Id, Location.Name, Location.LocationFile));
+        }
+
+
+        public class LocationModifiedEventArgs : LocationEventArgs
+        {
+            public LocationModifiedEventArgs(int id, string name, string locationFile) : base(id, name, locationFile) { }
+        }
+        public delegate void LocationModifiedEventHandler(object sender, LocationModifiedEventArgs args);
+        public static event LocationModifiedEventHandler LocationModified;
+        private static void OnLocationModified(Location Location)
+        {
+            if (LocationModified != null)
+                LocationModified(typeof(GinTubBuilderManager), new LocationModifiedEventArgs(Location.Id, Location.Name, Location.LocationFile));
+        }
+
+
+        public class LocationGetEventArgs : LocationEventArgs
+        {
+            public LocationGetEventArgs(int id, string name, string locationFile) : base(id, name, locationFile) { }
+        }
+        public delegate void LocationGetEventHandler(object sender, LocationGetEventArgs args);
+        public static event LocationGetEventHandler LocationGet;
+        private static void OnLocationGet(Location Location)
+        {
+            if (LocationGet != null)
+                LocationGet(typeof(GinTubBuilderManager), new LocationGetEventArgs(Location.Id, Location.Name, Location.LocationFile));
+        }
+
+        #endregion
+
+
         #region Rooms
 
         public class RoomEventArgs : EventArgs
@@ -170,9 +227,14 @@ namespace TBGINTB_Builder.Lib
         {
             Mapper.CreateMap<dev_GetArea_Result, Area>();
             Mapper.CreateMap<dev_GetAllAreas_Result, Area>();
+
+            Mapper.CreateMap<dev_GetLocation_Result, Location>();
+            Mapper.CreateMap<dev_GetAllLocations_Result, Location>();
+
             Mapper.CreateMap<dev_GetRoom_Result, Room>();
             Mapper.CreateMap<dev_GetAllRoomsInArea_Result, Room>();
             Mapper.CreateMap<dev_GetAllRoomsInAreaOnFloor_Result, Room>();
+
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
         }
@@ -209,6 +271,45 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
+        #region Locations
+
+        public static void AddLocation(string name, string locationFile)
+        {
+            int id = InsertLocation(name, locationFile);
+            Location location = SelectLocation(id);
+            OnLocationAdded(location);
+        }
+
+        public static void ModifyLocation(int id, string name, string locationFile)
+        {
+            UpdateLocation(id, name, locationFile);
+            Location location = SelectLocation(id);
+            OnLocationModified(location);
+        }
+
+        public static void GetLocation(int id)
+        {
+            Location location = SelectLocation(id);
+            OnLocationGet(location);
+        }
+
+        public static void LoadAllLocations()
+        {
+            List<Location> locations = SelectAllLocations();
+            foreach (var location in locations)
+                OnLocationAdded(location);
+        }
+
+        public static void GetAllLocations()
+        {
+            List<Location> locations = SelectAllLocations();
+            foreach (var location in locations)
+                OnLocationGet(location);
+        }
+
+        #endregion
+
+
         #region Rooms
 
         public static void AddRoom(string name, int x, int y, int z, int area)
@@ -233,29 +334,29 @@ namespace TBGINTB_Builder.Lib
 
         public static void LoadAllRoomsInArea(int area)
         {
-            List<Room> Rooms = SelectAllRoomsInArea(area);
-            foreach (var room in Rooms)
+            List<Room> rooms = SelectAllRoomsInArea(area);
+            foreach (var room in rooms)
                 OnRoomAdded(room);
         }
 
         public static void LoadAllRoomsInAreaOnFloor(int area, int z)
         {
-            List<Room> Rooms = SelectAllRoomsInAreaOnFloor(area, z);
-            foreach (var room in Rooms)
+            List<Room> rooms = SelectAllRoomsInAreaOnFloor(area, z);
+            foreach (var room in rooms)
                 OnRoomAdded(room);
         }
 
         public static void GetAllRoomsInArea(int id)
         {
-            List<Room> Rooms = SelectAllRoomsInArea(id);
-            foreach (var room in Rooms)
+            List<Room> rooms = SelectAllRoomsInArea(id);
+            foreach (var room in rooms)
                 OnRoomGet(room);
         }
 
         public static void GetAllRoomsInAreaOnFloor(int area, int z)
         {
-            List<Room> Rooms = SelectAllRoomsInAreaOnFloor(area, z);
-            foreach (var room in Rooms)
+            List<Room> rooms = SelectAllRoomsInAreaOnFloor(area, z);
+            foreach (var room in rooms)
                 OnRoomGet(room);
         }
 
@@ -332,6 +433,77 @@ namespace TBGINTB_Builder.Lib
 
             List<Area> areas = databaseResult.Select(r => Mapper.Map<Area>(r)).ToList();
             return areas;
+        }
+
+        #endregion
+
+
+        #region Locations
+
+        private static int InsertLocation(string name, string locationFile)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddLocation(name, locationFile);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddLocation", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddLocation", new Exception("No [Id] was returned after [Location] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateLocation(int id, string name, string locationFile)
+        {
+            try
+            {
+                m_entities.dev_UpdateLocation(id, name, locationFile);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateLocation", e);
+            }
+        }
+
+        private static Location SelectLocation(int id)
+        {
+            ObjectResult<dev_GetLocation_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetLocation(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetLocation", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetLocation", new Exception(string.Format("No [Locations] record found with [Id] = {0}.", id)));
+
+            Location location = Mapper.Map<Location>(databaseResult.Single());
+            return location;
+        }
+
+        private static List<Location> SelectAllLocations()
+        {
+            ObjectResult<dev_GetAllLocations_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllLocations();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllLocations", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllLocations", new Exception("No [Locations] records found."));
+
+            List<Location> locations = databaseResult.Select(r => Mapper.Map<Location>(r)).ToList();
+            return locations;
         }
 
         #endregion

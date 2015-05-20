@@ -25,7 +25,8 @@
           <Parameter Name="description" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="dev_AddLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="location" Type="varchar(max)" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="locationfile" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="dev_AddMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="text" Type="varchar(max)" Mode="In" />
@@ -110,6 +111,7 @@
         </Function>
         <Function Name="dev_DeleteAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_GetAllLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllRoomsInArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="area" Type="int" Mode="In" />
         </Function>
@@ -117,7 +119,13 @@
           <Parameter Name="area" Type="int" Mode="In" />
           <Parameter Name="z" Type="int" Mode="In" />
         </Function>
+        <Function Name="dev_GetAllRoomStatesForRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="room" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -155,7 +163,8 @@
         </Function>
         <Function Name="dev_UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="location" Type="varchar(max)" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="locationfile" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="dev_UpdateMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -261,7 +270,8 @@
             <Parameter Name="description" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="dev_AddLocation" ReturnType="Collection(Decimal)">
-          <Parameter Name="location" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="locationfile" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="dev_AddMessage" ReturnType="Collection(Decimal)">
           <Parameter Name="text" Mode="In" Type="String" />
@@ -376,7 +386,8 @@
           </FunctionImport>
           <FunctionImport Name="dev_UpdateLocation">
             <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="location" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="locationfile" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdateMessage">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -471,6 +482,13 @@
             <Parameter Name="area" Mode="In" Type="Int32" />
             <Parameter Name="z" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetAllLocations" ReturnType="Collection(GinTubModel.dev_GetAllLocations_Result)" />
+          <FunctionImport Name="dev_GetAllRoomStatesForRoom" ReturnType="Collection(GinTubModel.dev_GetAllRoomStatesForRoom_Result)">
+          <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetLocation" ReturnType="Collection(GinTubModel.dev_GetLocation_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -510,6 +528,23 @@
           <Property Type="Int32" Name="Y" Nullable="false" />
           <Property Type="Int32" Name="Z" Nullable="false" />
           <Property Type="Int32" Name="Area" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllLocations_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="LocationFile" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllRoomStatesForRoom_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="false" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Location" Nullable="false" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="dev_GetLocation_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="LocationFile" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -620,6 +655,35 @@
                 <ScalarProperty Name="Y" ColumnName="Y" />
                 <ScalarProperty Name="Z" ColumnName="Z" />
                 <ScalarProperty Name="Area" ColumnName="Area" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllLocations" FunctionName="GinTubModel.Store.dev_GetAllLocations">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllLocations_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LocationFile" ColumnName="LocationFile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllRoomStatesForRoom" FunctionName="GinTubModel.Store.dev_GetAllRoomStatesForRoom">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllRoomStatesForRoom_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetLocation" FunctionName="GinTubModel.Store.dev_GetLocation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetLocation_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="LocationFile" ColumnName="LocationFile" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

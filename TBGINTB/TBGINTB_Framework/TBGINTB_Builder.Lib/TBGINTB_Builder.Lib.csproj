@@ -57,6 +57,7 @@
     <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="Model\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
+    <Compile Include="Model\Location.cs" />
     <Compile Include="Repository\devSchema.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -75,10 +76,16 @@
     <Compile Include="Repository\dev_GetAllAreas_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllLocations_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllRoomsInAreaOnFloor_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllRoomsInArea_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllRoomStatesForRoom_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetArea_Result.cs">
@@ -86,6 +93,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Room.cs" />
+    <Compile Include="Repository\dev_GetLocation_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetRoom_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
