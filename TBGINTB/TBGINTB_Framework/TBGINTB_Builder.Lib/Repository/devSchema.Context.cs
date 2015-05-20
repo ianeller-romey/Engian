@@ -786,5 +786,18 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAllRoomsInAreaOnFloor_Result> dev_GetAllRoomsInAreaOnFloor(Nullable<int> area, Nullable<int> z)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            var zParameter = z.HasValue ?
+                new ObjectParameter("z", z) :
+                new ObjectParameter("z", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInAreaOnFloor_Result>("dev_GetAllRoomsInAreaOnFloor", areaParameter, zParameter);
+        }
     }
 }

@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 using TBGINTB_Builder.Lib;
 
@@ -18,9 +20,14 @@ namespace TBGINTB_Builder.Controls
     {
         #region MEMBER FIELDS
 
-        private List<Grid_RoomsGrid> m_grid_rooms;
+        private Grid_RoomsOnFloor m_grid_roomsOnFloor;
+        private Grid_RoomModify m_grid_roomModify;
         private Grid m_grid_main;
         private Grid m_grid_sub;
+        private ComboBox m_comboBox_z;
+        private readonly ComboBoxItem
+            c_comboBoxItem_newFloorAbove = new ComboBoxItem() { Content = "++" },
+            c_comboBoxItem_newFloorBelow = new ComboBoxItem() { Content = "--" };
 
         #endregion
 
@@ -29,6 +36,35 @@ namespace TBGINTB_Builder.Controls
 
         public int AreaId { get; private set; }
         public string AreaName { get; private set; }
+
+        #endregion
+
+
+        #region MEMBER CLASSES
+
+        private class ZComboBoxItem : ComboBoxItem
+        {
+            #region MEMBER PROPERTIES
+
+            public int Z { get; private set; }
+
+            #endregion
+
+
+            #region MEMBER METHODS
+
+            #region Public Functionality
+
+            public ZComboBoxItem(int z)
+            {
+                Z = z;
+                Content = Z;
+            }
+
+            #endregion
+
+            #endregion
+        }
 
         #endregion
 
@@ -42,7 +78,7 @@ namespace TBGINTB_Builder.Controls
             Content = CreateControls();
             AreaId = -1;
             SetAreaName("AREA");
-
+            
             GinTubBuilderManager.AreaModified += GinTubBuilderManager_AreaModified;
             GinTubBuilderManager.AreaGet += GinTubBuilderManager_AreaGet;
         }
@@ -58,10 +94,31 @@ namespace TBGINTB_Builder.Controls
             m_grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             m_grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
 
+            Label label_z = new Label() { Content = "Floor: ", FontWeight = FontWeights.Bold };
+
+            m_comboBox_z = new ComboBox();
+            m_comboBox_z.SelectionChanged += ComboBox_A_SelectionChanged;
+
+            StackPanel stackPanel_z = new StackPanel() { Orientation = Orientation.Horizontal };
+            stackPanel_z.Children.Add(label_z);
+            stackPanel_z.Children.Add(m_comboBox_z);
+            IW.SetGridRowColumn(m_grid_main, stackPanel_z, 0, 0);
+
             m_grid_sub = new Grid();
-            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
-            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(60.0, GridUnitType.Star) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5.0, GridUnitType.Pixel) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(40.0, GridUnitType.Star) });
             IW.SetGridRowColumn(m_grid_main, m_grid_sub, 1, 0);
+
+            Rectangle rectangle_roomsOnFloor = new Rectangle() { Fill = Brushes.Lavender };
+            IW.SetGridRowColumn(m_grid_sub, rectangle_roomsOnFloor, 0, 0);
+
+            GridSplitter gridSplitter = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
+            IW.SetGridRowColumn(m_grid_sub, gridSplitter, 0, 1);
+
+            m_grid_roomModify = new Grid_RoomModify();
+            IW.SetGridRowColumn(m_grid_sub, m_grid_roomModify, 0, 2);
+
             return m_grid_main;
         }
 
@@ -87,14 +144,65 @@ namespace TBGINTB_Builder.Controls
             AreaId = id;
             SetAreaName(name);
 
-            m_grid_sub.Children.Clear();
-            for (int z = minZ; z <= maxZ; ++z )
-            {
-                Grid_RoomsGrid grid = new Grid_RoomsGrid(AreaId, maxX, minX, maxY, minY, z);
-                IW.SetGridRowColumn(m_grid_sub, grid, 0, 0);
-            }
+            m_grid_sub.Children.Remove(m_grid_roomsOnFloor);
+            m_grid_roomsOnFloor = null;
 
-            GinTubBuilderManager.LoadAllRoomsInArea(AreaId);
+            m_comboBox_z.Items.Clear();
+            m_comboBox_z.Items.Add(c_comboBoxItem_newFloorAbove);
+            m_comboBox_z.Items.Add(c_comboBoxItem_newFloorBelow);
+            if(minZ < 0)
+            {
+                for (int z = minZ; z < 0; ++z)
+                    AddFloorBelow();
+                for (int z = 0; z <= maxZ; ++z)
+                    AddFloorAbove();
+            }
+            else
+            {
+                for (int z = minZ; z <= maxZ; ++z)
+                    AddFloorAbove();
+            }
+            m_comboBox_z.SelectedItem = m_comboBox_z.Items[m_comboBox_z.Items.Count - 2];
+
+            m_grid_roomsOnFloor = new Grid_RoomsOnFloor(AreaId, maxX, maxY, minZ);
+            IW.SetGridRowColumn(m_grid_sub, m_grid_roomsOnFloor, 0, 0);
+        }
+
+        private void AddFloorAbove()
+        {
+            ZComboBoxItem item = m_comboBox_z.Items[1] as ZComboBoxItem;
+            int newFloor = (item == null) ? 0 : item.Z + 1;
+            item = new ZComboBoxItem(newFloor);
+            m_comboBox_z.Items.Insert(1, item);
+            m_comboBox_z.SelectedItem = item;
+        }
+
+        private void AddFloorBelow()
+        {
+            ZComboBoxItem item = m_comboBox_z.Items[m_comboBox_z.Items.Count - 2] as ZComboBoxItem;
+            int newFloor = (item == null) ? -1 : item.Z - 1;
+            item = new ZComboBoxItem(newFloor);
+            m_comboBox_z.Items.Insert(m_comboBox_z.Items.Count - 1, item);
+            m_comboBox_z.SelectedItem = item;
+        }
+
+        void ComboBox_A_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem item = null;
+            if(sender == m_comboBox_z && (item = m_comboBox_z.SelectedItem as ComboBoxItem) != null)
+            {
+                if (item == c_comboBoxItem_newFloorAbove)
+                    AddFloorAbove();
+                else if (item == c_comboBoxItem_newFloorBelow)
+                    AddFloorBelow();
+                else
+                {
+                    ZComboBoxItem zItem = item as ZComboBoxItem;
+                    if (item != null && m_grid_roomsOnFloor != null)
+                        m_grid_roomsOnFloor.SetFloor(zItem.Z);
+                }
+
+            }
         }
 
         #endregion

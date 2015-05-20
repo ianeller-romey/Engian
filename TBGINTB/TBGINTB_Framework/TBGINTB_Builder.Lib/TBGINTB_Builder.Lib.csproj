@@ -75,6 +75,9 @@
     <Compile Include="Repository\dev_GetAllAreas_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllRoomsInAreaOnFloor_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllRoomsInArea_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>

@@ -286,7 +286,7 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/14/2015
--- Description:	Gets all Area records currently in the database
+-- Description:	Gets all Room records associated with the specified Area
 -- =============================================
 ALTER PROCEDURE [dev].[dev_GetAllRoomsInArea]
 	@area int
@@ -296,14 +296,44 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT r.[Id],
-		   r.[Name],
-		   r.[X],
-		   r.[Y],
-		   r.[Z],
-		   r.[Area]
+	SELECT [Id],
+		   [Name],
+		   [X],
+		   [Y],
+		   [Z],
+		   [Area]
 	FROM [dbo].[Rooms]
 	WHERE [Area] = @area
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomsInAreaOnFloor]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomsInAreaOnFloor] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/19/2015
+-- Description:	Gets all Room records associated with the specified Area, on a specific floor (Z)
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllRoomsInAreaOnFloor]
+	@area int,
+	@z int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [X],
+		   [Y],
+		   [Z],
+		   [Area]
+	FROM [dbo].[Rooms]
+	WHERE [Area] = @area
+	AND [Z] = @z
 
 END
 GO
@@ -393,6 +423,33 @@ BEGIN
 	WHERE	[Id] = @id AND
 			[Room] = @room AND
 			[State] = @state
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomStatesForRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/19/2015
+-- Description:	Gets all RoomState records associated with the specified Room
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllRoomStatesForRoom]
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Room],
+		   [State],
+		   [Location],
+		   [Time]
+	FROM [dbo].[Rooms]
+	WHERE [Room] = @room
 
 END
 GO

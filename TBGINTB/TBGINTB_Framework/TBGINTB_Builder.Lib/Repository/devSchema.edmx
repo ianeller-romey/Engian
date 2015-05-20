@@ -113,6 +113,10 @@
         <Function Name="dev_GetAllRoomsInArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="area" Type="int" Mode="In" />
         </Function>
+        <Function Name="dev_GetAllRoomsInAreaOnFloor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="area" Type="int" Mode="In" />
+          <Parameter Name="z" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -463,6 +467,10 @@
           <FunctionImport Name="dev_GetRoom" ReturnType="Collection(GinTubModel.dev_GetRoom_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetAllRoomsInAreaOnFloor" ReturnType="Collection(GinTubModel.dev_GetAllRoomsInAreaOnFloor_Result)">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+            <Parameter Name="z" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -488,6 +496,14 @@
           <Property Type="Int32" Name="NumRooms" Nullable="true" />
         </ComplexType>
         <ComplexType Name="dev_GetRoom_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="X" Nullable="false" />
+          <Property Type="Int32" Name="Y" Nullable="false" />
+          <Property Type="Int32" Name="Z" Nullable="false" />
+          <Property Type="Int32" Name="Area" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllRoomsInAreaOnFloor_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
           <Property Type="Int32" Name="X" Nullable="false" />
@@ -586,6 +602,18 @@
           <FunctionImportMapping FunctionImportName="dev_GetRoom" FunctionName="GinTubModel.Store.dev_GetRoom">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoom_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="X" ColumnName="X" />
+                <ScalarProperty Name="Y" ColumnName="Y" />
+                <ScalarProperty Name="Z" ColumnName="Z" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllRoomsInAreaOnFloor" FunctionName="GinTubModel.Store.dev_GetAllRoomsInAreaOnFloor">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllRoomsInAreaOnFloor_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="X" ColumnName="X" />

@@ -172,6 +172,7 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetAllAreas_Result, Area>();
             Mapper.CreateMap<dev_GetRoom_Result, Room>();
             Mapper.CreateMap<dev_GetAllRoomsInArea_Result, Room>();
+            Mapper.CreateMap<dev_GetAllRoomsInAreaOnFloor_Result, Room>();
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
         }
@@ -230,9 +231,16 @@ namespace TBGINTB_Builder.Lib
             OnRoomGet(room);
         }
 
-        public static void LoadAllRoomsInArea(int id)
+        public static void LoadAllRoomsInArea(int area)
         {
-            List<Room> Rooms = SelectAllRoomsInArea(id);
+            List<Room> Rooms = SelectAllRoomsInArea(area);
+            foreach (var room in Rooms)
+                OnRoomAdded(room);
+        }
+
+        public static void LoadAllRoomsInAreaOnFloor(int area, int z)
+        {
+            List<Room> Rooms = SelectAllRoomsInAreaOnFloor(area, z);
             foreach (var room in Rooms)
                 OnRoomAdded(room);
         }
@@ -240,6 +248,13 @@ namespace TBGINTB_Builder.Lib
         public static void GetAllRoomsInArea(int id)
         {
             List<Room> Rooms = SelectAllRoomsInArea(id);
+            foreach (var room in Rooms)
+                OnRoomGet(room);
+        }
+
+        public static void GetAllRoomsInAreaOnFloor(int area, int z)
+        {
+            List<Room> Rooms = SelectAllRoomsInAreaOnFloor(area, z);
             foreach (var room in Rooms)
                 OnRoomGet(room);
         }
@@ -372,12 +387,12 @@ namespace TBGINTB_Builder.Lib
             return room;
         }
 
-        private static List<Room> SelectAllRoomsInArea(int id)
+        private static List<Room> SelectAllRoomsInArea(int area)
         {
             ObjectResult<dev_GetAllRoomsInArea_Result> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_GetAllRoomsInArea(id);
+                databaseResult = m_entities.dev_GetAllRoomsInArea(area);
             }
             catch (Exception e)
             {
@@ -385,6 +400,24 @@ namespace TBGINTB_Builder.Lib
             }
             if (databaseResult == null)
                 throw new GinTubDatabaseException("dev_GetAllRoomsInArea", new Exception("No [Rooms] records found."));
+
+            List<Room> rooms = databaseResult.Select(r => Mapper.Map<Room>(r)).ToList();
+            return rooms;
+        }
+
+        private static List<Room> SelectAllRoomsInAreaOnFloor(int area, int z)
+        {
+            ObjectResult<dev_GetAllRoomsInAreaOnFloor_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllRoomsInAreaOnFloor(area, z);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllRoomsInAreaOnFloor", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllRoomsInAreaOnFloor", new Exception("No [Rooms] records found."));
 
             List<Room> rooms = databaseResult.Select(r => Mapper.Map<Room>(r)).ToList();
             return rooms;
