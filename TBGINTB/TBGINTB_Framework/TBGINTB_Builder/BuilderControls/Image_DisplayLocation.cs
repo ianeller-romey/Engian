@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Image_DisplayLocation : Image
+    public class Image_DisplayLocation : Image, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -38,8 +38,16 @@ namespace TBGINTB_Builder.BuilderControls
         {
             AllowDrop = true;
             Drop += Image_DisplayLocation_Drop;
+        }
 
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
             GinTubBuilderManager.LocationGet += GinTubBuilderManager_LocationGet;
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.LocationGet -= GinTubBuilderManager_LocationGet;
         }
 
         #endregion

@@ -15,7 +15,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class TabItem_Locations : TabItem
+    public class TabItem_Locations : TabItem, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -23,7 +23,7 @@ namespace TBGINTB_Builder.BuilderControls
         TextBlock m_textBlock_addLocation;
         Image_DisplayLocation m_image_displayLocation;
         private readonly ComboBoxItem
-            c_comboBoxItem_newFloorAbove = new ComboBoxItem() { Content = "++" };
+            c_comboBoxItem_newLocation = new ComboBoxItem() { Content = "++" };
 
         readonly string[] c_validImageTypes = { ".png", ".bmp", ".jpg" };
 
@@ -32,7 +32,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER CLASSES
 
-        private class LocationComboBoxItem : ComboBoxItem
+        private class ComboBoxItem_Location : ComboBoxItem
         {
             #region MEMBER PROPERTIES
 
@@ -46,7 +46,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public LocationComboBoxItem(int id, string locationName)
+            public ComboBoxItem_Location(int id, string locationName)
             {
                 Id = id;
                 SetLocationName(locationName);
@@ -75,10 +75,25 @@ namespace TBGINTB_Builder.BuilderControls
             Header = "Locations";
             Content = CreateControls();
 
-            AddNewLocation();
+            DisplayAddingControl();
+        }
 
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
             GinTubBuilderManager.LocationAdded += GinTubBuilderManager_LocationAdded;
             GinTubBuilderManager.LocationModified += GinTubBuilderManager_LocationModified;
+
+            m_image_displayLocation.SetActiveAndRegisterForGinTubEvents();
+
+            GinTubBuilderManager.LoadAllLocations();
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.LocationAdded -= GinTubBuilderManager_LocationAdded;
+            GinTubBuilderManager.LocationModified -= GinTubBuilderManager_LocationModified;
+
+            m_image_displayLocation.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -93,8 +108,8 @@ namespace TBGINTB_Builder.BuilderControls
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
 
             m_comboBox_locations = new ComboBox();
-            m_comboBox_locations.Items.Add(c_comboBoxItem_newFloorAbove);
-            m_comboBox_locations.SelectedItem = c_comboBoxItem_newFloorAbove;
+            m_comboBox_locations.Items.Add(c_comboBoxItem_newLocation);
+            m_comboBox_locations.SelectedItem = null;
             m_comboBox_locations.SelectionChanged += ComboBox_Locations_SelectionChanged;
             grid_main.SetGridRowColumn(m_comboBox_locations, 0, 0);
 
@@ -116,7 +131,7 @@ namespace TBGINTB_Builder.BuilderControls
             return grid_main;
         }
 
-        private void AddNewLocation()
+        private void DisplayAddingControl()
         {
             m_image_displayLocation.Visibility = Visibility.Collapsed;
             m_textBlock_addLocation.Visibility = Visibility.Visible;
@@ -127,20 +142,23 @@ namespace TBGINTB_Builder.BuilderControls
             m_image_displayLocation.Visibility = Visibility.Visible;
             m_textBlock_addLocation.Visibility = Visibility.Collapsed;
 
-            m_image_displayLocation.Focus();
             GinTubBuilderManager.GetLocation(id);
         }
 
-        private void LocationAdded(int id, string name)
+        private void AddedLocation(int id, string name)
         {
-            LocationComboBoxItem lItem = new LocationComboBoxItem(id, name);
+            if (m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Any(l => l.Id == id))
+                return;
+
+            object prevItem = m_comboBox_locations.SelectedItem;
+            ComboBoxItem_Location lItem = new ComboBoxItem_Location(id, name);
             m_comboBox_locations.Items.Add(lItem);
-            m_comboBox_locations.SelectedItem = lItem;
+            m_comboBox_locations.SelectedItem = (prevItem == c_comboBoxItem_newLocation) ? lItem : prevItem;
         }
 
-        private void LocationModified(int id, string name)
+        private void ModifiedLocation(int id, string name)
         {
-            LocationComboBoxItem lItem = m_comboBox_locations.Items.OfType<LocationComboBoxItem>().Single(l => l.Id == id);
+            ComboBoxItem_Location lItem = m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Single(l => l.Id == id);
             lItem.SetLocationName(name);
             if (m_comboBox_locations.SelectedItem == lItem) DisplayLocation(lItem.Id);
             else m_comboBox_locations.SelectedItem = lItem;
@@ -167,11 +185,11 @@ namespace TBGINTB_Builder.BuilderControls
             ComboBoxItem item = null;
             if (sender == m_comboBox_locations && (item = m_comboBox_locations.SelectedItem as ComboBoxItem) != null)
             {
-                if (item == c_comboBoxItem_newFloorAbove)
-                    AddNewLocation();
+                if (item == c_comboBoxItem_newLocation)
+                    DisplayAddingControl();
                 else
                 {
-                    LocationComboBoxItem lItem = item as LocationComboBoxItem;
+                    ComboBoxItem_Location lItem = item as ComboBoxItem_Location;
                     DisplayLocation(lItem.Id);
                 }
 
@@ -180,12 +198,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
         {
-            LocationAdded(args.Id, args.Name);
+            AddedLocation(args.Id, args.Name);
         }
 
         void GinTubBuilderManager_LocationModified(object sender, GinTubBuilderManager.LocationModifiedEventArgs args)
         {
-            LocationModified(args.Id, args.Name);
+            ModifiedLocation(args.Id, args.Name);
         }
 
         #endregion

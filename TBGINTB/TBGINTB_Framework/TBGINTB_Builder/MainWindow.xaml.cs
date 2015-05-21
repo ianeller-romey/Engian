@@ -25,8 +25,8 @@ namespace TBGINTB_Builder
     {
         #region MEMBER FIELDS
 
+        Grid m_grid_main;
         TabControl m_tabControl_controls;
-        MenuItem m_menuItem_selectArea;
 
         #endregion
 
@@ -51,22 +51,31 @@ namespace TBGINTB_Builder
         {
             ////////
             // toolbar
-            MenuItem menuItem_addArea = new MenuItem() { Header = "Add Area" };
-            menuItem_addArea.Click += AddArea;
+            MenuItem menuItem_loadFromDatabase = new MenuItem() { Header = "Load DB" };
+            menuItem_loadFromDatabase.Click += MenuItem_LoadFromDatabase_Click;
 
-            m_menuItem_selectArea = new MenuItem() { Header = "Select Area" }; 
-
-            MenuItem menuItem_areas = new MenuItem() { Header = "Areas" };
-            menuItem_areas.Items.Add(menuItem_addArea);
-            menuItem_areas.Items.Add(m_menuItem_selectArea);
+            MenuItem menuItem_file = new MenuItem() { Header = "File" };
+            menuItem_file.Items.Add(menuItem_loadFromDatabase);
 
             Menu menu_main = new Menu();
-            menu_main.Items.Add(menuItem_areas);
+            menu_main.Items.Add(menuItem_file);
 
             DockPanel dockPanel_main = new DockPanel();
             dockPanel_main.Children.Add(menu_main);
             DockPanel.SetDock(menu_main, Dock.Top);
 
+            ////////
+            // grid
+            m_grid_main = new Grid();
+            m_grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            m_grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
+            m_grid_main.SetGridRowColumn(dockPanel_main, 0, 0);
+
+            return m_grid_main;
+        }
+
+        private void CreateControlsAfterLoading()
+        {
             ////////
             // tab control
             m_tabControl_controls = new TabControl();
@@ -75,37 +84,38 @@ namespace TBGINTB_Builder
 
             ////////
             // grid
-            Grid grid_main = new Grid();
-            grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
-            grid_main.SetGridRowColumn(dockPanel_main, 0, 0);
-            grid_main.SetGridRowColumn(m_tabControl_controls, 1, 0);
-
-            return grid_main;
+            m_grid_main.SetGridRowColumn(m_tabControl_controls, 1, 0);
         }
 
         private void CreateGinTubManager()
         {
             GinTubBuilderManager.Initialize();
-            GinTubBuilderManager.AreaAdded += GinTubBuilderManager_AreaAdded;
-
-            GinTubBuilderManager.LoadAllAreas();
-            GinTubBuilderManager.LoadAllLocations();
         }
 
-        private void AddArea(object sender, RoutedEventArgs e)
+        private void MenuItem_LoadFromDatabase_Click(object sender, RoutedEventArgs e)
         {
-            Window_TextEntry window = new Window_TextEntry("Area Name", "");
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddArea(window.Text);
+            MenuItem menuItem = sender as MenuItem;
+            if(menuItem != null)
+            {
+                CreateControlsAfterLoading();
+                CreateGinTubManager();
+                m_tabControl_controls.SelectionChanged += TabControl_Controls_SelectionChanged;
+                m_tabControl_controls.SelectedItem = m_tabControl_controls.Items.OfType<TabItem>().First();
+
+                menuItem.Click -= MenuItem_LoadFromDatabase_Click;
+            }
         }
 
-        private void GinTubBuilderManager_AreaAdded(object sender, GinTubBuilderManager.AreaAddedEventArgs args)
+        void TabControl_Controls_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MenuItem_SelectArea menuItem_area = new MenuItem_SelectArea(args.Id, args.Name);
+            if (e.OriginalSource != m_tabControl_controls)
+                return;
 
-            m_menuItem_selectArea.Items.Add(menuItem_area);
+            foreach (var i in m_tabControl_controls.Items.OfType<IRegisterGinTubEventsOnlyWhenActive>())
+                i.SetInactiveAndUnregisterFromGinTubEvents();
+            var item = (m_tabControl_controls.SelectedItem as IRegisterGinTubEventsOnlyWhenActive);
+            if (item != null)
+                item.SetActiveAndRegisterForGinTubEvents();
         }
 
         #endregion

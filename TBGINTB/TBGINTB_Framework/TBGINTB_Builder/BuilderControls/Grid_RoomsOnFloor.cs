@@ -15,7 +15,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_RoomsOnFloor : Grid
+    public class Grid_RoomsOnFloor : Grid, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -48,9 +48,23 @@ namespace TBGINTB_Builder.BuilderControls
             RoomsMaxY = maxY;
             CreateControls(RoomsMaxX, RoomsMaxY);
 
+            SetFloor(z);
+        }
+
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
             GinTubBuilderManager.RoomAdded += GinTubBuilderManager_RoomAdded;
 
-            SetFloor(z);
+            foreach (var i in Children.OfType<IRegisterGinTubEventsOnlyWhenActive>())
+                i.SetActiveAndRegisterForGinTubEvents();
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.RoomAdded -= GinTubBuilderManager_RoomAdded;
+
+            foreach (var i in Children.OfType<IRegisterGinTubEventsOnlyWhenActive>())
+                i.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         public void SetFloor(int z)

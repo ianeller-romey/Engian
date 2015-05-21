@@ -14,7 +14,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Button_RoomOnFloor : Button
+    public class Button_RoomOnFloor : Button, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
         #endregion
@@ -45,7 +45,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             FontSize = 9.0;
 
-            RegisterGinTubHandlers();
+            SetActiveAndRegisterForGinTubEvents();
 
             HasNoRoom();
         }
@@ -59,9 +59,21 @@ namespace TBGINTB_Builder.BuilderControls
 
             FontSize = 9.0;
 
-            RegisterGinTubHandlers();
+            SetActiveAndRegisterForGinTubEvents();
 
             HasRoom(id, name);
+        }
+
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
+            GinTubBuilderManager.RoomAdded += GinTubBuilderManager_RoomAdded;
+            GinTubBuilderManager.RoomModified += GinTubBuilderManager_RoomModified;
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.RoomAdded -= GinTubBuilderManager_RoomAdded;
+            GinTubBuilderManager.RoomModified -= GinTubBuilderManager_RoomModified;
         }
 
         public void SetFloor(int z)
@@ -113,15 +125,9 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.GetRoom(RoomId);
         }
 
-        private void RegisterGinTubHandlers()
-        {
-            GinTubBuilderManager.RoomAdded += GinTubBuilderManager_RoomAdded;
-            GinTubBuilderManager.RoomModified += GinTubBuilderManager_RoomModified;
-        }
-
         private void RemoveClickHandlers()
         {
-            // Remove everything, in case we accidentallly call "HasRoom" or "HasNoRoom" twice
+            // Remove everything, in case we accidentally call "HasRoom" or "HasNoRoom" twice
             Click -= Button_CreateRoom_Click;
             Click -= Button_UpdateRoom_Click;
         }

@@ -12,7 +12,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_RoomModify : Grid
+    public class Grid_RoomModify : Grid, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -47,8 +47,36 @@ namespace TBGINTB_Builder.BuilderControls
         public Grid_RoomModify()
         {
             CreateControls();
+        }
 
+        public void ResetValues()
+        {
+            AreaId = int.MinValue;
+
+            RoomId = int.MinValue;
+            m_textBlock_roomId.Text = string.Empty;
+
+            RoomName = string.Empty;
+            m_textBox_roomName.Text = string.Empty;
+
+            RoomX = int.MinValue;
+            m_textBlock_roomX.Text = string.Empty;
+
+            RoomY = int.MinValue;
+            m_textBlock_roomY.Text = string.Empty;
+
+            RoomZ = int.MinValue;
+            m_textBlock_roomZ.Text = string.Empty;
+        }
+
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
             GinTubBuilderManager.RoomGet += GinTubBuilderManager_RoomGet;
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.RoomGet -= GinTubBuilderManager_RoomGet;
         }
 
         #endregion
