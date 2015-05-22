@@ -50,7 +50,7 @@ namespace TBGINTB_Builder.BuilderControls
             HasNoRoom();
         }
 
-        public Button_RoomOnFloor(int areaId, int id, string name, int x, int y, int z)
+        public Button_RoomOnFloor(int areaId, int roomId, string name, int x, int y, int z)
         {
             AreaId = areaId;
             RoomX = x;
@@ -59,9 +59,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             FontSize = 9.0;
 
-            SetActiveAndRegisterForGinTubEvents();
-
-            HasRoom(id, name);
+            HasRoom(roomId, name);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -114,10 +112,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_CreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            Window_TextEntry window = new Window_TextEntry("Room Name", "");
+            Window_RoomData window = new Window_RoomData(null, string.Empty, RoomX, RoomY, RoomZ, AreaId);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddRoom(window.Text, RoomX, RoomY, RoomZ, AreaId);
+                GinTubBuilderManager.AddRoom(window.RoomName, RoomX, RoomY, RoomZ, AreaId);
         }
 
         private void Button_UpdateRoom_Click(object sender, RoutedEventArgs e)

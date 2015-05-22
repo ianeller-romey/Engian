@@ -21,7 +21,7 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER FIELDS
 
         private Grid_RoomsOnFloor m_grid_roomsOnFloor;
-        private Grid_RoomModify m_grid_roomModify;
+        private Grid_RoomAndState m_grid_roomAndState;
         private Grid 
             m_grid_main,
             m_grid_sub;
@@ -43,112 +43,6 @@ namespace TBGINTB_Builder.BuilderControls
         #endregion
 
 
-        #region MEMBER CLASSES
-
-        private class ComboBoxItem_Area : ComboBoxItem
-        {
-            #region MEMBER FIELDS
-
-            private TextBox_AreaName m_textBox_areaName;
-
-            #endregion
-
-
-            #region MEMBER PROPERTIES
-
-            public int AreaId { get; private set; }
-            public string AreaName { get { return m_textBox_areaName.Text; } }
-
-            #endregion
-
-
-            #region MEMBER CLASSES
-
-            private class TextBox_AreaName : TextBox
-            {
-                #region MEMBER METHODS
-
-                #region Public Functionality
-
-                public TextBox_AreaName(string text)
-                {
-                    Margin = new Thickness() { Top = 0.0, Right = 5.0, Bottom = 0.0, Left = 2.0 };
-                    Text = text;
-                    List<UIElement> removedItems = new List<UIElement>();
-                    List<UIElement> addedItems = new List<UIElement>();
-                    addedItems.Add(this);
-                }
-
-                #endregion
-
-                #endregion
-            }
-
-            #endregion
-
-
-            #region MEMBER METHODS
-
-            #region Public Functionality
-
-            public ComboBoxItem_Area(int id, string name)
-            {
-                AreaId = id;
-                m_textBox_areaName = new TextBox_AreaName(name);
-                Content = m_textBox_areaName;
-
-                m_textBox_areaName.TextChanged += TextBox_AreaName_TextChanged;
-                m_textBox_areaName.GotFocus += (x, y) => { RaiseEvent(new RoutedEventArgs(ComboBoxItem.SelectedEvent, this)); };
-            }
-
-            public void SetAreaName(string name)
-            {
-                if(m_textBox_areaName.Text != name)
-                    m_textBox_areaName.Text = name;
-            }
-
-            #endregion
-
-
-            #region Private Functionality
-
-            void TextBox_AreaName_TextChanged(object sender, TextChangedEventArgs e)
-            {
-                GinTubBuilderManager.ModifyArea(AreaId, m_textBox_areaName.Text);
-            }
-
-            #endregion
-
-            #endregion
-        }
-
-        private class ComboBoxItem_Z : ComboBoxItem
-        {
-            #region MEMBER PROPERTIES
-
-            public int Z { get; private set; }
-
-            #endregion
-
-
-            #region MEMBER METHODS
-
-            #region Public Functionality
-
-            public ComboBoxItem_Z(int z)
-            {
-                Z = z;
-                Content = Z;
-            }
-
-            #endregion
-
-            #endregion
-        }
-
-        #endregion
-
-
         #region MEMBER METHODS
 
         #region Public Functionality
@@ -165,9 +59,12 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.AreaModified += GinTubBuilderManager_AreaModified;
             GinTubBuilderManager.AreaGet += GinTubBuilderManager_AreaGet;
 
+            GinTubBuilderManager.RoomGet += GinTubBuilderManager_RoomGet;
+
             if (m_grid_roomsOnFloor != null)
                 m_grid_roomsOnFloor.SetActiveAndRegisterForGinTubEvents();
-            m_grid_roomModify.SetActiveAndRegisterForGinTubEvents();
+            if(m_grid_roomAndState != null)
+                m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
 
             GinTubBuilderManager.LoadAllAreas();
             m_comboBox_areas.SelectionChanged += ComboBox_Area_SelectionChanged;
@@ -179,9 +76,12 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.AreaModified -= GinTubBuilderManager_AreaModified;
             GinTubBuilderManager.AreaGet -= GinTubBuilderManager_AreaGet;
 
+            GinTubBuilderManager.RoomGet -= GinTubBuilderManager_RoomGet;
+
             if(m_grid_roomsOnFloor != null)
                 m_grid_roomsOnFloor.SetInactiveAndUnregisterFromGinTubEvents();
-            m_grid_roomModify.SetInactiveAndUnregisterFromGinTubEvents();
+            if(m_grid_roomAndState != null)
+                m_grid_roomAndState.SetInactiveAndUnregisterFromGinTubEvents();
 
             m_comboBox_areas.SelectionChanged -= ComboBox_Area_SelectionChanged;
         }
@@ -237,9 +137,6 @@ namespace TBGINTB_Builder.BuilderControls
             GridSplitter gridSplitter = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
             m_grid_sub.SetGridRowColumn(gridSplitter, 0, 1);
 
-            m_grid_roomModify = new Grid_RoomModify();
-            m_grid_sub.SetGridRowColumn(m_grid_roomModify, 0, 2);
-
             return m_grid_main;
         }
 
@@ -256,6 +153,11 @@ namespace TBGINTB_Builder.BuilderControls
         private void GinTubBuilderManager_AreaGet(object sender, GinTubBuilderManager.AreaGetEventArgs args)
         {
             LoadArea(args.Id, args.Name, args.MaxX, args.MinX, args.MaxY, args.MinY, args.MinZ, args.MaxZ);
+        }
+
+        private void GinTubBuilderManager_RoomGet(object sender, GinTubBuilderManager.RoomGetEventArgs args)
+        {
+            LoadRoom(args.Id, args.Name, args.X, args.Y, args.Z);
         }
 
         private void AddingArea()
@@ -309,9 +211,20 @@ namespace TBGINTB_Builder.BuilderControls
             }
             m_comboBox_z.SelectedItem = m_comboBox_z.Items[m_comboBox_z.Items.Count - 2];
 
-            m_grid_roomModify.ResetValues();
+            if (m_grid_roomAndState != null)
+                m_grid_sub.Children.Remove(m_grid_roomAndState);
             m_grid_roomsOnFloor = new Grid_RoomsOnFloor(AreaId, maxX, maxY, minZ);
             m_grid_sub.SetGridRowColumn(m_grid_roomsOnFloor, 0, 0);
+            m_grid_roomsOnFloor.SetActiveAndRegisterForGinTubEvents();
+        }
+
+        private void LoadRoom(int roomId, string roomName, int roomX, int roomY, int roomZ)
+        {
+            if (m_grid_roomAndState != null)
+                m_grid_sub.Children.Remove(m_grid_roomAndState);
+            m_grid_roomAndState = new Grid_RoomAndState(AreaId, roomId, roomName, roomX, roomY, roomZ);
+            m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
+            m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
         }
 
         private void AddFloorAbove()

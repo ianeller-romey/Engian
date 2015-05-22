@@ -62,8 +62,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
-    <Compile Include="BuilderControls\Grid_RoomModify.cs" />
+    <Compile Include="BuilderControls\ComboBoxItems.cs" />
+    <Compile Include="BuilderControls\Grid_RoomAndState.cs" />
+    <Compile Include="BuilderControls\Grid_RoomData.cs" />
     <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
+    <Compile Include="BuilderControls\Grid_RoomStateData.cs" />
     <Compile Include="BuilderControls\Image_DisplayLocation.cs" />
     <Compile Include="BuilderControls\IRegisterGinTubBuilderEvents.cs" />
     <Compile Include="BuilderControls\TabItem_Area.cs" />
@@ -77,6 +80,7 @@
     </Compile>
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
     <Compile Include="BuilderControls\Window_NewRoomState.cs" />
+    <Compile Include="BuilderControls\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />
     <Compile Include="HelperControls\Window_TextEntry.cs" />

@@ -30,42 +30,6 @@ namespace TBGINTB_Builder.BuilderControls
         #endregion
 
 
-        #region MEMBER CLASSES
-
-        private class ComboBoxItem_Location : ComboBoxItem
-        {
-            #region MEMBER PROPERTIES
-
-            public int Id { get; private set; }
-            public string LocationName { get; private set; }
-
-            #endregion
-
-
-            #region MEMBER METHODS
-
-            #region Public Functionality
-
-            public ComboBoxItem_Location(int id, string locationName)
-            {
-                Id = id;
-                SetLocationName(locationName);
-            }
-
-            public void SetLocationName(string name)
-            {
-                LocationName = name;
-                Content = LocationName;
-            }
-
-            #endregion
-
-            #endregion
-        }
-
-        #endregion
-
-
         #region MEMBER METHODS
 
         #region Public Functionality
@@ -145,22 +109,22 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.GetLocation(id);
         }
 
-        private void AddedLocation(int id, string name)
+        private void AddedLocation(int id, string name, string file)
         {
-            if (m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Any(l => l.Id == id))
+            if (m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Any(l => l.LocationId == id))
                 return;
 
             object prevItem = m_comboBox_locations.SelectedItem;
-            ComboBoxItem_Location lItem = new ComboBoxItem_Location(id, name);
+            ComboBoxItem_Location lItem = new ComboBoxItem_Location(id, name, file);
             m_comboBox_locations.Items.Add(lItem);
             m_comboBox_locations.SelectedItem = (prevItem == c_comboBoxItem_newLocation) ? lItem : prevItem;
         }
 
         private void ModifiedLocation(int id, string name)
         {
-            ComboBoxItem_Location lItem = m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Single(l => l.Id == id);
+            ComboBoxItem_Location lItem = m_comboBox_locations.Items.OfType<ComboBoxItem_Location>().Single(l => l.LocationId == id);
             lItem.SetLocationName(name);
-            if (m_comboBox_locations.SelectedItem == lItem) DisplayLocation(lItem.Id);
+            if (m_comboBox_locations.SelectedItem == lItem) DisplayLocation(lItem.LocationId);
             else m_comboBox_locations.SelectedItem = lItem;
         }
 
@@ -190,7 +154,7 @@ namespace TBGINTB_Builder.BuilderControls
                 else
                 {
                     ComboBoxItem_Location lItem = item as ComboBoxItem_Location;
-                    DisplayLocation(lItem.Id);
+                    DisplayLocation(lItem.LocationId);
                 }
 
             }
@@ -198,7 +162,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
         {
-            AddedLocation(args.Id, args.Name);
+            AddedLocation(args.Id, args.Name, args.LocationFile);
         }
 
         void GinTubBuilderManager_LocationModified(object sender, GinTubBuilderManager.LocationModifiedEventArgs args)

@@ -118,6 +118,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             Button_RoomOnFloor button = new Button_RoomOnFloor(AreaId, column, row, RoomsZ);
             this.SetGridRowColumn(button, row, column);
+            button.SetActiveAndRegisterForGinTubEvents();
         }
 
         private void AddRoom(int x, int y)

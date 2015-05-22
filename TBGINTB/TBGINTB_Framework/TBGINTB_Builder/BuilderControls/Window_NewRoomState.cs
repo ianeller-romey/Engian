@@ -30,44 +30,6 @@ namespace TBGINTB_Builder.BuilderControls
         public TimeSpan Time { get; private set; }
 
         #endregion
-        
-
-        #region MEMBER CLASSES
-
-        private class ComboBoxItem_Location : ComboBoxItem
-        {
-            #region MEMBER PROPERTIES
-
-            public int LocationId { get; private set; }
-            public string LocationName { get; private set; }
-            public string LocationFile { get; private set; }
-
-            #endregion
-
-
-            #region MEMBER METHODS
-
-            #region Public Functionality
-
-            public ComboBoxItem_Location(int id, string locationName, string locationFile)
-            {
-                LocationId = id;
-                LocationFile = locationFile;
-                SetLocationName(locationName);
-            }
-
-            public void SetLocationName(string name)
-            {
-                LocationName = name;
-                Content = LocationName;
-            }
-
-            #endregion
-
-            #endregion
-        }
-
-        #endregion
 
 
         #region MEMBER METHODS
