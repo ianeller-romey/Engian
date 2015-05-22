@@ -23,12 +23,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
-        public int AreaId { get; private set; }
         public int? RoomId { get; private set; }
         public string RoomName { get; private set; }
         public int RoomX { get; private set; }
         public int RoomY { get; private set; }
         public int RoomZ { get; private set; }
+        public int AreaId { get; private set; }
 
         public List<UIElement> EditingControls
         {
@@ -155,7 +155,11 @@ namespace TBGINTB_Builder.BuilderControls
         private void GinTubBuilderManager_RoomModified(object sender, GinTubBuilderManager.RoomModifiedEventArgs args)
         {
             if (args.Id == RoomId)
+            {
                 m_textBox_roomName.Text = args.Name;
+                if (!m_textBox_roomName.IsEnabled)
+                    TextBox_RoomName_TextChanged(m_textBox_roomName, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+            }
         }
 
         private void TextBox_RoomName_TextChanged(object sender, TextChangedEventArgs e)

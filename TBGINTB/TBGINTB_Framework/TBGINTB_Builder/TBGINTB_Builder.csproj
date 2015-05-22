@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
     <Compile Include="BuilderControls\ComboBoxItems.cs" />
+    <Compile Include="BuilderControls\ComboBox_Location.cs" />
     <Compile Include="BuilderControls\Grid_RoomAndState.cs" />
     <Compile Include="BuilderControls\Grid_RoomData.cs" />
     <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
