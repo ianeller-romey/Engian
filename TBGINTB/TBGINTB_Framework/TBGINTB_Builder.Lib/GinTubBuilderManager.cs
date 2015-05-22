@@ -216,6 +216,73 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region RoomStates
+
+        public class RoomStateEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Room { get; set; }
+            public int State { get; set; }
+            public int Location { get; set; }
+            public TimeSpan Time { get; set; }
+            public RoomStateEventArgs(int id, int room, int state, int location, TimeSpan time)
+            {
+                Id = id;
+                Room = room;
+                State = state;
+                Location = location;
+                Time = time;
+            }
+        }
+
+
+        public class RoomStateAddedEventArgs : RoomStateEventArgs
+        {
+            public RoomStateAddedEventArgs(int id, int room, int state, int location, TimeSpan time) : 
+                base(id, room, state, location, time) { }
+        }
+        public delegate void RoomStateAddedEventHandler(object sender, RoomStateAddedEventArgs args);
+        public static event RoomStateAddedEventHandler RoomStateAdded;
+        private static void OnRoomStateAdded(RoomState roomState)
+        {
+            if (RoomStateAdded != null)
+                RoomStateAdded(typeof(GinTubBuilderManager),
+                    new RoomStateAddedEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+        }
+
+
+        public class RoomStateModifiedEventArgs : RoomStateEventArgs
+        {
+            public RoomStateModifiedEventArgs(int id, int room, int state, int location, TimeSpan time) :
+                base(id, room, state, location, time) { }
+        }
+        public delegate void RoomStateModifiedEventHandler(object sender, RoomStateModifiedEventArgs args);
+        public static event RoomStateModifiedEventHandler RoomStateModified;
+        private static void OnRoomStateModified(RoomState roomState)
+        {
+            if (RoomStateModified != null)
+                RoomStateModified(typeof(GinTubBuilderManager),
+                    new RoomStateModifiedEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+        }
+
+
+        public class RoomStateGetEventArgs : RoomStateEventArgs
+        {
+            public RoomStateGetEventArgs(int id, int room, int state, int location, TimeSpan time) :
+                base(id, room, state, location, time) { }
+        }
+        public delegate void RoomStateGetEventHandler(object sender, RoomStateGetEventArgs args);
+        public static event RoomStateGetEventHandler RoomStateGet;
+        private static void OnRoomStateGet(RoomState roomState)
+        {
+            if (RoomStateGet != null)
+                RoomStateGet(typeof(GinTubBuilderManager),
+                    new RoomStateGetEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -346,9 +413,9 @@ namespace TBGINTB_Builder.Lib
                 OnRoomAdded(room);
         }
 
-        public static void GetAllRoomsInArea(int id)
+        public static void GetAllRoomsInArea(int area)
         {
-            List<Room> rooms = SelectAllRoomsInArea(id);
+            List<Room> rooms = SelectAllRoomsInArea(area);
             foreach (var room in rooms)
                 OnRoomGet(room);
         }
@@ -358,6 +425,45 @@ namespace TBGINTB_Builder.Lib
             List<Room> rooms = SelectAllRoomsInAreaOnFloor(area, z);
             foreach (var room in rooms)
                 OnRoomGet(room);
+        }
+
+        #endregion
+
+
+        #region RoomStates
+
+        public static void AddRoomState(int room, int location, TimeSpan time)
+        {
+            int id = InsertRoomState(room, location, time);
+            RoomState roomState = SelectRoomState(id);
+            OnRoomStateAdded(roomState);
+        }
+
+        public static void ModifyRoomState(int id, int room, int state, int location, TimeSpan time)
+        {
+            UpdateRoomState(id, room, state, location, time);
+            RoomState roomState = SelectRoomState(id);
+            OnRoomStateModified(roomState);
+        }
+
+        public static void GetRoomState(int id)
+        {
+            RoomState roomState = SelectRoomState(id);
+            OnRoomStateGet(roomState);
+        }
+
+        public static void LoadAllRoomStatesForRoom(int room)
+        {
+            List<RoomState> roomStates = SelectAllRoomStatesForRoom(room);
+            foreach (var roomState in roomStates)
+                OnRoomStateAdded(roomState);
+        }
+
+        public static void GetAllRoomStatesForRoom(int room)
+        {
+            List<RoomState> roomStates = SelectAllRoomStatesForRoom(room);
+            foreach (var roomState in roomStates)
+                OnRoomStateGet(roomState);
         }
 
         #endregion
@@ -593,6 +699,77 @@ namespace TBGINTB_Builder.Lib
 
             List<Room> rooms = databaseResult.Select(r => Mapper.Map<Room>(r)).ToList();
             return rooms;
+        }
+
+        #endregion
+
+
+        #region RoomStates
+
+        private static int InsertRoomState(int room, int location, TimeSpan time)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddRoomState(room, location, time);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddRoomState", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddRoomState", new Exception("No [Id] was returned after [RoomState] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateRoomState(int id, int room, int state, int location, TimeSpan time)
+        {
+            try
+            {
+                m_entities.dev_UpdateRoomState(id, room, state, location, time);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateRoomState", e);
+            }
+        }
+
+        private static RoomState SelectRoomState(int id)
+        {
+            ObjectResult<dev_GetRoomState_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetRoomState(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetRoomState", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetRoomState", new Exception(string.Format("No [RoomStates] record found with [Id] = {0}.", id)));
+
+            RoomState roomState = Mapper.Map<RoomState>(databaseResult.Single());
+            return roomState;
+        }
+
+        private static List<RoomState> SelectAllRoomStatesForRoom(int room)
+        {
+            ObjectResult<dev_GetAllRoomStatesForRoom_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllRoomStatesForRoom(room);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllRoomStatesForRoom", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllRoomStatesForRoom", new Exception("No [RoomStates] records found."));
+
+            List<RoomState> roomStates = databaseResult.Select(r => Mapper.Map<RoomState>(r)).ToList();
+            return roomStates;
         }
 
         #endregion

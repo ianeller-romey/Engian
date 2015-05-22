@@ -66,7 +66,6 @@
     <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
     <Compile Include="BuilderControls\Image_DisplayLocation.cs" />
     <Compile Include="BuilderControls\IRegisterGinTubBuilderEvents.cs" />
-    <Compile Include="BuilderControls\MenuItem_SelectArea.cs" />
     <Compile Include="BuilderControls\TabItem_Area.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

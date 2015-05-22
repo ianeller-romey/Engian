@@ -329,15 +329,11 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoom", nameParameter, xParameter, yParameter, zParameter, areaParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddRoomState(Nullable<int> room, Nullable<int> state, Nullable<int> location, Nullable<System.DateTime> time)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddRoomState(Nullable<int> room, Nullable<int> location, Nullable<System.TimeSpan> time)
         {
             var roomParameter = room.HasValue ?
                 new ObjectParameter("room", room) :
                 new ObjectParameter("room", typeof(int));
-    
-            var stateParameter = state.HasValue ?
-                new ObjectParameter("state", state) :
-                new ObjectParameter("state", typeof(int));
     
             var locationParameter = location.HasValue ?
                 new ObjectParameter("location", location) :
@@ -345,9 +341,9 @@ namespace TBGINTB_Builder.Lib.Repository
     
             var timeParameter = time.HasValue ?
                 new ObjectParameter("time", time) :
-                new ObjectParameter("time", typeof(System.DateTime));
+                new ObjectParameter("time", typeof(System.TimeSpan));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoomState", roomParameter, stateParameter, locationParameter, timeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoomState", roomParameter, locationParameter, timeParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddVerb(string name, Nullable<int> verbtype)
@@ -703,7 +699,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRoom", idParameter, nameParameter, xParameter, yParameter, zParameter, areaParameter);
         }
     
-        public virtual int dev_UpdateRoomState(Nullable<int> id, Nullable<int> room, Nullable<int> state, Nullable<int> location, Nullable<System.DateTime> time)
+        public virtual int dev_UpdateRoomState(Nullable<int> id, Nullable<int> room, Nullable<int> state, Nullable<int> location, Nullable<System.TimeSpan> time)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -723,7 +719,7 @@ namespace TBGINTB_Builder.Lib.Repository
     
             var timeParameter = time.HasValue ?
                 new ObjectParameter("time", time) :
-                new ObjectParameter("time", typeof(System.DateTime));
+                new ObjectParameter("time", typeof(System.TimeSpan));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRoomState", idParameter, roomParameter, stateParameter, locationParameter, timeParameter);
         }
@@ -829,6 +825,15 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("id", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetLocation_Result>("dev_GetLocation", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetRoomState_Result> dev_GetRoomState(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomState_Result>("dev_GetRoomState", idParameter);
         }
     }
 }

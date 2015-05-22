@@ -214,6 +214,8 @@ namespace TBGINTB_Builder.BuilderControls
         {
             Window_NewRoomState window = new Window_NewRoomState(RoomName);
             window.ShowDialog();
+            if (window.Accepted)
+                GinTubBuilderManager.AddRoomState(RoomId, window.LocationId, window.Time);
         }
 
         private void GinTubBuilderManager_RoomGet(object sender, GinTubBuilderManager.RoomGetEventArgs args)

@@ -98,9 +98,8 @@
         </Function>
         <Function Name="dev_AddRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="room" Type="int" Mode="In" />
-          <Parameter Name="state" Type="int" Mode="In" />
           <Parameter Name="location" Type="int" Mode="In" />
-          <Parameter Name="time" Type="datetime" Mode="In" />
+          <Parameter Name="time" Type="time" Mode="In" />
         </Function>
         <Function Name="dev_AddVerb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
@@ -129,6 +128,9 @@
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ShiftRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -233,7 +235,7 @@
           <Parameter Name="room" Type="int" Mode="In" />
           <Parameter Name="state" Type="int" Mode="In" />
           <Parameter Name="location" Type="int" Mode="In" />
-          <Parameter Name="time" Type="datetime" Mode="In" />
+          <Parameter Name="time" Type="time" Mode="In" />
         </Function>
         <Function Name="dev_UpdateVerb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -343,9 +345,8 @@
           </FunctionImport>
           <FunctionImport Name="dev_AddRoomState" ReturnType="Collection(Decimal)">
             <Parameter Name="room" Mode="In" Type="Int32" />
-            <Parameter Name="state" Mode="In" Type="Int32" />
             <Parameter Name="location" Mode="In" Type="Int32" />
-            <Parameter Name="time" Mode="In" Type="DateTime" />
+            <Parameter Name="time" Mode="In" Type="Time" />
           </FunctionImport>
           <FunctionImport Name="dev_AddVerb" ReturnType="Collection(Decimal)">
             <Parameter Name="name" Mode="In" Type="String" />
@@ -456,7 +457,7 @@
             <Parameter Name="room" Mode="In" Type="Int32" />
             <Parameter Name="state" Mode="In" Type="Int32" />
             <Parameter Name="location" Mode="In" Type="Int32" />
-            <Parameter Name="time" Mode="In" Type="DateTime" />
+            <Parameter Name="time" Mode="In" Type="Time" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdateVerb">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -488,6 +489,9 @@
           </FunctionImport>
           <FunctionImport Name="dev_GetLocation" ReturnType="Collection(GinTubModel.dev_GetLocation_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetRoomState" ReturnType="Collection(GinTubModel.dev_GetRoomState_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
@@ -545,6 +549,13 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="LocationFile" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="dev_GetRoomState_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="false" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Location" Nullable="false" />
+          <Property Type="Time" Name="Time" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -684,6 +695,17 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="LocationFile" ColumnName="LocationFile" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetRoomState" FunctionName="GinTubModel.Store.dev_GetRoomState">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomState_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

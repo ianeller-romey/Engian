@@ -431,17 +431,21 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddRoomState]
 	@room int,
-	@state int,
 	@location int,
-	@time datetime
+	@time time
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+    DECLARE @newstate int
+    SELECT @newstate = ISNULL(MAX([State]), -1) + 1
+    FROM [dbo].[RoomStates]
+    WHERE [Room] = @room
+    
 	INSERT INTO [dbo].[RoomStates] ([Room], [State], [Location], [Time])
-	VALUES (@room, @state, @location, @time)
+	VALUES (@room, @newstate, @location, @time)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -461,7 +465,7 @@ ALTER PROCEDURE [dev].[dev_UpdateRoomState]
 	@room int,
 	@state int,
 	@location int,
-	@time datetime
+	@time time
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -501,6 +505,33 @@ BEGIN
 		   [Time]
 	FROM [dbo].[RoomStates]
 	WHERE [Room] = @room
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/21/2015
+-- Description:	Gets data about an RoomState record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetRoomState]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Room],
+		   [State],
+		   [Location],
+		   [Time]
+	FROM [dbo].[RoomStates]
+	WHERE [Id] = @id
 
 END
 GO

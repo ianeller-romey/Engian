@@ -34,12 +34,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER CLASSES
 
-        private class LocationComboBoxItem : ComboBoxItem
+        private class ComboBoxItem_Location : ComboBoxItem
         {
             #region MEMBER PROPERTIES
 
-            public int Id { get; private set; }
+            public int LocationId { get; private set; }
             public string LocationName { get; private set; }
+            public string LocationFile { get; private set; }
 
             #endregion
 
@@ -48,9 +49,10 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public LocationComboBoxItem(int id, string locationName)
+            public ComboBoxItem_Location(int id, string locationName, string locationFile)
             {
-                Id = id;
+                LocationId = id;
+                LocationFile = locationFile;
                 SetLocationName(locationName);
             }
 
@@ -108,6 +110,7 @@ namespace TBGINTB_Builder.BuilderControls
             stackPanel_location.Children.Add(label_location);
 
             m_comboBox_location = new ComboBox();
+            m_comboBox_location.SelectionChanged += ComboBox_Location_SelectionChanged;
             stackPanel_location.Children.Add(m_comboBox_location);
 
             ////////
@@ -127,6 +130,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_hour = new ComboBox();
             for (int i = 0; i <= 24; ++i)
                 m_comboBox_hour.Items.Add(string.Format("{0:00}", i));
+            m_comboBox_hour.SelectionChanged += ComboBox_Time_SelectionChanged;
             grid_time.SetGridRowColumn(m_comboBox_hour, 1, 0);
 
             Label label_colon = new Label() { Content = " : " };
@@ -142,7 +146,25 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_LocationGet(object sender, GinTubBuilderManager.LocationGetEventArgs args)
         {
-            m_comboBox_location.Items.Add(new LocationComboBoxItem(args.Id, args.Name));
+            m_comboBox_location.Items.Add(new ComboBoxItem_Location(args.Id, args.Name, args.LocationFile));
+        }
+
+        void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem_Location item;
+            if(m_comboBox_location.SelectedItem != null && (item = m_comboBox_location.SelectedItem as ComboBoxItem_Location) != null)
+                LocationId = item.LocationId;
+        }
+
+        private void ComboBox_Time_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(m_comboBox_hour.SelectedItem != null && m_comboBox_minute.SelectedItem != null)
+            {
+                int 
+                    hour = int.Parse(m_comboBox_hour.SelectedItem.ToString()),
+                    minute = int.Parse(m_comboBox_minute.SelectedItem.ToString());
+                Time = new TimeSpan(hour, minute, 0);
+            }
         }
 
         #endregion
