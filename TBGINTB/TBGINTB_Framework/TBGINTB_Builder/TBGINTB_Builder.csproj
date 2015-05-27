@@ -13,6 +13,8 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +50,7 @@
     <Reference Include="System.Security" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -64,11 +67,12 @@
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
     <Compile Include="BuilderControls\ComboBoxItems.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\Grid_RoomStateUnderRoom.cs" />
+    <Compile Include="BuilderControls\Grid_LocationData.cs" />
     <Compile Include="BuilderControls\Grid_RoomAndState.cs" />
     <Compile Include="BuilderControls\Grid_RoomData.cs" />
     <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
     <Compile Include="BuilderControls\Grid_RoomStateData.cs" />
-    <Compile Include="BuilderControls\Image_DisplayLocation.cs" />
     <Compile Include="BuilderControls\IRegisterGinTubBuilderEvents.cs" />
     <Compile Include="BuilderControls\TabItem_Area.cs" />
     <Page Include="MainWindow.xaml">
@@ -80,9 +84,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
-    <Compile Include="BuilderControls\Window_NewRoomState.cs" />
+    <Compile Include="BuilderControls\Window_RoomState.cs" />
     <Compile Include="BuilderControls\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
+    <Compile Include="HelperControls\Window_OpenFile.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />
     <Compile Include="HelperControls\Window_TextEntry.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -131,6 +136,13 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

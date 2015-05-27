@@ -37,11 +37,17 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
+            GinTubBuilderManager.RoomStateAdded += GinTubBuilderManager_RoomStateAdded;
+            GinTubBuilderManager.RoomStateGet += GinTubBuilderManager_RoomStateGet;
+
             m_grid_roomData.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
+            GinTubBuilderManager.RoomStateAdded -= GinTubBuilderManager_RoomStateAdded;
+            GinTubBuilderManager.RoomStateGet -= GinTubBuilderManager_RoomStateGet;
+
             m_grid_roomData.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
@@ -82,6 +88,21 @@ namespace TBGINTB_Builder.BuilderControls
             this.SetGridRowColumn(scrollViewer_roomStates, 3, 0);
         }
 
+        private void AddRoomState(int roomStateId, int state, int locationId, DateTime time, int roomId)
+        {
+            m_stackPanel_roomStates.Children.Add(new Grid_RoomStateData(roomStateId, state, locationId, time, roomId, false));
+        }
+
+        private void GinTubBuilderManager_RoomStateAdded(object sender, GinTubBuilderManager.RoomStateAddedEventArgs args)
+        {
+            AddRoomState(args.Id, args.State, args.Location, args.Time, args.Room);
+        }
+
+        private void GinTubBuilderManager_RoomStateGet(object sender, GinTubBuilderManager.RoomStateGetEventArgs args)
+        {
+            AddRoomState(args.Id, args.State, args.Location, args.Time, args.Room);
+        }
+
         private void Button_ModifyRoom_Click(object sender, RoutedEventArgs e)
         {
             Window_RoomData window =
@@ -109,10 +130,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
         {
-            Window_NewRoomState window = new Window_NewRoomState(m_grid_roomData.RoomName);
+            Window_RoomState window = new Window_RoomState(m_grid_roomData.RoomId.Value);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddRoomState(m_grid_roomData.RoomId.Value, window.LocationId, window.Time);
+                GinTubBuilderManager.AddRoomState(m_grid_roomData.RoomId.Value, window.LocationId.Value, window.Time);
         }
 
         #endregion

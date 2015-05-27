@@ -225,8 +225,8 @@ namespace TBGINTB_Builder.Lib
             public int Room { get; set; }
             public int State { get; set; }
             public int Location { get; set; }
-            public TimeSpan Time { get; set; }
-            public RoomStateEventArgs(int id, int room, int state, int location, TimeSpan time)
+            public DateTime Time { get; set; }
+            public RoomStateEventArgs(int id, int room, int state, int location, DateTime time)
             {
                 Id = id;
                 Room = room;
@@ -239,7 +239,7 @@ namespace TBGINTB_Builder.Lib
 
         public class RoomStateAddedEventArgs : RoomStateEventArgs
         {
-            public RoomStateAddedEventArgs(int id, int room, int state, int location, TimeSpan time) : 
+            public RoomStateAddedEventArgs(int id, int room, int state, int location, DateTime time) : 
                 base(id, room, state, location, time) { }
         }
         public delegate void RoomStateAddedEventHandler(object sender, RoomStateAddedEventArgs args);
@@ -254,7 +254,7 @@ namespace TBGINTB_Builder.Lib
 
         public class RoomStateModifiedEventArgs : RoomStateEventArgs
         {
-            public RoomStateModifiedEventArgs(int id, int room, int state, int location, TimeSpan time) :
+            public RoomStateModifiedEventArgs(int id, int room, int state, int location, DateTime time) :
                 base(id, room, state, location, time) { }
         }
         public delegate void RoomStateModifiedEventHandler(object sender, RoomStateModifiedEventArgs args);
@@ -269,7 +269,7 @@ namespace TBGINTB_Builder.Lib
 
         public class RoomStateGetEventArgs : RoomStateEventArgs
         {
-            public RoomStateGetEventArgs(int id, int room, int state, int location, TimeSpan time) :
+            public RoomStateGetEventArgs(int id, int room, int state, int location, DateTime time) :
                 base(id, room, state, location, time) { }
         }
         public delegate void RoomStateGetEventHandler(object sender, RoomStateGetEventArgs args);
@@ -301,6 +301,9 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetRoom_Result, Room>();
             Mapper.CreateMap<dev_GetAllRoomsInArea_Result, Room>();
             Mapper.CreateMap<dev_GetAllRoomsInAreaOnFloor_Result, Room>();
+
+            Mapper.CreateMap<dev_GetRoomState_Result, RoomState>();
+            Mapper.CreateMap<dev_GetAllRoomStatesForRoom_Result, RoomState>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -432,14 +435,14 @@ namespace TBGINTB_Builder.Lib
 
         #region RoomStates
 
-        public static void AddRoomState(int room, int location, TimeSpan time)
+        public static void AddRoomState(int room, int location, DateTime time)
         {
             int id = InsertRoomState(room, location, time);
             RoomState roomState = SelectRoomState(id);
             OnRoomStateAdded(roomState);
         }
 
-        public static void ModifyRoomState(int id, int room, int state, int location, TimeSpan time)
+        public static void ModifyRoomState(int id, int room, int state, int location, DateTime time)
         {
             UpdateRoomState(id, room, state, location, time);
             RoomState roomState = SelectRoomState(id);
@@ -706,7 +709,7 @@ namespace TBGINTB_Builder.Lib
 
         #region RoomStates
 
-        private static int InsertRoomState(int room, int location, TimeSpan time)
+        private static int InsertRoomState(int room, int location, DateTime time)
         {
             ObjectResult<decimal?> databaseResult = null;
             try
@@ -724,7 +727,7 @@ namespace TBGINTB_Builder.Lib
             return (int)result.Value;
         }
 
-        private static void UpdateRoomState(int id, int room, int state, int location, TimeSpan time)
+        private static void UpdateRoomState(int id, int room, int state, int location, DateTime time)
         {
             try
             {

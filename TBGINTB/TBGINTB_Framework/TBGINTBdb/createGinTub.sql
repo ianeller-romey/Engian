@@ -17,7 +17,7 @@ EXECUTE sp_executesql @dropDatabaseExec
 
 -- Create the database anew
 DECLARE @mdfFileDirectory varchar(MAX)
-SELECT @mdfFileDirectory = N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\'
+SELECT @mdfFileDirectory = N'C:\Users\Ian Eller-Romey\AppData\Local\Microsoft\Microsoft SQL Server Local DB\Instances\Projects' --N'D:\Microsoft SQL Server\MSSQL10_50.MSSQLSERVER\MSSQL\DATA\'
 
 DECLARE @mdfFileName varchar(MAX)
 DECLARE @mdfLogFileName varchar(MAX)
@@ -27,7 +27,7 @@ SELECT @mdfFileName = @mdfFileDirectory + @databaseName + N'.mdf',
 
 DECLARE @createDatabaseExec nvarchar(MAX)
 SELECT @createDatabaseExec = N'CREATE DATABASE [' + @databaseName + '] ON PRIMARY ' +
-	'(NAME = ''' + @databaseName + ''', FILENAME = ''' + @mdfFileName + ''', SIZE = 2048KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB) LOG ON ' +
+	'(NAME = ''' + @databaseName + ''', FILENAME = ''' + @mdfFileName + ''', SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB) LOG ON ' +
 	'(NAME = ''' + @databaseName + '_log'', FILENAME = ''' + @mdfLogFileName + ''' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%) ' +
 	--'GO ' +
 	'ALTER DATABASE [' + @databaseName + '] SET COMPATIBILITY_LEVEL = 100 ' + 

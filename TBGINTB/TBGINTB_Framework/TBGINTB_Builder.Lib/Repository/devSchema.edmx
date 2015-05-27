@@ -4,7 +4,8 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GinTubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GinTubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="GinTubModelStoreContainer" />
         <Function Name="dev_AddAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="noun" Type="int" Mode="In" />
           <Parameter Name="verbtype" Type="int" Mode="In" />
@@ -246,7 +247,6 @@
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
-        <EntityContainer Name="GinTubModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -491,7 +491,7 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetRoomState" ReturnType="Collection(GinTubModel.dev_GetRoomState_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
@@ -543,7 +543,7 @@
           <Property Type="Int32" Name="Room" Nullable="false" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Location" Nullable="false" />
-          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+          <Property Type="Time" Name="Time" Nullable="true" />
         </ComplexType>
         <ComplexType Name="dev_GetLocation_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />

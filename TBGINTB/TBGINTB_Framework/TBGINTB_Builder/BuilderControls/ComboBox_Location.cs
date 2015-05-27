@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
@@ -15,17 +17,21 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem
-            c_comboBoxItem_newLocation = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newLocation = new ComboBoxItem() { Content = "++" };
+
+        private static readonly List<string> c_validFileTypes = new List<string> { ".png", ".bmp", ".jpg" };
 
         #endregion
 
 
         #region MEMBER PROPERTIES
+
+        public static List<string> ValidFileTypes { get { return c_validFileTypes; } }
+
         #endregion
 
 
-        #region MEMBER CLASSES       
+        #region MEMBER CLASSES
     
         public class ComboBoxItem_Location : ComboBoxItem
         {
@@ -96,13 +102,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
+        private void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
         {
             if (!Items.OfType<ComboBoxItem_Location>().Any(i => i.LocationId == args.Id))
                 Items.Add(new ComboBoxItem_Location(args.Id, args.Name, args.LocationFile));
         }
 
-        void GinTubBuilderManager_LocationModified(object sender, GinTubBuilderManager.LocationModifiedEventArgs args)
+        private void GinTubBuilderManager_LocationModified(object sender, GinTubBuilderManager.LocationModifiedEventArgs args)
         {
             ComboBoxItem_Location i = Items.OfType<ComboBoxItem_Location>().SingleOrDefault(l => l.LocationId == args.Id);
             if(i != null)
@@ -112,7 +118,20 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void NewLocationDialog()
+        {
+            Window_OpenFile window_openFile = new Window_OpenFile("Location File", string.Empty);
+            window_openFile.ShowDialog();
+            if (window_openFile.Accepted)
+            {
+                Window_TextEntry window_textEntry = new Window_TextEntry("Location Name", Path.GetFileNameWithoutExtension(window_openFile.FileName));
+                window_textEntry.ShowDialog();
+                if (window_textEntry.Accepted)
+                    GinTubBuilderManager.AddLocation(window_textEntry.Text, window_openFile.FileName);
+            }
+        }
+
+        private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBoxItem item = null;
             if ((item = SelectedItem as ComboBoxItem) != null)
