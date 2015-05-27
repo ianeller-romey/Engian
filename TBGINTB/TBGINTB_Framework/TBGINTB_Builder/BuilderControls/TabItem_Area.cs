@@ -225,6 +225,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_roomAndState = new Grid_RoomAndState(AreaId, roomId, roomName, roomX, roomY, roomZ);
             m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
             m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
+            GinTubBuilderManager.LoadAllRoomStatesForRoom(roomId);
         }
 
         private void AddFloorAbove()

@@ -4,8 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GinTubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="GinTubModelStoreContainer" />
+    <Schema Namespace="GinTubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="dev_AddAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="noun" Type="int" Mode="In" />
           <Parameter Name="verbtype" Type="int" Mode="In" />
@@ -46,6 +45,7 @@
           <Parameter Name="paragraphstate" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="text" Type="varchar(max)" Mode="In" />
           <Parameter Name="room" Type="int" Mode="In" />
           <Parameter Name="roomstate" Type="int" Mode="In" />
@@ -100,7 +100,7 @@
         <Function Name="dev_AddRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="room" Type="int" Mode="In" />
           <Parameter Name="location" Type="int" Mode="In" />
-          <Parameter Name="time" Type="time" Mode="In" />
+          <Parameter Name="time" Type="datetime" Mode="In" />
         </Function>
         <Function Name="dev_AddVerb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
@@ -112,6 +112,10 @@
         <Function Name="dev_DeleteAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_GetAllParagraphsForRoomAndRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="room" Type="int" Mode="In" />
+          <Parameter Name="roomstate" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_GetAllRoomsInArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="area" Type="int" Mode="In" />
         </Function>
@@ -127,6 +131,10 @@
         </Function>
         <Function Name="dev_GetLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="state" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -236,7 +244,7 @@
           <Parameter Name="room" Type="int" Mode="In" />
           <Parameter Name="state" Type="int" Mode="In" />
           <Parameter Name="location" Type="int" Mode="In" />
-          <Parameter Name="time" Type="time" Mode="In" />
+          <Parameter Name="time" Type="datetime" Mode="In" />
         </Function>
         <Function Name="dev_UpdateVerb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -247,6 +255,7 @@
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
+        <EntityContainer Name="GinTubModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -291,7 +300,8 @@
             <Parameter Name="paragraph" Mode="In" Type="Int32" />
             <Parameter Name="paragraphstate" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="dev_AddParagraph" ReturnType="Collection(Decimal)">
+          <FunctionImport Name="dev_AddParagraph" ReturnType="Collection(GinTubModel.dev_AddParagraph_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="text" Mode="In" Type="String" />
             <Parameter Name="room" Mode="In" Type="Int32" />
             <Parameter Name="roomstate" Mode="In" Type="Int32" />
@@ -346,7 +356,7 @@
           <FunctionImport Name="dev_AddRoomState" ReturnType="Collection(Decimal)">
             <Parameter Name="room" Mode="In" Type="Int32" />
             <Parameter Name="location" Mode="In" Type="Int32" />
-            <Parameter Name="time" Mode="In" Type="Time" />
+            <Parameter Name="time" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="dev_AddVerb" ReturnType="Collection(Decimal)">
             <Parameter Name="name" Mode="In" Type="String" />
@@ -457,7 +467,7 @@
             <Parameter Name="room" Mode="In" Type="Int32" />
             <Parameter Name="state" Mode="In" Type="Int32" />
             <Parameter Name="location" Mode="In" Type="Int32" />
-            <Parameter Name="time" Mode="In" Type="Time" />
+            <Parameter Name="time" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdateVerb">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -492,6 +502,14 @@
           </FunctionImport>
           <FunctionImport Name="dev_GetRoomState" ReturnType="Collection(GinTubModel.dev_GetRoomState_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetAllParagraphsForRoomAndRoomState" ReturnType="Collection(GinTubModel.dev_GetAllParagraphsForRoomAndRoomState_Result)">
+            <Parameter Name="room" Mode="In" Type="Int32" />
+            <Parameter Name="roomstate" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetParagraph" ReturnType="Collection(GinTubModel.dev_GetParagraph_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
@@ -543,7 +561,7 @@
           <Property Type="Int32" Name="Room" Nullable="false" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Location" Nullable="false" />
-          <Property Type="Time" Name="Time" Nullable="true" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="dev_GetLocation_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -555,7 +573,25 @@
           <Property Type="Int32" Name="Room" Nullable="false" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Location" Nullable="false" />
-          <Property Type="Time" Name="Time" Nullable="true" />
+          <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllParagraphsForRoomAndRoomState_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="false" />
+          <Property Type="Int32" Name="RoomState" Nullable="true" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetParagraph_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="false" />
+          <Property Type="Int32" Name="RoomState" Nullable="true" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_AddParagraph_Result">
+          <Property Type="Decimal" Name="Id" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Int32" Name="State" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -573,7 +609,14 @@
           <FunctionImportMapping FunctionImportName="dev_AddMessageChoice" FunctionName="GinTubModel.Store.dev_AddMessageChoice" />
           <FunctionImportMapping FunctionImportName="dev_AddMessageChoiceOutcome" FunctionName="GinTubModel.Store.dev_AddMessageChoiceOutcome" />
           <FunctionImportMapping FunctionImportName="dev_AddNoun" FunctionName="GinTubModel.Store.dev_AddNoun" />
-          <FunctionImportMapping FunctionImportName="dev_AddParagraph" FunctionName="GinTubModel.Store.dev_AddParagraph" />
+          <FunctionImportMapping FunctionImportName="dev_AddParagraph" FunctionName="GinTubModel.Store.dev_AddParagraph" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_AddParagraph_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="dev_AddPlayer" FunctionName="GinTubModel.Store.dev_AddPlayer" />
           <FunctionImportMapping FunctionImportName="dev_AddPlayerHistory" FunctionName="GinTubModel.Store.dev_AddPlayerHistory" />
           <FunctionImportMapping FunctionImportName="dev_AddPlayerInventory" FunctionName="GinTubModel.Store.dev_AddPlayerInventory" />
@@ -706,6 +749,28 @@
                 <ScalarProperty Name="State" ColumnName="State" />
                 <ScalarProperty Name="Location" ColumnName="Location" />
                 <ScalarProperty Name="Time" ColumnName="Time" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllParagraphsForRoomAndRoomState" FunctionName="GinTubModel.Store.dev_GetAllParagraphsForRoomAndRoomState">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllParagraphsForRoomAndRoomState_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="RoomState" ColumnName="RoomState" />
+                <ScalarProperty Name="State" ColumnName="State" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetParagraph" FunctionName="GinTubModel.Store.dev_GetParagraph">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetParagraph_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="RoomState" ColumnName="RoomState" />
+                <ScalarProperty Name="State" ColumnName="State" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

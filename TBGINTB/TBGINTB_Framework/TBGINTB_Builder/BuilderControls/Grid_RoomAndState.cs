@@ -38,17 +38,19 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.RoomStateAdded += GinTubBuilderManager_RoomStateAdded;
-            GinTubBuilderManager.RoomStateGet += GinTubBuilderManager_RoomStateGet;
 
             m_grid_roomData.SetActiveAndRegisterForGinTubEvents();
+            foreach (var grid in m_stackPanel_roomStates.Children.OfType<Grid_RoomStateUnderRoom>())
+                grid.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.RoomStateAdded -= GinTubBuilderManager_RoomStateAdded;
-            GinTubBuilderManager.RoomStateGet -= GinTubBuilderManager_RoomStateGet;
 
             m_grid_roomData.SetInactiveAndUnregisterFromGinTubEvents();
+            foreach (var grid in m_stackPanel_roomStates.Children.OfType<Grid_RoomStateUnderRoom>())
+                grid.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -79,26 +81,27 @@ namespace TBGINTB_Builder.BuilderControls
             button_addRoomState.Click += Button_AddRoomState_Click;
             this.SetGridRowColumn(button_addRoomState, 2, 0);
 
+            m_stackPanel_roomStates = new StackPanel() { Orientation = Orientation.Vertical };
+
             ScrollViewer scrollViewer_roomStates =
                 new ScrollViewer()
                 {
                     HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
                     VerticalScrollBarVisibility = ScrollBarVisibility.Visible
                 };
+            scrollViewer_roomStates.Content = m_stackPanel_roomStates;
             this.SetGridRowColumn(scrollViewer_roomStates, 3, 0);
         }
 
-        private void AddRoomState(int roomStateId, int state, int locationId, DateTime time, int roomId)
+        private void AddRoomState(int roomStateId, int state, int locationId, DateTime? time, int roomId)
         {
-            m_stackPanel_roomStates.Children.Add(new Grid_RoomStateData(roomStateId, state, locationId, time, roomId, false));
+            Grid_RoomStateUnderRoom grid_roomStateData = new Grid_RoomStateUnderRoom(roomStateId, state, locationId, time, roomId);
+            grid_roomStateData.SetActiveAndRegisterForGinTubEvents();
+            m_stackPanel_roomStates.Children.Add(grid_roomStateData);
+            GinTubBuilderManager.LoadAllLocations();
         }
 
         private void GinTubBuilderManager_RoomStateAdded(object sender, GinTubBuilderManager.RoomStateAddedEventArgs args)
-        {
-            AddRoomState(args.Id, args.State, args.Location, args.Time, args.Room);
-        }
-
-        private void GinTubBuilderManager_RoomStateGet(object sender, GinTubBuilderManager.RoomStateGetEventArgs args)
         {
             AddRoomState(args.Id, args.State, args.Location, args.Time, args.Room);
         }
@@ -130,7 +133,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
         {
-            Window_RoomState window = new Window_RoomState(m_grid_roomData.RoomId.Value);
+            Window_RoomStateData window = 
+                new Window_RoomStateData(null, null, null, null, m_grid_roomData.RoomId.Value);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddRoomState(m_grid_roomData.RoomId.Value, window.LocationId.Value, window.Time);

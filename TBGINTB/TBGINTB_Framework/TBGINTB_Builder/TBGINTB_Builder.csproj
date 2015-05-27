@@ -67,6 +67,7 @@
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
     <Compile Include="BuilderControls\ComboBoxItems.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\Grid_ParagraphData.cs" />
     <Compile Include="BuilderControls\Grid_RoomStateUnderRoom.cs" />
     <Compile Include="BuilderControls\Grid_LocationData.cs" />
     <Compile Include="BuilderControls\Grid_RoomAndState.cs" />
@@ -84,7 +85,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
-    <Compile Include="BuilderControls\Window_RoomState.cs" />
+    <Compile Include="BuilderControls\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
     <Compile Include="HelperControls\Window_OpenFile.cs" />

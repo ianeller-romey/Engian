@@ -432,7 +432,7 @@ GO
 ALTER PROCEDURE [dev].[dev_AddRoomState]
 	@room int,
 	@location int,
-	@time time
+	@time datetime
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -465,7 +465,7 @@ ALTER PROCEDURE [dev].[dev_UpdateRoomState]
 	@room int,
 	@state int,
 	@location int,
-	@time time
+	@time datetime
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -473,11 +473,11 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[RoomStates] 
-	SET	[Location] = ISNULL(@location, [Location]), 
-		[Time] = ISNULL(@time, [Time])
-	WHERE	[Id] = @id AND
-			[Room] = @room AND
-			[State] = @state
+	SET	[Room] = ISNULL(@room, [Room]),
+		[State] = ISNULL(@state, [State]),
+		[Location] = ISNULL(@location, [Location]), 
+		[Time] = @time
+	WHERE	[Id] = @id
 
 END
 GO
@@ -546,9 +546,10 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Paragraph record and returns the newly generated ID
+-- Description:	Adds a Paragraph record and returns the newly generated ID, OR adds a new state to an existing Paragraph record
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddParagraph]
+	@id int,
 	@text varchar(MAX),
 	@room int,
 	@roomstate int
@@ -558,10 +559,29 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Paragraphs] ([Text], [Room], [RoomState])
-	VALUES (@text, @room, @roomstate)
+    DECLARE @newstate int
+    SELECT @newstate = ISNULL(MAX([State]), -1) + 1
+    FROM [dbo].[Paragraphs]
+    WHERE [Room] = @room
+    AND [RoomState] = @roomState
+    AND [Id] = @id
+    
+    IF @id IS NULL
+    BEGIN
+		INSERT INTO [dbo].[Paragraphs] ([Text], [Room], [RoomState], [State])
+		VALUES (@text, @room, @roomstate, @newstate)
+	END
+	ELSE
+	BEGIN
+		SET IDENTITY_INSERT [dbo].[Paragraphs] ON
+		
+		INSERT INTO [dbo].[Paragraphs] ([Id], [Text], [Room], [RoomState], [State])
+		VALUES (@id, @text, @room, @roomstate, @newstate)
+		
+		SET IDENTITY_INSERT [dbo].[Paragraphs] ON
+	END
 	
-	SELECT SCOPE_IDENTITY()
+	SELECT SCOPE_IDENTITY() as [Id], @newstate as [State]
 
 END
 GO
@@ -589,8 +609,66 @@ BEGIN
 	UPDATE [dbo].[Paragraphs] 
 	SET	[Text] = ISNULL(@text, [Text]), 
 		[Room] = ISNULL(@room, [Room]),
-		[RoomState] = ISNULL(@roomstate, [RoomState])
+		[RoomState] = @roomState
 	WHERE [Id] = @id AND [State] = @state
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphsForRoomAndRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/27/2015
+-- Description:	Gets all Paragraph records associated with the specified Room and RoomState
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllParagraphsForRoomAndRoomState]
+	@room int,
+	@roomstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [Room],
+		   [RoomState],
+		   [State]
+	FROM [dbo].[Paragraphs]
+	WHERE [Room] = @room
+	AND ([RoomState] = @roomstate OR @roomstate IS NULL)
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/21/2015
+-- Description:	Gets data about an Paragraph record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetParagraph]
+	@id int,
+	@state int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [Room],
+		   [RoomState],
+		   [State]
+	FROM [dbo].[Paragraphs]
+	WHERE [Id] = @id
+	AND [State] = @state
 
 END
 GO

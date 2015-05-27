@@ -121,7 +121,6 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_UpdateRoom_Click(object sender, RoutedEventArgs e)
         {
             GinTubBuilderManager.GetRoom(RoomId);
-            GinTubBuilderManager.GetAllRoomStatesForRoom(RoomId);
         }
 
         private void RemoveClickHandlers()

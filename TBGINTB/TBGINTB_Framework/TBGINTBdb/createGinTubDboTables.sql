@@ -25,7 +25,7 @@ CREATE TABLE [dbo].[RoomStates] (
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
 	[State] int NOT NULL,
 	[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id]),
-	[Time] time NULL
+	[Time] datetime NULL
 )
 
 CREATE TABLE [dbo].[Paragraphs] (
