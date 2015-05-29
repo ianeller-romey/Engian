@@ -39,7 +39,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         public Window_RoomStateData(int? roomStateId, int? roomState, int? locationId, DateTime? time, int roomId)
         {
-            Title = "New Room State";
+            Title = "Room State Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(roomStateId, roomState, locationId, time, roomId);

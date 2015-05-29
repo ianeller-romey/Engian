@@ -477,7 +477,7 @@ BEGIN
 		[State] = ISNULL(@state, [State]),
 		[Location] = ISNULL(@location, [Location]), 
 		[Time] = @time
-	WHERE	[Id] = @id
+	WHERE [Id] = @id
 
 END
 GO
@@ -640,6 +640,34 @@ BEGIN
 	FROM [dbo].[Paragraphs]
 	WHERE [Room] = @room
 	AND ([RoomState] = @roomstate OR @roomstate IS NULL)
+	ORDER BY [Id], [State]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllStatesOfParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllStatesOfParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/28/2015
+-- Description:	Gets all Paragraph records with a given state
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllStatesOfParagraph]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [Room],
+		   [RoomState],
+		   [State]
+	FROM [dbo].[Paragraphs]
+	WHERE [Id] = @id
 
 END
 GO

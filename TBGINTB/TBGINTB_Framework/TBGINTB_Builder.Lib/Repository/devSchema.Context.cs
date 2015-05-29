@@ -865,5 +865,14 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraph_Result>("dev_GetParagraph", idParameter, stateParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAllStatesOfParagraph_Result> dev_GetAllStatesOfParagraph(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllStatesOfParagraph_Result>("dev_GetAllStatesOfParagraph", idParameter);
+        }
     }
 }

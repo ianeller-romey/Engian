@@ -62,6 +62,7 @@ namespace TBGINTB_Builder.BuilderControls
             RoomId = roomId;
 
             CreateControls();
+            MouseLeftButtonDown += Grid_RoomStateData_MouseLeftButtonDown;
 
             foreach (var e in EditingControls)
                 e.IsEnabled = enableEditing;
@@ -212,6 +213,12 @@ namespace TBGINTB_Builder.BuilderControls
                     minute = int.Parse(m_comboBox_minute.SelectedItem.ToString());
                 Time = new DateTime(1988, 8, 13, hour, minute, 0);
             }
+        }
+
+        private void Grid_RoomStateData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if(RoomStateId.HasValue)
+                GinTubBuilderManager.GetRoomState(RoomStateId.Value);
         }
 
         #endregion

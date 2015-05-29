@@ -98,6 +98,9 @@
     <Compile Include="Repository\dev_GetAllRoomStatesForRoom_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllStatesOfParagraph_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetArea_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>

@@ -39,6 +39,8 @@ namespace TBGINTB_Builder.BuilderControls
         public Window_RoomData(int? roomId, string roomName, int roomX, int roomY, int roomZ, int areaId)
         {
             Title = "Room Data";
+            Width = 300;
+            Height = 300;
             Content = CreateControls(roomId, roomName, roomX, roomY, roomZ, areaId);
         }
 

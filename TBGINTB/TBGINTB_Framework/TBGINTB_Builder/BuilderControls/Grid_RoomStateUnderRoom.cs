@@ -76,7 +76,14 @@ namespace TBGINTB_Builder.BuilderControls
                 );
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.ModifyRoomState(m_grid_roomState.RoomStateId.Value, m_grid_roomState.RoomId, m_grid_roomState.RoomState.Value, window.LocationId.Value, window.Time);
+                GinTubBuilderManager.ModifyRoomState
+                (
+                    window.RoomStateId.Value,
+                    window.RoomId,
+                    window.RoomState.Value, 
+                    window.LocationId.Value, 
+                    window.Time
+                );
         }
 
         #endregion

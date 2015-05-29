@@ -66,11 +66,14 @@
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
     <Compile Include="BuilderControls\ComboBoxItems.cs" />
+    <Compile Include="BuilderControls\ComboBox_RoomState.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\Grid_ParagraphsAndStates.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphData.cs" />
+    <Compile Include="BuilderControls\Grid_ParagraphStateUnderParagraph.cs" />
     <Compile Include="BuilderControls\Grid_RoomStateUnderRoom.cs" />
     <Compile Include="BuilderControls\Grid_LocationData.cs" />
-    <Compile Include="BuilderControls\Grid_RoomAndState.cs" />
+    <Compile Include="BuilderControls\Grid_RoomAndStates.cs" />
     <Compile Include="BuilderControls\Grid_RoomData.cs" />
     <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
     <Compile Include="BuilderControls\Grid_RoomStateData.cs" />
@@ -85,6 +88,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
+    <Compile Include="BuilderControls\TextBlock_ParagraphText.cs" />
+    <Compile Include="BuilderControls\Window_ParagraphData.cs" />
     <Compile Include="BuilderControls\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />

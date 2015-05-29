@@ -348,6 +348,51 @@ namespace TBGINTB_Builder.Lib
                     new ParagraphGetEventArgs(paragraph.Id, paragraph.Text, paragraph.Room, paragraph.RoomState, paragraph.State));
         }
 
+
+        public class ParagraphStateAddedEventArgs : ParagraphEventArgs
+        {
+            public ParagraphStateAddedEventArgs(int id, string text, int room, int? roomState, int state) :
+                base(id, text, room, roomState, state) { }
+        }
+        public delegate void ParagraphStateAddedEventHandler(object sender, ParagraphStateAddedEventArgs args);
+        public static event ParagraphStateAddedEventHandler ParagraphStateAdded;
+        private static void OnParagraphStateAdded(Paragraph paragraphState)
+        {
+            if (ParagraphStateAdded != null)
+                ParagraphStateAdded(typeof(GinTubBuilderManager),
+                    new ParagraphStateAddedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
+        }
+
+
+        public class ParagraphStateModifiedEventArgs : ParagraphEventArgs
+        {
+            public ParagraphStateModifiedEventArgs(int id, string text, int room, int? roomState, int state) :
+                base(id, text, room, roomState, state) { }
+        }
+        public delegate void ParagraphStateModifiedEventHandler(object sender, ParagraphStateModifiedEventArgs args);
+        public static event ParagraphStateModifiedEventHandler ParagraphStateModified;
+        private static void OnParagraphStateModified(Paragraph paragraphState)
+        {
+            if (ParagraphStateModified != null)
+                ParagraphStateModified(typeof(GinTubBuilderManager),
+                    new ParagraphStateModifiedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
+        }
+
+
+        public class ParagraphStateGetEventArgs : ParagraphEventArgs
+        {
+            public ParagraphStateGetEventArgs(int id, string text, int room, int? roomState, int state) :
+                base(id, text, room, roomState, state) { }
+        }
+        public delegate void ParagraphStateGetEventHandler(object sender, ParagraphStateGetEventArgs args);
+        public static event ParagraphStateGetEventHandler ParagraphStateGet;
+        private static void OnParagraphStateGet(Paragraph paragraphState)
+        {
+            if (ParagraphStateGet != null)
+                ParagraphStateGet(typeof(GinTubBuilderManager),
+                    new ParagraphStateGetEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
+        }
+
         #endregion
 
         #endregion
@@ -373,6 +418,7 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetAllRoomStatesForRoom_Result, RoomState>();
 
             Mapper.CreateMap<dev_GetParagraph_Result, Paragraph>();
+            Mapper.CreateMap<dev_GetAllStatesOfParagraph_Result, Paragraph>();
             Mapper.CreateMap<dev_GetAllParagraphsForRoomAndRoomState_Result, Paragraph>();
 
             m_entities = new GinTubEntities();
@@ -564,7 +610,7 @@ namespace TBGINTB_Builder.Lib
             OnParagraphGet(paragraph);
         }
 
-        public static void GetAllParagraphsForRoomAndRoomState(int room, int? roomState)
+        public static void LoadAllParagraphsForRoomAndRoomState(int room, int? roomState)
         {
             List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(room, roomState);
             foreach (var paragraph in paragraphs)
@@ -576,6 +622,20 @@ namespace TBGINTB_Builder.Lib
             List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(room, roomState);
             foreach (var paragraph in paragraphs)
                 OnParagraphGet(paragraph);
+        }
+
+        public static void LoadAllParagraphStates(int paragraphId)
+        {
+            List<Paragraph> paragraphs = SelectAllParagraphStates(paragraphId);
+            foreach (var paragraph in paragraphs)
+                OnParagraphStateAdded(paragraph);
+        }
+
+        public static void GetAllParagraphStates(int paragraphId)
+        {
+            List<Paragraph> paragraphs = SelectAllParagraphStates(paragraphId);
+            foreach (var paragraph in paragraphs)
+                OnParagraphStateGet(paragraph);
         }
 
         #endregion
@@ -950,6 +1010,24 @@ namespace TBGINTB_Builder.Lib
             }
             if (databaseResult == null)
                 throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", new Exception("No [Paragraphs] records found."));
+
+            List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
+            return paragraphs;
+        }
+
+        private static List<Paragraph> SelectAllParagraphStates(int paragraphId)
+        {
+            ObjectResult<dev_GetAllStatesOfParagraph_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllStatesOfParagraph(paragraphId);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllStatesOfParagraph", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllStatesOfParagraph", new Exception("No [Paragraphs] records found."));
 
             List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
             return paragraphs;
