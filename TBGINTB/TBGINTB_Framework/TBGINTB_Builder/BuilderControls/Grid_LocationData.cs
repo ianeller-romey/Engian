@@ -77,9 +77,9 @@ namespace TBGINTB_Builder.BuilderControls
                 SetLocationImage(args.LocationFile);
         }
 
-        private void SetLocationImage(string file)
+        private void SetLocationImage(string locationFile)
         {
-            m_image_locationFile.Source = (file != null) ? new BitmapImage(new Uri(file)) : null;
+            m_image_locationFile.Source = (locationFile != null) ? new BitmapImage(new Uri(locationFile)) : null;
         }
 
         private void ComboBox_LocationData_SelectionChanged(object sender, SelectionChangedEventArgs e)

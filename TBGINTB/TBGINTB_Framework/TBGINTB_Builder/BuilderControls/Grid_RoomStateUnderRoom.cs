@@ -29,9 +29,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_RoomStateUnderRoom(int roomStateId, int roomState, int locationId, DateTime? time, int roomId)
+        public Grid_RoomStateUnderRoom(int roomStateId, int roomStateState, DateTime? roomStateTime, int locationId, int roomId)
         {
-            CreateControls(roomStateId, roomState, locationId, time, roomId);
+            CreateControls(roomStateId, roomStateState, roomStateTime, locationId, roomId);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -49,7 +49,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private void CreateControls(int roomStateId, int roomState, int locationId, DateTime? time, int roomId)
+        private void CreateControls(int roomStateId, int roomStateState, DateTime? roomStateTime, int locationId, int roomId)
         {
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -58,7 +58,7 @@ namespace TBGINTB_Builder.BuilderControls
             button_modifyRoomState.Click += Button_ModifyRoomState_Click;
             this.SetGridRowColumn(button_modifyRoomState, 0, 0);
 
-            m_grid_roomState = new Grid_RoomStateData(roomStateId, roomState, locationId, time, roomId, false);
+            m_grid_roomState = new Grid_RoomStateData(roomStateId, roomStateState, roomStateTime, locationId, roomId, false);
             this.SetGridRowColumn(m_grid_roomState, 1, 0);
             m_grid_roomState.SetActiveAndRegisterForGinTubEvents();
         }
@@ -69,9 +69,9 @@ namespace TBGINTB_Builder.BuilderControls
                 new Window_RoomStateData
                 (
                     m_grid_roomState.RoomStateId,
-                    m_grid_roomState.RoomState,
-                    m_grid_roomState.LocationId,
-                    m_grid_roomState.Time,                    
+                    m_grid_roomState.RoomStateState,
+                    m_grid_roomState.RoomStateTime,  
+                    m_grid_roomState.LocationId,                  
                     m_grid_roomState.RoomId
                 );
             window.ShowDialog();
@@ -79,10 +79,10 @@ namespace TBGINTB_Builder.BuilderControls
                 GinTubBuilderManager.ModifyRoomState
                 (
                     window.RoomStateId.Value,
-                    window.RoomId,
-                    window.RoomState.Value, 
-                    window.LocationId.Value, 
-                    window.Time
+                    window.RoomStateState.Value, 
+                    window.RoomStateTime, 
+                    window.LocationId.Value,
+                    window.RoomId
                 );
         }
 

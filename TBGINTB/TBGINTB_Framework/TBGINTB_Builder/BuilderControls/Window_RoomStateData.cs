@@ -25,9 +25,9 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER PROPERTIES
 
         public int? RoomStateId { get { return m_grid_roomStateData.RoomStateId; } }
-        public int? RoomState { get { return m_grid_roomStateData.RoomState; } }
+        public int? RoomStateState { get { return m_grid_roomStateData.RoomStateState; } }
+        public DateTime? RoomStateTime { get { return m_grid_roomStateData.RoomStateTime; } }
         public int? LocationId { get { return m_grid_roomStateData.LocationId; } }
-        public DateTime? Time { get { return m_grid_roomStateData.Time; } }
         public int RoomId { get { return m_grid_roomStateData.RoomId; } }
 
         #endregion
@@ -37,12 +37,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_RoomStateData(int? roomStateId, int? roomState, int? locationId, DateTime? time, int roomId)
+        public Window_RoomStateData(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId)
         {
             Title = "Room State Data";
             Width = 300;
             Height = 300;
-            Content = CreateControls(roomStateId, roomState, locationId, time, roomId);
+            Content = CreateControls(roomStateId, roomStateState, roomStateTime, locationId, roomId);
             m_grid_roomStateData.SetActiveAndRegisterForGinTubEvents(); // need for loading Location
             GinTubBuilderManager.LoadAllLocations();
         }
@@ -52,9 +52,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private UIElement CreateControls(int? roomStateId, int? roomState, int? locationId, DateTime? time, int roomId)
+        private UIElement CreateControls(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId)
         {
-            m_grid_roomStateData = new Grid_RoomStateData(roomStateId, roomState, locationId, time, roomId, true);
+            m_grid_roomStateData = new Grid_RoomStateData(roomStateId, roomStateState, roomStateTime, locationId, roomId, true);
             return m_grid_roomStateData;
         }
 

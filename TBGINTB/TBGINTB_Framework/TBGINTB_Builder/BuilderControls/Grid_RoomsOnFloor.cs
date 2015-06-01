@@ -29,10 +29,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
-        public int AreaId { get; private set; }
-        public int RoomsZ { get; private set; }
         public int RoomsMaxX { get; private set; }
         public int RoomsMaxY { get; private set; }
+        public int RoomsZ { get; private set; }
+        public int AreaId { get; private set; }
 
         #endregion
 
@@ -41,14 +41,14 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_RoomsOnFloor(int areaId, int maxX, int maxY, int z)
+        public Grid_RoomsOnFloor(int maxX, int maxY, int roomsZ, int areaId)
         {
-            AreaId = areaId;
             RoomsMaxX = maxX;
             RoomsMaxY = maxY;
+            AreaId = areaId;
             CreateControls(RoomsMaxX, RoomsMaxY);
 
-            SetFloor(z);
+            SetFloor(roomsZ);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -116,16 +116,16 @@ namespace TBGINTB_Builder.BuilderControls
             Rectangle rect = new Rectangle() { Stroke = Brushes.Black, StrokeThickness = 1.0 };
             this.SetGridRowColumn(rect, row, column);
 
-            Button_RoomOnFloor button = new Button_RoomOnFloor(AreaId, column, row, RoomsZ);
+            Button_RoomOnFloor button = new Button_RoomOnFloor(column, row, RoomsZ, AreaId);
             this.SetGridRowColumn(button, row, column);
             button.SetActiveAndRegisterForGinTubEvents();
         }
 
-        private void AddRoom(int x, int y)
+        private void AddRoom(int roomX, int roomY)
         {
-            for(int xPlusModifier = x + c_defaultRowsColsModifier; RoomsMaxX + c_defaultRowsColsModifier < xPlusModifier; RoomsMaxX = RoomsMaxX + 1)
+            for(int xPlusModifier = roomX + c_defaultRowsColsModifier; RoomsMaxX + c_defaultRowsColsModifier < xPlusModifier; RoomsMaxX = RoomsMaxX + 1)
                 AddColumn(true);
-            for (int yPlusModifier = y + c_defaultRowsColsModifier; RoomsMaxY + c_defaultRowsColsModifier < yPlusModifier; RoomsMaxY = RoomsMaxY + 1)
+            for (int yPlusModifier = roomY + c_defaultRowsColsModifier; RoomsMaxY + c_defaultRowsColsModifier < yPlusModifier; RoomsMaxY = RoomsMaxY + 1)
                 AddRow(true);
         }
 

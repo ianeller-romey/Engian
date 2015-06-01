@@ -28,9 +28,9 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER PROPERTIES
 
         public int? RoomStateId { get; private set; }
-        public int? RoomState { get; private set; }
+        public int? RoomStateState { get; private set; }
+        public DateTime? RoomStateTime { get; private set; }
         public int? LocationId { get; private set; }
-        public DateTime? Time { get; private set; }
         public int RoomId { get; private set; }
 
         public List<UIElement> EditingControls
@@ -53,12 +53,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_RoomStateData(int? roomStateId, int? roomState, int? locationId, DateTime? time, int roomId, bool enableEditing)
+        public Grid_RoomStateData(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId, bool enableEditing)
         {
             RoomStateId = roomStateId;
-            RoomState = roomState;
+            RoomStateState = roomStateState;
+            RoomStateTime = roomStateTime;
             LocationId = locationId;
-            Time = time;
             RoomId = roomId;
 
             CreateControls();
@@ -103,7 +103,7 @@ namespace TBGINTB_Builder.BuilderControls
             ////////
             // State
             m_textBlock_state = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
-            SetRoomState(RoomState);
+            SetRoomState(RoomStateState);
             Label label_roomState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_state.SetGridRowColumn(m_textBlock_state, 0, 1);
             grid_state.SetGridRowColumn(label_roomState, 0, 0);
@@ -153,7 +153,7 @@ namespace TBGINTB_Builder.BuilderControls
                 m_comboBox_minute.Items.Add(string.Format("{0:00}", i));
             grid_time.SetGridRowColumn(m_comboBox_minute, 1, 2);
 
-            SetTime(Time);
+            SetTime(RoomStateTime);
             m_comboBox_hour.SelectionChanged += ComboBox_Time_SelectionChanged;
             m_comboBox_minute.SelectionChanged += ComboBox_Time_SelectionChanged;
         }
@@ -177,18 +177,18 @@ namespace TBGINTB_Builder.BuilderControls
                 m_comboBox_location.SelectedItem = m_comboBox_location.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
         }
 
-        private void SetRoomState(int? state)
+        private void SetRoomState(int? roomState)
         {
-            m_textBlock_state.Text = (RoomState.HasValue) ? RoomState.ToString() : "NewState";
+            m_textBlock_state.Text = (RoomStateState.HasValue) ? RoomStateState.ToString() : "NewState";
         }
 
-        private void SetTime(DateTime? time)
+        private void SetTime(DateTime? roomTime)
         {
-            Time = time;
-            if (Time != null)
+            RoomStateTime = roomTime;
+            if (RoomStateTime != null)
             {
-                m_comboBox_hour.SelectedItem = m_comboBox_hour.Items.OfType<string>().SingleOrDefault(h => int.Parse(h) == Time.Value.Hour);
-                m_comboBox_minute.SelectedItem = m_comboBox_minute.Items.OfType<string>().SingleOrDefault(m => int.Parse(m) == Time.Value.Minute);
+                m_comboBox_hour.SelectedItem = m_comboBox_hour.Items.OfType<string>().SingleOrDefault(h => int.Parse(h) == RoomStateTime.Value.Hour);
+                m_comboBox_minute.SelectedItem = m_comboBox_minute.Items.OfType<string>().SingleOrDefault(m => int.Parse(m) == RoomStateTime.Value.Minute);
             }
             else
             {
@@ -211,7 +211,7 @@ namespace TBGINTB_Builder.BuilderControls
                 int
                     hour = int.Parse(m_comboBox_hour.SelectedItem.ToString()),
                     minute = int.Parse(m_comboBox_minute.SelectedItem.ToString());
-                Time = new DateTime(1988, 8, 13, hour, minute, 0);
+                RoomStateTime = new DateTime(1988, 8, 13, hour, minute, 0);
             }
         }
 

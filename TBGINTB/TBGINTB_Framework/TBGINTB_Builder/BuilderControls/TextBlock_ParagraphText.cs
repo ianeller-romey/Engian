@@ -37,24 +37,16 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            GinTubBuilderManager.ParagraphModified += GinTubBuilderManager_ParagraphModified;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            GinTubBuilderManager.ParagraphModified -= GinTubBuilderManager_ParagraphModified;
         }
 
         #endregion
 
 
         #region Private Functionality
-
-        private void GinTubBuilderManager_ParagraphModified(object sender, GinTubBuilderManager.ParagraphModifiedEventArgs args)
-        {
-            if (args.Id == ParagraphId)
-                this.Text = args.Text;
-        }
 
         #endregion
 

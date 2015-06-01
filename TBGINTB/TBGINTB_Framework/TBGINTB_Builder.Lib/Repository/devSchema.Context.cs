@@ -28,17 +28,17 @@ namespace TBGINTB_Builder.Lib.Repository
         }
     
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddAction(Nullable<int> noun, Nullable<int> verbtype)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddAction(Nullable<int> verbtype, Nullable<int> noun)
         {
-            var nounParameter = noun.HasValue ?
-                new ObjectParameter("noun", noun) :
-                new ObjectParameter("noun", typeof(int));
-    
             var verbtypeParameter = verbtype.HasValue ?
                 new ObjectParameter("verbtype", verbtype) :
                 new ObjectParameter("verbtype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddAction", nounParameter, verbtypeParameter);
+            var nounParameter = noun.HasValue ?
+                new ObjectParameter("noun", noun) :
+                new ObjectParameter("noun", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddAction", verbtypeParameter, nounParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddArea(string name)
@@ -111,58 +111,50 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessage", textParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoice(Nullable<int> message, string text)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoice(string text, Nullable<int> message)
         {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
             var messageParameter = message.HasValue ?
                 new ObjectParameter("message", message) :
                 new ObjectParameter("message", typeof(int));
     
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoice", messageParameter, textParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoice", textParameter, messageParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoiceOutcome(Nullable<int> messagechoice, Nullable<int> result)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoiceOutcome(Nullable<int> result, Nullable<int> messagechoice)
         {
-            var messagechoiceParameter = messagechoice.HasValue ?
-                new ObjectParameter("messagechoice", messagechoice) :
-                new ObjectParameter("messagechoice", typeof(int));
-    
             var resultParameter = result.HasValue ?
                 new ObjectParameter("result", result) :
                 new ObjectParameter("result", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoiceOutcome", messagechoiceParameter, resultParameter);
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoiceOutcome", resultParameter, messagechoiceParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddNoun(string text, Nullable<int> paragraph, Nullable<int> paragraphstate)
+        public virtual int dev_AddNoun(string text, Nullable<int> paragraphtextstate)
         {
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
     
-            var paragraphParameter = paragraph.HasValue ?
-                new ObjectParameter("paragraph", paragraph) :
-                new ObjectParameter("paragraph", typeof(int));
+            var paragraphtextstateParameter = paragraphtextstate.HasValue ?
+                new ObjectParameter("paragraphtextstate", paragraphtextstate) :
+                new ObjectParameter("paragraphtextstate", typeof(int));
     
-            var paragraphstateParameter = paragraphstate.HasValue ?
-                new ObjectParameter("paragraphstate", paragraphstate) :
-                new ObjectParameter("paragraphstate", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddNoun", textParameter, paragraphParameter, paragraphstateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_AddNoun", textParameter, paragraphtextstateParameter);
         }
     
-        public virtual ObjectResult<dev_AddParagraph_Result> dev_AddParagraph(Nullable<int> id, string text, Nullable<int> room, Nullable<int> roomstate)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddParagraph(Nullable<int> order, Nullable<int> room, Nullable<int> roomstate)
         {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
+            var orderParameter = order.HasValue ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(int));
     
             var roomParameter = room.HasValue ?
                 new ObjectParameter("room", room) :
@@ -172,7 +164,20 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("roomstate", roomstate) :
                 new ObjectParameter("roomstate", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_AddParagraph_Result>("dev_AddParagraph", idParameter, textParameter, roomParameter, roomstateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddParagraph", orderParameter, roomParameter, roomstateParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> dev_AddParagraphTextState(string text, Nullable<int> paragraph)
+        {
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddParagraphTextState", textParameter, paragraphParameter);
         }
     
         public virtual int dev_AddPlayer(string username, string domainname, string domain, string password)
@@ -243,21 +248,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddPlayerParty", playerParameter, characterParameter, activeParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddRequirement(Nullable<int> action, Nullable<int> requirementsourcetype, Nullable<int> requirement)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddRequirement(Nullable<int> requirement, Nullable<int> requirementsourcetype, Nullable<int> action)
         {
-            var actionParameter = action.HasValue ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(int));
+            var requirementParameter = requirement.HasValue ?
+                new ObjectParameter("requirement", requirement) :
+                new ObjectParameter("requirement", typeof(int));
     
             var requirementsourcetypeParameter = requirementsourcetype.HasValue ?
                 new ObjectParameter("requirementsourcetype", requirementsourcetype) :
                 new ObjectParameter("requirementsourcetype", typeof(int));
     
-            var requirementParameter = requirement.HasValue ?
-                new ObjectParameter("requirement", requirement) :
-                new ObjectParameter("requirement", typeof(int));
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRequirement", actionParameter, requirementsourcetypeParameter, requirementParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRequirement", requirementParameter, requirementsourcetypeParameter, actionParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddRequirementSourceType(string name)
@@ -269,25 +274,25 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRequirementSourceType", nameParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddResult(Nullable<int> resulttype, Nullable<int> resultsourcetype, Nullable<int> source, string jsondata)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddResult(string jsondata, Nullable<int> source, Nullable<int> resultsourcetype, Nullable<int> resulttype)
         {
-            var resulttypeParameter = resulttype.HasValue ?
-                new ObjectParameter("resulttype", resulttype) :
-                new ObjectParameter("resulttype", typeof(int));
-    
-            var resultsourcetypeParameter = resultsourcetype.HasValue ?
-                new ObjectParameter("resultsourcetype", resultsourcetype) :
-                new ObjectParameter("resultsourcetype", typeof(int));
+            var jsondataParameter = jsondata != null ?
+                new ObjectParameter("jsondata", jsondata) :
+                new ObjectParameter("jsondata", typeof(string));
     
             var sourceParameter = source.HasValue ?
                 new ObjectParameter("source", source) :
                 new ObjectParameter("source", typeof(int));
     
-            var jsondataParameter = jsondata != null ?
-                new ObjectParameter("jsondata", jsondata) :
-                new ObjectParameter("jsondata", typeof(string));
+            var resultsourcetypeParameter = resultsourcetype.HasValue ?
+                new ObjectParameter("resultsourcetype", resultsourcetype) :
+                new ObjectParameter("resultsourcetype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResult", resulttypeParameter, resultsourcetypeParameter, sourceParameter, jsondataParameter);
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResult", jsondataParameter, sourceParameter, resultsourcetypeParameter, resulttypeParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddResultSourceType(string name)
@@ -333,21 +338,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoom", nameParameter, xParameter, yParameter, zParameter, areaParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddRoomState(Nullable<int> room, Nullable<int> location, Nullable<System.DateTime> time)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddRoomState(Nullable<System.DateTime> time, Nullable<int> location, Nullable<int> room)
         {
-            var roomParameter = room.HasValue ?
-                new ObjectParameter("room", room) :
-                new ObjectParameter("room", typeof(int));
+            var timeParameter = time.HasValue ?
+                new ObjectParameter("time", time) :
+                new ObjectParameter("time", typeof(System.DateTime));
     
             var locationParameter = location.HasValue ?
                 new ObjectParameter("location", location) :
                 new ObjectParameter("location", typeof(int));
     
-            var timeParameter = time.HasValue ?
-                new ObjectParameter("time", time) :
-                new ObjectParameter("time", typeof(System.DateTime));
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoomState", roomParameter, locationParameter, timeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRoomState", timeParameter, locationParameter, roomParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddVerb(string name, Nullable<int> verbtype)
@@ -372,6 +377,128 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddVerbType", nameParameter);
         }
     
+        public virtual int dev_DeleteAllAreas()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllAreas");
+        }
+    
+        public virtual ObjectResult<dev_GetAllAreas_Result> dev_GetAllAreas()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllAreas_Result>("dev_GetAllAreas");
+        }
+    
+        public virtual ObjectResult<dev_GetAllLocations_Result> dev_GetAllLocations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllLocations_Result>("dev_GetAllLocations");
+        }
+    
+        public virtual ObjectResult<dev_GetAllParagraphsForRoomAndRoomState_Result> dev_GetAllParagraphsForRoomAndRoomState(Nullable<int> room, Nullable<int> roomstate)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            var roomstateParameter = roomstate.HasValue ?
+                new ObjectParameter("roomstate", roomstate) :
+                new ObjectParameter("roomstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphsForRoomAndRoomState_Result>("dev_GetAllParagraphsForRoomAndRoomState", roomParameter, roomstateParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllParagraphTextStatesForParagraph_Result> dev_GetAllParagraphTextStatesForParagraph(Nullable<int> paragraph)
+        {
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphTextStatesForParagraph_Result>("dev_GetAllParagraphTextStatesForParagraph", paragraphParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllRoomsInArea_Result> dev_GetAllRoomsInArea(Nullable<int> area)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInArea_Result>("dev_GetAllRoomsInArea", areaParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllRoomsInAreaOnFloor_Result> dev_GetAllRoomsInAreaOnFloor(Nullable<int> area, Nullable<int> z)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            var zParameter = z.HasValue ?
+                new ObjectParameter("z", z) :
+                new ObjectParameter("z", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInAreaOnFloor_Result>("dev_GetAllRoomsInAreaOnFloor", areaParameter, zParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllRoomStatesForRoom_Result> dev_GetAllRoomStatesForRoom(Nullable<int> room)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomStatesForRoom_Result>("dev_GetAllRoomStatesForRoom", roomParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetArea_Result> dev_GetArea(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetArea_Result>("dev_GetArea", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetLocation_Result> dev_GetLocation(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetLocation_Result>("dev_GetLocation", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetParagraph_Result> dev_GetParagraph(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraph_Result>("dev_GetParagraph", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetParagraphTextState_Result> dev_GetParagraphTextState(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraphTextState_Result>("dev_GetParagraphTextState", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetRoom_Result> dev_GetRoom(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetRoomState_Result> dev_GetRoomState(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomState_Result>("dev_GetRoomState", idParameter);
+        }
+    
         public virtual int dev_ShiftRoom(Nullable<int> id, Nullable<int> xIncr, Nullable<int> yIncr, Nullable<int> zIncr)
         {
             var idParameter = id.HasValue ?
@@ -393,21 +520,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ShiftRoom", idParameter, xIncrParameter, yIncrParameter, zIncrParameter);
         }
     
-        public virtual int dev_UpdateAction(Nullable<int> id, Nullable<int> noun, Nullable<int> verbtype)
+        public virtual int dev_UpdateAction(Nullable<int> id, Nullable<int> verbtype, Nullable<int> noun)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var nounParameter = noun.HasValue ?
-                new ObjectParameter("noun", noun) :
-                new ObjectParameter("noun", typeof(int));
-    
             var verbtypeParameter = verbtype.HasValue ?
                 new ObjectParameter("verbtype", verbtype) :
                 new ObjectParameter("verbtype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateAction", idParameter, nounParameter, verbtypeParameter);
+            var nounParameter = noun.HasValue ?
+                new ObjectParameter("noun", noun) :
+                new ObjectParameter("noun", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateAction", idParameter, verbtypeParameter, nounParameter);
         }
     
         public virtual int dev_UpdateArea(Nullable<int> id, string name)
@@ -517,7 +644,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoice", idParameter, textParameter);
         }
     
-        public virtual int dev_UpdateMessageChoiceOutcome(Nullable<int> id, Nullable<int> result)
+        public virtual int dev_UpdateMessageChoiceOutcome(Nullable<int> id, Nullable<int> result, Nullable<int> messagechoice)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -527,18 +654,22 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("result", result) :
                 new ObjectParameter("result", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoiceOutcome", idParameter, resultParameter);
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoiceOutcome", idParameter, resultParameter, messagechoiceParameter);
         }
     
-        public virtual int dev_UpdateParagraph(Nullable<int> id, string text, Nullable<int> room, Nullable<int> roomstate, Nullable<int> state)
+        public virtual int dev_UpdateParagraph(Nullable<int> id, Nullable<int> order, Nullable<int> room, Nullable<int> roomstate)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var textParameter = text != null ?
-                new ObjectParameter("text", text) :
-                new ObjectParameter("text", typeof(string));
+            var orderParameter = order.HasValue ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(int));
     
             var roomParameter = room.HasValue ?
                 new ObjectParameter("room", room) :
@@ -548,11 +679,28 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("roomstate", roomstate) :
                 new ObjectParameter("roomstate", typeof(int));
     
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraph", idParameter, orderParameter, roomParameter, roomstateParameter);
+        }
+    
+        public virtual int dev_UpdateParagraphTextState(Nullable<int> id, string text, Nullable<int> state, Nullable<int> paragraph)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
             var stateParameter = state.HasValue ?
                 new ObjectParameter("state", state) :
                 new ObjectParameter("state", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraph", idParameter, textParameter, roomParameter, roomstateParameter, stateParameter);
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraphTextState", idParameter, textParameter, stateParameter, paragraphParameter);
         }
     
         public virtual int dev_UpdatePlayerInventory(Nullable<System.Guid> player, Nullable<int> item, Nullable<bool> active)
@@ -589,25 +737,25 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdatePlayerParty", playerParameter, characterParameter, activeParameter);
         }
     
-        public virtual int dev_UpdateRequirement(Nullable<int> id, Nullable<int> action, Nullable<int> requirementsourcetype, Nullable<int> requirement)
+        public virtual int dev_UpdateRequirement(Nullable<int> id, Nullable<int> requirement, Nullable<int> requirementsourcetype, Nullable<int> action)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var actionParameter = action.HasValue ?
-                new ObjectParameter("action", action) :
-                new ObjectParameter("action", typeof(int));
+            var requirementParameter = requirement.HasValue ?
+                new ObjectParameter("requirement", requirement) :
+                new ObjectParameter("requirement", typeof(int));
     
             var requirementsourcetypeParameter = requirementsourcetype.HasValue ?
                 new ObjectParameter("requirementsourcetype", requirementsourcetype) :
                 new ObjectParameter("requirementsourcetype", typeof(int));
     
-            var requirementParameter = requirement.HasValue ?
-                new ObjectParameter("requirement", requirement) :
-                new ObjectParameter("requirement", typeof(int));
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRequirement", idParameter, actionParameter, requirementsourcetypeParameter, requirementParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRequirement", idParameter, requirementParameter, requirementsourcetypeParameter, actionParameter);
         }
     
         public virtual int dev_UpdateRequirementSourceType(Nullable<int> id, string name)
@@ -623,29 +771,29 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRequirementSourceType", idParameter, nameParameter);
         }
     
-        public virtual int dev_UpdateResult(Nullable<int> id, Nullable<int> resulttype, Nullable<int> resultsourcetype, Nullable<int> source, string jsondata)
+        public virtual int dev_UpdateResult(Nullable<int> id, string jsondata, Nullable<int> source, Nullable<int> resultsourcetype, Nullable<int> resulttype)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var resulttypeParameter = resulttype.HasValue ?
-                new ObjectParameter("resulttype", resulttype) :
-                new ObjectParameter("resulttype", typeof(int));
-    
-            var resultsourcetypeParameter = resultsourcetype.HasValue ?
-                new ObjectParameter("resultsourcetype", resultsourcetype) :
-                new ObjectParameter("resultsourcetype", typeof(int));
+            var jsondataParameter = jsondata != null ?
+                new ObjectParameter("jsondata", jsondata) :
+                new ObjectParameter("jsondata", typeof(string));
     
             var sourceParameter = source.HasValue ?
                 new ObjectParameter("source", source) :
                 new ObjectParameter("source", typeof(int));
     
-            var jsondataParameter = jsondata != null ?
-                new ObjectParameter("jsondata", jsondata) :
-                new ObjectParameter("jsondata", typeof(string));
+            var resultsourcetypeParameter = resultsourcetype.HasValue ?
+                new ObjectParameter("resultsourcetype", resultsourcetype) :
+                new ObjectParameter("resultsourcetype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResult", idParameter, resulttypeParameter, resultsourcetypeParameter, sourceParameter, jsondataParameter);
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResult", idParameter, jsondataParameter, sourceParameter, resultsourcetypeParameter, resulttypeParameter);
         }
     
         public virtual int dev_UpdateResultSourceType(Nullable<int> id, string name)
@@ -703,29 +851,29 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRoom", idParameter, nameParameter, xParameter, yParameter, zParameter, areaParameter);
         }
     
-        public virtual int dev_UpdateRoomState(Nullable<int> id, Nullable<int> room, Nullable<int> state, Nullable<int> location, Nullable<System.DateTime> time)
+        public virtual int dev_UpdateRoomState(Nullable<int> id, Nullable<int> state, Nullable<System.DateTime> time, Nullable<int> location, Nullable<int> room)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            var roomParameter = room.HasValue ?
-                new ObjectParameter("room", room) :
-                new ObjectParameter("room", typeof(int));
-    
             var stateParameter = state.HasValue ?
                 new ObjectParameter("state", state) :
                 new ObjectParameter("state", typeof(int));
-    
-            var locationParameter = location.HasValue ?
-                new ObjectParameter("location", location) :
-                new ObjectParameter("location", typeof(int));
     
             var timeParameter = time.HasValue ?
                 new ObjectParameter("time", time) :
                 new ObjectParameter("time", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRoomState", idParameter, roomParameter, stateParameter, locationParameter, timeParameter);
+            var locationParameter = location.HasValue ?
+                new ObjectParameter("location", location) :
+                new ObjectParameter("location", typeof(int));
+    
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRoomState", idParameter, stateParameter, timeParameter, locationParameter, roomParameter);
         }
     
         public virtual int dev_UpdateVerb(Nullable<int> id, string name, Nullable<int> verbtype)
@@ -756,123 +904,6 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateVerbType", idParameter, nameParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllAreas_Result> dev_GetAllAreas()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllAreas_Result>("dev_GetAllAreas");
-        }
-    
-        public virtual ObjectResult<dev_GetAllRoomsInArea_Result> dev_GetAllRoomsInArea(Nullable<int> area)
-        {
-            var areaParameter = area.HasValue ?
-                new ObjectParameter("area", area) :
-                new ObjectParameter("area", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInArea_Result>("dev_GetAllRoomsInArea", areaParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetArea_Result> dev_GetArea(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetArea_Result>("dev_GetArea", idParameter);
-        }
-    
-        public virtual int dev_DeleteAllAreas()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllAreas");
-        }
-    
-        public virtual ObjectResult<dev_GetRoom_Result> dev_GetRoom(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllRoomsInAreaOnFloor_Result> dev_GetAllRoomsInAreaOnFloor(Nullable<int> area, Nullable<int> z)
-        {
-            var areaParameter = area.HasValue ?
-                new ObjectParameter("area", area) :
-                new ObjectParameter("area", typeof(int));
-    
-            var zParameter = z.HasValue ?
-                new ObjectParameter("z", z) :
-                new ObjectParameter("z", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomsInAreaOnFloor_Result>("dev_GetAllRoomsInAreaOnFloor", areaParameter, zParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllLocations_Result> dev_GetAllLocations()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllLocations_Result>("dev_GetAllLocations");
-        }
-    
-        public virtual ObjectResult<dev_GetAllRoomStatesForRoom_Result> dev_GetAllRoomStatesForRoom(Nullable<int> room)
-        {
-            var roomParameter = room.HasValue ?
-                new ObjectParameter("room", room) :
-                new ObjectParameter("room", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllRoomStatesForRoom_Result>("dev_GetAllRoomStatesForRoom", roomParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetLocation_Result> dev_GetLocation(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetLocation_Result>("dev_GetLocation", idParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetRoomState_Result> dev_GetRoomState(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomState_Result>("dev_GetRoomState", idParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllParagraphsForRoomAndRoomState_Result> dev_GetAllParagraphsForRoomAndRoomState(Nullable<int> room, Nullable<int> roomstate)
-        {
-            var roomParameter = room.HasValue ?
-                new ObjectParameter("room", room) :
-                new ObjectParameter("room", typeof(int));
-    
-            var roomstateParameter = roomstate.HasValue ?
-                new ObjectParameter("roomstate", roomstate) :
-                new ObjectParameter("roomstate", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphsForRoomAndRoomState_Result>("dev_GetAllParagraphsForRoomAndRoomState", roomParameter, roomstateParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetParagraph_Result> dev_GetParagraph(Nullable<int> id, Nullable<int> state)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            var stateParameter = state.HasValue ?
-                new ObjectParameter("state", state) :
-                new ObjectParameter("state", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraph_Result>("dev_GetParagraph", idParameter, stateParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllStatesOfParagraph_Result> dev_GetAllStatesOfParagraph(Nullable<int> id)
-        {
-            var idParameter = id.HasValue ?
-                new ObjectParameter("id", id) :
-                new ObjectParameter("id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllStatesOfParagraph_Result>("dev_GetAllStatesOfParagraph", idParameter);
         }
     }
 }

@@ -7,16 +7,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace TBGINTB_Builder.Lib.Model
+namespace TBGINTB_Builder.Lib.Model.DbModel
 {
     [DataContract]
     class Paragraph
     {
         int m_id;
-        string m_text;
+        int m_order;
         int m_room;
         int m_roomState;
-        int m_state;
 
         [DataMember]
         public int Id
@@ -30,13 +29,13 @@ namespace TBGINTB_Builder.Lib.Model
         }
 
         [DataMember]
-        public string Text
+        public int Order
         {
-            get { return m_text; }
+            get { return m_order; }
             private set
             {
-                if (m_text != value)
-                    m_text = value;
+                if (m_order != value)
+                    m_order = value;
             }
         }
 
@@ -59,17 +58,6 @@ namespace TBGINTB_Builder.Lib.Model
             {
                 if (m_roomState != value)
                     m_roomState = value;
-            }
-        }
-
-        [DataMember]
-        public int State
-        {
-            get { return m_state; }
-            private set
-            {
-                if (m_state != value)
-                    m_state = value;
             }
         }
     }

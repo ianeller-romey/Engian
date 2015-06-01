@@ -22,12 +22,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
-        public int AreaId { get; protected set; }
         public int RoomId { get; protected set; }
         public string RoomName { get; protected set; }
         public int RoomX { get; protected set; }
         public int RoomY { get; protected set; }
         public int RoomZ { get; protected set; }
+        public int AreaId { get; protected set; }
 
         #endregion
 
@@ -36,12 +36,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Button_RoomOnFloor(int areaId, int x, int y, int z)
+        public Button_RoomOnFloor(int roomX, int roomY, int roomZ, int areaId)
         {
             AreaId = areaId;
-            RoomX = x;
-            RoomY = y;
-            RoomZ = z;
+            RoomX = roomX;
+            RoomY = roomY;
+            RoomZ = roomZ;
 
             FontSize = 9.0;
 
@@ -50,12 +50,12 @@ namespace TBGINTB_Builder.BuilderControls
             HasNoRoom();
         }
 
-        public Button_RoomOnFloor(int areaId, int roomId, string name, int x, int y, int z)
+        public Button_RoomOnFloor(int roomId, string name, int x, int y, int z, int areaId)
         {
-            AreaId = areaId;
             RoomX = x;
             RoomY = y;
             RoomZ = z;
+            AreaId = areaId;
 
             FontSize = 9.0;
 
@@ -79,10 +79,10 @@ namespace TBGINTB_Builder.BuilderControls
             RoomZ = z;
         }
 
-        public void HasRoom(int id, string name)
+        public void HasRoom(int roomId, string roomName)
         {
-            RoomId = id;
-            RoomName = name;
+            RoomId = roomId;
+            RoomName = roomName;
 
             Content = RoomName;
             ToolTip = RoomName;

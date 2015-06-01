@@ -48,7 +48,6 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.ParagraphAdded += GinTubBuilderManager_ParagraphAdded;
-            GinTubBuilderManager.ParagraphStateAdded += GinTubBuilderManager_ParagraphStateAdded;
 
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<TextBlock_ParagraphText>())
                 block.SetActiveAndRegisterForGinTubEvents();
@@ -59,7 +58,6 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.ParagraphAdded -= GinTubBuilderManager_ParagraphAdded;
-            GinTubBuilderManager.ParagraphStateAdded -= GinTubBuilderManager_ParagraphStateAdded;
 
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<TextBlock_ParagraphText>())
                 block.SetInactiveAndUnregisterFromGinTubEvents();
@@ -114,25 +112,20 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if (!m_stackPanel_paragraphs.Children.OfType<TextBlock_ParagraphText>().Any(t => t.ParagraphId == args.Id))
             {
-                TextBlock_ParagraphText textBlock = new TextBlock_ParagraphText(args.Id, args.Text);
-                textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
-                textBlock.SetActiveAndRegisterForGinTubEvents();
-                m_stackPanel_paragraphs.Children.Add(textBlock);
+                //TextBlock_ParagraphText textBlock = new TextBlock_ParagraphText(args.Id, args.Text);
+                //textBlock.MouseLeftButtonDown += TextBlock_MouseLeftButtonDown;
+                //textBlock.SetActiveAndRegisterForGinTubEvents();
+                //m_stackPanel_paragraphs.Children.Add(textBlock);
             }
-            if(args.Id == SelectedParagraphId)
-                AddParagraphState(args.Id, args.State, args.Text, args.RoomState.Value, args.Room);
-        }
-
-        private void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
-        {
-            m_stackPanel_paragraphStates.Children.Add(new Grid_ParagraphStateUnderParagraph(args.Id, args.State, args.Text, args.RoomState.Value, args.Room));
+            if (args.Id == SelectedParagraphId) ;
+                //AddParagraphState(args.Id, args.State, args.Text, args.RoomState.Value, args.Room);
         }
 
         private void AddParagraphState(int paragraphId, int paragraphState, string paragraphText, int roomStateId, int roomId)
         {
-            Grid_ParagraphStateUnderParagraph grid_paragraphState = new Grid_ParagraphStateUnderParagraph(paragraphId, paragraphState, paragraphText, roomStateId, roomId);
-            grid_paragraphState.SetActiveAndRegisterForGinTubEvents();
-            m_stackPanel_paragraphStates.Children.Add(grid_paragraphState);
+            //Grid_ParagraphStateUnderParagraph grid_paragraphState = new Grid_ParagraphStateUnderParagraph(paragraphId, paragraphState, paragraphText, roomStateId, roomId);
+            //grid_paragraphState.SetActiveAndRegisterForGinTubEvents();
+            //m_stackPanel_paragraphStates.Children.Add(grid_paragraphState);
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -143,16 +136,16 @@ namespace TBGINTB_Builder.BuilderControls
                 m_stackPanel_paragraphStates.Children.Clear();
 
                 SelectedParagraphId = textBlock.ParagraphId;
-                GinTubBuilderManager.LoadAllParagraphStates(SelectedParagraphId);
+                //GinTubBuilderManager.LoadAllParagraphStates(SelectedParagraphId);
             }
         }
 
         private void Button_AddParagraph_Click(object sender, RoutedEventArgs e)
         {
-            Window_ParagraphData window = new Window_ParagraphData(null, null, string.Empty, RoomStateId, RoomId);
+            Window_ParagraphData window = new Window_ParagraphData(null, null, RoomId, RoomStateId);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddParagraph(null, window.ParagraphText, window.RoomId, window.RoomStateId);
+                GinTubBuilderManager.AddParagraph(window.ParagraphOrder.Value, window.RoomId, window.RoomStateId);
         }
 
         private void Button_AddParagraphState_Click(object sender, RoutedEventArgs e)

@@ -44,6 +44,112 @@ namespace TBGINTB_Builder.BuilderControls
         #endregion
 
 
+        #region MEMBER CLASSES
+
+        public class ComboBoxItem_Area : ComboBoxItem
+        {
+            #region MEMBER FIELDS
+
+            private TextBox_AreaName m_textBox_areaName;
+
+            #endregion
+
+
+            #region MEMBER PROPERTIES
+
+            public int AreaId { get; private set; }
+            public string AreaName { get { return m_textBox_areaName.Text; } }
+
+            #endregion
+
+
+            #region MEMBER CLASSES
+
+            private class TextBox_AreaName : TextBox
+            {
+                #region MEMBER METHODS
+
+                #region Public Functionality
+
+                public TextBox_AreaName(string text)
+                {
+                    Margin = new Thickness() { Top = 0.0, Right = 5.0, Bottom = 0.0, Left = 2.0 };
+                    Text = text;
+                    List<UIElement> removedItems = new List<UIElement>();
+                    List<UIElement> addedItems = new List<UIElement>();
+                    addedItems.Add(this);
+                }
+
+                #endregion
+
+                #endregion
+            }
+
+            #endregion
+
+
+            #region MEMBER METHODS
+
+            #region Public Functionality
+
+            public ComboBoxItem_Area(int id, string name)
+            {
+                AreaId = id;
+                m_textBox_areaName = new TextBox_AreaName(name);
+                Content = m_textBox_areaName;
+
+                m_textBox_areaName.TextChanged += TextBox_AreaName_TextChanged;
+                m_textBox_areaName.GotFocus += (x, y) => { RaiseEvent(new RoutedEventArgs(ComboBoxItem.SelectedEvent, this)); };
+            }
+
+            public void SetAreaName(string name)
+            {
+                if (m_textBox_areaName.Text != name)
+                    m_textBox_areaName.Text = name;
+            }
+
+            #endregion
+
+
+            #region Private Functionality
+
+            void TextBox_AreaName_TextChanged(object sender, TextChangedEventArgs e)
+            {
+                GinTubBuilderManager.ModifyArea(AreaId, m_textBox_areaName.Text);
+            }
+
+            #endregion
+
+            #endregion
+        }
+        
+        private class ComboBoxItem_Z : ComboBoxItem
+        {
+            #region MEMBER PROPERTIES
+
+            public int Z { get; private set; }
+
+            #endregion
+
+
+            #region MEMBER METHODS
+
+            #region Public Functionality
+
+            public ComboBoxItem_Z(int z)
+            {
+                Z = z;
+                Content = Z;
+            }
+
+            #endregion
+
+            #endregion
+        }
+
+        #endregion
+
+
         #region MEMBER METHODS
 
         #region Public Functionality
@@ -227,7 +333,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             if (m_grid_roomAndState != null)
                 m_grid_sub.Children.Remove(m_grid_roomAndState);
-            m_grid_roomsOnFloor = new Grid_RoomsOnFloor(AreaId, maxX, maxY, minZ);
+            m_grid_roomsOnFloor = new Grid_RoomsOnFloor(maxX, maxY, minZ, AreaId);
             m_grid_sub.SetGridRowColumn(m_grid_roomsOnFloor, 0, 0);
             m_grid_roomsOnFloor.SetActiveAndRegisterForGinTubEvents();
         }
@@ -236,7 +342,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if (m_grid_roomAndState != null)
                 m_grid_sub.Children.Remove(m_grid_roomAndState);
-            m_grid_roomAndState = new Grid_RoomAndStates(AreaId, roomId, roomName, roomX, roomY, roomZ);
+            m_grid_roomAndState = new Grid_RoomAndStates(roomId, roomName, roomX, roomY, roomZ, AreaId);
             m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
             m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllRoomStatesForRoom(roomId);

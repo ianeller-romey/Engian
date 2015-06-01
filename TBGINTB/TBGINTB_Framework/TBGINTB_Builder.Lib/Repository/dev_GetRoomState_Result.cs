@@ -14,9 +14,9 @@ namespace TBGINTB_Builder.Lib.Repository
     public partial class dev_GetRoomState_Result
     {
         public int Id { get; set; }
-        public int Room { get; set; }
         public int State { get; set; }
-        public int Location { get; set; }
         public Nullable<System.DateTime> Time { get; set; }
+        public int Location { get; set; }
+        public int Room { get; set; }
     }
 }

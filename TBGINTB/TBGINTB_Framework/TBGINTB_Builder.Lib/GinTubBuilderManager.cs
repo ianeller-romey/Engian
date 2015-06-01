@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 
 using TBGINTB_Builder.Lib.Exceptions;
-using TBGINTB_Builder.Lib.Model;
+using TBGINTB_Builder.Lib.Model.DbModel;
 using TBGINTB_Builder.Lib.Repository;
 
 
@@ -222,25 +222,25 @@ namespace TBGINTB_Builder.Lib
         public class RoomStateEventArgs : EventArgs
         {
             public int Id { get; set; }
-            public int Room { get; set; }
             public int State { get; set; }
-            public int Location { get; set; }
             public DateTime? Time { get; set; }
-            public RoomStateEventArgs(int id, int room, int state, int location, DateTime? time)
+            public int Location { get; set; }
+            public int Room { get; set; }
+            public RoomStateEventArgs(int id, int state, DateTime time, int location, int room)
             {
                 Id = id;
-                Room = room;
                 State = state;
-                Location = location;
                 Time = time;
+                Location = location;
+                Room = room;
             }
         }
 
 
         public class RoomStateAddedEventArgs : RoomStateEventArgs
         {
-            public RoomStateAddedEventArgs(int id, int room, int state, int location, DateTime? time) : 
-                base(id, room, state, location, time) { }
+            public RoomStateAddedEventArgs(int id, int state, DateTime time, int location, int room) : 
+                base(id, state, time, location, room) { }
         }
         public delegate void RoomStateAddedEventHandler(object sender, RoomStateAddedEventArgs args);
         public static event RoomStateAddedEventHandler RoomStateAdded;
@@ -248,14 +248,14 @@ namespace TBGINTB_Builder.Lib
         {
             if (RoomStateAdded != null)
                 RoomStateAdded(typeof(GinTubBuilderManager),
-                    new RoomStateAddedEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+                    new RoomStateAddedEventArgs(roomState.Id, roomState.State, roomState.Time, roomState.Location, roomState.Room));
         }
 
 
         public class RoomStateModifiedEventArgs : RoomStateEventArgs
         {
-            public RoomStateModifiedEventArgs(int id, int room, int state, int location, DateTime? time) :
-                base(id, room, state, location, time) { }
+            public RoomStateModifiedEventArgs(int id, int state, DateTime time, int location, int room) :
+                base(id, state, time, location, room) { }
         }
         public delegate void RoomStateModifiedEventHandler(object sender, RoomStateModifiedEventArgs args);
         public static event RoomStateModifiedEventHandler RoomStateModified;
@@ -263,14 +263,14 @@ namespace TBGINTB_Builder.Lib
         {
             if (RoomStateModified != null)
                 RoomStateModified(typeof(GinTubBuilderManager),
-                    new RoomStateModifiedEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+                    new RoomStateModifiedEventArgs(roomState.Id, roomState.State, roomState.Time, roomState.Location, roomState.Room));
         }
 
 
         public class RoomStateGetEventArgs : RoomStateEventArgs
         {
-            public RoomStateGetEventArgs(int id, int room, int state, int location, DateTime? time) :
-                base(id, room, state, location, time) { }
+            public RoomStateGetEventArgs(int id, int state, DateTime time, int location, int room) :
+                base(id, state, time, location, room) { }
         }
         public delegate void RoomStateGetEventHandler(object sender, RoomStateGetEventArgs args);
         public static event RoomStateGetEventHandler RoomStateGet;
@@ -278,7 +278,7 @@ namespace TBGINTB_Builder.Lib
         {
             if (RoomStateGet != null)
                 RoomStateGet(typeof(GinTubBuilderManager),
-                    new RoomStateGetEventArgs(roomState.Id, roomState.Room, roomState.State, roomState.Location, roomState.Time));
+                    new RoomStateGetEventArgs(roomState.Id, roomState.State, roomState.Time, roomState.Location, roomState.Room));
         }
 
         #endregion
@@ -289,25 +289,23 @@ namespace TBGINTB_Builder.Lib
         public class ParagraphEventArgs : EventArgs
         {
             public int Id { get; set; }
-            public string Text { get; set; }
+            public int Order { get; set; }
             public int Room { get; set; }
             public int? RoomState { get; set; }
-            public int State { get; set; }
-            public ParagraphEventArgs(int id, string text, int room, int? roomState, int state)
+            public ParagraphEventArgs(int id, int order, int room, int? roomState)
             {
                 Id = id;
-                Text = text;
+                Order = order;
                 Room = room;
                 RoomState = roomState;
-                State = state;
             }
         }
 
 
         public class ParagraphAddedEventArgs : ParagraphEventArgs
         {
-            public ParagraphAddedEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
+            public ParagraphAddedEventArgs(int id, int order, int room, int? roomState) :
+                base(id, order, room, roomState) { }
         }
         public delegate void ParagraphAddedEventHandler(object sender, ParagraphAddedEventArgs args);
         public static event ParagraphAddedEventHandler ParagraphAdded;
@@ -315,14 +313,14 @@ namespace TBGINTB_Builder.Lib
         {
             if (ParagraphAdded != null)
                 ParagraphAdded(typeof(GinTubBuilderManager),
-                    new ParagraphAddedEventArgs(paragraph.Id, paragraph.Text, paragraph.Room, paragraph.RoomState, paragraph.State));
+                    new ParagraphAddedEventArgs(paragraph.Id, paragraph.Order, paragraph.Room, paragraph.RoomState));
         }
 
 
         public class ParagraphModifiedEventArgs : ParagraphEventArgs
         {
-            public ParagraphModifiedEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
+            public ParagraphModifiedEventArgs(int id, int order, int room, int? roomState) :
+                base(id, order, room, roomState) { }
         }
         public delegate void ParagraphModifiedEventHandler(object sender, ParagraphModifiedEventArgs args);
         public static event ParagraphModifiedEventHandler ParagraphModified;
@@ -330,14 +328,14 @@ namespace TBGINTB_Builder.Lib
         {
             if (ParagraphModified != null)
                 ParagraphModified(typeof(GinTubBuilderManager),
-                    new ParagraphModifiedEventArgs(paragraph.Id, paragraph.Text, paragraph.Room, paragraph.RoomState, paragraph.State));
+                    new ParagraphModifiedEventArgs(paragraph.Id, paragraph.Order, paragraph.Room, paragraph.RoomState));
         }
 
 
         public class ParagraphGetEventArgs : ParagraphEventArgs
         {
-            public ParagraphGetEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
+            public ParagraphGetEventArgs(int id, int order, int room, int? roomState) :
+                base(id, order, room, roomState) { }
         }
         public delegate void ParagraphGetEventHandler(object sender, ParagraphGetEventArgs args);
         public static event ParagraphGetEventHandler ParagraphGet;
@@ -345,52 +343,7 @@ namespace TBGINTB_Builder.Lib
         {
             if (ParagraphGet != null)
                 ParagraphGet(typeof(GinTubBuilderManager),
-                    new ParagraphGetEventArgs(paragraph.Id, paragraph.Text, paragraph.Room, paragraph.RoomState, paragraph.State));
-        }
-
-
-        public class ParagraphStateAddedEventArgs : ParagraphEventArgs
-        {
-            public ParagraphStateAddedEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
-        }
-        public delegate void ParagraphStateAddedEventHandler(object sender, ParagraphStateAddedEventArgs args);
-        public static event ParagraphStateAddedEventHandler ParagraphStateAdded;
-        private static void OnParagraphStateAdded(Paragraph paragraphState)
-        {
-            if (ParagraphStateAdded != null)
-                ParagraphStateAdded(typeof(GinTubBuilderManager),
-                    new ParagraphStateAddedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
-        }
-
-
-        public class ParagraphStateModifiedEventArgs : ParagraphEventArgs
-        {
-            public ParagraphStateModifiedEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
-        }
-        public delegate void ParagraphStateModifiedEventHandler(object sender, ParagraphStateModifiedEventArgs args);
-        public static event ParagraphStateModifiedEventHandler ParagraphStateModified;
-        private static void OnParagraphStateModified(Paragraph paragraphState)
-        {
-            if (ParagraphStateModified != null)
-                ParagraphStateModified(typeof(GinTubBuilderManager),
-                    new ParagraphStateModifiedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
-        }
-
-
-        public class ParagraphStateGetEventArgs : ParagraphEventArgs
-        {
-            public ParagraphStateGetEventArgs(int id, string text, int room, int? roomState, int state) :
-                base(id, text, room, roomState, state) { }
-        }
-        public delegate void ParagraphStateGetEventHandler(object sender, ParagraphStateGetEventArgs args);
-        public static event ParagraphStateGetEventHandler ParagraphStateGet;
-        private static void OnParagraphStateGet(Paragraph paragraphState)
-        {
-            if (ParagraphStateGet != null)
-                ParagraphStateGet(typeof(GinTubBuilderManager),
-                    new ParagraphStateGetEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.Room, paragraphState.RoomState, paragraphState.State));
+                    new ParagraphGetEventArgs(paragraph.Id, paragraph.Order, paragraph.Room, paragraph.RoomState));
         }
 
         #endregion
@@ -418,7 +371,6 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetAllRoomStatesForRoom_Result, RoomState>();
 
             Mapper.CreateMap<dev_GetParagraph_Result, Paragraph>();
-            Mapper.CreateMap<dev_GetAllStatesOfParagraph_Result, Paragraph>();
             Mapper.CreateMap<dev_GetAllParagraphsForRoomAndRoomState_Result, Paragraph>();
 
             m_entities = new GinTubEntities();
@@ -427,23 +379,23 @@ namespace TBGINTB_Builder.Lib
 
         #region Areas
 
-        public static void AddArea(string name)
+        public static void AddArea(string areaName)
         {
-            int id = InsertArea(name);
+            int id = InsertArea(areaName);
             Area area = SelectArea(id);
             OnAreaAdded(area);
         }
 
-        public static void ModifyArea(int id, string name)
+        public static void ModifyArea(int areaId, string areaName)
         {
-            UpdateArea(id, name);
-            Area area = SelectArea(id);
+            UpdateArea(areaId, areaName);
+            Area area = SelectArea(areaId);
             OnAreaModified(area);
         }
 
-        public static void GetArea(int id)
+        public static void GetArea(int areaId)
         {
-            Area area = SelectArea(id);
+            Area area = SelectArea(areaId);
             OnAreaGet(area);
         }
 
@@ -459,23 +411,23 @@ namespace TBGINTB_Builder.Lib
 
         #region Locations
 
-        public static void AddLocation(string name, string locationFile)
+        public static void AddLocation(string locationName, string locationFile)
         {
-            int id = InsertLocation(name, locationFile);
+            int id = InsertLocation(locationName, locationFile);
             Location location = SelectLocation(id);
             OnLocationAdded(location);
         }
 
-        public static void ModifyLocation(int id, string name, string locationFile)
+        public static void ModifyLocation(int locationId, string locationName, string locationFile)
         {
-            UpdateLocation(id, name, locationFile);
-            Location location = SelectLocation(id);
+            UpdateLocation(locationId, locationName, locationFile);
+            Location location = SelectLocation(locationId);
             OnLocationModified(location);
         }
 
-        public static void GetLocation(int id)
+        public static void GetLocation(int locationId)
         {
-            Location location = SelectLocation(id);
+            Location location = SelectLocation(locationId);
             OnLocationGet(location);
         }
 
@@ -498,50 +450,50 @@ namespace TBGINTB_Builder.Lib
 
         #region Rooms
 
-        public static void AddRoom(string name, int x, int y, int z, int area)
+        public static void AddRoom(string roomName, int roomX, int roomY, int roomZ, int areaId)
         {
-            int id = InsertRoom(name, x, y, z, area);
+            int id = InsertRoom(roomName, roomX, roomY, roomZ, areaId);
             Room room = SelectRoom(id);
             OnRoomAdded(room);
         }
 
-        public static void ModifyRoom(int id, string name, int x, int y, int z, int area)
+        public static void ModifyRoom(int roomId, string roomName, int roomX, int roomY, int roomZ, int areaId)
         {
-            UpdateRoom(id, name, x, y, z, area);
-            Room room = SelectRoom(id);
+            UpdateRoom(roomId, roomName, roomX, roomY, roomZ, areaId);
+            Room room = SelectRoom(roomId);
             OnRoomModified(room);
         }
 
-        public static void GetRoom(int id)
+        public static void GetRoom(int roomId)
         {
-            Room room = SelectRoom(id);
+            Room room = SelectRoom(roomId);
             OnRoomGet(room);
         }
 
-        public static void LoadAllRoomsInArea(int area)
+        public static void LoadAllRoomsInArea(int areaId)
         {
-            List<Room> rooms = SelectAllRoomsInArea(area);
+            List<Room> rooms = SelectAllRoomsInArea(areaId);
             foreach (var room in rooms)
                 OnRoomAdded(room);
         }
 
-        public static void LoadAllRoomsInAreaOnFloor(int area, int z)
+        public static void LoadAllRoomsInAreaOnFloor(int areaId, int z)
         {
-            List<Room> rooms = SelectAllRoomsInAreaOnFloor(area, z);
+            List<Room> rooms = SelectAllRoomsInAreaOnFloor(areaId, z);
             foreach (var room in rooms)
                 OnRoomAdded(room);
         }
 
-        public static void GetAllRoomsInArea(int area)
+        public static void GetAllRoomsInArea(int areaId)
         {
-            List<Room> rooms = SelectAllRoomsInArea(area);
+            List<Room> rooms = SelectAllRoomsInArea(areaId);
             foreach (var room in rooms)
                 OnRoomGet(room);
         }
 
-        public static void GetAllRoomsInAreaOnFloor(int area, int z)
+        public static void GetAllRoomsInAreaOnFloor(int areaId, int z)
         {
-            List<Room> rooms = SelectAllRoomsInAreaOnFloor(area, z);
+            List<Room> rooms = SelectAllRoomsInAreaOnFloor(areaId, z);
             foreach (var room in rooms)
                 OnRoomGet(room);
         }
@@ -551,36 +503,36 @@ namespace TBGINTB_Builder.Lib
 
         #region RoomStates
 
-        public static void AddRoomState(int room, int location, DateTime? time)
+        public static void AddRoomState(DateTime? roomStateTime, int locationId, int roomId)
         {
-            int id = InsertRoomState(room, location, time);
+            int id = InsertRoomState(roomStateTime, locationId, roomId);
             RoomState roomState = SelectRoomState(id);
             OnRoomStateAdded(roomState);
         }
 
-        public static void ModifyRoomState(int id, int room, int state, int location, DateTime? time)
+        public static void ModifyRoomState(int roomStateId, int roomStateState, DateTime? roomStateTime, int locationId, int roomId)
         {
-            UpdateRoomState(id, room, state, location, time);
-            RoomState roomState = SelectRoomState(id);
+            UpdateRoomState(roomStateId, roomStateState, roomStateTime, locationId, roomId);
+            RoomState roomState = SelectRoomState(roomStateId);
             OnRoomStateModified(roomState);
         }
 
-        public static void GetRoomState(int id)
+        public static void GetRoomState(int roomStateId)
         {
-            RoomState roomState = SelectRoomState(id);
+            RoomState roomState = SelectRoomState(roomStateId);
             OnRoomStateGet(roomState);
         }
 
-        public static void LoadAllRoomStatesForRoom(int room)
+        public static void LoadAllRoomStatesForRoom(int roomId)
         {
-            List<RoomState> roomStates = SelectAllRoomStatesForRoom(room);
+            List<RoomState> roomStates = SelectAllRoomStatesForRoom(roomId);
             foreach (var roomState in roomStates)
                 OnRoomStateAdded(roomState);
         }
 
-        public static void GetAllRoomStatesForRoom(int room)
+        public static void GetAllRoomStatesForRoom(int roomId)
         {
-            List<RoomState> roomStates = SelectAllRoomStatesForRoom(room);
+            List<RoomState> roomStates = SelectAllRoomStatesForRoom(roomId);
             foreach (var roomState in roomStates)
                 OnRoomStateGet(roomState);
         }
@@ -590,52 +542,38 @@ namespace TBGINTB_Builder.Lib
 
         #region Paragraphs
 
-        public static void AddParagraph(int? id, string text, int room, int? roomState)
+        public static void AddParagraph(int paragraphOrder, int roomId, int? roomStateId)
         {
-            Tuple<int, int> returned = InsertParagraph(id, text, room, roomState);
-            Paragraph paragraph = SelectParagraph(returned.Item1, returned.Item2);
+            int id = InsertParagraph(paragraphOrder, roomId, roomStateId);
+            Paragraph paragraph = SelectParagraph(id);
             OnParagraphAdded(paragraph);
         }
 
-        public static void ModifyParagraph(int id, string text, int room, int? roomState, int state)
+        public static void ModifyParagraph(int paragraphId, int paragraphOrder, int roomId, int? roomStateId)
         {
-            UpdateParagraph(id, text, room, roomState, state);
-            Paragraph paragraph = SelectParagraph(id, state);
+            UpdateParagraph(paragraphId, paragraphOrder, roomId, roomStateId);
+            Paragraph paragraph = SelectParagraph(paragraphId);
             OnParagraphModified(paragraph);
         }
 
-        public static void GetParagraph(int id, int state)
+        public static void GetParagraph(int paragraphId)
         {
-            Paragraph paragraph = SelectParagraph(id, state);
+            Paragraph paragraph = SelectParagraph(paragraphId);
             OnParagraphGet(paragraph);
         }
 
-        public static void LoadAllParagraphsForRoomAndRoomState(int room, int? roomState)
+        public static void LoadAllParagraphsForRoomAndRoomState(int roomId, int? roomStateId)
         {
-            List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(room, roomState);
+            List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(roomId, roomStateId);
             foreach (var paragraph in paragraphs)
                 OnParagraphAdded(paragraph);
         }
 
-        public static void GetAllParagraphsForRoomAndRoomState(int room, int? roomState)
+        public static void GetAllParagraphsForRoomAndRoomState(int roomId, int? roomStateId)
         {
-            List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(room, roomState);
+            List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(roomId, roomStateId);
             foreach (var paragraph in paragraphs)
                 OnParagraphGet(paragraph);
-        }
-
-        public static void LoadAllParagraphStates(int paragraphId)
-        {
-            List<Paragraph> paragraphs = SelectAllParagraphStates(paragraphId);
-            foreach (var paragraph in paragraphs)
-                OnParagraphStateAdded(paragraph);
-        }
-
-        public static void GetAllParagraphStates(int paragraphId)
-        {
-            List<Paragraph> paragraphs = SelectAllParagraphStates(paragraphId);
-            foreach (var paragraph in paragraphs)
-                OnParagraphStateGet(paragraph);
         }
 
         #endregion
@@ -878,12 +816,12 @@ namespace TBGINTB_Builder.Lib
 
         #region RoomStates
 
-        private static int InsertRoomState(int room, int location, DateTime? time)
+        private static int InsertRoomState(DateTime? time, int location, int room)
         {
             ObjectResult<decimal?> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_AddRoomState(room, location, time);
+                databaseResult = m_entities.dev_AddRoomState(time, location, room);
             }
             catch (Exception e)
             {
@@ -896,11 +834,11 @@ namespace TBGINTB_Builder.Lib
             return (int)result.Value;
         }
 
-        private static void UpdateRoomState(int id, int room, int state, int location, DateTime? time)
+        private static void UpdateRoomState(int id, int state, DateTime? time, int location, int room)
         {
             try
             {
-                m_entities.dev_UpdateRoomState(id, room, state, location, time);
+                m_entities.dev_UpdateRoomState(id, state, time, location, room);
             }
             catch (Exception e)
             {
@@ -949,29 +887,29 @@ namespace TBGINTB_Builder.Lib
 
         #region Paragraphs
 
-        private static Tuple<int, int> InsertParagraph(int? id, string text, int room, int? roomState)
+        private static int InsertParagraph(int order, int room, int? roomState)
         {
-            ObjectResult<dev_AddParagraph_Result> databaseResult = null;
+            ObjectResult<decimal?> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_AddParagraph(id, text, room, roomState);
+                databaseResult = m_entities.dev_AddParagraph(order, room, roomState);
             }
             catch (Exception e)
             {
                 throw new GinTubDatabaseException("dev_AddParagraph", e);
             }
             var result = databaseResult.FirstOrDefault();
-            if (result == null || !result.Id.HasValue || !result.State.HasValue)
-                throw new GinTubDatabaseException("dev_AddParagraph", new Exception("No [Id] or [State] was returned after [Paragraph] INSERT."));
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddParagraph", new Exception("No [Id] was returned after [Paragraph] INSERT."));
 
-            return new Tuple<int, int>((int)result.Id.Value, (int)result.State.Value);
+            return (int)result.Value;
         }
 
-        private static void UpdateParagraph(int? id, string text, int room, int? roomState, int state)
+        private static void UpdateParagraph(int id, int order, int room, int? roomState)
         {
             try
             {
-                m_entities.dev_UpdateParagraph(id, text, room, roomState, state);
+                m_entities.dev_UpdateParagraph(id, order, room, roomState);
             }
             catch (Exception e)
             {
@@ -979,12 +917,12 @@ namespace TBGINTB_Builder.Lib
             }
         }
 
-        private static Paragraph SelectParagraph(int id, int state)
+        private static Paragraph SelectParagraph(int id)
         {
             ObjectResult<dev_GetParagraph_Result> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_GetParagraph(id, state);
+                databaseResult = m_entities.dev_GetParagraph(id);
             }
             catch (Exception e)
             {
@@ -1010,24 +948,6 @@ namespace TBGINTB_Builder.Lib
             }
             if (databaseResult == null)
                 throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", new Exception("No [Paragraphs] records found."));
-
-            List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
-            return paragraphs;
-        }
-
-        private static List<Paragraph> SelectAllParagraphStates(int paragraphId)
-        {
-            ObjectResult<dev_GetAllStatesOfParagraph_Result> databaseResult = null;
-            try
-            {
-                databaseResult = m_entities.dev_GetAllStatesOfParagraph(paragraphId);
-            }
-            catch (Exception e)
-            {
-                throw new GinTubDatabaseException("dev_GetAllStatesOfParagraph", e);
-            }
-            if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllStatesOfParagraph", new Exception("No [Paragraphs] records found."));
 
             List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
             return paragraphs;

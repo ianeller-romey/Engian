@@ -65,7 +65,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
-    <Compile Include="BuilderControls\ComboBoxItems.cs" />
     <Compile Include="BuilderControls\ComboBox_RoomState.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphsAndStates.cs" />

@@ -11,12 +11,11 @@ namespace TBGINTB_Builder.Lib.Repository
 {
     using System;
     
-    public partial class dev_GetAllStatesOfParagraph_Result
+    public partial class dev_GetAllParagraphTextStatesForParagraph_Result
     {
         public int Id { get; set; }
         public string Text { get; set; }
-        public int Room { get; set; }
-        public Nullable<int> RoomState { get; set; }
         public int State { get; set; }
+        public int Paragraph { get; set; }
     }
 }

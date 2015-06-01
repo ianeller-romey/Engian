@@ -430,9 +430,9 @@ GO
 -- Description:	Adds a RoomState record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddRoomState]
-	@room int,
+	@time datetime,
 	@location int,
-	@time datetime
+	@room int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -444,8 +444,8 @@ BEGIN
     FROM [dbo].[RoomStates]
     WHERE [Room] = @room
     
-	INSERT INTO [dbo].[RoomStates] ([Room], [State], [Location], [Time])
-	VALUES (@room, @newstate, @location, @time)
+	INSERT INTO [dbo].[RoomStates] ([State], [Time], [Location], [Room])
+	VALUES (@newstate, @time, @location, @room)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -462,10 +462,10 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateRoomState]
 	@id int,
-	@room int,
 	@state int,
+	@time datetime,
 	@location int,
-	@time datetime
+	@room int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -473,10 +473,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[RoomStates] 
-	SET	[Room] = ISNULL(@room, [Room]),
-		[State] = ISNULL(@state, [State]),
-		[Location] = ISNULL(@location, [Location]), 
-		[Time] = @time
+	SET	[State] = ISNULL(@state, [State]), 
+		[Time] = @time,
+		[Location] = ISNULL(@location, [Location]),
+		[Room] = ISNULL(@room, [Room])
 	WHERE [Id] = @id
 
 END
@@ -499,10 +499,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT [Id],
-		   [Room],
 		   [State],
+		   [Time],
 		   [Location],
-		   [Time]
+		   [Room]
 	FROM [dbo].[RoomStates]
 	WHERE [Room] = @room
 
@@ -526,10 +526,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT [Id],
-		   [Room],
 		   [State],
+		   [Time],
 		   [Location],
-		   [Time]
+		   [Room]
 	FROM [dbo].[RoomStates]
 	WHERE [Id] = @id
 
@@ -546,11 +546,10 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Paragraph record and returns the newly generated ID, OR adds a new state to an existing Paragraph record
+-- Description:	Adds a Paragraph record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddParagraph]
-	@id int,
-	@text varchar(MAX),
+	@order int,
 	@room int,
 	@roomstate int
 AS
@@ -558,30 +557,11 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-
-    DECLARE @newstate int
-    SELECT @newstate = ISNULL(MAX([State]), -1) + 1
-    FROM [dbo].[Paragraphs]
-    WHERE [Room] = @room
-    AND [RoomState] = @roomState
-    AND [Id] = @id
     
-    IF @id IS NULL
-    BEGIN
-		INSERT INTO [dbo].[Paragraphs] ([Text], [Room], [RoomState], [State])
-		VALUES (@text, @room, @roomstate, @newstate)
-	END
-	ELSE
-	BEGIN
-		SET IDENTITY_INSERT [dbo].[Paragraphs] ON
-		
-		INSERT INTO [dbo].[Paragraphs] ([Id], [Text], [Room], [RoomState], [State])
-		VALUES (@id, @text, @room, @roomstate, @newstate)
-		
-		SET IDENTITY_INSERT [dbo].[Paragraphs] ON
-	END
+	INSERT INTO [dbo].[Paragraphs] ([Order], [Room], [RoomState])
+	VALUES (@order, @room, @roomstate)
 	
-	SELECT SCOPE_IDENTITY() as [Id], @newstate as [State]
+	SELECT SCOPE_IDENTITY()
 
 END
 GO
@@ -596,10 +576,9 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateParagraph]
 	@id int,
-	@text varchar(MAX),
+	@order int,
 	@room int,
-	@roomstate int,
-	@state int
+	@roomstate int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -607,10 +586,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Paragraphs] 
-	SET	[Text] = ISNULL(@text, [Text]), 
+	SET	[Order] = ISNULL(@order, [Order]),
 		[Room] = ISNULL(@room, [Room]),
 		[RoomState] = @roomState
-	WHERE [Id] = @id AND [State] = @state
+	WHERE [Id] = @id
 
 END
 GO
@@ -633,41 +612,13 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT [Id],
-		   [Text],
+		   [Order],
 		   [Room],
-		   [RoomState],
-		   [State]
+		   [RoomState]
 	FROM [dbo].[Paragraphs]
 	WHERE [Room] = @room
 	AND ([RoomState] = @roomstate OR @roomstate IS NULL)
-	ORDER BY [Id], [State]
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllStatesOfParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllStatesOfParagraph] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/28/2015
--- Description:	Gets all Paragraph records with a given state
--- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllStatesOfParagraph]
-	@id int
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	SELECT [Id],
-		   [Text],
-		   [Room],
-		   [RoomState],
-		   [State]
-	FROM [dbo].[Paragraphs]
-	WHERE [Id] = @id
+	ORDER BY [Order]
 
 END
 GO
@@ -681,8 +632,95 @@ GO
 -- Description:	Gets data about an Paragraph record in the database
 -- =============================================
 ALTER PROCEDURE [dev].[dev_GetParagraph]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Order],
+		   [Room],
+		   [RoomState]
+	FROM [dbo].[Paragraphs]
+	WHERE [Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*ParagraphTextState***********************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraphTextState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/1/2015
+-- Description:	Adds a ParagraphTextState record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddParagraphTextState]
+	@text varchar(MAX),
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+    
+    DECLARE @newstate int
+    SELECT @newstate = ISNULL(MAX([State]), -1) + 1
+    FROM [dbo].[ParagraphTextStates]
+    WHERE [Paragraph] = @paragraph
+    
+	INSERT INTO [dbo].[ParagraphTextStates] ([Text], [State], [Paragraph])
+	VALUES (@text, @newstate, @paragraph)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraphTextState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/1/2015
+-- Description:	Updates a ParagraphTextState record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateParagraphTextState]
 	@id int,
-	@state int
+	@text varchar(MAX),
+	@state int,
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[ParagraphTextStates] 
+	SET	[Text] = ISNULL(@text, [Text]),
+		[State] = ISNULL(@state, [State]),
+		[Paragraph] = ISNULL(@paragraph, [Paragraph])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphTextStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphTextStatesForParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/1/2015
+-- Description:	Gets all ParagraphTextState records associated with a specified Paragraph
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllParagraphTextStatesForParagraph]
+	@paragraph int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -691,12 +729,37 @@ BEGIN
 
 	SELECT [Id],
 		   [Text],
-		   [Room],
-		   [RoomState],
-		   [State]
-	FROM [dbo].[Paragraphs]
+		   [State],
+		   [Paragraph]
+	FROM [dbo].[ParagraphTextStates]
+	WHERE [Paragraph] = @paragraph
+	ORDER BY [State]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphTextState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/1/2015
+-- Description:	Gets data about a ParagraphTextState record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetParagraphTextState]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [State],
+		   [Paragraph]
+	FROM [dbo].[ParagraphTextStates]
 	WHERE [Id] = @id
-	AND [State] = @state
 
 END
 GO
@@ -711,13 +774,12 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Noun record, checking to ensure that the specified text value IS present in the Paragraph, 
+-- Description:	Adds a Noun record, checking to ensure that the specified text value IS present in the ParagraphTextState, 
 -- and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddNoun]
 	@text varchar(MAX),
-	@paragraph int,
-	@paragraphstate int
+	@paragraphtextstate int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -725,16 +787,16 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	IF NOT EXISTS (SELECT 1
-				   FROM [dbo].[Paragraphs] p
-				   WHERE [Id] = @paragraph AND [State] = @paragraphstate AND [Text] LIKE '%' + @text + '%')
+				   FROM [dbo].[ParagraphsTextStates] p
+				   WHERE [Id] = @paragraphtextstate AND [Text] LIKE '%' + @text + '%')
 	BEGIN
-		RAISERROR (N'The Text value of a Noun must be present in the Text value of the Paragraph to which it is associated.',
+		RAISERROR (N'The Text value of a Noun must be present in the Text value of the ParagraphTextState to which it is associated.',
 				   1,
 				   1)
 	END
 
-	INSERT INTO [dbo].[Nouns] ([Text], [Paragraph], [ParagraphState])
-	VALUES (@text, @paragraph, @paragraphstate)
+	INSERT INTO [dbo].[Nouns] ([Text], [ParagraphTextState])
+	VALUES (@text, @paragraphtextstate)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -861,16 +923,16 @@ GO
 -- Description:	Adds a Action record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddAction]
-	@noun int,
-	@verbtype int
+	@verbtype int,
+	@noun int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Actions] ([Noun], [VerbType])
-	VALUES (@noun, @verbtype)
+	INSERT INTO [dbo].[Actions] ([VerbType], [Noun])
+	VALUES (@verbtype, @noun)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -887,8 +949,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateAction]
 	@id int,
-	@noun int,
-	@verbtype int
+	@verbtype int,
+	@noun int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -896,8 +958,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Actions] 
-	SET	[Noun] = ISNULL(@noun, [Noun]),
-		[VerbType] = ISNULL(@verbtype, [VerbType])
+	SET	[VerbType] = ISNULL(@verbtype, [VerbType]),
+		[Noun] = ISNULL(@noun, [Noun])
 	WHERE [Id] = @id
 
 END
@@ -1020,18 +1082,18 @@ GO
 -- Description:	Adds a Result record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddResult]
-	@resulttype int,
-	@resultsourcetype int,
+	@jsondata varchar(MAX),
 	@source int,
-	@jsondata varchar(MAX)
+	@resultsourcetype int,
+	@resulttype int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Results] ([ResultType], [ResultSourceType], [Source], [JSONData])
-	VALUES (@resulttype, @resultsourcetype, @source, @jsondata)
+	INSERT INTO [dbo].[Results] ([JSONData], [Source], [ResultSourceType], [ResultType])
+	VALUES (@jsondata, @source, @resultsourcetype, @resulttype)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1048,10 +1110,10 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateResult]
 	@id int,
-	@resulttype int,
-	@resultsourcetype int,
+	@jsondata varchar(MAX),
 	@source int,
-	@jsondata varchar(MAX)
+	@resultsourcetype int,
+	@resulttype int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1059,10 +1121,10 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Results] 
-	SET	[ResultType] = ISNULL(@resulttype, [ResultType]), 
-		[ResultSourceType] = ISNULL(@resultsourcetype, [ResultSourceType]), 
+	SET	[JSONData] = ISNULL(@jsondata, [JSONData]), 
 		[Source] = ISNULL(@source, [Source]), 
-		[JSONData] = ISNULL(@jsondata, [JSONData])
+		[ResultSourceType] = ISNULL(@resultsourcetype, [ResultSourceType]),
+		[ResultType] = ISNULL(@resulttype, [ResultType])
 	WHERE [Id] = @id
 
 END
@@ -1134,17 +1196,17 @@ GO
 -- corresponds to the ID of an item, event, or character depending on the @requirementsourcetype
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddRequirement]
-	@action int,
+	@requirement int,
 	@requirementsourcetype int,
-	@requirement int
+	@action int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra Requirement sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Requirements] ([Action], [RequirementSourceType], [Requirement])
-	VALUES (@action, @requirementsourcetype, @requirement)
+	INSERT INTO [dbo].[Requirements] ([Requirement], [RequirementSourceType], [Action])
+	VALUES (@requirement, @requirementsourcetype, @action)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1162,9 +1224,9 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateRequirement]
 	@id int,
-	@action int,
+	@requirement int,
 	@requirementsourcetype int,
-	@requirement int
+	@action int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra Requirement sets from
@@ -1172,9 +1234,9 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Requirements] 
-	SET	[Action] = ISNULL(@action, [Action]), 
-		[RequirementSourceType] = ISNULL(@requirementsourcetype, [RequirementSourceType]), 
-		[Requirement] = ISNULL(@requirement, [Requirement])
+	SET	[Requirement] = ISNULL(@requirement, [Requirement]), 
+		[RequirementSourceType] = ISNULL(@requirementsourcetype, [RequirementSourceType]),
+		[Action] = ISNULL(@action, [Action])
 	WHERE [Id] = @id
 
 END
@@ -1245,16 +1307,16 @@ GO
 -- Description:	Adds an MessageChoice record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessageChoice]
-	@message int,
-	@text varchar(MAX)
+	@text varchar(MAX),
+	@message int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[MessageChoices] ([Message], [Text])
-	VALUES (@message, @text)
+	INSERT INTO [dbo].[MessageChoices] ([Text], [Message])
+	VALUES (@text, @message)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1298,16 +1360,16 @@ GO
 -- Description:	Adds an MessageChoiceOutcome record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessageChoiceOutcome]
-	@messagechoice int,
-	@result int
+	@result int,
+	@messagechoice int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[MessageChoiceOutcomes] ([MessageChoice], [Result])
-	VALUES (@messagechoice, @result)
+	INSERT INTO [dbo].[MessageChoiceOutcomes] ([Result], [MessageChoice])
+	VALUES (@result, @messagechoice)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1324,7 +1386,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateMessageChoiceOutcome]
 	@id int,
-	@result int
+	@result int,
+	@messagechoice int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1332,7 +1395,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[MessageChoiceOutcomes]
-	SET [Result] = @result
+	SET [Result] = ISNULL(@result, [Result]),
+		[MessageChoice] = ISNULL(@messagechoice, [MessageChoice])
 	WHERE [Id] = @id
 
 END

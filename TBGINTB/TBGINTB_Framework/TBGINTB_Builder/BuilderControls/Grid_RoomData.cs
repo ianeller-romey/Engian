@@ -52,13 +52,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_RoomData(int? roomId, string roomName, int x, int y, int z, int areaId, bool enableEditing)
+        public Grid_RoomData(int? roomId, string roomName, int roomX, int roomY, int roomZ, int areaId, bool enableEditing)
         {
             RoomId = roomId;
             RoomName = roomName;
-            RoomX = x;
-            RoomY = y;
-            RoomZ = z;
+            RoomX = roomX;
+            RoomY = roomY;
+            RoomZ = roomZ;
             AreaId = areaId;
 
             CreateControls();
@@ -168,27 +168,27 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        private void SetRoomX(int x)
+        private void SetRoomX(int roomX)
         {
-            RoomX = x;
+            RoomX = roomX;
             m_textBlock_roomX.Text = RoomX.ToString();
         }
 
-        private void SetRoomY(int y)
+        private void SetRoomY(int roomY)
         {
-            RoomY = y;
+            RoomY = roomY;
             m_textBlock_roomY.Text = RoomY.ToString();
         }
 
-        private void SetRoomZ(int z)
+        private void SetRoomZ(int roomZ)
         {
-            RoomZ = z;
+            RoomZ = roomZ;
             m_textBlock_roomZ.Text = RoomZ.ToString();
         }
 
-        private void SetRoomName(string name)
+        private void SetRoomName(string roomName)
         {
-            m_textBox_roomName.Text = name;
+            m_textBox_roomName.Text = roomName;
             if (!m_textBox_roomName.IsEnabled)
                 TextBox_RoomName_TextChanged(m_textBox_roomName, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }

@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace TBGINTB_Builder.Lib.Model
+namespace TBGINTB_Builder.Lib.Model.DbModel
 {
     [DataContract]
     class Room

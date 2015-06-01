@@ -14,7 +14,7 @@ namespace TBGINTB_Builder.Lib.Repository
     public partial class dev_GetAllLocations_Result
     {
         public int Id { get; set; }
-        public string LocationFile { get; set; }
         public string Name { get; set; }
+        public string LocationFile { get; set; }
     }
 }

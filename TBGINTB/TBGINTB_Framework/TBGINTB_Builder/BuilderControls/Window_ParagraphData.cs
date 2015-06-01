@@ -25,10 +25,9 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER PROPERTIES
 
         public int? ParagraphId { get { return m_grid_paragraphData.ParagraphId; } }
-        public int? ParagraphState { get { return m_grid_paragraphData.ParagraphState; } }
-        public string ParagraphText { get { return m_grid_paragraphData.ParagraphText; } }
-        public int? RoomStateId { get { return m_grid_paragraphData.RoomStateId; } }
+        public int? ParagraphOrder { get { return m_grid_paragraphData.ParagraphOrder; } }
         public int RoomId { get { return m_grid_paragraphData.RoomId; } }
+        public int? RoomStateId { get { return m_grid_paragraphData.RoomStateId; } }
 
         #endregion
 
@@ -37,12 +36,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ParagraphData(int? paragraphId, int? paragraphState, string paragraphText, int? roomStateId, int roomId)
+        public Window_ParagraphData(int? paragraphId, int? paragraphOrder, int roomId, int? roomStateId)
         {
             Title = "Paragraph Data";
             Width = 300;
             Height = 300;
-            Content = CreateControls(paragraphId, paragraphState, paragraphText, roomStateId, roomId);
+            Content = CreateControls(paragraphId, paragraphOrder, roomId, roomStateId);
             GinTubBuilderManager.LoadAllLocations();
         }
 
@@ -51,9 +50,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private UIElement CreateControls(int? paragraphId, int? paragraphState, string paragraphText, int? roomStateId, int roomId)
+        private UIElement CreateControls(int? paragraphId, int? paragraphOrder, int roomId, int? roomStateId)
         {
-            m_grid_paragraphData = new Grid_ParagraphData(paragraphId, paragraphState, paragraphText, roomStateId, roomId, true);
+            m_grid_paragraphData = new Grid_ParagraphData(paragraphId, paragraphOrder, roomId, roomStateId, true);
             return m_grid_paragraphData;
         }
 

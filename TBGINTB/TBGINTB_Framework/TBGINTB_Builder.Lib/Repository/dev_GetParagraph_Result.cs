@@ -14,9 +14,8 @@ namespace TBGINTB_Builder.Lib.Repository
     public partial class dev_GetParagraph_Result
     {
         public int Id { get; set; }
-        public string Text { get; set; }
+        public int Order { get; set; }
         public int Room { get; set; }
         public Nullable<int> RoomState { get; set; }
-        public int State { get; set; }
     }
 }

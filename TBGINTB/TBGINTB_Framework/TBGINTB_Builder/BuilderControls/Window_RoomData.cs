@@ -22,12 +22,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
-        public int AreaId { get { return m_grid_roomData.AreaId; } }
         public int? RoomId { get { return m_grid_roomData.RoomId; } }
         public string RoomName { get { return m_grid_roomData.RoomName; } }
         public int RoomX { get { return m_grid_roomData.RoomX; } }
         public int RoomY { get { return m_grid_roomData.RoomY; } }
         public int RoomZ { get { return m_grid_roomData.RoomZ; } }
+        public int AreaId { get { return m_grid_roomData.AreaId; } }
 
         #endregion
 

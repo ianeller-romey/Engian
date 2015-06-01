@@ -17,8 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBlock m_textBlock_paragraphState;
-        TextBox m_textBox_paragraphText;
+        TextBox m_textBox_paragraphOrder;
 
         #endregion
 
@@ -26,10 +25,9 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER PROPERTIES
 
         public int? ParagraphId { get; private set; }
-        public int? ParagraphState { get; private set; }
-        public string ParagraphText { get; private set; }
-        public int? RoomStateId { get; private set; }
+        public int? ParagraphOrder { get; private set; }
         public int RoomId { get; private set; }
+        public int? RoomStateId { get; private set; }
 
         public List<UIElement> EditingControls
         {
@@ -37,7 +35,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_textBox_paragraphText
+                    m_textBox_paragraphOrder
                 };
             }
         }
@@ -49,11 +47,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_ParagraphData(int? paragraphId, int? paragraphState, string paragraphText, int? roomStateId, int roomId, bool enableEditing)
+        public Grid_ParagraphData(int? paragraphId, int? paragraphOrder, int roomId, int? roomStateId, bool enableEditing)
         {
             ParagraphId = paragraphId;
-            ParagraphState = paragraphState;
-            ParagraphText = paragraphText;
+            ParagraphOrder = paragraphOrder;
             RoomStateId = roomStateId;
             RoomId = roomId;
 
@@ -112,52 +109,39 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // State
-            m_textBlock_paragraphState =
-                new TextBlock()
+            m_textBox_paragraphOrder =
+                new TextBox()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
-                    Text = (ParagraphState.HasValue) ? ParagraphState.ToString() : "NewState"
+                    Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0"
                 };
-            Label label_paragraphState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBlock_paragraphState, 0, 1);
-            grid_state.SetGridRowColumn(label_paragraphState, 0, 0);
-
-            ////////
-            // Text
-            m_textBox_paragraphText = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ParagraphText };
-            m_textBox_paragraphText.TextChanged += TextBox_ParagraphText_TextChanged;
-            this.SetGridRowColumn(m_textBox_paragraphText, 2, 0);
+            Label label_paragraphOrder = new Label() { Content = "Order:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_state.SetGridRowColumn(m_textBox_paragraphOrder, 0, 1);
+            grid_state.SetGridRowColumn(label_paragraphOrder, 0, 0);
         }
 
         private void GinTubBuilderManager_ParagraphModified(object sender, GinTubBuilderManager.ParagraphModifiedEventArgs args)
         {
             if (args.Id == ParagraphId)
             {
-                SetParagraphState(args.State);
-                SetParagraphText(args.Text);
+                SetParagraphOrder(args.Order);
                 RoomStateId = args.RoomState;
                 RoomId = args.Room;
             }
         }
 
-        private void SetParagraphState(int state)
+        private void SetParagraphOrder(int order)
         {
-            ParagraphState = state;
-            m_textBlock_paragraphState.Text = ParagraphState.ToString();
-        }
-
-        private void SetParagraphText(string text)
-        {
-            m_textBox_paragraphText.Text = text;
-            if (!m_textBox_paragraphText.IsEnabled)
-                TextBox_ParagraphText_TextChanged(m_textBox_paragraphText, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+            ParagraphOrder = order;
+            m_textBox_paragraphOrder.Text = ParagraphOrder.ToString();
         }
 
         void TextBox_ParagraphText_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            if (tb != null && tb == m_textBox_paragraphText)
-                ParagraphText = m_textBox_paragraphText.Text;
+            int newOrder = 0;
+            if (tb != null && tb == m_textBox_paragraphOrder && int.TryParse(m_textBox_paragraphOrder.Text, out newOrder))
+                ParagraphOrder = newOrder;
         }
 
         #endregion

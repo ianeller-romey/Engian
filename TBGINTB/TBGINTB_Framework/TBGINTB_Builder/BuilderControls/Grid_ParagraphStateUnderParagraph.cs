@@ -16,7 +16,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_ParagraphData m_grid_paragraph;
+        //Grid_ParagraphData m_grid_paragraph;
 
         #endregion
 
@@ -29,19 +29,19 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Grid_ParagraphStateUnderParagraph(int paragraphId, int paragraphState, string paragraphText, int roomStateId, int roomId)
+        public Grid_ParagraphStateUnderParagraph()
         {
-            CreateControls(paragraphId, paragraphState, paragraphText, roomStateId, roomId);
+            //CreateControls(paragraphId, paragraphState, paragraphText, roomStateId, roomId);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            m_grid_paragraph.SetActiveAndRegisterForGinTubEvents();
+            //m_grid_paragraph.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            m_grid_paragraph.SetInactiveAndUnregisterFromGinTubEvents();
+            //m_grid_paragraph.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -49,7 +49,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private void CreateControls(int paragraphId, int paragraphState, string paragraphText, int roomStateId, int roomId)
+        private void CreateControls()
         {
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -58,13 +58,14 @@ namespace TBGINTB_Builder.BuilderControls
             button_modifyParagraph.Click += Button_ModifyParagraph_Click;
             this.SetGridRowColumn(button_modifyParagraph, 0, 0);
 
-            m_grid_paragraph = new Grid_ParagraphData(paragraphId, paragraphState, paragraphText, roomStateId, roomId, false);
-            this.SetGridRowColumn(m_grid_paragraph, 1, 0);
-            m_grid_paragraph.SetActiveAndRegisterForGinTubEvents();
+            //m_grid_paragraph = new Grid_ParagraphData(paragraphId, paragraphOrder, paragraphText, roomStateId, roomId, false);
+            //this.SetGridRowColumn(m_grid_paragraph, 1, 0);
+            //m_grid_paragraph.SetActiveAndRegisterForGinTubEvents();
         }
 
         private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
         {
+            /*
             Window_ParagraphData window = 
                 new Window_ParagraphData
                 (
@@ -84,6 +85,7 @@ namespace TBGINTB_Builder.BuilderControls
                     window.RoomStateId.Value,
                     window.ParagraphState.Value
                 );
+             */
         }
 
         #endregion
