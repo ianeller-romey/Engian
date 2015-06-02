@@ -36,7 +36,7 @@ CREATE TABLE [dbo].[Paragraphs] (
 	CONSTRAINT UQ__ParagraphsOrder UNIQUE NONCLUSTERED ([Order], [Room], [RoomState])
 )
 
-CREATE TABLE [dbo].[ParagraphTextStates] (
+CREATE TABLE [dbo].[ParagraphStates] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
 	[State] int NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE [dbo].[ParagraphTextStates] (
 CREATE TABLE [dbo].[Nouns] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
-	[ParagraphTextState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphTextStates]([Id])
+	[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id])
 )
 
 CREATE TABLE [dbo].[VerbTypes] (
@@ -145,10 +145,10 @@ CREATE TABLE [dbo].[PlayerRoomStates] (
 	[CheckpointDate] datetime NOT NULL
 )
 
-CREATE TABLE [dbo].[PlayerParagraphTextStates] (
+CREATE TABLE [dbo].[PlayerParagraphStates] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
-	[ParagraphTextStates] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphTextStates]([Id]),
+	[ParagraphStates] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id]),
 	[CheckpointDate] datetime NOT NULL
 )
 

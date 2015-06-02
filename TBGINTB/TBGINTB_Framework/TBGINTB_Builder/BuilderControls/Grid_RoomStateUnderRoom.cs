@@ -22,6 +22,13 @@ namespace TBGINTB_Builder.BuilderControls
 
 
         #region MEMBER PROPERTIES
+
+        public int? RoomStateId { get { return m_grid_roomState.RoomStateId; } }
+        public int? RoomStateState { get { return m_grid_roomState.RoomStateState; } }
+        public DateTime? RoomStateTime { get { return m_grid_roomState.RoomStateTime; } }
+        public int? LocationId { get { return m_grid_roomState.LocationId; } }
+        public int RoomId { get { return m_grid_roomState.RoomId; } }
+
         #endregion
 
 

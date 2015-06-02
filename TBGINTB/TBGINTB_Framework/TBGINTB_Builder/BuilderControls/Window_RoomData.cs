@@ -15,19 +15,19 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_RoomData m_grid_roomData;
+        Grid_RoomData m_grid_room;
 
         #endregion
 
 
         #region MEMBER PROPERTIES
 
-        public int? RoomId { get { return m_grid_roomData.RoomId; } }
-        public string RoomName { get { return m_grid_roomData.RoomName; } }
-        public int RoomX { get { return m_grid_roomData.RoomX; } }
-        public int RoomY { get { return m_grid_roomData.RoomY; } }
-        public int RoomZ { get { return m_grid_roomData.RoomZ; } }
-        public int AreaId { get { return m_grid_roomData.AreaId; } }
+        public int? RoomId { get { return m_grid_room.RoomId; } }
+        public string RoomName { get { return m_grid_room.RoomName; } }
+        public int RoomX { get { return m_grid_room.RoomX; } }
+        public int RoomY { get { return m_grid_room.RoomY; } }
+        public int RoomZ { get { return m_grid_room.RoomZ; } }
+        public int AreaId { get { return m_grid_room.AreaId; } }
 
         #endregion
 
@@ -51,8 +51,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls(int? roomId, string roomName, int roomX, int roomY, int roomZ, int areaId)
         {
-            m_grid_roomData = new Grid_RoomData(roomId, roomName, roomX, roomY, roomZ, areaId, true);
-            return m_grid_roomData;
+            m_grid_room = new Grid_RoomData(roomId, roomName, roomX, roomY, roomZ, areaId, true);
+            return m_grid_room;
         }
 
         #endregion

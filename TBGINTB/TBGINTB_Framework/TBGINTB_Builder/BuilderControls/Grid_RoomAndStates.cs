@@ -95,9 +95,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void AddRoomState(int roomStateId, int roomStateState, DateTime? roomStateTime, int locationId, int roomId)
         {
-            Grid_RoomStateUnderRoom grid_roomStateData = new Grid_RoomStateUnderRoom(roomStateId, roomStateState, roomStateTime, locationId, roomId);
-            grid_roomStateData.SetActiveAndRegisterForGinTubEvents();
-            m_stackPanel_roomStates.Children.Add(grid_roomStateData);
+            Grid_RoomStateUnderRoom grid = new Grid_RoomStateUnderRoom(roomStateId, roomStateState, roomStateTime, locationId, roomId);
+            m_stackPanel_roomStates.Children.Add(grid);
             GinTubBuilderManager.LoadAllLocations();
         }
 

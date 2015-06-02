@@ -62,10 +62,11 @@ namespace TBGINTB_Builder.BuilderControls
             RoomId = roomId;
 
             CreateControls();
-            MouseLeftButtonDown += Grid_RoomStateData_MouseLeftButtonDown;
 
             foreach (var e in EditingControls)
                 e.IsEnabled = enableEditing;
+            if(!enableEditing)
+                MouseLeftButtonDown += Grid_RoomStateData_MouseLeftButtonDown;
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -163,7 +164,7 @@ namespace TBGINTB_Builder.BuilderControls
             if(RoomStateId == args.Id)
             {
                 SetRoomStateState(args.State);
-                LocationId = args.Location;
+                SetRoomStateLocation(args.Location);
                 SetRoomStateTime(args.Time);
                 RoomId = args.Room;
 
@@ -175,6 +176,12 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if (LocationId == args.Id)
                 m_comboBox_locationId.SelectedItem = m_comboBox_locationId.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
+        }
+
+        private void SetRoomStateLocation(int locationId)
+        {
+            LocationId = locationId;
+            m_comboBox_locationId.SelectedItem = m_comboBox_locationId.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(l => l.LocationId == locationId);
         }
 
         private void SetRoomStateState(int? roomStateState)

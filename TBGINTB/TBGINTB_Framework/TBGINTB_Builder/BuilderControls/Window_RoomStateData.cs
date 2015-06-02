@@ -17,18 +17,18 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_RoomStateData m_grid_roomStateData;
+        Grid_RoomStateData m_grid_roomState;
 
         #endregion
 
 
         #region MEMBER PROPERTIES
 
-        public int? RoomStateId { get { return m_grid_roomStateData.RoomStateId; } }
-        public int? RoomStateState { get { return m_grid_roomStateData.RoomStateState; } }
-        public DateTime? RoomStateTime { get { return m_grid_roomStateData.RoomStateTime; } }
-        public int? LocationId { get { return m_grid_roomStateData.LocationId; } }
-        public int RoomId { get { return m_grid_roomStateData.RoomId; } }
+        public int? RoomStateId { get { return m_grid_roomState.RoomStateId; } }
+        public int? RoomStateState { get { return m_grid_roomState.RoomStateState; } }
+        public DateTime? RoomStateTime { get { return m_grid_roomState.RoomStateTime; } }
+        public int? LocationId { get { return m_grid_roomState.LocationId; } }
+        public int RoomId { get { return m_grid_roomState.RoomId; } }
 
         #endregion
 
@@ -43,7 +43,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(roomStateId, roomStateState, roomStateTime, locationId, roomId);
-            m_grid_roomStateData.SetActiveAndRegisterForGinTubEvents(); // need for loading Location
+            m_grid_roomState.SetActiveAndRegisterForGinTubEvents(); // need for loading Location
             GinTubBuilderManager.LoadAllLocations();
         }
 
@@ -54,8 +54,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId)
         {
-            m_grid_roomStateData = new Grid_RoomStateData(roomStateId, roomStateState, roomStateTime, locationId, roomId, true);
-            return m_grid_roomStateData;
+            m_grid_roomState = new Grid_RoomStateData(roomStateId, roomStateState, roomStateTime, locationId, roomId, true);
+            return m_grid_roomState;
         }
 
         #endregion

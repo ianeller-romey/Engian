@@ -349,66 +349,129 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
-        #region ParagraphTextStates
+        #region ParagraphStates
 
-        public class ParagraphTextStateEventArgs : EventArgs
+        public class ParagraphStateEventArgs : EventArgs
         {
             public int Id { get; set; }
             public string Text { get; set; }
             public int State { get; set; }
             public int Paragraph { get; set; }
-            public ParagraphTextStateEventArgs(int id, string text, int state, int paragraphTextState)
+            public ParagraphStateEventArgs(int id, string text, int state, int paragraphState)
             {
                 Id = id;
                 Text = text;
                 State = state;
-                Paragraph = paragraphTextState;
+                Paragraph = paragraphState;
             }
         }
 
 
-        public class ParagraphTextStateAddedEventArgs : ParagraphTextStateEventArgs
+        public class ParagraphStateAddedEventArgs : ParagraphStateEventArgs
         {
-            public ParagraphTextStateAddedEventArgs(int id, string text, int state, int paragraphTextState) :
-                base(id, text, state, paragraphTextState) { }
+            public ParagraphStateAddedEventArgs(int id, string text, int state, int paragraphState) :
+                base(id, text, state, paragraphState) { }
         }
-        public delegate void ParagraphTextStateAddedEventHandler(object sender, ParagraphTextStateAddedEventArgs args);
-        public static event ParagraphTextStateAddedEventHandler ParagraphTextStateAdded;
-        private static void OnParagraphTextStateAdded(ParagraphTextState paragraphTextState)
+        public delegate void ParagraphStateAddedEventHandler(object sender, ParagraphStateAddedEventArgs args);
+        public static event ParagraphStateAddedEventHandler ParagraphStateAdded;
+        private static void OnParagraphStateAdded(ParagraphState paragraphState)
         {
-            if (ParagraphTextStateAdded != null)
-                ParagraphTextStateAdded(typeof(GinTubBuilderManager),
-                    new ParagraphTextStateAddedEventArgs(paragraphTextState.Id, paragraphTextState.Text, paragraphTextState.State, paragraphTextState.Paragraph));
-        }
-
-
-        public class ParagraphTextStateModifiedEventArgs : ParagraphTextStateEventArgs
-        {
-            public ParagraphTextStateModifiedEventArgs(int id, string text, int state, int paragraphTextState) :
-                base(id, text, state, paragraphTextState) { }
-        }
-        public delegate void ParagraphTextStateModifiedEventHandler(object sender, ParagraphTextStateModifiedEventArgs args);
-        public static event ParagraphTextStateModifiedEventHandler ParagraphTextStateModified;
-        private static void OnParagraphTextStateModified(ParagraphTextState paragraphTextState)
-        {
-            if (ParagraphTextStateModified != null)
-                ParagraphTextStateModified(typeof(GinTubBuilderManager),
-                    new ParagraphTextStateModifiedEventArgs(paragraphTextState.Id, paragraphTextState.Text, paragraphTextState.State, paragraphTextState.Paragraph));
+            if (ParagraphStateAdded != null)
+                ParagraphStateAdded(typeof(GinTubBuilderManager),
+                    new ParagraphStateAddedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.State, paragraphState.Paragraph));
         }
 
 
-        public class ParagraphTextStateGetEventArgs : ParagraphTextStateEventArgs
+        public class ParagraphStateModifiedEventArgs : ParagraphStateEventArgs
         {
-            public ParagraphTextStateGetEventArgs(int id, string text, int state, int paragraphTextState) :
-                base(id, text, state, paragraphTextState) { }
+            public ParagraphStateModifiedEventArgs(int id, string text, int state, int paragraphState) :
+                base(id, text, state, paragraphState) { }
         }
-        public delegate void ParagraphTextStateGetEventHandler(object sender, ParagraphTextStateGetEventArgs args);
-        public static event ParagraphTextStateGetEventHandler ParagraphTextStateGet;
-        private static void OnParagraphTextStateGet(ParagraphTextState paragraphTextState)
+        public delegate void ParagraphStateModifiedEventHandler(object sender, ParagraphStateModifiedEventArgs args);
+        public static event ParagraphStateModifiedEventHandler ParagraphStateModified;
+        private static void OnParagraphStateModified(ParagraphState paragraphState)
         {
-            if (ParagraphTextStateGet != null)
-                ParagraphTextStateGet(typeof(GinTubBuilderManager),
-                    new ParagraphTextStateGetEventArgs(paragraphTextState.Id, paragraphTextState.Text, paragraphTextState.State, paragraphTextState.Paragraph));
+            if (ParagraphStateModified != null)
+                ParagraphStateModified(typeof(GinTubBuilderManager),
+                    new ParagraphStateModifiedEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.State, paragraphState.Paragraph));
+        }
+
+
+        public class ParagraphStateGetEventArgs : ParagraphStateEventArgs
+        {
+            public ParagraphStateGetEventArgs(int id, string text, int state, int paragraphState) :
+                base(id, text, state, paragraphState) { }
+        }
+        public delegate void ParagraphStateGetEventHandler(object sender, ParagraphStateGetEventArgs args);
+        public static event ParagraphStateGetEventHandler ParagraphStateGet;
+        private static void OnParagraphStateGet(ParagraphState paragraphState)
+        {
+            if (ParagraphStateGet != null)
+                ParagraphStateGet(typeof(GinTubBuilderManager),
+                    new ParagraphStateGetEventArgs(paragraphState.Id, paragraphState.Text, paragraphState.State, paragraphState.Paragraph));
+        }
+
+        #endregion
+
+
+        #region Nouns
+
+        public class NounEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public int ParagraphState { get; set; }
+            public NounEventArgs(int id, string text, int paragraphState)
+            {
+                Id = id;
+                Text = text;
+                ParagraphState = paragraphState;
+            }
+        }
+
+
+        public class NounAddedEventArgs : NounEventArgs
+        {
+            public NounAddedEventArgs(int id, string text, int paragraphState) :
+                base(id, text, paragraphState) { }
+        }
+        public delegate void NounAddedEventHandler(object sender, NounAddedEventArgs args);
+        public static event NounAddedEventHandler NounAdded;
+        private static void OnNounAdded(Noun noun)
+        {
+            if (NounAdded != null)
+                NounAdded(typeof(GinTubBuilderManager),
+                    new NounAddedEventArgs(noun.Id, noun.Text, noun.ParagraphState));
+        }
+
+
+        public class NounModifiedEventArgs : NounEventArgs
+        {
+            public NounModifiedEventArgs(int id, string text, int paragraphState) :
+                base(id, text, paragraphState) { }
+        }
+        public delegate void NounModifiedEventHandler(object sender, NounModifiedEventArgs args);
+        public static event NounModifiedEventHandler NounModified;
+        private static void OnNounModified(Noun noun)
+        {
+            if (NounModified != null)
+                NounModified(typeof(GinTubBuilderManager),
+                    new NounModifiedEventArgs(noun.Id, noun.Text, noun.ParagraphState));
+        }
+
+
+        public class NounGetEventArgs : NounEventArgs
+        {
+            public NounGetEventArgs(int id, string text, int paragraphState) :
+                base(id, text, paragraphState) { }
+        }
+        public delegate void NounGetEventHandler(object sender, NounGetEventArgs args);
+        public static event NounGetEventHandler NounGet;
+        private static void OnNounGet(Noun noun)
+        {
+            if (NounGet != null)
+                NounGet(typeof(GinTubBuilderManager),
+                    new NounGetEventArgs(noun.Id, noun.Text, noun.ParagraphState));
         }
 
         #endregion
@@ -438,8 +501,11 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetParagraph_Result, Paragraph>();
             Mapper.CreateMap<dev_GetAllParagraphsForRoomAndRoomState_Result, Paragraph>();
 
-            Mapper.CreateMap<dev_GetParagraphTextState_Result, ParagraphTextState>();
-            Mapper.CreateMap<dev_GetAllParagraphTextStatesForParagraph_Result, ParagraphTextState>();
+            Mapper.CreateMap<dev_GetParagraphState_Result, ParagraphState>();
+            Mapper.CreateMap<dev_GetAllParagraphStatesForParagraph_Result, ParagraphState>();
+
+            Mapper.CreateMap<dev_GetNoun_Result, Noun>();
+            Mapper.CreateMap<dev_GetAllNounsForParagraphState_Result, Noun>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -647,40 +713,85 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
-        #region ParagraphTextStates
+        #region ParagraphStates
 
-        public static void AddParagraphTextState(string paragraphTextStateText, int paragraphId)
+        public static void AddParagraphState(string paragraphStateText, int paragraphId)
         {
-            int id = InsertParagraphTextState(paragraphTextStateText, paragraphId);
-            ParagraphTextState paragraphTextState = SelectParagraphTextState(id);
-            OnParagraphTextStateAdded(paragraphTextState);
+            int id = InsertParagraphState(paragraphStateText, paragraphId);
+            ParagraphState paragraphState = SelectParagraphState(id);
+            OnParagraphStateAdded(paragraphState);
         }
 
-        public static void ModifyParagraphTextState(int paragraphTextStateId, string paragraphTextStateText, int paragraphTextStateState, int paragraphId)
+        public static void ModifyParagraphState(int paragraphStateId, string paragraphStateText, int paragraphStateState, int paragraphId)
         {
-            UpdateParagraphTextState(paragraphTextStateId, paragraphTextStateText, paragraphTextStateState, paragraphId);
-            ParagraphTextState paragraphTextState = SelectParagraphTextState(paragraphTextStateId);
-            OnParagraphTextStateModified(paragraphTextState);
+            UpdateParagraphState(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId);
+            ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
+            OnParagraphStateModified(paragraphState);
         }
 
-        public static void GetParagraphTextState(int paragraphTextStateId)
+        public static void LoadParagraphState(int paragraphStateId)
         {
-            ParagraphTextState paragraphTextState = SelectParagraphTextState(paragraphTextStateId);
-            OnParagraphTextStateGet(paragraphTextState);
+            ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
+            OnParagraphStateAdded(paragraphState);
         }
 
-        public static void LoadAllParagraphTextStatesForParagraph(int paragraph)
+        public static void GetParagraphState(int paragraphStateId)
         {
-            List<ParagraphTextState> paragraphTextStates = SelectAllParagraphTextStatesForParagraph(paragraph);
-            foreach (var paragraphTextState in paragraphTextStates)
-                OnParagraphTextStateAdded(paragraphTextState);
+            ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
+            OnParagraphStateGet(paragraphState);
         }
 
-        public static void GetAllParagraphTextStatesForParagraph(int paragraph)
+        public static void LoadAllParagraphStatesForParagraph(int paragraphId)
         {
-            List<ParagraphTextState> paragraphTextStates = SelectAllParagraphTextStatesForParagraph(paragraph);
-            foreach (var paragraphTextState in paragraphTextStates)
-                OnParagraphTextStateGet(paragraphTextState);
+            List<ParagraphState> paragraphStates = SelectAllParagraphStatesForParagraph(paragraphId);
+            foreach (var paragraphState in paragraphStates)
+                OnParagraphStateAdded(paragraphState);
+        }
+
+        public static void GetAllParagraphStatesForParagraph(int paragraphId)
+        {
+            List<ParagraphState> paragraphStates = SelectAllParagraphStatesForParagraph(paragraphId);
+            foreach (var paragraphState in paragraphStates)
+                OnParagraphStateGet(paragraphState);
+        }
+
+        #endregion
+
+
+        #region Nouns
+
+        public static void AddNoun(string nounText, int paragraphStateId)
+        {
+            int id = InsertNoun(nounText, paragraphStateId);
+            Noun noun = SelectNoun(id);
+            OnNounAdded(noun);
+        }
+
+        public static void ModifyNoun(int nounId, string nounText, int paragraphStateId)
+        {
+            UpdateNoun(nounId, nounText, paragraphStateId);
+            Noun noun = SelectNoun(nounId);
+            OnNounModified(noun);
+        }
+
+        public static void GetNoun(int nounId)
+        {
+            Noun noun = SelectNoun(nounId);
+            OnNounGet(noun);
+        }
+
+        public static void LoadAllNounsForParagraphState(int paragraphStateId)
+        {
+            List<Noun> nouns = SelectAllNounsForParagraphState(paragraphStateId);
+            foreach (var noun in nouns)
+                OnNounAdded(noun);
+        }
+
+        public static void GetAllNounsForParagraph(int paragraphStateId)
+        {
+            List<Noun> nouns = SelectAllNounsForParagraphState(paragraphStateId);
+            foreach (var noun in nouns)
+                OnNounGet(noun);
         }
 
         #endregion
@@ -1063,72 +1174,143 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
-        #region ParagraphTextStates
+        #region ParagraphStates
 
-        private static int InsertParagraphTextState(string text, int paragraph)
+        private static int InsertParagraphState(string text, int paragraph)
         {
             ObjectResult<decimal?> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_AddParagraphTextState(text, paragraph);
+                databaseResult = m_entities.dev_AddParagraphState(text, paragraph);
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_AddParagraphTextState", e);
+                throw new GinTubDatabaseException("dev_AddParagraphState", e);
             }
             var result = databaseResult.FirstOrDefault();
             if (!result.HasValue)
-                throw new GinTubDatabaseException("dev_AddParagraphTextState", new Exception("No [Id] was returned after [ParagraphTextState] INSERT."));
+                throw new GinTubDatabaseException("dev_AddParagraphState", new Exception("No [Id] was returned after [ParagraphState] INSERT."));
 
             return (int)result.Value;
         }
 
-        private static void UpdateParagraphTextState(int id, string text, int state, int paragraph)
+        private static void UpdateParagraphState(int id, string text, int state, int paragraph)
         {
             try
             {
-                m_entities.dev_UpdateParagraphTextState(id, text, state, paragraph);
+                m_entities.dev_UpdateParagraphState(id, text, state, paragraph);
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_UpdateParagraphTextState", e);
+                throw new GinTubDatabaseException("dev_UpdateParagraphState", e);
             }
         }
 
-        private static ParagraphTextState SelectParagraphTextState(int id)
+        private static ParagraphState SelectParagraphState(int id)
         {
-            ObjectResult<dev_GetParagraphTextState_Result> databaseResult = null;
+            ObjectResult<dev_GetParagraphState_Result> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_GetParagraphTextState(id);
+                databaseResult = m_entities.dev_GetParagraphState(id);
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetParagraphTextState", e);
+                throw new GinTubDatabaseException("dev_GetParagraphState", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetParagraphTextState", new Exception(string.Format("No [ParagraphTextStates] record found with [Id] = {0}.", id)));
+                throw new GinTubDatabaseException("dev_GetParagraphState", new Exception(string.Format("No [ParagraphStates] record found with [Id] = {0}.", id)));
 
-            ParagraphTextState paragraphTextState = Mapper.Map<ParagraphTextState>(databaseResult.Single());
-            return paragraphTextState;
+            ParagraphState paragraphState = Mapper.Map<ParagraphState>(databaseResult.Single());
+            return paragraphState;
         }
 
-        private static List<ParagraphTextState> SelectAllParagraphTextStatesForParagraph(int paragraph)
+        private static List<ParagraphState> SelectAllParagraphStatesForParagraph(int paragraph)
         {
-            ObjectResult<dev_GetAllParagraphTextStatesForParagraph_Result> databaseResult = null;
+            ObjectResult<dev_GetAllParagraphStatesForParagraph_Result> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_GetAllParagraphTextStatesForParagraph(paragraph);
+                databaseResult = m_entities.dev_GetAllParagraphStatesForParagraph(paragraph);
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllParagraphTextStatesForRoom", e);
+                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForRoom", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllParagraphTextStatesForRoom", new Exception("No [ParagraphTextStates] records found."));
+                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForRoom", new Exception("No [ParagraphStates] records found."));
 
-            List<ParagraphTextState> paragraphTextStates = databaseResult.Select(r => Mapper.Map<ParagraphTextState>(r)).ToList();
-            return paragraphTextStates;
+            List<ParagraphState> paragraphStates = databaseResult.Select(r => Mapper.Map<ParagraphState>(r)).ToList();
+            return paragraphStates;
+        }
+
+        #endregion
+
+
+        #region Nouns
+
+        private static int InsertNoun(string text, int paragraphState)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddNoun(text, paragraphState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddNoun", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddNoun", new Exception("No [Id] was returned after [Noun] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateNoun(int id, string text, int paragraphState)
+        {
+            try
+            {
+                m_entities.dev_UpdateNoun(id, text, paragraphState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateNoun", e);
+            }
+        }
+
+        private static Noun SelectNoun(int id)
+        {
+            ObjectResult<dev_GetNoun_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetNoun(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetNoun", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetNoun", new Exception(string.Format("No [Nouns] record found with [Id] = {0}.", id)));
+
+            Noun noun = Mapper.Map<Noun>(databaseResult.Single());
+            return noun;
+        }
+
+        private static List<Noun> SelectAllNounsForParagraphState(int paragraphState)
+        {
+            ObjectResult<dev_GetAllNounsForParagraphState_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllNounsForParagraphState(paragraphState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllNounsForRoom", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllNounsForRoom", new Exception("No [Nouns] records found."));
+
+            List<Noun> nouns = databaseResult.Select(r => Mapper.Map<Noun>(r)).ToList();
+            return nouns;
         }
 
         #endregion

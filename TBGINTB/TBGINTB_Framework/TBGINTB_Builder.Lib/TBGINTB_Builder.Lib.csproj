@@ -60,7 +60,8 @@
     <Compile Include="Model\DbModel\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Model\DbModel\Location.cs" />
-    <Compile Include="Model\DbModel\ParagraphTextState.cs" />
+    <Compile Include="Model\DbModel\Noun.cs" />
+    <Compile Include="Model\DbModel\ParagraphState.cs" />
     <Compile Include="Model\DbModel\Paragraph.cs" />
     <Compile Include="Model\DbModel\RoomState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,10 +87,13 @@
     <Compile Include="Repository\dev_GetAllLocations_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllNounsForParagraphState_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllParagraphsForRoomAndRoomState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\dev_GetAllParagraphTextStatesForParagraph_Result.cs">
+    <Compile Include="Repository\dev_GetAllParagraphStatesForParagraph_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllRoomsInAreaOnFloor_Result.cs">
@@ -107,7 +111,10 @@
     <Compile Include="Repository\dev_GetLocation_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\dev_GetParagraphTextState_Result.cs">
+    <Compile Include="Repository\dev_GetNoun_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetParagraphState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetParagraph_Result.cs">

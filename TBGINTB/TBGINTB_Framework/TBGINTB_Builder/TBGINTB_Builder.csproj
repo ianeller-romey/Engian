@@ -65,12 +65,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
-    <Compile Include="BuilderControls\ComboBox_RoomState.cs" />
+    <Compile Include="BuilderControls\ComboBox_ParagraphStateNouns.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\Grid_NounsAndActions.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphsAndStates.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphData.cs" />
+    <Compile Include="BuilderControls\Grid_NounData.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphStateUnderParagraph.cs" />
-    <Compile Include="BuilderControls\Grid_ParagraphTextStateData.cs" />
+    <Compile Include="BuilderControls\Grid_ParagraphStateData.cs" />
     <Compile Include="BuilderControls\Grid_RoomStateUnderRoom.cs" />
     <Compile Include="BuilderControls\Grid_LocationData.cs" />
     <Compile Include="BuilderControls\Grid_RoomAndStates.cs" />
@@ -88,6 +90,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
+    <Compile Include="BuilderControls\Window_NounData.cs" />
+    <Compile Include="BuilderControls\Window_ParagraphStateData.cs" />
     <Compile Include="BuilderControls\Window_ParagraphData.cs" />
     <Compile Include="BuilderControls\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\Window_RoomData.cs" />

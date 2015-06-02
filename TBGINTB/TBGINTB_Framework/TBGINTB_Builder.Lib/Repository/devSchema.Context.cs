@@ -137,17 +137,17 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoiceOutcome", resultParameter, messagechoiceParameter);
         }
     
-        public virtual int dev_AddNoun(string text, Nullable<int> paragraphtextstate)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddNoun(string text, Nullable<int> paragraphstate)
         {
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
     
-            var paragraphtextstateParameter = paragraphtextstate.HasValue ?
-                new ObjectParameter("paragraphtextstate", paragraphtextstate) :
-                new ObjectParameter("paragraphtextstate", typeof(int));
+            var paragraphstateParameter = paragraphstate.HasValue ?
+                new ObjectParameter("paragraphstate", paragraphstate) :
+                new ObjectParameter("paragraphstate", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_AddNoun", textParameter, paragraphtextstateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddNoun", textParameter, paragraphstateParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddParagraph(Nullable<int> order, Nullable<int> room, Nullable<int> roomstate)
@@ -167,7 +167,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddParagraph", orderParameter, roomParameter, roomstateParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddParagraphTextState(string text, Nullable<int> paragraph)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddParagraphState(string text, Nullable<int> paragraph)
         {
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
@@ -177,7 +177,7 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("paragraph", paragraph) :
                 new ObjectParameter("paragraph", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddParagraphTextState", textParameter, paragraphParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddParagraphState", textParameter, paragraphParameter);
         }
     
         public virtual int dev_AddPlayer(string username, string domainname, string domain, string password)
@@ -392,6 +392,15 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllLocations_Result>("dev_GetAllLocations");
         }
     
+        public virtual ObjectResult<dev_GetAllNounsForParagraphState_Result> dev_GetAllNounsForParagraphState(Nullable<int> paragraphstate)
+        {
+            var paragraphstateParameter = paragraphstate.HasValue ?
+                new ObjectParameter("paragraphstate", paragraphstate) :
+                new ObjectParameter("paragraphstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllNounsForParagraphState_Result>("dev_GetAllNounsForParagraphState", paragraphstateParameter);
+        }
+    
         public virtual ObjectResult<dev_GetAllParagraphsForRoomAndRoomState_Result> dev_GetAllParagraphsForRoomAndRoomState(Nullable<int> room, Nullable<int> roomstate)
         {
             var roomParameter = room.HasValue ?
@@ -405,13 +414,13 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphsForRoomAndRoomState_Result>("dev_GetAllParagraphsForRoomAndRoomState", roomParameter, roomstateParameter);
         }
     
-        public virtual ObjectResult<dev_GetAllParagraphTextStatesForParagraph_Result> dev_GetAllParagraphTextStatesForParagraph(Nullable<int> paragraph)
+        public virtual ObjectResult<dev_GetAllParagraphStatesForParagraph_Result> dev_GetAllParagraphStatesForParagraph(Nullable<int> paragraph)
         {
             var paragraphParameter = paragraph.HasValue ?
                 new ObjectParameter("paragraph", paragraph) :
                 new ObjectParameter("paragraph", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphTextStatesForParagraph_Result>("dev_GetAllParagraphTextStatesForParagraph", paragraphParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphStatesForParagraph_Result>("dev_GetAllParagraphStatesForParagraph", paragraphParameter);
         }
     
         public virtual ObjectResult<dev_GetAllRoomsInArea_Result> dev_GetAllRoomsInArea(Nullable<int> area)
@@ -463,6 +472,15 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetLocation_Result>("dev_GetLocation", idParameter);
         }
     
+        public virtual ObjectResult<dev_GetNoun_Result> dev_GetNoun(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetNoun_Result>("dev_GetNoun", idParameter);
+        }
+    
         public virtual ObjectResult<dev_GetParagraph_Result> dev_GetParagraph(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
@@ -472,13 +490,13 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraph_Result>("dev_GetParagraph", idParameter);
         }
     
-        public virtual ObjectResult<dev_GetParagraphTextState_Result> dev_GetParagraphTextState(Nullable<int> id)
+        public virtual ObjectResult<dev_GetParagraphState_Result> dev_GetParagraphState(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraphTextState_Result>("dev_GetParagraphTextState", idParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraphState_Result>("dev_GetParagraphState", idParameter);
         }
     
         public virtual ObjectResult<dev_GetRoom_Result> dev_GetRoom(Nullable<int> id)
@@ -682,7 +700,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraph", idParameter, orderParameter, roomParameter, roomstateParameter);
         }
     
-        public virtual int dev_UpdateParagraphTextState(Nullable<int> id, string text, Nullable<int> state, Nullable<int> paragraph)
+        public virtual int dev_UpdateParagraphState(Nullable<int> id, string text, Nullable<int> state, Nullable<int> paragraph)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -700,7 +718,7 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("paragraph", paragraph) :
                 new ObjectParameter("paragraph", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraphTextState", idParameter, textParameter, stateParameter, paragraphParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateParagraphState", idParameter, textParameter, stateParameter, paragraphParameter);
         }
     
         public virtual int dev_UpdatePlayerInventory(Nullable<System.Guid> player, Nullable<int> item, Nullable<bool> active)
@@ -904,6 +922,23 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateVerbType", idParameter, nameParameter);
+        }
+    
+        public virtual int dev_UpdateNoun(Nullable<int> id, string text, Nullable<int> paragraphstate)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            var paragraphstateParameter = paragraphstate.HasValue ?
+                new ObjectParameter("paragraphstate", paragraphstate) :
+                new ObjectParameter("paragraphstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateNoun", idParameter, textParameter, paragraphstateParameter);
         }
     }
 }

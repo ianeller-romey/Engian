@@ -23,6 +23,7 @@ namespace TBGINTB_Builder.BuilderControls
         private Grid_RoomsOnFloor m_grid_roomsOnFloor;
         private Grid_RoomAndStates m_grid_roomAndState;
         private Grid_ParagraphsAndStates m_grid_paragraphsAndStates;
+        private Grid_NounsAndActions m_grid_nounsAndActions;
         private Grid 
             m_grid_main,
             m_grid_sub;
@@ -170,6 +171,8 @@ namespace TBGINTB_Builder.BuilderControls
 
             GinTubBuilderManager.RoomStateGet += GinTubBuilderManager_RoomStateGet;
 
+            GinTubBuilderManager.ParagraphStateGet += GinTubBuilderManager_ParagraphStateGet;
+
             if (m_grid_roomsOnFloor != null)
                 m_grid_roomsOnFloor.SetActiveAndRegisterForGinTubEvents();
             if(m_grid_roomAndState != null)
@@ -188,6 +191,8 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.RoomGet -= GinTubBuilderManager_RoomGet;
 
             GinTubBuilderManager.RoomStateGet -= GinTubBuilderManager_RoomStateGet;
+
+            GinTubBuilderManager.ParagraphStateGet -= GinTubBuilderManager_ParagraphStateGet;
 
             if(m_grid_roomsOnFloor != null)
                 m_grid_roomsOnFloor.SetInactiveAndUnregisterFromGinTubEvents();
@@ -242,6 +247,8 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(140.0, GridUnitType.Pixel) });
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5.0, GridUnitType.Pixel) });
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5.0, GridUnitType.Pixel) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
             m_grid_main.SetGridRowColumn(m_grid_sub, 2, 0);
 
             Rectangle rectangle_roomsOnFloor = new Rectangle() { Fill = Brushes.Lavender };
@@ -251,6 +258,8 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_sub.SetGridRowColumn(gridSplitter, 0, 1);
             GridSplitter gridSplitter2 = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
             m_grid_sub.SetGridRowColumn(gridSplitter2, 0, 3);
+            GridSplitter gridSplitter3 = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
+            m_grid_sub.SetGridRowColumn(gridSplitter3, 0, 5);
 
             return m_grid_main;
         }
@@ -278,6 +287,11 @@ namespace TBGINTB_Builder.BuilderControls
         void GinTubBuilderManager_RoomStateGet(object sender, GinTubBuilderManager.RoomStateGetEventArgs args)
         {
             LoadRoomState(args.Room, args.Id);
+        }
+
+        void GinTubBuilderManager_ParagraphStateGet(object sender, GinTubBuilderManager.ParagraphStateGetEventArgs args)
+        {
+            LoadParagraphState(args.Id);
         }
 
         private void AddingArea()
@@ -340,12 +354,52 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void LoadRoom(int roomId, string roomName, int roomX, int roomY, int roomZ)
         {
-            if (m_grid_roomAndState != null)
-                m_grid_sub.Children.Remove(m_grid_roomAndState);
+            UnloadRoom();
+
             m_grid_roomAndState = new Grid_RoomAndStates(roomId, roomName, roomX, roomY, roomZ, AreaId);
             m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
             m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllRoomStatesForRoom(roomId);
+        }
+
+        private void LoadRoomState(int roomId, int roomStateId)
+        {
+            UnloadRoomState();
+
+            m_grid_paragraphsAndStates = new Grid_ParagraphsAndStates(roomId, roomStateId);
+            m_grid_sub.SetGridRowColumn(m_grid_paragraphsAndStates, 0, 4);
+            m_grid_paragraphsAndStates.SetActiveAndRegisterForGinTubEvents();
+            GinTubBuilderManager.LoadAllParagraphsForRoomAndRoomState(roomId, roomStateId);
+        }
+
+        private void LoadParagraphState(int paragraphStateId)
+        {
+            UnloadParagraphState();
+
+            m_grid_nounsAndActions = new Grid_NounsAndActions(paragraphStateId);
+            m_grid_sub.SetGridRowColumn(m_grid_nounsAndActions, 0, 6);
+            m_grid_nounsAndActions.SetActiveAndRegisterForGinTubEvents();
+            GinTubBuilderManager.LoadAllNounsForParagraphState(paragraphStateId);
+        }
+
+        private void UnloadRoom()
+        {
+            if (m_grid_roomAndState != null)
+                m_grid_sub.Children.Remove(m_grid_roomAndState);
+            UnloadRoomState();
+        }
+
+        private void UnloadRoomState()
+        {
+            if (m_grid_paragraphsAndStates != null)
+                m_grid_sub.Children.Remove(m_grid_paragraphsAndStates);
+            UnloadParagraphState();
+        }
+
+        private void UnloadParagraphState()
+        {
+            if (m_grid_nounsAndActions != null)
+                m_grid_sub.Children.Remove(m_grid_nounsAndActions);
         }
 
         private void AddFloorAbove()
@@ -364,16 +418,6 @@ namespace TBGINTB_Builder.BuilderControls
             item = new ComboBoxItem_Z(newFloor);
             m_comboBox_z.Items.Insert(m_comboBox_z.Items.Count - 1, item);
             m_comboBox_z.SelectedItem = item;
-        }
-
-        private void LoadRoomState(int roomId, int roomStateId)
-        {
-            if (m_grid_paragraphsAndStates != null)
-                m_grid_sub.Children.Remove(m_grid_paragraphsAndStates);
-            m_grid_paragraphsAndStates = new Grid_ParagraphsAndStates(roomId, roomStateId);
-            m_grid_sub.SetGridRowColumn(m_grid_paragraphsAndStates, 0, 4);
-            m_grid_paragraphsAndStates.SetActiveAndRegisterForGinTubEvents();
-            GinTubBuilderManager.LoadAllParagraphsForRoomAndRoomState(roomId, roomStateId);
         }
 
         private void ComboBoxItem_Area_Selected(object sender, RoutedEventArgs e)
@@ -412,7 +456,10 @@ namespace TBGINTB_Builder.BuilderControls
                 {
                     ComboBoxItem_Z zItem = item as ComboBoxItem_Z;
                     if (item != null && m_grid_roomsOnFloor != null)
+                    {
+                        UnloadRoom();
                         m_grid_roomsOnFloor.SetFloor(zItem.Z);
+                    }
                 }
             }
         }

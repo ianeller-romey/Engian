@@ -17,17 +17,17 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_ParagraphData m_grid_paragraphData;
+        Grid_ParagraphData m_grid_paragraph;
 
         #endregion
 
 
         #region MEMBER PROPERTIES
 
-        public int? ParagraphId { get { return m_grid_paragraphData.ParagraphId; } }
-        public int? ParagraphOrder { get { return m_grid_paragraphData.ParagraphOrder; } }
-        public int RoomId { get { return m_grid_paragraphData.RoomId; } }
-        public int? RoomStateId { get { return m_grid_paragraphData.RoomStateId; } }
+        public int? ParagraphId { get { return m_grid_paragraph.ParagraphId; } }
+        public int? ParagraphOrder { get { return m_grid_paragraph.ParagraphOrder; } }
+        public int RoomId { get { return m_grid_paragraph.RoomId; } }
+        public int? RoomStateId { get { return m_grid_paragraph.RoomStateId; } }
 
         #endregion
 
@@ -52,8 +52,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls(int? paragraphId, int? paragraphOrder, int roomId, int? roomStateId)
         {
-            m_grid_paragraphData = new Grid_ParagraphData(paragraphId, paragraphOrder, roomId, roomStateId, true);
-            return m_grid_paragraphData;
+            m_grid_paragraph = new Grid_ParagraphData(paragraphId, paragraphOrder, roomId, roomStateId, true);
+            return m_grid_paragraph;
         }
 
         #endregion

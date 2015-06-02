@@ -650,18 +650,18 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*ParagraphTextState***********************************************************************************************************************/
+/*ParagraphState***************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraphTextState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Adds a ParagraphTextState record and returns the newly generated ID
+-- Description:	Adds a ParagraphState record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddParagraphTextState]
+ALTER PROCEDURE [dev].[dev_AddParagraphState]
 	@text varchar(MAX),
 	@paragraph int
 AS
@@ -672,10 +672,10 @@ BEGIN
     
     DECLARE @newstate int
     SELECT @newstate = ISNULL(MAX([State]), -1) + 1
-    FROM [dbo].[ParagraphTextStates]
+    FROM [dbo].[ParagraphStates]
     WHERE [Paragraph] = @paragraph
     
-	INSERT INTO [dbo].[ParagraphTextStates] ([Text], [State], [Paragraph])
+	INSERT INTO [dbo].[ParagraphStates] ([Text], [State], [Paragraph])
 	VALUES (@text, @newstate, @paragraph)
 	
 	SELECT SCOPE_IDENTITY()
@@ -683,15 +683,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraphTextState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Updates a ParagraphTextState record
+-- Description:	Updates a ParagraphState record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateParagraphTextState]
+ALTER PROCEDURE [dev].[dev_UpdateParagraphState]
 	@id int,
 	@text varchar(MAX),
 	@state int,
@@ -702,7 +702,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[ParagraphTextStates] 
+	UPDATE [dbo].[ParagraphStates] 
 	SET	[Text] = ISNULL(@text, [Text]),
 		[State] = ISNULL(@state, [State]),
 		[Paragraph] = ISNULL(@paragraph, [Paragraph])
@@ -711,15 +711,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphTextStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphTextStatesForParagraph] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphStatesForParagraph] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Gets all ParagraphTextState records associated with a specified Paragraph
+-- Description:	Gets all ParagraphState records associated with a specified Paragraph
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllParagraphTextStatesForParagraph]
+ALTER PROCEDURE [dev].[dev_GetAllParagraphStatesForParagraph]
 	@paragraph int
 AS
 BEGIN
@@ -731,22 +731,22 @@ BEGIN
 		   [Text],
 		   [State],
 		   [Paragraph]
-	FROM [dbo].[ParagraphTextStates]
+	FROM [dbo].[ParagraphStates]
 	WHERE [Paragraph] = @paragraph
 	ORDER BY [State]
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphTextState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphTextState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Gets data about a ParagraphTextState record in the database
+-- Description:	Gets data about a ParagraphState record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetParagraphTextState]
+ALTER PROCEDURE [dev].[dev_GetParagraphState]
 	@id int
 AS
 BEGIN
@@ -758,7 +758,7 @@ BEGIN
 		   [Text],
 		   [State],
 		   [Paragraph]
-	FROM [dbo].[ParagraphTextStates]
+	FROM [dbo].[ParagraphStates]
 	WHERE [Id] = @id
 
 END
@@ -774,12 +774,12 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Noun record, checking to ensure that the specified text value IS present in the ParagraphTextState, 
+-- Description:	Adds a Noun record, checking to ensure that the specified text value IS present in the ParagraphState, 
 -- and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddNoun]
 	@text varchar(MAX),
-	@paragraphtextstate int
+	@paragraphstate int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -787,18 +787,94 @@ BEGIN
 	SET NOCOUNT ON;
 	
 	IF NOT EXISTS (SELECT 1
-				   FROM [dbo].[ParagraphsTextStates] p
-				   WHERE [Id] = @paragraphtextstate AND [Text] LIKE '%' + @text + '%')
+				   FROM [dbo].[ParagraphStates] p
+				   WHERE p.[Id] = @paragraphstate AND p.[Text] LIKE '%' + @text + '%')
 	BEGIN
-		RAISERROR (N'The Text value of a Noun must be present in the Text value of the ParagraphTextState to which it is associated.',
+		RAISERROR (N'The [Text] value of a Noun must be present in the [Text] value of the ParagraphState to which it is associated.',
 				   1,
 				   1)
 	END
 
-	INSERT INTO [dbo].[Nouns] ([Text], [ParagraphTextState])
-	VALUES (@text, @paragraphtextstate)
+	INSERT INTO [dbo].[Nouns] ([Text], [ParagraphState])
+	VALUES (@text, @paragraphstate)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateNoun] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Updates a Noun record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateNoun]
+	@id int,
+	@text varchar(MAX),
+	@paragraphstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[Nouns] 
+	SET	[Text] = ISNULL(@text, [Text]),
+		[ParagraphState] = ISNULL(@paragraphstate, [ParagraphState])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllNounsForParagraphState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets all Noun records associated with a specified ParagraphState
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllNounsForParagraphState]
+	@paragraphstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [ParagraphState]
+	FROM [dbo].[Nouns]
+	WHERE [ParagraphState] = @paragraphstate
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetNoun] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets data about a Noun record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetNoun]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [ParagraphState]
+	FROM [dbo].[Nouns]
+	WHERE [Id] = @id
 
 END
 GO
