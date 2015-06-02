@@ -109,12 +109,9 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // State
-            m_textBox_paragraphOrder =
-                new TextBox()
-                {
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0"
-                };
+            m_textBox_paragraphOrder = new TextBox() { VerticalAlignment = VerticalAlignment.Center };
+            m_textBox_paragraphOrder.TextChanged += TextBox_ParagraphOrder_TextChanged;
+            m_textBox_paragraphOrder.Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0";
             Label label_paragraphOrder = new Label() { Content = "Order:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_state.SetGridRowColumn(m_textBox_paragraphOrder, 0, 1);
             grid_state.SetGridRowColumn(label_paragraphOrder, 0, 0);
@@ -136,7 +133,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_textBox_paragraphOrder.Text = ParagraphOrder.ToString();
         }
 
-        void TextBox_ParagraphText_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_ParagraphOrder_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             int newOrder = 0;

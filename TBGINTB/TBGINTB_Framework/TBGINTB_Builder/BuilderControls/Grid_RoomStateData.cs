@@ -16,11 +16,11 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBlock m_textBlock_state;
-        ComboBox_Location m_comboBox_location;
+        TextBlock m_textBlock_roomStateState;
+        ComboBox_Location m_comboBox_locationId;
         ComboBox
-            m_comboBox_hour,
-            m_comboBox_minute;
+            m_comboBox_roomStateTime_hour,
+            m_comboBox_roomStateTime_minute;
 
         #endregion
 
@@ -39,9 +39,9 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_comboBox_location,
-                    m_comboBox_hour,
-                    m_comboBox_minute
+                    m_comboBox_locationId,
+                    m_comboBox_roomStateTime_hour,
+                    m_comboBox_roomStateTime_minute
                 };
             }
         }
@@ -102,10 +102,10 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // State
-            m_textBlock_state = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
-            SetRoomState(RoomStateState);
+            m_textBlock_roomStateState = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
+            SetRoomStateState(RoomStateState);
             Label label_roomState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBlock_state, 0, 1);
+            grid_state.SetGridRowColumn(m_textBlock_roomStateState, 0, 1);
             grid_state.SetGridRowColumn(label_roomState, 0, 0);
 
             ////////
@@ -121,10 +121,10 @@ namespace TBGINTB_Builder.BuilderControls
             Label label_location = new Label() { Content = "Location: ", FontWeight = FontWeights.Bold };
             stackPanel_location.Children.Add(label_location);
 
-            m_comboBox_location = new ComboBox_Location();
-            m_comboBox_location.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_location.SelectionChanged += ComboBox_Location_SelectionChanged;
-            stackPanel_location.Children.Add(m_comboBox_location);
+            m_comboBox_locationId = new ComboBox_Location();
+            m_comboBox_locationId.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
+            m_comboBox_locationId.SelectionChanged += ComboBox_Location_SelectionChanged;
+            stackPanel_location.Children.Add(m_comboBox_locationId);
 
             ////////
             // Time
@@ -140,31 +140,31 @@ namespace TBGINTB_Builder.BuilderControls
             Grid.SetColumnSpan(label_time, 3);
             grid_time.SetGridRowColumn(label_time, 0, 0);
 
-            m_comboBox_hour = new ComboBox();
+            m_comboBox_roomStateTime_hour = new ComboBox();
             for (int i = 0; i <= 24; ++i)
-                m_comboBox_hour.Items.Add(string.Format("{0:00}", i));
-            grid_time.SetGridRowColumn(m_comboBox_hour, 1, 0);
+                m_comboBox_roomStateTime_hour.Items.Add(string.Format("{0:00}", i));
+            grid_time.SetGridRowColumn(m_comboBox_roomStateTime_hour, 1, 0);
 
             Label label_colon = new Label() { Content = " : " };
             grid_time.SetGridRowColumn(label_colon, 1, 1);
 
-            m_comboBox_minute = new ComboBox();
+            m_comboBox_roomStateTime_minute = new ComboBox();
             for (int i = 0; i < 60; ++i)
-                m_comboBox_minute.Items.Add(string.Format("{0:00}", i));
-            grid_time.SetGridRowColumn(m_comboBox_minute, 1, 2);
+                m_comboBox_roomStateTime_minute.Items.Add(string.Format("{0:00}", i));
+            grid_time.SetGridRowColumn(m_comboBox_roomStateTime_minute, 1, 2);
 
-            SetTime(RoomStateTime);
-            m_comboBox_hour.SelectionChanged += ComboBox_Time_SelectionChanged;
-            m_comboBox_minute.SelectionChanged += ComboBox_Time_SelectionChanged;
+            SetRoomStateTime(RoomStateTime);
+            m_comboBox_roomStateTime_hour.SelectionChanged += ComboBox_Time_SelectionChanged;
+            m_comboBox_roomStateTime_minute.SelectionChanged += ComboBox_Time_SelectionChanged;
         }
 
         private void GinTubBuilderManager_RoomStateModified(object sender, GinTubBuilderManager.RoomStateModifiedEventArgs args)
         {
             if(RoomStateId == args.Id)
             {
-                SetRoomState(args.State);
+                SetRoomStateState(args.State);
                 LocationId = args.Location;
-                SetTime(args.Time);
+                SetRoomStateTime(args.Time);
                 RoomId = args.Room;
 
                 GinTubBuilderManager.LoadAllLocations();
@@ -174,43 +174,43 @@ namespace TBGINTB_Builder.BuilderControls
         private void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
         {
             if (LocationId == args.Id)
-                m_comboBox_location.SelectedItem = m_comboBox_location.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
+                m_comboBox_locationId.SelectedItem = m_comboBox_locationId.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
         }
 
-        private void SetRoomState(int? roomState)
+        private void SetRoomStateState(int? roomStateState)
         {
-            m_textBlock_state.Text = (RoomStateState.HasValue) ? RoomStateState.ToString() : "NewState";
+            m_textBlock_roomStateState.Text = (roomStateState.HasValue) ? roomStateState.ToString() : "NewState";
         }
 
-        private void SetTime(DateTime? roomTime)
+        private void SetRoomStateTime(DateTime? roomStateTime)
         {
-            RoomStateTime = roomTime;
+            RoomStateTime = roomStateTime;
             if (RoomStateTime != null)
             {
-                m_comboBox_hour.SelectedItem = m_comboBox_hour.Items.OfType<string>().SingleOrDefault(h => int.Parse(h) == RoomStateTime.Value.Hour);
-                m_comboBox_minute.SelectedItem = m_comboBox_minute.Items.OfType<string>().SingleOrDefault(m => int.Parse(m) == RoomStateTime.Value.Minute);
+                m_comboBox_roomStateTime_hour.SelectedItem = m_comboBox_roomStateTime_hour.Items.OfType<string>().SingleOrDefault(h => int.Parse(h) == RoomStateTime.Value.Hour);
+                m_comboBox_roomStateTime_minute.SelectedItem = m_comboBox_roomStateTime_minute.Items.OfType<string>().SingleOrDefault(m => int.Parse(m) == RoomStateTime.Value.Minute);
             }
             else
             {
-                m_comboBox_hour.SelectedItem = null;
-                m_comboBox_minute.SelectedItem = null;
+                m_comboBox_roomStateTime_hour.SelectedItem = null;
+                m_comboBox_roomStateTime_minute.SelectedItem = null;
             }
         }
 
         private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Location.ComboBoxItem_Location item;
-            if (m_comboBox_location.SelectedItem != null && (item = m_comboBox_location.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null)
+            if (m_comboBox_locationId.SelectedItem != null && (item = m_comboBox_locationId.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null)
                 LocationId = item.LocationId;
         }
 
         private void ComboBox_Time_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (m_comboBox_hour.SelectedItem != null && m_comboBox_minute.SelectedItem != null)
+            if (m_comboBox_roomStateTime_hour.SelectedItem != null && m_comboBox_roomStateTime_minute.SelectedItem != null)
             {
                 int
-                    hour = int.Parse(m_comboBox_hour.SelectedItem.ToString()),
-                    minute = int.Parse(m_comboBox_minute.SelectedItem.ToString());
+                    hour = int.Parse(m_comboBox_roomStateTime_hour.SelectedItem.ToString()),
+                    minute = int.Parse(m_comboBox_roomStateTime_minute.SelectedItem.ToString());
                 RoomStateTime = new DateTime(1988, 8, 13, hour, minute, 0);
             }
         }

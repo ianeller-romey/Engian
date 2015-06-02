@@ -617,7 +617,7 @@ BEGIN
 		   [RoomState]
 	FROM [dbo].[Paragraphs]
 	WHERE [Room] = @room
-	AND ([RoomState] = @roomstate OR @roomstate IS NULL)
+	AND ([RoomState] = @roomstate OR [RoomState] IS NULL)
 	ORDER BY [Order]
 
 END

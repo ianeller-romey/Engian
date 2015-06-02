@@ -60,6 +60,7 @@
     <Compile Include="Model\DbModel\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Model\DbModel\Location.cs" />
+    <Compile Include="Model\DbModel\ParagraphTextState.cs" />
     <Compile Include="Model\DbModel\Paragraph.cs" />
     <Compile Include="Model\DbModel\RoomState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

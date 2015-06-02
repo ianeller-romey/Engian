@@ -74,10 +74,10 @@ namespace TBGINTB_Builder.BuilderControls
         {
             ComboBox_Location.ComboBoxItem_Location comboBoxItem = null;
             if ((comboBoxItem = m_comboBox_location.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null && comboBoxItem.LocationId == args.Id)
-                SetLocationImage(args.LocationFile);
+                SetLocationFile(args.LocationFile);
         }
 
-        private void SetLocationImage(string locationFile)
+        private void SetLocationFile(string locationFile)
         {
             m_image_locationFile.Source = (locationFile != null) ? new BitmapImage(new Uri(locationFile)) : null;
         }
@@ -89,7 +89,7 @@ namespace TBGINTB_Builder.BuilderControls
             if (comboBox != null && (comboBoxItem = comboBox.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null)
                 GinTubBuilderManager.GetLocation(comboBoxItem.LocationId);
             else
-                SetLocationImage(null);
+                SetLocationFile(null);
         }
 
         private void Image_LocationFile_Drop(object sender, DragEventArgs e)
