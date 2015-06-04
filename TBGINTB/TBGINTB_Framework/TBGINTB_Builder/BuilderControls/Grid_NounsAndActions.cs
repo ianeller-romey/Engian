@@ -49,23 +49,23 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.NounAdded += GinTubBuilderManager_NounAdded;
-            //GinTubBuilderManager.ActionAdded += GinTubBuilderManager_ActionAdded;
+            GinTubBuilderManager.ActionAdded += GinTubBuilderManager_ActionAdded;
 
             foreach (var block in m_stackPanel_nouns.Children.OfType<Grid_NounData>())
                 block.SetActiveAndRegisterForGinTubEvents();
-            //foreach (var grid in m_stackPanel_actions.Children.OfType<Grid_ActionUnderNoun>())
-            //    grid.SetActiveAndRegisterForGinTubEvents();
+            foreach (var grid in m_stackPanel_actions.Children.OfType<Grid_ActionUnderNoun>())
+                grid.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.NounAdded -= GinTubBuilderManager_NounAdded;
-            //GinTubBuilderManager.ActionAdded -= GinTubBuilderManager_ActionAdded;
+            GinTubBuilderManager.ActionAdded -= GinTubBuilderManager_ActionAdded;
 
             foreach (var block in m_stackPanel_nouns.Children.OfType<Grid_NounData>())
                 block.SetInactiveAndUnregisterFromGinTubEvents();
-            //foreach (var grid in m_stackPanel_actions.Children.OfType<Grid_ActionUnderNoun>())
-            //    grid.SetInactiveAndUnregisterFromGinTubEvents();
+            foreach (var grid in m_stackPanel_actions.Children.OfType<Grid_ActionUnderNoun>())
+                grid.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -124,19 +124,19 @@ namespace TBGINTB_Builder.BuilderControls
                 grid.MouseLeftButtonDown += Grid_NounData_MouseLeftButtonDown;
                 grid.SetActiveAndRegisterForGinTubEvents();
                 m_stackPanel_nouns.Children.Add(grid);
-                GinTubBuilderManager.LoadParagraphState(args.ParagraphState);
+                GinTubBuilderManager.LoadParagraphStateNounPossibilities(args.ParagraphState);
             }
         }
 
-        void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
+        void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
         {
-            /*
-            if (!m_stackPanel_actions.Children.OfType<Grid_ParagraphStateUnderParagraph>().Any(t => t.ParagraphStateId == args.Id))
+            if (!m_stackPanel_actions.Children.OfType<Grid_ActionData>().Any(a => a.ActionId == args.Id))
             {
-                Grid_ParagraphStateUnderParagraph grid = new Grid_ParagraphStateUnderParagraph(args.Id, args.Text, args.State, args.Paragraph);
+                Grid_ActionUnderNoun grid = new Grid_ActionUnderNoun(args.Id, args.VerbType, args.Noun, ParagraphStateId);
                 m_stackPanel_actions.Children.Add(grid);
+                GinTubBuilderManager.LoadAllVerbTypes();
+                GinTubBuilderManager.LoadAllNounsForParagraphState(ParagraphStateId);
             }
-             */
         }
 
         private void Button_AddNoun_Click(object sender, RoutedEventArgs e)
@@ -158,12 +158,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_AddAction_Click(object sender, RoutedEventArgs e)
         {
-            /*
-            Window_ParagraphStateData window = new Window_ParagraphStateData(null, null, null, SelectedParagraphId);
+            Window_ActionData window = new Window_ActionData(null, null, SelectedNounId, ParagraphStateId);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddParagraphState(window.ParagraphStateText, window.ParagraphId);
-             */
+                GinTubBuilderManager.AddAction(window.ActionVerbType.Value, window.ActionNoun.Value);
         }
 
         private void Grid_NounData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -174,7 +172,7 @@ namespace TBGINTB_Builder.BuilderControls
                 m_stackPanel_actions.Children.Clear();
 
                 SelectedNounId = grid.NounId.Value;
-                //GinTubBuilderManager.LoadAllParagraphStatesForParagraph(SelectedParagraphId);
+                GinTubBuilderManager.LoadAllActionsForNoun(SelectedNounId);
 
                 m_button_modifyNoun.IsEnabled = true;
                 m_button_addAction.IsEnabled = true;

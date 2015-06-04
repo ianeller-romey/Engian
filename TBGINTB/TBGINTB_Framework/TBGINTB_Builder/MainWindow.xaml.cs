@@ -40,6 +40,8 @@ namespace TBGINTB_Builder
             InitializeComponent();
             Content = CreateControls();
             CreateGinTubManager();
+            Width = 1000;
+            Height = 500;
         }
 
         #endregion
@@ -81,6 +83,7 @@ namespace TBGINTB_Builder
             m_tabControl_controls = new TabControl();
             m_tabControl_controls.Items.Add(new TabItem_Area());
             m_tabControl_controls.Items.Add(new TabItem_Locations());
+            m_tabControl_controls.Items.Add(new TabItem_Verbs());
 
             ////////
             // grid

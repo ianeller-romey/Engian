@@ -65,8 +65,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
+    <Compile Include="BuilderControls\ComboBox_Noun.cs" />
+    <Compile Include="BuilderControls\Grid_ActionData.cs" />
+    <Compile Include="BuilderControls\Grid_ActionUnderNoun.cs" />
+    <Compile Include="BuilderControls\ItemsControl_Verb.cs" />
+    <Compile Include="BuilderControls\ComboBox_VerbType.cs" />
     <Compile Include="BuilderControls\ComboBox_ParagraphStateNouns.cs" />
     <Compile Include="BuilderControls\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\Grid_VerbTypeData.cs" />
     <Compile Include="BuilderControls\Grid_NounsAndActions.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphsAndStates.cs" />
     <Compile Include="BuilderControls\Grid_ParagraphData.cs" />
@@ -89,7 +95,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BuilderControls\TabItem_Verbs.cs" />
     <Compile Include="BuilderControls\TabItem_Locations.cs" />
+    <Compile Include="BuilderControls\Window_ActionData.cs" />
     <Compile Include="BuilderControls\Window_NounData.cs" />
     <Compile Include="BuilderControls\Window_ParagraphStateData.cs" />
     <Compile Include="BuilderControls\Window_ParagraphData.cs" />

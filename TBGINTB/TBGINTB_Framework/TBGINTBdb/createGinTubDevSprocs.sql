@@ -58,6 +58,28 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllAreas] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/14/2015
+-- Description:	Gets the Id and Name fields of all Area records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllAreas]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[Areas]
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetArea] AS SELECT 1')
 GO
@@ -88,28 +110,6 @@ BEGIN
 	ON r.[Area] = a.[Id]
 	WHERE a.[Id] = @id
 	GROUP BY a.[Id], a.[Name]
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllAreas] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/14/2015
--- Description:	Gets the Id and Name fields of all Area records currently in the database
--- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllAreas]
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	SELECT [Id],
-		   [Name]
-	FROM [dbo].[Areas]
 
 END
 GO
@@ -191,6 +191,29 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllLocations] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/20/2015
+-- Description:	Gets the Id and Location fields of all Location records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllLocations]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [LocationFile]
+	FROM [dbo].[Locations]
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetLocation] AS SELECT 1')
 GO
@@ -212,29 +235,6 @@ BEGIN
 		   [LocationFile]
 	FROM [dbo].[Locations]
 	WHERE [Id] = @id
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllLocations] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/20/2015
--- Description:	Gets the Id and Location fields of all Location records currently in the database
--- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllLocations]
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	SELECT [Id],
-		   [Name],
-		   [LocationFile]
-	FROM [dbo].[Locations]
 
 END
 GO
@@ -931,6 +931,52 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllVerbTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets the Id and Name fields of all VerbType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllVerbTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[VerbTypes]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetVerbType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets data about a VerbType record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetVerbType]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[VerbTypes]
+	WHERE [Id] = @id
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Verb*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -981,6 +1027,56 @@ BEGIN
 	UPDATE [dbo].[Verbs] 
 	SET	[Name] = ISNULL(@name, [Name]),
 		[VerbType] = ISNULL(@verbtype, [VerbType])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllVerbsForVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllVerbsForVerbType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets all Verb records associated with a specified VerbType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllVerbsForVerbType]
+	@verbtype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [VerbType]
+	FROM [dbo].[Verbs]
+	WHERE [VerbType] = @verbtype
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetVerb] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets data about a Verb record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetVerb]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [VerbType]
+	FROM [dbo].[Verbs]
 	WHERE [Id] = @id
 
 END
@@ -1037,6 +1133,60 @@ BEGIN
 	SET	[VerbType] = ISNULL(@verbtype, [VerbType]),
 		[Noun] = ISNULL(@noun, [Noun])
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllActionsForNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllActionsForNoun] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/3/2015
+-- Description:	Get all Action records associated with the specified Noun
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllActionsForNoun]
+	@noun int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [VerbType],
+		   [Noun]
+	FROM [dbo].[Actions]
+	WHERE [Noun] = @noun
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/3/2015
+-- Description:	Get an Action record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAction]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [VerbType],
+		   [Noun]
+	FROM [dbo].[Actions]
+	WHERE [Id] = @id
+	
+	SELECT SCOPE_IDENTITY()
 
 END
 GO

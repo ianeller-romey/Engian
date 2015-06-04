@@ -60,9 +60,9 @@ namespace TBGINTB_Builder.BuilderControls
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
-            Button button_modifyParagraph = new Button() { Content = "Modify Paragraph State" };
-            button_modifyParagraph.Click += Button_ModifyParagraph_Click;
-            this.SetGridRowColumn(button_modifyParagraph, 0, 0);
+            Button button_modifyParagraphState = new Button() { Content = "Modify Paragraph State" };
+            button_modifyParagraphState.Click += Button_ModifyParagraph_Click;
+            this.SetGridRowColumn(button_modifyParagraphState, 0, 0);
 
             m_grid_paragraphState = new Grid_ParagraphStateData(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId, false);
             this.SetGridRowColumn(m_grid_paragraphState, 1, 0);

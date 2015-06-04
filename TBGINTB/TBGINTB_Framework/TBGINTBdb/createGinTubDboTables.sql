@@ -55,10 +55,22 @@ CREATE TABLE [dbo].[VerbTypes] (
 	[Name] varchar(500) NOT NULL
 )
 
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('Move')
+
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('Take')
+
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('Use')
+
 CREATE TABLE [dbo].[Verbs] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Name] varchar(500) NOT NULL,
 	[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id])
+)
+
+INSERT INTO [dbo].[Verbs] (
 )
 
 CREATE TABLE [dbo].[Actions] (
@@ -76,6 +88,12 @@ CREATE TABLE [dbo].[ResultSourceTypes] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Name] varchar(500) NOT NULL
 )
+
+INSERT INTO [dbo].[ResultSourceTypes] ([Name])
+VALUES ('Action')
+
+INSERT INTO [dbo].[ResultSourceTypes] ([Name])
+VALUES ('Message Choice')
 
 CREATE TABLE [dbo].[Results] (
 	[Id] int PRIMARY KEY IDENTITY,

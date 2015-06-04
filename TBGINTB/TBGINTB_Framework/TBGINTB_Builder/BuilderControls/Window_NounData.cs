@@ -42,7 +42,7 @@ namespace TBGINTB_Builder.BuilderControls
             Height = 300;
             Content = CreateControls(paragraphStateId, nounText, paragraphStateId);
             m_grid_noun.SetActiveAndRegisterForGinTubEvents(); // needed for possible nouns
-            GinTubBuilderManager.LoadParagraphState(paragraphStateId);
+            GinTubBuilderManager.LoadParagraphStateNounPossibilities(paragraphStateId);
         }
 
         #endregion

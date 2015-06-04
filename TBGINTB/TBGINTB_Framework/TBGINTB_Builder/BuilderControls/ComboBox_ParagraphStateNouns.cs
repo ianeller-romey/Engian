@@ -35,7 +35,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             #region MEMBER PROPERTIES
 
-            public string PossibleNounText { get; set;}
+            public string PossibleNounText { get; private set; }
 
             #endregion
 
@@ -88,7 +88,6 @@ namespace TBGINTB_Builder.BuilderControls
 
 
         #region Private Functionality
-        
 
         void GinTubBuilderManager_ParagraphStateEvent(object sender, GinTubBuilderManager.ParagraphStateEventArgs args)
         {

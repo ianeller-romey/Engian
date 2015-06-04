@@ -48,22 +48,22 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public ComboBoxItem_Location(int id, string locationName, string locationFile)
+            public ComboBoxItem_Location(int locationId, string locationName, string locationFile)
             {
-                LocationId = id;
-                LocationFile = locationFile;
+                LocationId = locationId;
+                SetLocationFile(locationFile);
                 SetLocationName(locationName);
             }
 
-            public void SetLocationName(string name)
+            public void SetLocationName(string locationName)
             {
-                LocationName = name;
+                LocationName = locationName;
                 Content = LocationName;
             }
 
-            public void SetLocationFile(string file)
+            public void SetLocationFile(string locationFile)
             {
-                LocationFile = file;
+                LocationFile = locationFile;
             }
 
             #endregion
@@ -110,11 +110,11 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_LocationModified(object sender, GinTubBuilderManager.LocationModifiedEventArgs args)
         {
-            ComboBoxItem_Location i = Items.OfType<ComboBoxItem_Location>().SingleOrDefault(l => l.LocationId == args.Id);
-            if(i != null)
+            ComboBoxItem_Location item = Items.OfType<ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
+            if(item != null)
             {
-                i.SetLocationName(args.Name);
-                i.SetLocationFile(args.LocationFile);
+                item.SetLocationName(args.Name);
+                item.SetLocationFile(args.LocationFile);
             }
         }
 

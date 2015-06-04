@@ -59,6 +59,9 @@
     <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="Model\DbModel\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
+    <Compile Include="Model\DbModel\Action.cs" />
+    <Compile Include="Model\DbModel\Verb.cs" />
+    <Compile Include="Model\DbModel\VerbType.cs" />
     <Compile Include="Model\DbModel\Location.cs" />
     <Compile Include="Model\DbModel\Noun.cs" />
     <Compile Include="Model\DbModel\ParagraphState.cs" />
@@ -80,6 +83,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>devSchema.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAction_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllActionsForNoun_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllAreas_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
@@ -105,6 +114,12 @@
     <Compile Include="Repository\dev_GetAllRoomStatesForRoom_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllVerbsForVerbType_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllVerbTypes_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetArea_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
@@ -124,6 +139,12 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetRoom_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetVerbType_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetVerb_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -940,5 +940,55 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateNoun", idParameter, textParameter, paragraphstateParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAllVerbTypes_Result> dev_GetAllVerbTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllVerbTypes_Result>("dev_GetAllVerbTypes");
+        }
+    
+        public virtual ObjectResult<dev_GetVerbType_Result> dev_GetVerbType(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetVerbType_Result>("dev_GetVerbType", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllVerbsForVerbType_Result> dev_GetAllVerbsForVerbType(Nullable<int> verbtype)
+        {
+            var verbtypeParameter = verbtype.HasValue ?
+                new ObjectParameter("verbtype", verbtype) :
+                new ObjectParameter("verbtype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllVerbsForVerbType_Result>("dev_GetAllVerbsForVerbType", verbtypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetVerb_Result> dev_GetVerb(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetVerb_Result>("dev_GetVerb", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAction_Result> dev_GetAction(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAction_Result>("dev_GetAction", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllActionsForNoun_Result> dev_GetAllActionsForNoun(Nullable<int> noun)
+        {
+            var nounParameter = noun.HasValue ?
+                new ObjectParameter("noun", noun) :
+                new ObjectParameter("noun", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllActionsForNoun_Result>("dev_GetAllActionsForNoun", nounParameter);
+        }
     }
 }

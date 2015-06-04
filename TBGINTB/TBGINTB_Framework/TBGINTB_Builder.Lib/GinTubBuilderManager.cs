@@ -11,6 +11,8 @@ using TBGINTB_Builder.Lib.Exceptions;
 using TBGINTB_Builder.Lib.Model.DbModel;
 using TBGINTB_Builder.Lib.Repository;
 
+using Db = TBGINTB_Builder.Lib.Model.DbModel;
+
 
 namespace TBGINTB_Builder.Lib
 {
@@ -119,10 +121,10 @@ namespace TBGINTB_Builder.Lib
         }
         public delegate void LocationAddedEventHandler(object sender, LocationAddedEventArgs args);
         public static event LocationAddedEventHandler LocationAdded;
-        private static void OnLocationAdded(Location Location)
+        private static void OnLocationAdded(Location location)
         {
             if (LocationAdded != null)
-                LocationAdded(typeof(GinTubBuilderManager), new LocationAddedEventArgs(Location.Id, Location.Name, Location.LocationFile));
+                LocationAdded(typeof(GinTubBuilderManager), new LocationAddedEventArgs(location.Id, location.Name, location.LocationFile));
         }
 
 
@@ -132,10 +134,10 @@ namespace TBGINTB_Builder.Lib
         }
         public delegate void LocationModifiedEventHandler(object sender, LocationModifiedEventArgs args);
         public static event LocationModifiedEventHandler LocationModified;
-        private static void OnLocationModified(Location Location)
+        private static void OnLocationModified(Location location)
         {
             if (LocationModified != null)
-                LocationModified(typeof(GinTubBuilderManager), new LocationModifiedEventArgs(Location.Id, Location.Name, Location.LocationFile));
+                LocationModified(typeof(GinTubBuilderManager), new LocationModifiedEventArgs(location.Id, location.Name, location.LocationFile));
         }
 
 
@@ -145,10 +147,10 @@ namespace TBGINTB_Builder.Lib
         }
         public delegate void LocationGetEventHandler(object sender, LocationGetEventArgs args);
         public static event LocationGetEventHandler LocationGet;
-        private static void OnLocationGet(Location Location)
+        private static void OnLocationGet(Location location)
         {
             if (LocationGet != null)
-                LocationGet(typeof(GinTubBuilderManager), new LocationGetEventArgs(Location.Id, Location.Name, Location.LocationFile));
+                LocationGet(typeof(GinTubBuilderManager), new LocationGetEventArgs(location.Id, location.Name, location.LocationFile));
         }
 
         #endregion
@@ -476,6 +478,175 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region VerbTypes
+
+        public class VerbTypeEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public VerbTypeEventArgs(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+        }
+
+
+        public class VerbTypeAddedEventArgs : VerbTypeEventArgs
+        {
+            public VerbTypeAddedEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void VerbTypeAddedEventHandler(object sender, VerbTypeAddedEventArgs args);
+        public static event VerbTypeAddedEventHandler VerbTypeAdded;
+        private static void OnVerbTypeAdded(VerbType verbType)
+        {
+            if (VerbTypeAdded != null)
+                VerbTypeAdded(typeof(GinTubBuilderManager), new VerbTypeAddedEventArgs(verbType.Id, verbType.Name));
+        }
+
+
+        public class VerbTypeModifiedEventArgs : VerbTypeEventArgs
+        {
+            public VerbTypeModifiedEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void VerbTypeModifiedEventHandler(object sender, VerbTypeModifiedEventArgs args);
+        public static event VerbTypeModifiedEventHandler VerbTypeModified;
+        private static void OnVerbTypeModified(VerbType verbType)
+        {
+            if (VerbTypeModified != null)
+                VerbTypeModified(typeof(GinTubBuilderManager), new VerbTypeModifiedEventArgs(verbType.Id, verbType.Name));
+        }
+
+
+        public class VerbTypeGetEventArgs : VerbTypeEventArgs
+        {
+            public VerbTypeGetEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void VerbTypeGetEventHandler(object sender, VerbTypeGetEventArgs args);
+        public static event VerbTypeGetEventHandler VerbTypeGet;
+        private static void OnVerbTypeGet(VerbType verbType)
+        {
+            if (VerbTypeGet != null)
+                VerbTypeGet(typeof(GinTubBuilderManager), new VerbTypeGetEventArgs(verbType.Id, verbType.Name));
+        }
+
+        #endregion
+
+
+        #region Verbs
+
+        public class VerbEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int VerbType { get; set; }
+            public VerbEventArgs(int id, string name, int verbType)
+            {
+                Id = id;
+                Name = name;
+                VerbType = verbType;
+            }
+        }
+
+
+        public class VerbAddedEventArgs : VerbEventArgs
+        {
+            public VerbAddedEventArgs(int id, string name, int verbType) : base(id, name, verbType) { }
+        }
+        public delegate void VerbAddedEventHandler(object sender, VerbAddedEventArgs args);
+        public static event VerbAddedEventHandler VerbAdded;
+        private static void OnVerbAdded(Verb verb)
+        {
+            if (VerbAdded != null)
+                VerbAdded(typeof(GinTubBuilderManager), new VerbAddedEventArgs(verb.Id, verb.Name, verb.VerbType));
+        }
+
+
+        public class VerbModifiedEventArgs : VerbEventArgs
+        {
+            public VerbModifiedEventArgs(int id, string name, int verbType) : base(id, name, verbType) { }
+        }
+        public delegate void VerbModifiedEventHandler(object sender, VerbModifiedEventArgs args);
+        public static event VerbModifiedEventHandler VerbModified;
+        private static void OnVerbModified(Verb verb)
+        {
+            if (VerbModified != null)
+                VerbModified(typeof(GinTubBuilderManager), new VerbModifiedEventArgs(verb.Id, verb.Name, verb.VerbType));
+        }
+
+
+        public class VerbGetEventArgs : VerbEventArgs
+        {
+            public VerbGetEventArgs(int id, string name, int verbType) : base(id, name, verbType) { }
+        }
+        public delegate void VerbGetEventHandler(object sender, VerbGetEventArgs args);
+        public static event VerbGetEventHandler VerbGet;
+        private static void OnVerbGet(Verb verb)
+        {
+            if (VerbGet != null)
+                VerbGet(typeof(GinTubBuilderManager), new VerbGetEventArgs(verb.Id, verb.Name, verb.VerbType));
+        }
+
+        #endregion
+
+
+        #region Actions
+
+        public class ActionEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int VerbType { get; set; }
+            public int Noun { get; set; }
+            public ActionEventArgs(int id, int verbType, int noun)
+            {
+                Id = id;
+                VerbType = verbType;
+                Noun = noun;
+            }
+        }
+
+
+        public class ActionAddedEventArgs : ActionEventArgs
+        {
+            public ActionAddedEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+        }
+        public delegate void ActionAddedEventHandler(object sender, ActionAddedEventArgs args);
+        public static event ActionAddedEventHandler ActionAdded;
+        private static void OnActionAdded(Db.Action action)
+        {
+            if (ActionAdded != null)
+                ActionAdded(typeof(GinTubBuilderManager), new ActionAddedEventArgs(action.Id, action.VerbType, action.Noun));
+        }
+
+
+        public class ActionModifiedEventArgs : ActionEventArgs
+        {
+            public ActionModifiedEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+        }
+        public delegate void ActionModifiedEventHandler(object sender, ActionModifiedEventArgs args);
+        public static event ActionModifiedEventHandler ActionModified;
+        private static void OnActionModified(Db.Action action)
+        {
+            if (ActionModified != null)
+                ActionModified(typeof(GinTubBuilderManager), new ActionModifiedEventArgs(action.Id, action.VerbType, action.Noun));
+        }
+
+
+        public class ActionGetEventArgs : ActionEventArgs
+        {
+            public ActionGetEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+        }
+        public delegate void ActionGetEventHandler(object sender, ActionGetEventArgs args);
+        public static event ActionGetEventHandler ActionGet;
+        private static void OnActionGet(Db.Action action)
+        {
+            if (ActionGet != null)
+                ActionGet(typeof(GinTubBuilderManager), new ActionGetEventArgs(action.Id, action.VerbType, action.Noun));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -506,6 +677,15 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetNoun_Result, Noun>();
             Mapper.CreateMap<dev_GetAllNounsForParagraphState_Result, Noun>();
+
+            Mapper.CreateMap<dev_GetVerbType_Result, VerbType>();
+            Mapper.CreateMap<dev_GetAllVerbTypes_Result, VerbType>();
+
+            Mapper.CreateMap<dev_GetVerb_Result, Verb>();
+            Mapper.CreateMap<dev_GetAllVerbsForVerbType_Result, Verb>();
+
+            Mapper.CreateMap<dev_GetAction_Result, Db.Action>();
+            Mapper.CreateMap<dev_GetAllActionsForNoun_Result, Db.Action>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -729,12 +909,6 @@ namespace TBGINTB_Builder.Lib
             OnParagraphStateModified(paragraphState);
         }
 
-        public static void LoadParagraphState(int paragraphStateId)
-        {
-            ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
-            OnParagraphStateAdded(paragraphState);
-        }
-
         public static void GetParagraphState(int paragraphStateId)
         {
             ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
@@ -753,6 +927,12 @@ namespace TBGINTB_Builder.Lib
             List<ParagraphState> paragraphStates = SelectAllParagraphStatesForParagraph(paragraphId);
             foreach (var paragraphState in paragraphStates)
                 OnParagraphStateGet(paragraphState);
+        }
+
+        public static void LoadParagraphStateNounPossibilities(int paragraphStateId)
+        {
+            ParagraphState paragraphState = SelectParagraphState(paragraphStateId);
+            OnParagraphStateAdded(paragraphState);
         }
 
         #endregion
@@ -792,6 +972,123 @@ namespace TBGINTB_Builder.Lib
             List<Noun> nouns = SelectAllNounsForParagraphState(paragraphStateId);
             foreach (var noun in nouns)
                 OnNounGet(noun);
+        }
+
+        #endregion
+
+
+        #region VerbTypes
+
+        public static void AddVerbType(string verbTypeName)
+        {
+            int id = InsertVerbType(verbTypeName);
+            VerbType verbType = SelectVerbType(id);
+            OnVerbTypeAdded(verbType);
+        }
+
+        public static void ModifyVerbType(int verbTypeId, string verbTypeName)
+        {
+            UpdateVerbType(verbTypeId, verbTypeName);
+            VerbType verbType = SelectVerbType(verbTypeId);
+            OnVerbTypeModified(verbType);
+        }
+
+        public static void GetVerbType(int verbTypeId)
+        {
+            VerbType verbType = SelectVerbType(verbTypeId);
+            OnVerbTypeGet(verbType);
+        }
+
+        public static void LoadAllVerbTypes()
+        {
+            List<VerbType> verbTypes = SelectAllVerbTypes();
+            foreach (var verbType in verbTypes)
+                OnVerbTypeAdded(verbType);
+        }
+
+        public static void GetAllVerbTypes()
+        {
+            List<VerbType> verbTypes = SelectAllVerbTypes();
+            foreach (var verbType in verbTypes)
+                OnVerbTypeGet(verbType);
+        }
+
+        #endregion
+
+
+        #region Verbs
+
+        public static void AddVerb(string verbName, int verbTypeId)
+        {
+            int id = InsertVerb(verbName, verbTypeId);
+            Verb verb = SelectVerb(id);
+            OnVerbAdded(verb);
+        }
+
+        public static void ModifyVerb(int verbId, string verbName, int verbTypeId)
+        {
+            UpdateVerb(verbId, verbName, verbTypeId);
+            Verb verb = SelectVerb(verbId);
+            OnVerbModified(verb);
+        }
+
+        public static void GetVerb(int verbId)
+        {
+            Verb verb = SelectVerb(verbId);
+            OnVerbGet(verb);
+        }
+
+        public static void LoadAllVerbsForVerbType(int verbTypeId)
+        {
+            List<Verb> verbs = SelectAllVerbsForVerbType(verbTypeId);
+            foreach (var verb in verbs)
+                OnVerbAdded(verb);
+        }
+
+        public static void GetAllVerbsForVerbType(int verbTypeId)
+        {
+            List<Verb> verbs = SelectAllVerbsForVerbType(verbTypeId);
+            foreach (var verb in verbs)
+                OnVerbGet(verb);
+        }
+
+        #endregion
+
+
+        #region Actions
+
+        public static void AddAction(int actionVerbType, int actionNoun)
+        {
+            int id = InsertAction(actionVerbType, actionNoun);
+            Db.Action action = SelectAction(id);
+            OnActionAdded(action);
+        }
+
+        public static void ModifyAction(int actionId, int actionVerbType, int actionNoun)
+        {
+            UpdateAction(actionId, actionVerbType, actionNoun);
+            Db.Action action = SelectAction(actionId);
+            OnActionModified(action);
+        }
+
+        public static void GetAction(int actionId)
+        {
+            Db.Action action = SelectAction(actionId);
+            OnActionGet(action);
+        }
+
+        public static void LoadAllActionsForNoun(int nounId)
+        {
+            List<Db.Action> actions = SelectAllActionsForNoun(nounId);
+            foreach (var action in actions)
+                OnActionAdded(action);
+        }
+
+        public static void GetAllActionsForNoun(int nounId)
+        {
+            List<Db.Action> actions = SelectAllActionsForNoun(nounId);
+            foreach (var action in actions)
+                OnActionGet(action);
         }
 
         #endregion
@@ -1311,6 +1608,219 @@ namespace TBGINTB_Builder.Lib
 
             List<Noun> nouns = databaseResult.Select(r => Mapper.Map<Noun>(r)).ToList();
             return nouns;
+        }
+
+        #endregion
+
+
+        #region VerbTypes
+
+        private static int InsertVerbType(string name)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddVerbType(name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddVerbType", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddVerbType", new Exception("No [Id] was returned after [VerbType] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateVerbType(int id, string name)
+        {
+            try
+            {
+                m_entities.dev_UpdateVerbType(id, name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateVerbType", e);
+            }
+        }
+
+        private static VerbType SelectVerbType(int id)
+        {
+            ObjectResult<dev_GetVerbType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetVerbType(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetVerbType", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetVerbType", new Exception(string.Format("No [VerbTypes] record found with [Id] = {0}.", id)));
+
+            VerbType verbType = Mapper.Map<VerbType>(databaseResult.Single());
+            return verbType;
+        }
+
+        private static List<VerbType> SelectAllVerbTypes()
+        {
+            ObjectResult<dev_GetAllVerbTypes_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllVerbTypes();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllVerbTypes", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllVerbTypes", new Exception("No [VerbTypes] records found."));
+
+            List<VerbType> verbTypes = databaseResult.Select(r => Mapper.Map<VerbType>(r)).ToList();
+            return verbTypes;
+        }
+
+        #endregion
+
+
+        #region Verbs
+
+        private static int InsertVerb(string name, int verbType)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddVerb(name, verbType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddVerb", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddVerb", new Exception("No [Id] was returned after [Verb] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateVerb(int id, string name, int verbType)
+        {
+            try
+            {
+                m_entities.dev_UpdateVerb(id, name, verbType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateVerb", e);
+            }
+        }
+
+        private static Verb SelectVerb(int id)
+        {
+            ObjectResult<dev_GetVerb_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetVerb(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetVerb", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetVerb", new Exception(string.Format("No [Verbs] record found with [Id] = {0}.", id)));
+
+            Verb verb = Mapper.Map<Verb>(databaseResult.Single());
+            return verb;
+        }
+
+        private static List<Verb> SelectAllVerbsForVerbType(int verbType)
+        {
+            ObjectResult<dev_GetAllVerbsForVerbType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllVerbsForVerbType(verbType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllVerbs", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllVerbs", new Exception("No [Verbs] records found."));
+
+            List<Verb> verbs = databaseResult.Select(r => Mapper.Map<Verb>(r)).ToList();
+            return verbs;
+        }
+
+        #endregion
+
+
+        #region Actions
+
+        private static int InsertAction(int verbType, int noun)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddAction(verbType, noun);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddAction", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddAction", new Exception("No [Id] was returned after [Action] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateAction(int id, int verbType, int noun)
+        {
+            try
+            {
+                m_entities.dev_UpdateAction(id, verbType, noun);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateAction", e);
+            }
+        }
+
+        private static Db.Action SelectAction(int id)
+        {
+            ObjectResult<dev_GetAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAction(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAction", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAction", new Exception(string.Format("No [Actions] record found with [Id] = {0}.", id)));
+
+            Db.Action action = Mapper.Map<Db.Action>(databaseResult.Single());
+            return action;
+        }
+
+        private static List<Db.Action> SelectAllActionsForNoun(int noun)
+        {
+            ObjectResult<dev_GetAllActionsForNoun_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllActionsForNoun(noun);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllActions", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllActions", new Exception("No [Actions] records found."));
+
+            List<Db.Action> actions = databaseResult.Select(r => Mapper.Map<Db.Action>(r)).ToList();
+            return actions;
         }
 
         #endregion

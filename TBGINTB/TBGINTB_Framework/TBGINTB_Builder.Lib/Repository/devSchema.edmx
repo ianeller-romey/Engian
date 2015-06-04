@@ -112,6 +112,12 @@
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_DeleteAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_GetAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetAllActionsForNoun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="noun" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_GetAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllNounsForParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -134,6 +140,10 @@
         <Function Name="dev_GetAllRoomStatesForRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="room" Type="int" Mode="In" />
         </Function>
+        <Function Name="dev_GetAllVerbsForVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="verbtype" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetAllVerbTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -153,6 +163,12 @@
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetVerb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ShiftRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -559,6 +575,22 @@
             <Parameter Name="text" Mode="In" Type="String" />
             <Parameter Name="paragraphstate" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetAllVerbTypes" ReturnType="Collection(GinTubModel.dev_GetAllVerbTypes_Result)" />
+          <FunctionImport Name="dev_GetVerbType" ReturnType="Collection(GinTubModel.dev_GetVerbType_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetAllVerbsForVerbType" ReturnType="Collection(GinTubModel.dev_GetAllVerbsForVerbType_Result)">
+          <Parameter Name="verbtype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetVerb" ReturnType="Collection(GinTubModel.dev_GetVerb_Result)">
+          <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetAction" ReturnType="Collection(GinTubModel.dev_GetAction_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetAllActionsForNoun" ReturnType="Collection(GinTubModel.dev_GetAllActionsForNoun_Result)">
+            <Parameter Name="noun" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -656,6 +688,34 @@
           <Property Type="DateTime" Name="Time" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="Location" Nullable="false" />
           <Property Type="Int32" Name="Room" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllVerbTypes_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="dev_GetVerbType_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllVerbsForVerbType_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="VerbType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetVerb_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="Int32" Name="VerbType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAction_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="VerbType" Nullable="false" />
+          <Property Type="Int32" Name="Noun" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllActionsForNoun_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="Int32" Name="VerbType" Nullable="false" />
+          <Property Type="Int32" Name="Noun" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -870,6 +930,58 @@
           <FunctionImportMapping FunctionImportName="dev_UpdateVerb" FunctionName="GinTubModel.Store.dev_UpdateVerb" />
           <FunctionImportMapping FunctionImportName="dev_UpdateVerbType" FunctionName="GinTubModel.Store.dev_UpdateVerbType" />
           <FunctionImportMapping FunctionImportName="dev_UpdateNoun" FunctionName="GinTubModel.Store.dev_UpdateNoun" />
+          <FunctionImportMapping FunctionImportName="dev_GetAllVerbTypes" FunctionName="GinTubModel.Store.dev_GetAllVerbTypes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllVerbTypes_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetVerbType" FunctionName="GinTubModel.Store.dev_GetVerbType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetVerbType_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllVerbsForVerbType" FunctionName="GinTubModel.Store.dev_GetAllVerbsForVerbType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllVerbsForVerbType_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VerbType" ColumnName="VerbType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetVerb" FunctionName="GinTubModel.Store.dev_GetVerb">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetVerb_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VerbType" ColumnName="VerbType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAction" FunctionName="GinTubModel.Store.dev_GetAction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAction_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VerbType" ColumnName="VerbType" />
+                <ScalarProperty Name="Noun" ColumnName="Noun" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAllActionsForNoun" FunctionName="GinTubModel.Store.dev_GetAllActionsForNoun">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllActionsForNoun_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="VerbType" ColumnName="VerbType" />
+                <ScalarProperty Name="Noun" ColumnName="Noun" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
