@@ -29,49 +29,6 @@ namespace TBGINTB_Builder.BuilderControls
         #endregion
 
 
-        #region MEMBER CLASSES
-
-        public class ListBoxItem_Verb : ListBoxItem
-        {
-            #region MEMBER PROPERTIES
-
-            public int VerbId { get; private set; }
-            public string VerbName { get; private set; }
-            public int VerbTypeId { get; private set; }
-
-            #endregion
-
-
-            #region MEMBER METHODS
-
-            #region Public Functionality
-
-            public ListBoxItem_Verb(int verbId, string verbName, int verbTypeId)
-            {
-                VerbId = verbId;
-                SetVerbName(verbName);
-                SetVerbTypeId(verbTypeId);
-            }
-
-            public void SetVerbName(string verbName)
-            {
-                VerbName = verbName;
-                Content = VerbName;
-            }
-
-            public void SetVerbTypeId(int verbTypeId)
-            {
-                VerbTypeId = verbTypeId;
-            }
-
-            #endregion
-
-            #endregion
-        }
-
-        #endregion
-
-
         #region MEMBER METHODS
 
         #region Public Functionality
@@ -90,13 +47,11 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.VerbAdded += GinTubBuilderManager_VerbAdded;
-            GinTubBuilderManager.VerbModified += GinTubBuilderManager_VerbModified;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.VerbAdded -= GinTubBuilderManager_VerbAdded;
-            GinTubBuilderManager.VerbModified -= GinTubBuilderManager_VerbModified;
         }
 
         #endregion
@@ -106,29 +61,21 @@ namespace TBGINTB_Builder.BuilderControls
 
         void GinTubBuilderManager_VerbAdded(object sender, GinTubBuilderManager.VerbAddedEventArgs args)
         {
-            if (args.VerbType == VerbTypeId && !Items.OfType<ListBoxItem_Verb>().Any(i => i.VerbId == args.Id))
-                Items.Add(new ListBoxItem_Verb(args.Id, args.Name, args.VerbType));
-        }
-
-        void GinTubBuilderManager_VerbModified(object sender, GinTubBuilderManager.VerbModifiedEventArgs args)
-        {
-            if (args.VerbType == VerbTypeId)
+            if (args.VerbType == VerbTypeId && !Items.OfType<Grid_VerbUnderVerbType>().Any(i => i.VerbId == args.Id))
             {
-                ListBoxItem_Verb item = Items.OfType<ListBoxItem_Verb>().SingleOrDefault(i => i.VerbTypeId == args.Id);
-                if (item != null)
-                {
-                    item.SetVerbName(args.Name);
-                    item.SetVerbTypeId(args.VerbType);
-                }
+                Grid_VerbUnderVerbType grid = new Grid_VerbUnderVerbType(args.Id, args.Name, args.VerbType);
+                grid.SetActiveAndRegisterForGinTubEvents();
+                Items.Add(grid);
+                GinTubBuilderManager.LoadAllVerbTypes();
             }
         }
 
         private void NewVerbDialog()
         {
-            Window_TextEntry window = new Window_TextEntry("Verb", "");
+            Window_VerbData window = new Window_VerbData(null, null, VerbTypeId);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddVerb(window.Text, VerbTypeId);
+                GinTubBuilderManager.AddVerb(window.VerbName, window.VerbTypeId);
         }
         
 

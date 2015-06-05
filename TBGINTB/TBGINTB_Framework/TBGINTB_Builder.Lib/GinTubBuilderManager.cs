@@ -647,6 +647,146 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region ResultTypes
+
+        public class ResultTypeEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public ResultTypeEventArgs(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+        }
+
+
+        public class ResultTypeAddedEventArgs : ResultTypeEventArgs
+        {
+            public ResultTypeAddedEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void ResultTypeAddedEventHandler(object sender, ResultTypeAddedEventArgs args);
+        public static event ResultTypeAddedEventHandler ResultTypeAdded;
+        private static void OnResultTypeAdded(ResultType resultType)
+        {
+            if (ResultTypeAdded != null)
+                ResultTypeAdded(typeof(GinTubBuilderManager), new ResultTypeAddedEventArgs(resultType.Id, resultType.Name));
+        }
+
+
+        public class ResultTypeModifiedEventArgs : ResultTypeEventArgs
+        {
+            public ResultTypeModifiedEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void ResultTypeModifiedEventHandler(object sender, ResultTypeModifiedEventArgs args);
+        public static event ResultTypeModifiedEventHandler ResultTypeModified;
+        private static void OnResultTypeModified(ResultType resultType)
+        {
+            if (ResultTypeModified != null)
+                ResultTypeModified(typeof(GinTubBuilderManager), new ResultTypeModifiedEventArgs(resultType.Id, resultType.Name));
+        }
+
+
+        public class ResultTypeGetEventArgs : ResultTypeEventArgs
+        {
+            public ResultTypeGetEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void ResultTypeGetEventHandler(object sender, ResultTypeGetEventArgs args);
+        public static event ResultTypeGetEventHandler ResultTypeGet;
+        private static void OnResultTypeGet(ResultType resultType)
+        {
+            if (ResultTypeGet != null)
+                ResultTypeGet(typeof(GinTubBuilderManager), new ResultTypeGetEventArgs(resultType.Id, resultType.Name));
+        }
+
+        #endregion
+
+
+        #region ResultTypeJSONFields
+
+        public class ResultTypeJSONFieldEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string JSONField { get; set; }
+            public int ResultType { get; set; }
+            public ResultTypeJSONFieldEventArgs(int id, string jsonField, int resultType)
+            {
+                Id = id;
+                JSONField = jsonField;
+                ResultType = resultType;
+            }
+        }
+
+
+        public class ResultTypeJSONFieldAddedEventArgs : ResultTypeJSONFieldEventArgs
+        {
+            public ResultTypeJSONFieldAddedEventArgs(int id, string jsonField, int resultType) :
+                base(id, jsonField, resultType) { }
+        }
+        public delegate void ResultTypeJSONFieldAddedEventHandler(object sender, ResultTypeJSONFieldAddedEventArgs args);
+        public static event ResultTypeJSONFieldAddedEventHandler ResultTypeJSONFieldAdded;
+        private static void OnResultTypeJSONFieldAdded(ResultTypeJSONField resultTypeJSONField)
+        {
+            if (ResultTypeJSONFieldAdded != null)
+                ResultTypeJSONFieldAdded
+                (
+                    typeof(GinTubBuilderManager), 
+                    new ResultTypeJSONFieldAddedEventArgs
+                    (
+                        resultTypeJSONField.Id, 
+                        resultTypeJSONField.JSONField, 
+                        resultTypeJSONField.ResultType
+                    )
+                );
+        }
+
+
+        public class ResultTypeJSONFieldModifiedEventArgs : ResultTypeJSONFieldEventArgs
+        {
+            public ResultTypeJSONFieldModifiedEventArgs(int id, string name, int ResultTypeJSONFieldType) : base(id, name, ResultTypeJSONFieldType) { }
+        }
+        public delegate void ResultTypeJSONFieldModifiedEventHandler(object sender, ResultTypeJSONFieldModifiedEventArgs args);
+        public static event ResultTypeJSONFieldModifiedEventHandler ResultTypeJSONFieldModified;
+        private static void OnResultTypeJSONFieldModified(ResultTypeJSONField resultTypeJSONField)
+        {
+            if (ResultTypeJSONFieldModified != null)
+                ResultTypeJSONFieldModified
+                (
+                    typeof(GinTubBuilderManager),
+                    new ResultTypeJSONFieldModifiedEventArgs
+                    (
+                        resultTypeJSONField.Id,
+                        resultTypeJSONField.JSONField,
+                        resultTypeJSONField.ResultType
+                    )
+                );
+        }
+
+
+        public class ResultTypeJSONFieldGetEventArgs : ResultTypeJSONFieldEventArgs
+        {
+            public ResultTypeJSONFieldGetEventArgs(int id, string name, int ResultTypeJSONFieldType) : base(id, name, ResultTypeJSONFieldType) { }
+        }
+        public delegate void ResultTypeJSONFieldGetEventHandler(object sender, ResultTypeJSONFieldGetEventArgs args);
+        public static event ResultTypeJSONFieldGetEventHandler ResultTypeJSONFieldGet;
+        private static void OnResultTypeJSONFieldGet(ResultTypeJSONField resultTypeJSONField)
+        {
+            if (ResultTypeJSONFieldGet != null)
+                ResultTypeJSONFieldGet
+                (
+                    typeof(GinTubBuilderManager),
+                    new ResultTypeJSONFieldGetEventArgs
+                    (
+                        resultTypeJSONField.Id,
+                        resultTypeJSONField.JSONField,
+                        resultTypeJSONField.ResultType
+                    )
+                );
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -686,6 +826,12 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetAction_Result, Db.Action>();
             Mapper.CreateMap<dev_GetAllActionsForNoun_Result, Db.Action>();
+
+            Mapper.CreateMap<dev_GetResultType_Result, ResultType>();
+            Mapper.CreateMap<dev_GetAllResultTypes_Result, ResultType>();
+
+            Mapper.CreateMap<dev_GetResultTypeJSONField_Result, ResultTypeJSONField>();
+            Mapper.CreateMap<dev_GetAllResultTypeJSONFieldsForResultType_Result, ResultTypeJSONField>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -1089,6 +1235,84 @@ namespace TBGINTB_Builder.Lib
             List<Db.Action> actions = SelectAllActionsForNoun(nounId);
             foreach (var action in actions)
                 OnActionGet(action);
+        }
+
+        #endregion
+
+
+        #region ResultTypes
+
+        public static void AddResultType(string resultTypeName)
+        {
+            int id = InsertResultType(resultTypeName);
+            ResultType resultType = SelectResultType(id);
+            OnResultTypeAdded(resultType);
+        }
+
+        public static void ModifyResultType(int resultTypeId, string resultTypeName)
+        {
+            UpdateResultType(resultTypeId, resultTypeName);
+            ResultType resultType = SelectResultType(resultTypeId);
+            OnResultTypeModified(resultType);
+        }
+
+        public static void GetResultType(int resultTypeId)
+        {
+            ResultType resultType = SelectResultType(resultTypeId);
+            OnResultTypeGet(resultType);
+        }
+
+        public static void LoadAllResultTypes()
+        {
+            List<ResultType> resultTypes = SelectAllResultTypes();
+            foreach (var resultType in resultTypes)
+                OnResultTypeAdded(resultType);
+        }
+
+        public static void GetAllResultTypes()
+        {
+            List<ResultType> resultTypes = SelectAllResultTypes();
+            foreach (var resultType in resultTypes)
+                OnResultTypeGet(resultType);
+        }
+
+        #endregion
+
+
+        #region ResultTypeJSONFields
+
+        public static void AddResultTypeJSONField(string resultTypeJSONFieldJSONField, int resultTypeJSONFieldResultTypeId)
+        {
+            int id = InsertResultTypeJSONField(resultTypeJSONFieldJSONField, resultTypeJSONFieldResultTypeId);
+            ResultTypeJSONField resultTypeJSONField = SelectResultTypeJSONField(id);
+            OnResultTypeJSONFieldAdded(resultTypeJSONField);
+        }
+
+        public static void ModifyResultTypeJSONField(int resultTypeJSONFieldId, string resultTypeJSONFieldJSONField, int resultTypeJSONFieldResultTypeId)
+        {
+            UpdateResultTypeJSONField(resultTypeJSONFieldId, resultTypeJSONFieldJSONField, resultTypeJSONFieldResultTypeId);
+            ResultTypeJSONField resultTypeJSONField = SelectResultTypeJSONField(resultTypeJSONFieldId);
+            OnResultTypeJSONFieldModified(resultTypeJSONField);
+        }
+
+        public static void GetResultTypeJSONField(int resultTypeJSONFieldId)
+        {
+            ResultTypeJSONField resultTypeJSONField = SelectResultTypeJSONField(resultTypeJSONFieldId);
+            OnResultTypeJSONFieldGet(resultTypeJSONField);
+        }
+
+        public static void LoadAllResultTypeJSONFieldsForResultType(int resultTypeId)
+        {
+            List<ResultTypeJSONField> resultTypeJSONFields = SelectAllResultTypeJSONFieldsForResultType(resultTypeId);
+            foreach (var resultTypeJSONField in resultTypeJSONFields)
+                OnResultTypeJSONFieldAdded(resultTypeJSONField);
+        }
+
+        public static void GetAllResultTypeJSONFieldsForResultType(int resultTypeId)
+        {
+            List<ResultTypeJSONField> resultTypeJSONFields = SelectAllResultTypeJSONFieldsForResultType(resultTypeId);
+            foreach (var resultTypeJSONField in resultTypeJSONFields)
+                OnResultTypeJSONFieldGet(resultTypeJSONField);
         }
 
         #endregion
@@ -1821,6 +2045,148 @@ namespace TBGINTB_Builder.Lib
 
             List<Db.Action> actions = databaseResult.Select(r => Mapper.Map<Db.Action>(r)).ToList();
             return actions;
+        }
+
+        #endregion
+
+
+        #region ResultTypes
+
+        private static int InsertResultType(string name)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddResultType(name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddResultType", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddResultType", new Exception("No [Id] was returned after [ResultType] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateResultType(int id, string name)
+        {
+            try
+            {
+                m_entities.dev_UpdateResultType(id, name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateResultType", e);
+            }
+        }
+
+        private static ResultType SelectResultType(int id)
+        {
+            ObjectResult<dev_GetResultType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetResultType(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetResultType", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetResultType", new Exception(string.Format("No [ResultTypes] record found with [Id] = {0}.", id)));
+
+            ResultType resultType = Mapper.Map<ResultType>(databaseResult.Single());
+            return resultType;
+        }
+
+        private static List<ResultType> SelectAllResultTypes()
+        {
+            ObjectResult<dev_GetAllResultTypes_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllResultTypes();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllResultTypes", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllResultTypes", new Exception("No [ResultTypes] records found."));
+
+            List<ResultType> resultTypes = databaseResult.Select(r => Mapper.Map<ResultType>(r)).ToList();
+            return resultTypes;
+        }
+
+        #endregion
+
+
+        #region ResultTypeJSONFields
+
+        private static int InsertResultTypeJSONField(string jsonField, int resultType)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddResultTypeJSONField(jsonField, resultType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddResultTypeJSONField", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddResultTypeJSONField", new Exception("No [Id] was returned after [ResultTypeJSONField] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateResultTypeJSONField(int id, string jsonField, int resultType)
+        {
+            try
+            {
+                m_entities.dev_UpdateResultTypeJSONField(id, jsonField, resultType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateResultTypeJSONField", e);
+            }
+        }
+
+        private static ResultTypeJSONField SelectResultTypeJSONField(int id)
+        {
+            ObjectResult<dev_GetResultTypeJSONField_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetResultTypeJSONField(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetResultTypeJSONField", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetResultTypeJSONField", new Exception(string.Format("No [ResultTypeJSONFields] record found with [Id] = {0}.", id)));
+
+            ResultTypeJSONField resultTypeJSONField = Mapper.Map<ResultTypeJSONField>(databaseResult.Single());
+            return resultTypeJSONField;
+        }
+
+        private static List<ResultTypeJSONField> SelectAllResultTypeJSONFieldsForResultType(int resultType)
+        {
+            ObjectResult<dev_GetAllResultTypeJSONFieldsForResultType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllResultTypeJSONFieldsForResultType(resultType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONFields", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONFields", new Exception("No [ResultTypeJSONFields] records found."));
+
+            List<ResultTypeJSONField> resultTypeJSONFields = databaseResult.Select(r => Mapper.Map<ResultTypeJSONField>(r)).ToList();
+            return resultTypeJSONFields;
         }
 
         #endregion

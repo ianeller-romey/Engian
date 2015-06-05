@@ -70,7 +70,40 @@ CREATE TABLE [dbo].[Verbs] (
 	[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id])
 )
 
-INSERT INTO [dbo].[Verbs] (
+CREATE TABLE [dbo].[ResultTypes] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL
+)
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Move')
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Item Acquisition')
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Event Acquisition')
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Character Acquisition')
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Paragraph State Change')
+
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES ('Room State Change')
+
+CREATE TABLE [dev].[ResultTypeJSONFields] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[JSONField] varchar(MAX) NOT NULL,
+	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
+)
+
+CREATE TABLE [dbo].[Results] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL,
+	[JSONData] varchar(MAX) NULL,
+	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 )
 
 CREATE TABLE [dbo].[Actions] (
@@ -79,34 +112,25 @@ CREATE TABLE [dbo].[Actions] (
 	[Noun] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Nouns]([Id])
 )
 
-CREATE TABLE [dbo].[ResultTypes] (
+CREATE TABLE [dbo].[ActionResults] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL
-)
-
-CREATE TABLE [dbo].[ResultSourceTypes] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL
-)
-
-INSERT INTO [dbo].[ResultSourceTypes] ([Name])
-VALUES ('Action')
-
-INSERT INTO [dbo].[ResultSourceTypes] ([Name])
-VALUES ('Message Choice')
-
-CREATE TABLE [dbo].[Results] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[JSONData] varchar(MAX) NULL,
-	[Source] int NOT NULL,
-	[ResultSourceType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultSourceTypes]([Id]),
-	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
+	[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id]),
+	[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id])
 )
 
 CREATE TABLE [dbo].[RequirementSourceTypes] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Name] varchar(500) NOT NULL
 )
+
+INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
+VALUES ('Item')
+
+INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
+VALUES ('Event')
+
+INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
+VALUES ('Character')
 
 CREATE TABLE [dbo].[Requirements] (
 	[Id] int PRIMARY KEY IDENTITY,
@@ -126,7 +150,7 @@ CREATE TABLE [dbo].[MessageChoices] (
 	[Message] int FOREIGN KEY REFERENCES [dbo].[Messages]([Id])
 )
 
-CREATE TABLE [dbo].[MessageChoiceOutcomes] (
+CREATE TABLE [dbo].[MessageChoiceResults] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Result] int NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 	[MessageChoice] int FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id])

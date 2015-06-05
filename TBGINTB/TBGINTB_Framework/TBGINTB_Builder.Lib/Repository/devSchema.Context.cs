@@ -274,25 +274,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddRequirementSourceType", nameParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddResult(string jsondata, Nullable<int> source, Nullable<int> resultsourcetype, Nullable<int> resulttype)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddResult(string name, string jsondata, Nullable<int> resulttype)
         {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var jsondataParameter = jsondata != null ?
                 new ObjectParameter("jsondata", jsondata) :
                 new ObjectParameter("jsondata", typeof(string));
-    
-            var sourceParameter = source.HasValue ?
-                new ObjectParameter("source", source) :
-                new ObjectParameter("source", typeof(int));
-    
-            var resultsourcetypeParameter = resultsourcetype.HasValue ?
-                new ObjectParameter("resultsourcetype", resultsourcetype) :
-                new ObjectParameter("resultsourcetype", typeof(int));
     
             var resulttypeParameter = resulttype.HasValue ?
                 new ObjectParameter("resulttype", resulttype) :
                 new ObjectParameter("resulttype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResult", jsondataParameter, sourceParameter, resultsourcetypeParameter, resulttypeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResult", nameParameter, jsondataParameter, resulttypeParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddResultSourceType(string name)
@@ -789,29 +785,25 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateRequirementSourceType", idParameter, nameParameter);
         }
     
-        public virtual int dev_UpdateResult(Nullable<int> id, string jsondata, Nullable<int> source, Nullable<int> resultsourcetype, Nullable<int> resulttype)
+        public virtual int dev_UpdateResult(Nullable<int> id, string name, string jsondata, Nullable<int> resulttype)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var jsondataParameter = jsondata != null ?
                 new ObjectParameter("jsondata", jsondata) :
                 new ObjectParameter("jsondata", typeof(string));
-    
-            var sourceParameter = source.HasValue ?
-                new ObjectParameter("source", source) :
-                new ObjectParameter("source", typeof(int));
-    
-            var resultsourcetypeParameter = resultsourcetype.HasValue ?
-                new ObjectParameter("resultsourcetype", resultsourcetype) :
-                new ObjectParameter("resultsourcetype", typeof(int));
     
             var resulttypeParameter = resulttype.HasValue ?
                 new ObjectParameter("resulttype", resulttype) :
                 new ObjectParameter("resulttype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResult", idParameter, jsondataParameter, sourceParameter, resultsourcetypeParameter, resulttypeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResult", idParameter, nameParameter, jsondataParameter, resulttypeParameter);
         }
     
         public virtual int dev_UpdateResultSourceType(Nullable<int> id, string name)
@@ -989,6 +981,164 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("noun", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllActionsForNoun_Result>("dev_GetAllActionsForNoun", nounParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllResultTypes_Result> dev_GetAllResultTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultTypes_Result>("dev_GetAllResultTypes");
+        }
+    
+        public virtual ObjectResult<dev_GetResultType_Result> dev_GetResultType(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetResultType_Result>("dev_GetResultType", idParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> dev_AddActionResult(Nullable<int> result, Nullable<int> action)
+        {
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddActionResult", resultParameter, actionParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoiceResult(Nullable<int> result, Nullable<int> messagechoice)
+        {
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoiceResult", resultParameter, messagechoiceParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<decimal>> dev_AddResultTypeJSONField(string jsonfield, Nullable<int> resulttype)
+        {
+            var jsonfieldParameter = jsonfield != null ?
+                new ObjectParameter("jsonfield", jsonfield) :
+                new ObjectParameter("jsonfield", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResultTypeJSONField", jsonfieldParameter, resulttypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetActionResult_Result> dev_GetActionResult(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetActionResult_Result>("dev_GetActionResult", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllActionResultsForAction_Result> dev_GetAllActionResultsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllActionResultsForAction_Result>("dev_GetAllActionResultsForAction", actionParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllResultsForResultType_Result> dev_GetAllResultsForResultType(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultsForResultType_Result>("dev_GetAllResultsForResultType", resulttypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllResultTypeJSONFieldsForResultType_Result> dev_GetAllResultTypeJSONFieldsForResultType(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultTypeJSONFieldsForResultType_Result>("dev_GetAllResultTypeJSONFieldsForResultType", resulttypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetResult_Result> dev_GetResult(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetResult_Result>("dev_GetResult", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetResultTypeJSONField_Result> dev_GetResultTypeJSONField(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetResultTypeJSONField_Result>("dev_GetResultTypeJSONField", idParameter);
+        }
+    
+        public virtual int dev_UpdateActionResult(Nullable<int> id, Nullable<int> result, Nullable<int> action)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateActionResult", idParameter, resultParameter, actionParameter);
+        }
+    
+        public virtual int dev_UpdateMessageChoiceResult(Nullable<int> id, Nullable<int> result, Nullable<int> messagechoice)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoiceResult", idParameter, resultParameter, messagechoiceParameter);
+        }
+    
+        public virtual int dev_UpdateResultTypeJSONField(Nullable<int> id, string jsonfield, Nullable<int> resulttype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var jsonfieldParameter = jsonfield != null ?
+                new ObjectParameter("jsonfield", jsonfield) :
+                new ObjectParameter("jsonfield", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONField", idParameter, jsonfieldParameter, resulttypeParameter);
         }
     }
 }

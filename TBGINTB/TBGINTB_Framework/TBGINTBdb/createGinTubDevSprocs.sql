@@ -1083,6 +1083,321 @@ END
 GO
 
 /******************************************************************************************************************************************/
+/*ResultType*******************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Adds a ResultType record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddResultType]
+	@name varchar(500)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[ResultTypes] ([Name])
+	VALUES (@name)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Updates a ResultType record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateResultType]
+	@id int,
+	@name varchar(500)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[ResultTypes] 
+	SET	[Name] = ISNULL(@name, [Name])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/3/2015
+-- Description:	Gets the Id and Name fields of all ResultType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllResultTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[ResultTypes]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/3/2015
+-- Description:	Gets data about a ResultType record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetResultType]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[ResultTypes]
+	WHERE [Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*ResultTypeJSONField**********************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddResultTypeJSONField] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Adds a ResultTypeJSONField record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddResultTypeJSONField]
+	@jsonfield varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dev].[ResultTypeJSONFields] ([JSONField], [ResultType])
+	VALUES (@jsonfield, @resulttype)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultTypeJSONField] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Updates a ResultTypeJSONField record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateResultTypeJSONField]
+	@id int,
+	@jsonfield varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dev].[ResultTypeJSONFields] 
+	SET	[JSONField] = ISNULL(@jsonfield, [JSONField]),
+		[ResultType] = ISNULL(@resulttype, [ResultType])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypeJSONFieldsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypeJSONFieldsForResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Gets the all ResultTypeJSONFields records associated with the specified ResultType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllResultTypeJSONFieldsForResultType]
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [JSONField],
+		   [ResultType]
+	FROM [dev].[ResultTypeJSONFields]
+	WHERE [ResultType] = @resulttype
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetResultTypeJSONField] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Gets data about a ResultTypeJSONField record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetResultTypeJSONField]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [JSONField],
+		   [ResultType]
+	FROM [dev].[ResultTypeJSONFields]
+	WHERE [Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*Result***********************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Adds a Result record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddResult]
+	@name varchar(500),
+	@jsondata varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Results] ([Name], [JSONData], [ResultType])
+	VALUES (@name, @jsondata, @resulttype)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Updates a Result record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateResult]
+	@id int,
+	@name varchar(500),
+	@jsondata varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[Results] 
+	SET	[Name] = ISNULL(@name, [Name]),
+		[JSONData] = @jsondata, 
+		[ResultType] = ISNULL(@resulttype, [ResultType])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Gets all Result records associated with a specified ResultType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllResultsForResultType]
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [JSONData],
+		   [ResultType]
+	FROM [dbo].[Results]
+	WHERE [ResultType] = @resulttype
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/4/2015
+-- Description:	Get a Result record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetResult]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [JSONData],
+		   [ResultType]
+	FROM [dbo].[Results]
+	WHERE [Id] = @id
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+/******************************************************************************************************************************************/
 /*Action***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
@@ -1192,165 +1507,105 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*ResultSourceType*************************************************************************************************************************/
+/*ActionResult*****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResultSourceType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddActionResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds a ResultSourceType record and returns the newly generated ID
+-- Create date: 6/4/2015
+-- Description:	Adds a ActionResult record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResultSourceType]
-	@name varchar(500)
+ALTER PROCEDURE [dev].[dev_AddActionResult]
+	@result int,
+	@action int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[ResultSourceTypes] ([Name])
-	VALUES (@name)
+	INSERT INTO [dbo].[ActionResults] ([Result], [Action])
+	VALUES (@result, @action)
 	
 	SELECT SCOPE_IDENTITY()
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultSourceType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateActionResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates a ResultSourceType record
+-- Create date: 6/4/2015
+-- Description:	Updates a ActionResult record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateResultSourceType]
+ALTER PROCEDURE [dev].[dev_UpdateActionResult]
 	@id int,
-	@name varchar(500)
+	@result int,
+	@action int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[ResultSourceTypes] 
-	SET	[Name] = ISNULL(@name, [Name])
+	UPDATE [dbo].[ActionResults] 
+	SET	[Result] = ISNULL(@result, [Result]),
+		[Action] = ISNULL(@action, [Action])
 	WHERE [Id] = @id
 
 END
 GO
 
-/******************************************************************************************************************************************/
-/*ResultType*******************************************************************************************************************************/
-/******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllActionResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllActionResultsForAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds a ResultType record and returns the newly generated ID
+-- Create date: 6/4/2015
+-- Description:	Gets all ActionResult records associated with the specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResultType]
-	@name varchar(500)
+ALTER PROCEDURE [dev].[dev_GetAllActionResultsForAction]
+	@action int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[ResultTypes] ([Name])
-	VALUES (@name)
-	
-	SELECT SCOPE_IDENTITY()
+	SELECT [Id],
+		   [Result],
+		   [Action]
+	FROM [dbo].[ActionResults]
+	WHERE [Action] = @action
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetActionResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates a ResultType record
+-- Create date: 6/3/2015
+-- Description:	Gets data about a ActionResult record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateResultType]
-	@id int,
-	@name varchar(500)
+ALTER PROCEDURE [dev].[dev_GetActionResult]
+	@id int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[ResultTypes] 
-	SET	[Name] = ISNULL(@name, [Name])
-	WHERE [Id] = @id
-
-END
-GO
-
-/******************************************************************************************************************************************/
-/*Result***********************************************************************************************************************************/
-/******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResult] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds a Result record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddResult]
-	@jsondata varchar(MAX),
-	@source int,
-	@resultsourcetype int,
-	@resulttype int
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[Results] ([JSONData], [Source], [ResultSourceType], [ResultType])
-	VALUES (@jsondata, @source, @resultsourcetype, @resulttype)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResult] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates a Result record
--- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateResult]
-	@id int,
-	@jsondata varchar(MAX),
-	@source int,
-	@resultsourcetype int,
-	@resulttype int
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	UPDATE [dbo].[Results] 
-	SET	[JSONData] = ISNULL(@jsondata, [JSONData]), 
-		[Source] = ISNULL(@source, [Source]), 
-		[ResultSourceType] = ISNULL(@resultsourcetype, [ResultSourceType]),
-		[ResultType] = ISNULL(@resulttype, [ResultType])
+	SELECT [Id],
+		   [Result],
+		   [Action]
+	FROM [dbo].[ActionResults]
 	WHERE [Id] = @id
 
 END
@@ -1574,18 +1829,18 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*MessageChoiceOutcome*********************************************************************************************************************/
+/*MessageChoiceResult*********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoiceOutcome] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoiceResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an MessageChoiceOutcome record and returns the newly generated ID
+-- Description:	Adds an MessageChoiceResult record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddMessageChoiceOutcome]
+ALTER PROCEDURE [dev].[dev_AddMessageChoiceResult]
 	@result int,
 	@messagechoice int
 AS
@@ -1594,7 +1849,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[MessageChoiceOutcomes] ([Result], [MessageChoice])
+	INSERT INTO [dbo].[MessageChoiceResults] ([Result], [MessageChoice])
 	VALUES (@result, @messagechoice)
 	
 	SELECT SCOPE_IDENTITY()
@@ -1602,15 +1857,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoiceOutcome]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessageChoiceOutcome] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessageChoiceResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Updates an MessageChoiceOutcome record
+-- Description:	Updates an MessageChoiceResult record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateMessageChoiceOutcome]
+ALTER PROCEDURE [dev].[dev_UpdateMessageChoiceResult]
 	@id int,
 	@result int,
 	@messagechoice int
@@ -1620,7 +1875,7 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[MessageChoiceOutcomes]
+	UPDATE [dbo].[MessageChoiceResults]
 	SET [Result] = ISNULL(@result, [Result]),
 		[MessageChoice] = ISNULL(@messagechoice, [MessageChoice])
 	WHERE [Id] = @id

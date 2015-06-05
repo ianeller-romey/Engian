@@ -141,48 +141,52 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if(ActionId == args.Id)
             {
-                ChangeActionVerbType(args.VerbType);
-                ChangeActionNoun(args.Noun);
+                SetActionVerbType(args.VerbType);
+                SetActionNoun(args.Noun);
             }
         }
 
         void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)
         {
-            SetActionVerbType(args.Id);
+            ResetActionVerbType(args.Id);
         }
         
         void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
             if (ParagraphStateId == args.ParagraphState)
-                SetActionNoun(args.Id);
+                ResetActionNoun(args.Id);
         }
 
         private void SetActionVerbType(int actionVerbType)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item =
-                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().SingleOrDefault(i => ActionVerbType.HasValue && ActionVerbType.Value == actionVerbType && i.VerbTypeId == actionVerbType);
+                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
+                SingleOrDefault(i => i.VerbTypeId == actionVerbType);
             if (item != null)
                 m_comboBox_actionVerbType.SelectedItem = item;
         }
 
         private void SetActionNoun(int actionNoun)
         {
-            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().SingleOrDefault(i => ActionNoun.HasValue && ActionNoun.Value == actionNoun && i.NounId == actionNoun);
+            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
+                SingleOrDefault(i => i.NounId == actionNoun);
             if (item != null)
                 m_comboBox_actionNoun.SelectedItem = item;
         }
 
-        private void ChangeActionVerbType(int actionVerbType)
+        private void ResetActionVerbType(int actionVerbType)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item =
-                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().SingleOrDefault(i => i.VerbTypeId == actionVerbType);
+                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
+                SingleOrDefault(i => ActionVerbType.HasValue && ActionVerbType.Value == actionVerbType && i.VerbTypeId == actionVerbType);
             if (item != null)
                 m_comboBox_actionVerbType.SelectedItem = item;
         }
 
-        private void ChangeActionNoun(int actionNoun)
+        private void ResetActionNoun(int actionNoun)
         {
-            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().SingleOrDefault(i => i.NounId == actionNoun);
+            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
+                SingleOrDefault(i => ActionNoun.HasValue && ActionNoun.Value == actionNoun && i.NounId == actionNoun);
             if (item != null)
                 m_comboBox_actionNoun.SelectedItem = item;
         }
