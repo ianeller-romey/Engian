@@ -40,7 +40,7 @@ namespace TBGINTB_Builder.BuilderControls
                 return
                     string.Format
                     (
-                        "{{\"result\":{{{0}}}}}",
+                        "{{{0}}}",
                         m_stackPanel_jsonProperties.Children.OfType<GroupBox_JSONPropertyValueEditor>().
                         Select(g => string.Format("\"{0}\":\"{1}\"", g.JSONPropertyName, g.JSONPropertyValue)).
                         Aggregate((x, y) => string.Format("{0}, {1}", x, y))
@@ -170,7 +170,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // ResultTypeId
-            m_comboBox_resultType = new ComboBox_ResultType();
+            m_comboBox_resultType = new ComboBox_ResultType() { IsEnabled = false };
             m_comboBox_resultType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
             m_comboBox_resultType.SelectionChanged += ComboBox_ResultType_SelectionChanged;
             SetResultTypeId(ResultTypeId);

@@ -28,6 +28,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
+        public int? SelectedVerbTypeId { get; private set; }
+        public string SelectedVerbTypeName { get; private set; }
+
         public List<UIElement> EditingControls
         {
             get
@@ -93,14 +96,23 @@ namespace TBGINTB_Builder.BuilderControls
             ComboBox_VerbType.ComboBoxItem_VerbType comboBoxItem = null;
             if (comboBox != null && (comboBoxItem = comboBox.SelectedItem as ComboBox_VerbType.ComboBoxItem_VerbType) != null)
             {
-                if(m_itemsControl_verb != null)
+                SelectedVerbTypeId = comboBoxItem.VerbTypeId;
+                SelectedVerbTypeName = comboBoxItem.VerbTypeName;
+
+                if (m_itemsControl_verb != null)
                     Children.Remove(m_itemsControl_verb);
-                m_itemsControl_verb = new ItemsControl_Verb(comboBoxItem.VerbTypeId);
+
+                m_itemsControl_verb = new ItemsControl_Verb(SelectedVerbTypeId.Value);
                 m_itemsControl_verb.IsEnabled = m_enableEditing;
                 m_itemsControl_verb.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
                 this.SetGridRowColumn(m_itemsControl_verb, 0, 1);
 
-                GinTubBuilderManager.LoadAllVerbsForVerbType(comboBoxItem.VerbTypeId);
+                GinTubBuilderManager.LoadAllVerbsForVerbType(SelectedVerbTypeId.Value);
+            }
+            else if (comboBoxItem == null)
+            {
+                SelectedVerbTypeId = null;
+                SelectedVerbTypeName = null;
             }
         }
 

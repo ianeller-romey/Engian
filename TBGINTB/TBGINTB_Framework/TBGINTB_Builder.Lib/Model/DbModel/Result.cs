@@ -42,11 +42,11 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         [DataMember]
         public string JSONData
         {
-            get { return m_name; }
+            get { return m_jsonData; }
             private set
             {
-                if (m_name != value)
-                    m_name = value;
+                if (m_jsonData != value)
+                    m_jsonData = value;
             }
         }
 

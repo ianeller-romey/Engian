@@ -68,10 +68,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Result.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultTypeJSONPropertyModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultModification.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeJSONPropertyData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultData.cs" />
     <Compile Include="BuilderControls\ItemsControls\ItemsControl_Result.cs" />

@@ -33,6 +33,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
+        public int? SelectedResultTypeId { get; private set; }
+        public string SelectedResultTypeName { get; private set; }
+
         public List<UIElement> EditingControls
         {
             get
@@ -105,14 +108,17 @@ namespace TBGINTB_Builder.BuilderControls
             ComboBox_ResultType.ComboBoxItem_ResultType comboBoxItem = null;
             if (comboBox != null && (comboBoxItem = comboBox.SelectedItem as ComboBox_ResultType.ComboBoxItem_ResultType) != null)
             {
-                if(m_itemsControl_resultTypeJSONProperty != null)
+                SelectedResultTypeId = comboBoxItem.ResultTypeId;
+                SelectedResultTypeName = comboBoxItem.ResultTypeName;
+
+                if (m_itemsControl_resultTypeJSONProperty != null)
                     Children.Remove(m_scrollViewer_resultTypeJSONProperty); // remove the scrollviewer, because its child is the control we really want to remove
-                if(m_itemsControl_results != null)
+                if (m_itemsControl_results != null)
                     Children.Remove(m_scrollViewer_results); // remove the scrollviewer, because its child is the control we really want to remove
 
                 ////////
                 // ResultTypeJSONProperties
-                m_itemsControl_resultTypeJSONProperty = new ItemsControl_ResultTypeJSONProperty(comboBoxItem.ResultTypeId);
+                m_itemsControl_resultTypeJSONProperty = new ItemsControl_ResultTypeJSONProperty(SelectedResultTypeId.Value);
                 m_itemsControl_resultTypeJSONProperty.IsEnabled = m_enableEditing;
                 m_itemsControl_resultTypeJSONProperty.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
 
@@ -122,7 +128,7 @@ namespace TBGINTB_Builder.BuilderControls
 
                 ////////
                 // Results
-                m_itemsControl_results = new ItemsControl_Result(comboBoxItem.ResultTypeId);
+                m_itemsControl_results = new ItemsControl_Result(SelectedResultTypeId.Value);
                 m_itemsControl_results.IsEnabled = m_enableEditing;
                 m_itemsControl_results.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
 
@@ -132,8 +138,13 @@ namespace TBGINTB_Builder.BuilderControls
                 this.SetGridRowColumn(m_scrollViewer_results, 0, 1);
 
                 //
-                GinTubBuilderManager.LoadAllResultTypeJSONPropertiesForResultType(comboBoxItem.ResultTypeId);
-                GinTubBuilderManager.LoadAllResultsForResultType(comboBoxItem.ResultTypeId);
+                GinTubBuilderManager.LoadAllResultTypeJSONPropertiesForResultType(SelectedResultTypeId.Value);
+                GinTubBuilderManager.LoadAllResultsForResultType(SelectedResultTypeId.Value);
+            }
+            else if (comboBoxItem == null)
+            {
+                SelectedResultTypeId = null;
+                SelectedResultTypeName = null;
             }
         }
 

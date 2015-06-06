@@ -54,6 +54,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             m_textBox_propertyValue = new TextBox();
             m_textBox_propertyValue.TextChanged += TextBox_PropertyValue_TextChanged;
+            m_textBox_propertyValue.Text = JSONPropertyValue;
             Content = m_textBox_propertyValue;
         }
 
