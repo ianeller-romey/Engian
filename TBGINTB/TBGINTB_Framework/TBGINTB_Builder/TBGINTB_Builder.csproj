@@ -43,6 +43,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -64,33 +68,42 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuilderControls\Button_RoomOnFloor.cs" />
-    <Compile Include="BuilderControls\ComboBox_Noun.cs" />
-    <Compile Include="BuilderControls\ComboBox_ResultType.cs" />
-    <Compile Include="BuilderControls\Grid_ActionData.cs" />
-    <Compile Include="BuilderControls\Grid_ResultTypeJSONFieldData.cs" />
-    <Compile Include="BuilderControls\Grid_VerbUnderVerbType.cs" />
-    <Compile Include="BuilderControls\Grid_ActionUnderNoun.cs" />
-    <Compile Include="BuilderControls\Grid_VerbData.cs" />
-    <Compile Include="BuilderControls\ItemsControl_Verb.cs" />
-    <Compile Include="BuilderControls\ComboBox_VerbType.cs" />
-    <Compile Include="BuilderControls\ComboBox_ParagraphStateNouns.cs" />
-    <Compile Include="BuilderControls\ComboBox_Location.cs" />
-    <Compile Include="BuilderControls\Grid_VerbTypeData.cs" />
-    <Compile Include="BuilderControls\Grid_NounsAndActions.cs" />
-    <Compile Include="BuilderControls\Grid_ParagraphsAndStates.cs" />
-    <Compile Include="BuilderControls\Grid_ParagraphData.cs" />
-    <Compile Include="BuilderControls\Grid_NounData.cs" />
-    <Compile Include="BuilderControls\Grid_ParagraphStateUnderParagraph.cs" />
-    <Compile Include="BuilderControls\Grid_ParagraphStateData.cs" />
-    <Compile Include="BuilderControls\Grid_RoomStateUnderRoom.cs" />
-    <Compile Include="BuilderControls\Grid_LocationData.cs" />
-    <Compile Include="BuilderControls\Grid_RoomAndStates.cs" />
-    <Compile Include="BuilderControls\Grid_RoomData.cs" />
-    <Compile Include="BuilderControls\Grid_RoomsOnFloor.cs" />
-    <Compile Include="BuilderControls\Grid_RoomStateData.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ResultTypeJSONPropertyModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ResultModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ResultTypeData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ResultData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ResultTypeJSONPropertyData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ResultData.cs" />
+    <Compile Include="BuilderControls\ItemsControls\ItemsControl_Result.cs" />
+    <Compile Include="BuilderControls\Misc\GroupBox_JSONPropertyValueEditor.cs" />
+    <Compile Include="BuilderControls\Misc\Button_RoomOnFloor.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Noun.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_ResultType.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ActionData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ResultTypeJSONPropertyData.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_VerbModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ActionModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_VerbData.cs" />
+    <Compile Include="BuilderControls\ItemsControls\ItemsControl_ResultTypeJSONField.cs" />
+    <Compile Include="BuilderControls\ItemsControls\ItemsControl_Verb.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_VerbType.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_ParagraphStateNouns.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Location.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_VerbTypeData.cs" />
+    <Compile Include="BuilderControls\CoalescingGrids\Grid_NounsAndActions.cs" />
+    <Compile Include="BuilderControls\CoalescingGrids\Grid_ParagraphsAndStates.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ParagraphData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_NounData.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ParagraphStateModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ParagraphStateData.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_RoomStateModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_LocationData.cs" />
+    <Compile Include="BuilderControls\CoalescingGrids\Grid_RoomAndStates.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_RoomData.cs" />
+    <Compile Include="BuilderControls\Misc\Grid_RoomsOnFloor.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_RoomStateData.cs" />
     <Compile Include="BuilderControls\IRegisterGinTubBuilderEvents.cs" />
-    <Compile Include="BuilderControls\TabItem_Area.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Area.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,15 +112,16 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BuilderControls\TabItem_Verbs.cs" />
-    <Compile Include="BuilderControls\TabItem_Locations.cs" />
-    <Compile Include="BuilderControls\Window_VerbData.cs" />
-    <Compile Include="BuilderControls\Window_ActionData.cs" />
-    <Compile Include="BuilderControls\Window_NounData.cs" />
-    <Compile Include="BuilderControls\Window_ParagraphStateData.cs" />
-    <Compile Include="BuilderControls\Window_ParagraphData.cs" />
-    <Compile Include="BuilderControls\Window_RoomStateData.cs" />
-    <Compile Include="BuilderControls\Window_RoomData.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Results.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Verbs.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Locations.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_VerbData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ActionData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_NounData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ParagraphStateData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ParagraphData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_RoomStateData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
     <Compile Include="HelperControls\Window_OpenFile.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />

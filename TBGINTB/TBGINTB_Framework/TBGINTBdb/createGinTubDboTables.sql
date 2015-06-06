@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[ResultTypes] (
 )
 
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Move')
+VALUES ('Movement')
 
 INSERT INTO [dbo].[ResultTypes] ([Name])
 VALUES ('Item Acquisition')
@@ -93,9 +93,9 @@ VALUES ('Paragraph State Change')
 INSERT INTO [dbo].[ResultTypes] ([Name])
 VALUES ('Room State Change')
 
-CREATE TABLE [dev].[ResultTypeJSONFields] (
+CREATE TABLE [dev].[ResultTypeJSONProperties] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[JSONField] varchar(MAX) NOT NULL,
+	[JSONProperty] varchar(MAX) NOT NULL,
 	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 )
 

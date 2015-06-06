@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace TBGINTB_Builder.Lib.Model.DbModel
 {
     [DataContract]
-    class ResultTypeJSONField
+    class ResultTypeJSONProperty
     {
         int m_id;
-        string m_jsonField;
+        string m_jsonProperty;
         int m_resultType;
 
         [DataMember]
@@ -28,13 +28,13 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         }
 
         [DataMember]
-        public string JSONField
+        public string JSONProperty
         {
-            get { return m_jsonField; }
+            get { return m_jsonProperty; }
             private set
             {
-                if (m_jsonField != value)
-                    m_jsonField = value;
+                if (m_jsonProperty != value)
+                    m_jsonProperty = value;
             }
         }
 

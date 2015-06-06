@@ -61,6 +61,7 @@
     <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Model\DbModel\Action.cs" />
     <Compile Include="Model\DbModel\ResultTypeJSONField.cs" />
+    <Compile Include="Model\DbModel\Result.cs" />
     <Compile Include="Model\DbModel\Verb.cs" />
     <Compile Include="Model\DbModel\ResultType.cs" />
     <Compile Include="Model\DbModel\VerbType.cs" />
@@ -119,6 +120,9 @@
     <Compile Include="Repository\dev_GetAllResultTypeJSONFieldsForResultType_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllResultTypeJSONPropertiesForResultType_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllResultTypes_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
@@ -153,6 +157,9 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetResultTypeJSONField_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetResultTypeJSONProperty_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetResultType_Result.cs">

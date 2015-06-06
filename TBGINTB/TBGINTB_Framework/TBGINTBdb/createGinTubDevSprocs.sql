@@ -1181,19 +1181,19 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*ResultTypeJSONField**********************************************************************************************************************/
+/*ResultTypeJSONProperty*******************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResultTypeJSONField] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddResultTypeJSONProperty] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Adds a ResultTypeJSONField record and returns the newly generated ID
+-- Description:	Adds a ResultTypeJSONProperty record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResultTypeJSONField]
-	@jsonfield varchar(MAX),
+ALTER PROCEDURE [dev].[dev_AddResultTypeJSONProperty]
+	@jsonproperty varchar(MAX),
 	@resulttype int
 AS
 BEGIN
@@ -1201,25 +1201,25 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dev].[ResultTypeJSONFields] ([JSONField], [ResultType])
-	VALUES (@jsonfield, @resulttype)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+	VALUES (@jsonproperty, @resulttype)
 	
 	SELECT SCOPE_IDENTITY()
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultTypeJSONField] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultTypeJSONProperty] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Updates a ResultTypeJSONField record
+-- Description:	Updates a ResultTypeJSONProperty record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateResultTypeJSONField]
+ALTER PROCEDURE [dev].[dev_UpdateResultTypeJSONProperty]
 	@id int,
-	@jsonfield varchar(MAX),
+	@jsonproperty varchar(MAX),
 	@resulttype int
 AS
 BEGIN
@@ -1227,23 +1227,23 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dev].[ResultTypeJSONFields] 
-	SET	[JSONField] = ISNULL(@jsonfield, [JSONField]),
+	UPDATE [dev].[ResultTypeJSONProperties] 
+	SET	[JSONProperty] = ISNULL(@jsonproperty, [JSONProperty]),
 		[ResultType] = ISNULL(@resulttype, [ResultType])
 	WHERE [Id] = @id
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypeJSONFieldsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypeJSONFieldsForResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypeJSONPropertiesForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypeJSONPropertiesForResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets the all ResultTypeJSONFields records associated with the specified ResultType
+-- Description:	Gets the all ResultTypeJSONProperties records associated with the specified ResultType
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultTypeJSONFieldsForResultType]
+ALTER PROCEDURE [dev].[dev_GetAllResultTypeJSONPropertiesForResultType]
 	@resulttype int
 AS
 BEGIN
@@ -1252,23 +1252,23 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT [Id],
-		   [JSONField],
+		   [JSONProperty],
 		   [ResultType]
-	FROM [dev].[ResultTypeJSONFields]
+	FROM [dev].[ResultTypeJSONProperties]
 	WHERE [ResultType] = @resulttype
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultTypeJSONField]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetResultTypeJSONField] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetResultTypeJSONProperty] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets data about a ResultTypeJSONField record in the database
+-- Description:	Gets data about a ResultTypeJSONProperty record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetResultTypeJSONField]
+ALTER PROCEDURE [dev].[dev_GetResultTypeJSONProperty]
 	@id int
 AS
 BEGIN
@@ -1277,9 +1277,9 @@ BEGIN
 	SET NOCOUNT ON;
 
 	SELECT [Id],
-		   [JSONField],
+		   [JSONProperty],
 		   [ResultType]
-	FROM [dev].[ResultTypeJSONFields]
+	FROM [dev].[ResultTypeJSONProperties]
 	WHERE [Id] = @id
 
 END

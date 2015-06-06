@@ -1140,5 +1140,53 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONField", idParameter, jsonfieldParameter, resulttypeParameter);
         }
+    
+        public virtual ObjectResult<Nullable<decimal>> dev_AddResultTypeJSONProperty(string jsonproperty, Nullable<int> resulttype)
+        {
+            var jsonpropertyParameter = jsonproperty != null ?
+                new ObjectParameter("jsonproperty", jsonproperty) :
+                new ObjectParameter("jsonproperty", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResultTypeJSONProperty", jsonpropertyParameter, resulttypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllResultTypeJSONPropertiesForResultType_Result> dev_GetAllResultTypeJSONPropertiesForResultType(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultTypeJSONPropertiesForResultType_Result>("dev_GetAllResultTypeJSONPropertiesForResultType", resulttypeParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetResultTypeJSONProperty_Result> dev_GetResultTypeJSONProperty(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetResultTypeJSONProperty_Result>("dev_GetResultTypeJSONProperty", idParameter);
+        }
+    
+        public virtual int dev_UpdateResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> resulttype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var jsonpropertyParameter = jsonproperty != null ?
+                new ObjectParameter("jsonproperty", jsonproperty) :
+                new ObjectParameter("jsonproperty", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONProperty", idParameter, jsonpropertyParameter, resulttypeParameter);
+        }
     }
 }
