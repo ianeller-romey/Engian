@@ -140,6 +140,9 @@
         <Function Name="dev_GetAllParagraphStatesForParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="paragraph" Type="int" Mode="In" />
         </Function>
+        <Function Name="dev_GetAllResultsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_GetAllResultsForResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
@@ -674,15 +677,18 @@
             <Parameter Name="resulttype" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetAllResultTypeJSONPropertiesForResultType" ReturnType="Collection(GinTubModel.dev_GetAllResultTypeJSONPropertiesForResultType_Result)">
-            <Parameter Name="resulttype" Mode="In" Type="Int32" />
+          <Parameter Name="resulttype" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetResultTypeJSONProperty" ReturnType="Collection(GinTubModel.dev_GetResultTypeJSONProperty_Result)">
-            <Parameter Name="id" Mode="In" Type="Int32" />
+          <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdateResultTypeJSONProperty">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="jsonproperty" Mode="In" Type="String" />
             <Parameter Name="resulttype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetAllResultsForAction" ReturnType="Collection(GinTubModel.dev_GetAllResultsForAction_Result)">
+            <Parameter Name="action" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAllAreas_Result">
@@ -858,6 +864,12 @@
         <ComplexType Name="dev_GetResultTypeJSONProperty_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="JSONProperty" Nullable="false" />
+          <Property Type="Int32" Name="ResultType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAllResultsForAction_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="JSONData" Nullable="true" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
       </Schema>
@@ -1199,6 +1211,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="dev_UpdateResultTypeJSONProperty" FunctionName="GinTubModel.Store.dev_UpdateResultTypeJSONProperty" />
+          <FunctionImportMapping FunctionImportName="dev_GetAllResultsForAction" FunctionName="GinTubModel.Store.dev_GetAllResultsForAction">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllResultsForAction_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="JSONData" ColumnName="JSONData" />
+                <ScalarProperty Name="ResultType" ColumnName="ResultType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -64,6 +64,7 @@
     <Compile Include="Model\DbModel\Result.cs" />
     <Compile Include="Model\DbModel\Verb.cs" />
     <Compile Include="Model\DbModel\ResultType.cs" />
+    <Compile Include="Model\DbModel\ActionResult.cs" />
     <Compile Include="Model\DbModel\VerbType.cs" />
     <Compile Include="Model\DbModel\Location.cs" />
     <Compile Include="Model\DbModel\Noun.cs" />
@@ -112,6 +113,9 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllParagraphStatesForParagraph_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllResultsForAction_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllResultsForResultType_Result.cs">

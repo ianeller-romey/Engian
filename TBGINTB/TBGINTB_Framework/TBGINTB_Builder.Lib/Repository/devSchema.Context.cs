@@ -1188,5 +1188,14 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONProperty", idParameter, jsonpropertyParameter, resulttypeParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAllResultsForAction_Result> dev_GetAllResultsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultsForAction_Result>("dev_GetAllResultsForAction", actionParameter);
+        }
     }
 }

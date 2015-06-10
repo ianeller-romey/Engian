@@ -118,24 +118,39 @@ CREATE TABLE [dbo].[ActionResults] (
 	[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id])
 )
 
-CREATE TABLE [dbo].[RequirementSourceTypes] (
+CREATE TABLE [dbo].[Items] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
 )
 
-INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
-VALUES ('Item')
-
-INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
-VALUES ('Event')
-
-INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
-VALUES ('Character')
-
-CREATE TABLE [dbo].[Requirements] (
+CREATE TABLE [dbo].[Events] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[Requirement] int NOT NULL,
-	[RequirementSourceType] int FOREIGN KEY REFERENCES [dbo].[RequirementSourceTypes]([Id]),
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[Characters] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Name] varchar(500) NOT NULL,
+	[Description] varchar(MAX) NOT NULL
+)
+
+CREATE TABLE [dbo].[ItemActionRequirements] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
+	[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
+)
+
+CREATE TABLE [dbo].[EventActionRequirements] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
+	[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
+)
+
+CREATE TABLE [dbo].[CharacterActionRequirements] (
+	[Id] int PRIMARY KEY IDENTITY,
+	[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Characters]([Id]),
 	[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 )
 
@@ -194,12 +209,6 @@ CREATE TABLE [dbo].[PlayerParagraphStates] (
 	[CheckpointDate] datetime NOT NULL
 )
 
-CREATE TABLE [dbo].[Items] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL,
-	[Description] varchar(MAX) NOT NULL
-)
-
 CREATE TABLE [dbo].[PlayerInventory] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
@@ -207,22 +216,10 @@ CREATE TABLE [dbo].[PlayerInventory] (
 	[CheckpointDate] datetime NOT NULL
 )
 
-CREATE TABLE [dbo].[Events] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL,
-	[Description] varchar(MAX) NOT NULL
-)
-
 CREATE TABLE [dbo].[PlayerHistory] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
 	[CheckpointDate] datetime NOT NULL
-)
-
-CREATE TABLE [dbo].[Characters] (
-	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL,
-	[Description] varchar(MAX) NOT NULL
 )
 
 CREATE TABLE [dbo].[PlayerParty] (

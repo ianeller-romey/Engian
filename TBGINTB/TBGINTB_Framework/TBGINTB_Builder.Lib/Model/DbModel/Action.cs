@@ -13,8 +13,8 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
     class Action
     {
         int m_id;
-        int m_noun;
         int m_verbType;
+        int m_noun;
 
         [DataMember]
         public int Id
@@ -28,17 +28,6 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         }
 
         [DataMember]
-        public int Noun
-        {
-            get { return m_noun; }
-            private set
-            {
-                if (m_noun != value)
-                    m_noun = value;
-            }
-        }
-
-        [DataMember]
         public int VerbType
         {
             get { return m_verbType; }
@@ -46,6 +35,17 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
             {
                 if (m_verbType != value)
                     m_verbType = value;
+            }
+        }
+
+        [DataMember]
+        public int Noun
+        {
+            get { return m_noun; }
+            private set
+            {
+                if (m_noun != value)
+                    m_noun = value;
             }
         }
     }

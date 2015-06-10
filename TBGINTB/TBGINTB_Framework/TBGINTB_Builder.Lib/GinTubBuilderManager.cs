@@ -846,6 +846,66 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region ActionResults
+
+        public class ActionResultEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Result { get; set; }
+            public int Action { get; set; }
+            public ActionResultEventArgs(int id, int result, int action)
+            {
+                Id = id;
+                Result = result;
+                Action = action;
+            }
+        }
+
+
+        public class ActionResultAddedEventArgs : ActionResultEventArgs
+        {
+            public ActionResultAddedEventArgs(int id, int result, int action) : base(id, result, action) { }
+        }
+        public delegate void ActionResultAddedEventHandler(object sender, ActionResultAddedEventArgs args);
+        public static event ActionResultAddedEventHandler ActionResultAdded;
+        private static void OnActionResultAdded(ActionResult actionResult)
+        {
+            if (ActionResultAdded != null)
+                ActionResultAdded(typeof(GinTubBuilderManager),
+                    new ActionResultAddedEventArgs(actionResult.Id, actionResult.Result, actionResult.Action));
+        }
+
+
+        public class ActionResultModifiedEventArgs : ActionResultEventArgs
+        {
+            public ActionResultModifiedEventArgs(int id, int result, int action) : base(id, result, action) { }
+        }
+        public delegate void ActionResultModifiedEventHandler(object sender, ActionResultModifiedEventArgs args);
+        public static event ActionResultModifiedEventHandler ActionResultModified;
+        private static void OnActionResultModified(ActionResult actionResult)
+        {
+            if (ActionResultModified != null)
+                ActionResultModified(typeof(GinTubBuilderManager),
+                    new ActionResultModifiedEventArgs(actionResult.Id, actionResult.Result, actionResult.Action));
+        }
+
+
+        public class ActionResultGetEventArgs : ActionResultEventArgs
+        {
+            public ActionResultGetEventArgs(int id, int result, int action) : base(id, result, action) { }
+        }
+        public delegate void ActionResultGetEventHandler(object sender, ActionResultGetEventArgs args);
+        public static event ActionResultGetEventHandler ActionResultGet;
+        private static void OnActionResultGet(ActionResult actionResult)
+        {
+            if (ActionResultGet != null)
+                ActionResultGet(typeof(GinTubBuilderManager),
+                    new ActionResultGetEventArgs(actionResult.Id, actionResult.Result, actionResult.Action));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -894,6 +954,10 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetResult_Result, Result>();
             Mapper.CreateMap<dev_GetAllResultsForResultType_Result, Result>();
+            Mapper.CreateMap<dev_GetAllResultsForAction_Result, Result>();
+
+            Mapper.CreateMap<dev_GetActionResult_Result, ActionResult>();
+            Mapper.CreateMap<dev_GetAllActionResultsForAction_Result, ActionResult>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -1414,6 +1478,59 @@ namespace TBGINTB_Builder.Lib
             List<Result> results = SelectAllResultsForResultType(resultTypeId);
             foreach (var result in results)
                 OnResultGet(result);
+        }
+
+        public static void LoadAllResultsForAction(int actionId)
+        {
+            List<Result> results = SelectAllResultsForAction(actionId);
+            foreach (var result in results)
+                OnResultAdded(result);
+        }
+
+        public static void GetAllResultsForAction(int actionId)
+        {
+            List<Result> results = SelectAllResultsForAction(actionId);
+            foreach (var result in results)
+                OnResultGet(result);
+        }
+
+        #endregion
+
+
+        #region ActionResults
+
+        public static void AddActionResult(int actionResultResult, int actionResultAction)
+        {
+            int id = InsertActionResult(actionResultResult, actionResultAction);
+            ActionResult actionResult = SelectActionResult(id);
+            OnActionResultAdded(actionResult);
+        }
+
+        public static void ModifyActionResult(int actionResultId, int actionResultResult, int actionResultAction)
+        {
+            UpdateActionResult(actionResultId, actionResultResult, actionResultAction);
+            ActionResult actionResult = SelectActionResult(actionResultId);
+            OnActionResultModified(actionResult);
+        }
+
+        public static void GetActionResult(int actionResultId)
+        {
+            ActionResult actionResult = SelectActionResult(actionResultId);
+            OnActionResultGet(actionResult);
+        }
+
+        public static void LoadAllActionResultsForAction(int actionId)
+        {
+            List<ActionResult> actionResults = SelectAllActionResultsForAction(actionId);
+            foreach (var actionResult in actionResults)
+                OnActionResultAdded(actionResult);
+        }
+
+        public static void GetAllActionResultsForAction(int actionId)
+        {
+            List<ActionResult> actionResults = SelectAllActionResultsForAction(actionId);
+            foreach (var actionResult in actionResults)
+                OnActionResultGet(actionResult);
         }
 
         #endregion
@@ -2359,6 +2476,95 @@ namespace TBGINTB_Builder.Lib
 
             List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
             return results;
+        }
+
+        private static List<Result> SelectAllResultsForAction(int action)
+        {
+            ObjectResult<dev_GetAllResultsForAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllResultsForAction(action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllResults", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllResults", new Exception("No [Results] records found."));
+
+            List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
+            return results;
+        }
+
+        #endregion
+
+
+        #region ActionResults
+
+        private static int InsertActionResult(int result, int action)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddActionResult(result, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddActionResult", e);
+            }
+            var reslt = databaseResult.FirstOrDefault();
+            if (!reslt.HasValue)
+                throw new GinTubDatabaseException("dev_AddActionResult", new Exception("No [Id] was returned after [ActionResult] INSERT."));
+
+            return (int)reslt.Value;
+        }
+
+        private static void UpdateActionResult(int id, int result, int action)
+        {
+            try
+            {
+                m_entities.dev_UpdateActionResult(id, result, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateActionResult", e);
+            }
+        }
+
+        private static ActionResult SelectActionResult(int id)
+        {
+            ObjectResult<dev_GetActionResult_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetActionResult(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetActionResult", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetActionResult", new Exception(string.Format("No [ActionResults] record found with [Id] = {0}.", id)));
+
+            ActionResult actionResult = Mapper.Map<ActionResult>(databaseResult.Single());
+            return actionResult;
+        }
+
+        private static List<ActionResult> SelectAllActionResultsForAction(int action)
+        {
+            ObjectResult<dev_GetAllActionResultsForAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllActionResultsForAction(action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllActionResultsForRoom", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllActionResultsForRoom", new Exception("No [ActionResults] records found."));
+
+            List<ActionResult> actionResults = databaseResult.Select(r => Mapper.Map<ActionResult>(r)).ToList();
+            return actionResults;
         }
 
         #endregion

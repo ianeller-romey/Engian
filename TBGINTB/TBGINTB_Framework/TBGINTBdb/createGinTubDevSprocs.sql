@@ -1369,6 +1369,38 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/9/2015
+-- Description:	Gets all Result records associated with all ResultTypes associated with the specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllResultsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT r.[Id],
+		   r.[Name],
+		   r.[JSONData],
+		   r.[ResultType]
+	FROM [dbo].[Results] r
+	INNER JOIN [dbo].[ActionResults] ar
+	ON ar.[Result] = r.[Id]
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[ResultTypes] rt
+	ON r.[ResultType] = rt.[Id]
+	WHERE a.[Id] = @action
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetResult] AS SELECT 1')
 GO

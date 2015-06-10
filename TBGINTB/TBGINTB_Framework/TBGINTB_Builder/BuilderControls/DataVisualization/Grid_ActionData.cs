@@ -59,6 +59,8 @@ namespace TBGINTB_Builder.BuilderControls
 
             foreach (var e in EditingControls)
                 e.IsEnabled = enableEditing;
+            if (!enableEditing)
+                MouseLeftButtonDown += Grid_ActionData_MouseLeftButtonDown;
 
             GinTubBuilderManager.VerbTypeAdded += GinTubBuilderManager_VerbTypeAdded;
             GinTubBuilderManager.NounAdded += GinTubBuilderManager_NounAdded;
@@ -137,7 +139,7 @@ namespace TBGINTB_Builder.BuilderControls
             grid_noun.SetGridRowColumn(label_actionNoun, 0, 0);
         }
 
-        void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
+        private void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
         {
             if(ActionId == args.Id)
             {
@@ -146,12 +148,12 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)
+        private void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)
         {
             ResetActionVerbType(args.Id);
         }
-        
-        void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
+
+        private void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
             if (ParagraphStateId == args.ParagraphState)
                 ResetActionNoun(args.Id);
@@ -191,18 +193,24 @@ namespace TBGINTB_Builder.BuilderControls
                 m_comboBox_actionNoun.SelectedItem = item;
         }
 
-        void ComboBox_ActionVerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_ActionVerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item;
             if (m_comboBox_actionVerbType.SelectedItem != null && (item = m_comboBox_actionVerbType.SelectedItem as ComboBox_VerbType.ComboBoxItem_VerbType) != null)
                 ActionVerbType = item.VerbTypeId;
         }
 
-        void ComboBox_ActionNoun_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_ActionNoun_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Noun.ComboBoxItem_Noun item;
             if (m_comboBox_actionNoun.SelectedItem != null && (item = m_comboBox_actionNoun.SelectedItem as ComboBox_Noun.ComboBoxItem_Noun) != null)
                 ActionNoun = item.NounId;
+        }
+
+        private void Grid_ActionData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (ActionId.HasValue)
+                GinTubBuilderManager.GetAction(ActionId.Value);
         }
 
         #endregion
