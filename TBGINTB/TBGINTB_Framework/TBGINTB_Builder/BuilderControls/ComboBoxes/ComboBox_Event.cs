@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+using TBGINTB_Builder.HelperControls;
+using TBGINTB_Builder.Lib;
+
+
+namespace TBGINTB_Builder.BuilderControls
+{
+    public class ComboBox_Event : ComboBox, IRegisterGinTubEventsOnlyWhenActive
+    {
+        #region MEMBER FIELDS
+
+        private readonly ComboBoxItem c_comboBoxEvent_newEvent = new ComboBoxItem() { Content = "++" };
+
+        #endregion
+
+
+        #region MEMBER PROPERTIES
+        #endregion
+
+
+        #region MEMBER CLASSES
+    
+        public class ComboBoxEvent_Event : ComboBoxItem
+        {
+            #region MEMBER PROPERTIES
+
+            public int EventId { get; private set; }
+            public string EventName { get; private set; }
+            public string EventDescription { get; private set; }
+
+            #endregion
+
+
+            #region MEMBER METHODS
+
+            #region Public Functionality
+
+            public ComboBoxEvent_Event(int evntId, string evntName, string evntDescription)
+            {
+                EventId = evntId;
+                SetEventName(evntName);
+                SetEventDescription(evntDescription);
+            }
+
+            public void SetEventName(string evntName)
+            {
+                EventName = evntName;
+                Content = EventName;
+            }
+
+            public void SetEventDescription(string evntDescription)
+            {
+                EventDescription = evntDescription;
+            }
+
+            #endregion
+
+            #endregion
+        }
+
+        #endregion
+
+
+        #region MEMBER METHODS
+
+        #region Public Functionality
+
+        public ComboBox_Event()
+        {
+            Items.Add(c_comboBoxEvent_newEvent);
+
+            SelectionChanged += ComboBox_Event_SelectionChanged;
+        }
+
+        public void SetActiveAndRegisterForGinTubEvents()
+        {
+            GinTubBuilderManager.EventAdded += GinTubBuilderManager_EventAdded;
+            GinTubBuilderManager.EventModified += GinTubBuilderManager_EventModified;
+        }
+
+        public void SetInactiveAndUnregisterFromGinTubEvents()
+        {
+            GinTubBuilderManager.EventAdded -= GinTubBuilderManager_EventAdded;
+            GinTubBuilderManager.EventModified -= GinTubBuilderManager_EventModified;
+        }
+
+        #endregion
+
+
+        #region Private Functionality
+
+        private void GinTubBuilderManager_EventAdded(object sender, GinTubBuilderManager.EventAddedEventArgs args)
+        {
+            if (!Items.OfType<ComboBoxEvent_Event>().Any(i => i.EventId == args.Id))
+                Items.Add(new ComboBoxEvent_Event(args.Id, args.Name, args.Description));
+        }
+
+        private void GinTubBuilderManager_EventModified(object sender, GinTubBuilderManager.EventModifiedEventArgs args)
+        {
+            ComboBoxEvent_Event evnt = Items.OfType<ComboBoxEvent_Event>().SingleOrDefault(i => i.EventId == args.Id);
+            if (evnt != null)
+            {
+                evnt.SetEventName(args.Name);
+                evnt.SetEventDescription(args.Description);
+            }
+        }
+
+        private void NewEventDialog()
+        {
+            Window_EventData window = new Window_EventData(null, null, null);
+            window.ShowDialog();
+            if (window.Accepted)
+                GinTubBuilderManager.AddEvent(window.EventName, window.EventDescription);
+        }
+
+        private void ComboBox_Event_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBoxItem evnt = null;
+            if ((evnt = SelectedItem as ComboBoxItem) != null)
+            {
+                if (evnt == c_comboBoxEvent_newEvent)
+                    NewEventDialog();
+            }
+        }
+
+        #endregion
+
+        #endregion
+    }
+}

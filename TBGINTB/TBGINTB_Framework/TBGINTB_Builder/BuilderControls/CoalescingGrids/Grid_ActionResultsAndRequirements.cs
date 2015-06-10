@@ -133,7 +133,7 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        /*void GinTubBuilderManager_RequirementAdded(object sender, GinTubBuilderManager.RequirementAddedEventArgs args)
+        /*private void GinTubBuilderManager_RequirementAdded(object sender, GinTubBuilderManager.RequirementAddedEventArgs args)
         {
             if (!m_stackPanel_requirements.Children.OfType<Grid_RequirementData>().Any(a => a.RequirementId == args.Id))
             {

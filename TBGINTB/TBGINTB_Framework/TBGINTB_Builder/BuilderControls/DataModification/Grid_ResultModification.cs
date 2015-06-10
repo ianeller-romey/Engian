@@ -61,7 +61,7 @@ namespace TBGINTB_Builder.BuilderControls
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             Button button_modifyResult = new Button() { Content = "Modify Result" };
-            button_modifyResult.Click += Button_ModifyParagraph_Click;
+            button_modifyResult.Click += Button_ModifyResult_Click;
             this.SetGridRowColumn(button_modifyResult, 0, 0);
 
             m_grid_result = new Grid_ResultData(resultId, resultName, resultJSONData, resultTypeId, false);
@@ -69,7 +69,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_result.SetActiveAndRegisterForGinTubEvents();
         }
 
-        private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
+        private void Button_ModifyResult_Click(object sender, RoutedEventArgs e)
         {
             Window_ResultData window =
                 new Window_ResultData(m_grid_result.ResultId, m_grid_result.ResultName, m_grid_result.ResultJSONData, m_grid_result.ResultTypeId);

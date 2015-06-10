@@ -102,7 +102,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
+        private void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
             if (ParagraphStateId == args.Id)
             {
@@ -111,7 +111,7 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void GinTubBuilderManager_NounModified(object sender, GinTubBuilderManager.NounModifiedEventArgs args)
+        private void GinTubBuilderManager_NounModified(object sender, GinTubBuilderManager.NounModifiedEventArgs args)
         {
             if (ParagraphStateId == args.Id)
             {

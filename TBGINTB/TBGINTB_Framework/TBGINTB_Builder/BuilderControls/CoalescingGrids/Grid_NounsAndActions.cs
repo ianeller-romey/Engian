@@ -128,7 +128,7 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
+        private void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
         {
             if (!m_stackPanel_actions.Children.OfType<Grid_ActionModification>().Any(a => a.ActionId == args.Id))
             {

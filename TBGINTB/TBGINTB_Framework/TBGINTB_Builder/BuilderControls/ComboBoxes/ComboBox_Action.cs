@@ -111,7 +111,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
+        private void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
         {
             if (NounId == args.Id)
             {
@@ -120,7 +120,7 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
+        private void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
         {
             if (NounId == args.Id)
             {

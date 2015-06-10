@@ -90,15 +90,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_nounId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (NounId.HasValue) ? NounId.ToString() : "NewNoun"
                 };
-            Label label_nounId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_nounId, 0, 1);
-            grid_id.SetGridRowColumn(label_nounId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // Text Grid
@@ -111,10 +111,10 @@ namespace TBGINTB_Builder.BuilderControls
             // Text
             m_comboBox_text = new ComboBox_ParagraphStateNouns(ParagraphStateId);
             m_comboBox_text.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_text.SelectionChanged += m_comboBox_nounText_SelectionChanged;
-            Label label_nounText = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_comboBox_text.SelectionChanged += ComboBox_Text_SelectionChanged;
+            Label label_text = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_text.SetGridRowColumn(m_comboBox_text, 1, 0);
-            grid_text.SetGridRowColumn(label_nounText, 0, 0);
+            grid_text.SetGridRowColumn(label_text, 0, 0);
         }
 
         void GinTubBuilderManager_NounModified(object sender, GinTubBuilderManager.NounModifiedEventArgs args)
@@ -138,7 +138,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_text.SelectedItem = m_comboBox_text.Items.OfType<ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun>().SingleOrDefault(n => n.PossibleNounText == nounText);
         }
 
-        void m_comboBox_nounText_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ComboBox_Text_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun item;
             if (m_comboBox_text.SelectedItem != null && (item = m_comboBox_text.SelectedItem as ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun) != null)

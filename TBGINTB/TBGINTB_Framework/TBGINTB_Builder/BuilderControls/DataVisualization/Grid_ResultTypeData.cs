@@ -98,11 +98,11 @@ namespace TBGINTB_Builder.BuilderControls
                     VerticalAlignment = System.Windows.VerticalAlignment.Top 
                 };
             m_comboBox_resultType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_resultType.SelectionChanged += ComboBox_ResultTypeData_SelectionChanged;
+            m_comboBox_resultType.SelectionChanged += ComboBox_ResultType_SelectionChanged;
             m_grid_resultType.SetGridRowColumn(m_comboBox_resultType, 0, 0);
         }
 
-        private void ComboBox_ResultTypeData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_ResultType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_ResultType comboBox = sender as ComboBox_ResultType;
             ComboBox_ResultType.ComboBoxItem_ResultType comboBoxItem = null;

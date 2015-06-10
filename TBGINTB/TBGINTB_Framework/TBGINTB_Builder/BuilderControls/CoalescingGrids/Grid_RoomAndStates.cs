@@ -130,7 +130,7 @@ namespace TBGINTB_Builder.BuilderControls
                 );
         }
 
-        void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
+        private void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
         {
             Window_RoomStateData window = 
                 new Window_RoomStateData(null, null, null, null, m_grid_rooms.RoomId.Value);

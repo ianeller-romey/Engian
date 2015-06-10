@@ -94,15 +94,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_paragraphStateId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (VerbId.HasValue) ? VerbId.ToString() : "NewVerb"
                 };
-            Label label_paragraphStateId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_paragraphStateId, 0, 1);
-            grid_id.SetGridRowColumn(label_paragraphStateId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // Name Grid
@@ -114,7 +114,7 @@ namespace TBGINTB_Builder.BuilderControls
             ////////
             // Name
             m_textBox_name = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = VerbName };
-            m_textBox_name.TextChanged += TextBox_VerbName_TextChanged;
+            m_textBox_name.TextChanged += TextBox_Name_TextChanged;
             Label label_name = new Label() { Content = "Name:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_name.SetGridRowColumn(m_textBox_name, 1, 0);
             grid_name.SetGridRowColumn(label_name, 0, 0);
@@ -132,9 +132,9 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_verbType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
             m_comboBox_verbType.SelectionChanged += ComboBox_VerbType_SelectionChanged;
             SetVerbTypeId(VerbTypeId);
-            Label label_paragraphStateState = new Label() { Content = "Verb Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            Label label_verbType = new Label() { Content = "Verb Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_verbType.SetGridRowColumn(m_comboBox_verbType, 0, 1);
-            grid_verbType.SetGridRowColumn(label_paragraphStateState, 0, 0);
+            grid_verbType.SetGridRowColumn(label_verbType, 0, 0);
         }
 
         void GinTubBuilderManager_VerbModified(object sender, GinTubBuilderManager.VerbModifiedEventArgs args)
@@ -157,7 +157,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             m_textBox_name.Text = verbName;
             if (!m_textBox_name.IsEnabled)
-                TextBox_VerbName_TextChanged(m_textBox_name, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+                TextBox_Name_TextChanged(m_textBox_name, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
         private void SetVerbTypeId(int verbTypeId)
@@ -166,7 +166,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_verbType.SelectedItem = m_comboBox_verbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().SingleOrDefault(v => v.VerbTypeId == VerbTypeId);
         }
 
-        void TextBox_VerbName_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb == m_textBox_name)

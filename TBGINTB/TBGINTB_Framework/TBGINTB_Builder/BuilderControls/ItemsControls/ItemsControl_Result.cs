@@ -37,7 +37,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             ResultTypeId = resultTypeId;
 
-            c_button_newResult.Click += ListBoxItem_NewResult_Click;
+            c_button_newResult.Click += Button_NewResult_Click;
 
             IsEnabled = false;
             IsEnabledChanged += ItemsControl_Result_IsEnabledChanged;
@@ -80,7 +80,7 @@ namespace TBGINTB_Builder.BuilderControls
         }
         
 
-        void ListBoxItem_NewResult_Click(object sender, RoutedEventArgs e)
+        void Button_NewResult_Click(object sender, RoutedEventArgs e)
         {
             Button item = null;
             if ((item = sender as Button) != null && item == c_button_newResult)

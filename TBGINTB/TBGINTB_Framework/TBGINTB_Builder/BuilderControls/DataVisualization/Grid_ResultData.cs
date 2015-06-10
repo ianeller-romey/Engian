@@ -119,15 +119,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_paragraphStateId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ResultId.HasValue) ? ResultId.ToString() : "NewResult"
                 };
-            Label label_paragraphStateId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_paragraphStateId, 0, 1);
-            grid_id.SetGridRowColumn(label_paragraphStateId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // Name Grid
@@ -139,7 +139,7 @@ namespace TBGINTB_Builder.BuilderControls
             ////////
             // Name
             m_textBox_name = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ResultName };
-            m_textBox_name.TextChanged += TextBox_ResultName_TextChanged;
+            m_textBox_name.TextChanged += TextBox_Name_TextChanged;
             Label label_name = new Label() { Content = "Name:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_name.SetGridRowColumn(m_textBox_name, 1, 0);
             grid_name.SetGridRowColumn(label_name, 0, 0);
@@ -174,9 +174,9 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_resultType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
             m_comboBox_resultType.SelectionChanged += ComboBox_ResultType_SelectionChanged;
             SetResultTypeId(ResultTypeId);
-            Label label_paragraphStateState = new Label() { Content = "Result Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            Label label_resultType = new Label() { Content = "Result Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_resultType.SetGridRowColumn(m_comboBox_resultType, 0, 1);
-            grid_resultType.SetGridRowColumn(label_paragraphStateState, 0, 0);
+            grid_resultType.SetGridRowColumn(label_resultType, 0, 0);
         }
 
         void GinTubBuilderManager_ResultModified(object sender, GinTubBuilderManager.ResultModifiedEventArgs args)
@@ -211,7 +211,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             m_textBox_name.Text = resultName;
             if (!m_textBox_name.IsEnabled)
-                TextBox_ResultName_TextChanged(m_textBox_name, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+                TextBox_Name_TextChanged(m_textBox_name, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
         private void SetResultJSONData(string resultJSONData)
@@ -247,7 +247,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_resultType.SelectedItem = m_comboBox_resultType.Items.OfType<ComboBox_ResultType.ComboBoxItem_ResultType>().SingleOrDefault(v => v.ResultTypeId == ResultTypeId);
         }
 
-        void TextBox_ResultName_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_Name_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb == m_textBox_name)

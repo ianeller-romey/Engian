@@ -94,40 +94,40 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_resultTypeJSONPropertyId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ResultTypeJSONPropertyId.HasValue) ? ResultTypeJSONPropertyId.ToString() : "NewResultTypeJSONProperty"
                 };
-            Label label_resultTypeJSONPropertyId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_resultTypeJSONPropertyId, 0, 1);
-            grid_id.SetGridRowColumn(label_resultTypeJSONPropertyId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
-            // Field Grid
+            // Property Grid
             Grid grid_field = new Grid();
             grid_field.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grid_field.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
             this.SetGridRowColumn(grid_field, 1, 0);
 
             ////////
-            // Field
+            // Property
             m_textBox_jsonProperty = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ResultTypeJSONPropertyJSONProperty };
-            m_textBox_jsonProperty.TextChanged += TextBox_ResultTypeJSONPropertyJSONProperty_TextChanged;
-            Label label_resultTypeJSONPropertyJSONProperty = new Label() { Content = "Field:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_textBox_jsonProperty.TextChanged += TextBox_JSONProperty_TextChanged;
+            Label jsonProperty = new Label() { Content = "Field:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_field.SetGridRowColumn(m_textBox_jsonProperty, 1, 0);
-            grid_field.SetGridRowColumn(label_resultTypeJSONPropertyJSONProperty, 0, 0);
+            grid_field.SetGridRowColumn(jsonProperty, 0, 0);
 
             ////////
-            // ResultTypeJSONPropertyTypeId Grid
+            // ResultType Grid
             Grid grid_resultType = new Grid();
             grid_resultType.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             grid_resultType.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             this.SetGridRowColumn(grid_resultType, 2, 0);
 
             ////////
-            // ResultTypeJSONPropertyTypeId
+            // ResultType
             m_comboBox_resultType = new ComboBox_ResultType();
             m_comboBox_resultType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
             m_comboBox_resultType.SelectionChanged += ComboBox_ResultType_SelectionChanged;
@@ -156,7 +156,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             m_textBox_jsonProperty.Text = resultTypeJSONPropertyJSONProperty;
             if (!m_textBox_jsonProperty.IsEnabled)
-                TextBox_ResultTypeJSONPropertyJSONProperty_TextChanged(m_textBox_jsonProperty, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+                TextBox_JSONProperty_TextChanged(m_textBox_jsonProperty, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
         private void SetResultTypeId(int resultTypeJSONPropertyTypeId)
@@ -165,7 +165,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_resultType.SelectedItem = m_comboBox_resultType.Items.OfType<ComboBox_ResultType.ComboBoxItem_ResultType>().SingleOrDefault(r => r.ResultTypeId == ResultTypeId);
         }
 
-        void TextBox_ResultTypeJSONPropertyJSONProperty_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_JSONProperty_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb == m_textBox_jsonProperty)

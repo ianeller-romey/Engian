@@ -93,15 +93,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_paragraphStateId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ParagraphStateId.HasValue) ? ParagraphStateId.ToString() : "NewParagraphState"
                 };
-            Label label_paragraphStateId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_paragraphStateId, 0, 1);
-            grid_id.SetGridRowColumn(label_paragraphStateId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // Text Grid
@@ -113,10 +113,10 @@ namespace TBGINTB_Builder.BuilderControls
             ////////
             // Text
             m_textBox_text = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ParagraphStateText };
-            m_textBox_text.TextChanged += TextBox_ParagraphStateText_TextChanged;
-            Label label_paragraphStateText = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_textBox_text.TextChanged += TextBox_Text_TextChanged;
+            Label label_text = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_text.SetGridRowColumn(m_textBox_text, 1, 0);
-            grid_text.SetGridRowColumn(label_paragraphStateText, 0, 0);
+            grid_text.SetGridRowColumn(label_text, 0, 0);
             
             ////////
             // State Grid
@@ -129,9 +129,9 @@ namespace TBGINTB_Builder.BuilderControls
             // State
             m_textBlock_state = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
             SetParagraphStateState(ParagraphStateState);
-            Label label_paragraphStateState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            Label label_state = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_state.SetGridRowColumn(m_textBlock_state, 0, 1);
-            grid_state.SetGridRowColumn(label_paragraphStateState, 0, 0);
+            grid_state.SetGridRowColumn(label_state, 0, 0);
         }
 
         void GinTubBuilderManager_ParagraphStateModified(object sender, GinTubBuilderManager.ParagraphStateModifiedEventArgs args)
@@ -153,10 +153,10 @@ namespace TBGINTB_Builder.BuilderControls
         {
             m_textBox_text.Text = paragraphStateText;
             if (!m_textBox_text.IsEnabled)
-                TextBox_ParagraphStateText_TextChanged(m_textBox_text, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+                TextBox_Text_TextChanged(m_textBox_text, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
-        void TextBox_ParagraphStateText_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_Text_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             if (tb != null && tb == m_textBox_text)

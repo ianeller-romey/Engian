@@ -37,7 +37,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             ResultTypeId = resultTypeId;
 
-            c_button_newResultTypeJSONProperty.Click += ListBoxItem_NewResultTypeJSONProperty_Click;
+            c_button_newResultTypeJSONProperty.Click += Button_NewResultTypeJSONProperty_Click;
 
             IsEnabled = false;
             IsEnabledChanged += ItemsControl_ResultTypeJSONProperty_IsEnabledChanged;
@@ -79,7 +79,7 @@ namespace TBGINTB_Builder.BuilderControls
         }
         
 
-        void ListBoxItem_NewResultTypeJSONProperty_Click(object sender, RoutedEventArgs e)
+        void Button_NewResultTypeJSONProperty_Click(object sender, RoutedEventArgs e)
         {
             Button item = null;
             if ((item = sender as Button) != null && item == c_button_newResultTypeJSONProperty)

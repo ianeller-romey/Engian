@@ -62,7 +62,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             m_comboBox_location = new ComboBox_Location();
             m_comboBox_location.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_location.SelectionChanged += ComboBox_LocationData_SelectionChanged;
+            m_comboBox_location.SelectionChanged += ComboBox_Location_SelectionChanged;
             this.SetGridRowColumn(m_comboBox_location, 0, 0);
 
             m_image_locationFile = new Image();
@@ -82,7 +82,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_image_locationFile.Source = (locationFile != null) ? new BitmapImage(new Uri(locationFile)) : null;
         }
 
-        private void ComboBox_LocationData_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Location comboBox = sender as ComboBox_Location;
             ComboBox_Location.ComboBoxItem_Location comboBoxItem = null;

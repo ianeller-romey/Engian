@@ -60,7 +60,7 @@ namespace TBGINTB_Builder.BuilderControls
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             Button button_modifyVerb = new Button() { Content = "Modify Verb" };
-            button_modifyVerb.Click += Button_ModifyParagraph_Click;
+            button_modifyVerb.Click += Button_ModifyVerb_Click;
             this.SetGridRowColumn(button_modifyVerb, 0, 0);
 
             m_grid_verb = new Grid_VerbData(verbId, verbName, verbTypeId, false);
@@ -68,7 +68,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_verb.SetActiveAndRegisterForGinTubEvents();
         }
 
-        private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
+        private void Button_ModifyVerb_Click(object sender, RoutedEventArgs e)
         {
             Window_VerbData window =
                 new Window_VerbData(m_grid_verb.VerbId, m_grid_verb.VerbName, m_grid_verb.VerbTypeId);

@@ -90,31 +90,31 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_paragraphId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ParagraphId.HasValue) ? ParagraphId.ToString() : "NewParagraph"
                 };
-            Label label_paragraphId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_paragraphId, 0, 1);
-            grid_id.SetGridRowColumn(label_paragraphId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
-            // State Grid
-            Grid grid_state = new Grid();
-            grid_state.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-            grid_state.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
-            this.SetGridRowColumn(grid_state, 1, 0);
+            // Order Grid
+            Grid grid_order = new Grid();
+            grid_order.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            grid_order.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            this.SetGridRowColumn(grid_order, 1, 0);
 
             ////////
             // State
             m_textBox_order = new TextBox() { VerticalAlignment = VerticalAlignment.Center };
-            m_textBox_order.TextChanged += TextBox_ParagraphOrder_TextChanged;
+            m_textBox_order.TextChanged += TextBox_Order_TextChanged;
             m_textBox_order.Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0";
-            Label label_paragraphOrder = new Label() { Content = "Order:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBox_order, 0, 1);
-            grid_state.SetGridRowColumn(label_paragraphOrder, 0, 0);
+            Label label_order = new Label() { Content = "Order:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_order.SetGridRowColumn(m_textBox_order, 0, 1);
+            grid_order.SetGridRowColumn(label_order, 0, 0);
         }
 
         private void GinTubBuilderManager_ParagraphModified(object sender, GinTubBuilderManager.ParagraphModifiedEventArgs args)
@@ -133,7 +133,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_textBox_order.Text = ParagraphOrder.ToString();
         }
 
-        void TextBox_ParagraphOrder_TextChanged(object sender, TextChangedEventArgs e)
+        void TextBox_Order_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             int newOrder = 0;

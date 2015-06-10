@@ -129,7 +129,7 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
-        void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
+        private void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
         {
             if (!m_stackPanel_paragraphStates.Children.OfType<Grid_ParagraphStateModification>().Any(t => t.ParagraphStateId == args.Id))
             {

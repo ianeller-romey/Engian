@@ -89,7 +89,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_ParagraphStateEvent(object sender, GinTubBuilderManager.ParagraphStateEventArgs args)
+        private void GinTubBuilderManager_ParagraphStateEvent(object sender, GinTubBuilderManager.ParagraphStateEventArgs args)
         {
             if (ParagraphStateId == args.Id)
                 ChangePossibleNounItems(args.Text);

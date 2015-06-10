@@ -37,7 +37,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             VerbTypeId = verbTypeId;
 
-            c_button_newVerb.Click += ListBoxItem_NewVerb_Click;
+            c_button_newVerb.Click += Button_NewVerb_Click;
 
             IsEnabled = false;
             IsEnabledChanged += ItemsControl_Verb_IsEnabledChanged;
@@ -79,7 +79,7 @@ namespace TBGINTB_Builder.BuilderControls
         }
         
 
-        void ListBoxItem_NewVerb_Click(object sender, RoutedEventArgs e)
+        void Button_NewVerb_Click(object sender, RoutedEventArgs e)
         {
             Button item = null;
             if ((item = sender as Button) != null && item == c_button_newVerb)

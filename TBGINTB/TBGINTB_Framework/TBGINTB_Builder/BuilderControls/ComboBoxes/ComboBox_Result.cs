@@ -97,13 +97,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_ResultAdded(object sender, GinTubBuilderManager.ResultAddedEventArgs args)
+        private void GinTubBuilderManager_ResultAdded(object sender, GinTubBuilderManager.ResultAddedEventArgs args)
         {
             if (!Items.OfType<ComboBoxItem_Result>().Any(i => i.ResultId == args.Id))
                 Items.Add(new ComboBoxItem_Result(args.Id, args.Name, args.ResultType));
         }
 
-        void GinTubBuilderManager_ResultModified(object sender, GinTubBuilderManager.ResultModifiedEventArgs args)
+        private void GinTubBuilderManager_ResultModified(object sender, GinTubBuilderManager.ResultModifiedEventArgs args)
         {
             ComboBoxItem_Result item = Items.OfType<ComboBoxItem_Result>().SingleOrDefault(i => i.ResultId == args.Id);
             if (item != null)

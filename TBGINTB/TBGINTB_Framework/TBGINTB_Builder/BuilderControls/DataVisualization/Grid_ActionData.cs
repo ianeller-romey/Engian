@@ -96,15 +96,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_nounId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ActionId.HasValue) ? ActionId.ToString() : "NewAction"
                 };
-            Label label_nounId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_nounId, 0, 1);
-            grid_id.SetGridRowColumn(label_nounId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // VerbType Grid
@@ -117,10 +117,10 @@ namespace TBGINTB_Builder.BuilderControls
             // VerbType
             m_comboBox_verbType = new ComboBox_VerbType();
             m_comboBox_verbType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_verbType.SelectionChanged += ComboBox_ActionVerbType_SelectionChanged;
-            Label label_actionVerbType = new Label() { Content = "Verb Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_comboBox_verbType.SelectionChanged += ComboBox_VerbType_SelectionChanged;
+            Label label_verbType = new Label() { Content = "Verb Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_verbType.SetGridRowColumn(m_comboBox_verbType, 1, 0);
-            grid_verbType.SetGridRowColumn(label_actionVerbType, 0, 0);
+            grid_verbType.SetGridRowColumn(label_verbType, 0, 0);
 
             ////////
             // Noun Grid
@@ -133,10 +133,10 @@ namespace TBGINTB_Builder.BuilderControls
             // Noun
             m_comboBox_noun = new ComboBox_Noun(ParagraphStateId);
             m_comboBox_noun.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_noun.SelectionChanged += ComboBox_ActionNoun_SelectionChanged;
-            Label label_actionNoun = new Label() { Content = "Noun:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_comboBox_noun.SelectionChanged += ComboBox_Noun_SelectionChanged;
+            Label label_noun = new Label() { Content = "Noun:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_noun.SetGridRowColumn(m_comboBox_noun, 1, 0);
-            grid_noun.SetGridRowColumn(label_actionNoun, 0, 0);
+            grid_noun.SetGridRowColumn(label_noun, 0, 0);
         }
 
         private void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
@@ -193,14 +193,14 @@ namespace TBGINTB_Builder.BuilderControls
                 m_comboBox_noun.SelectedItem = item;
         }
 
-        private void ComboBox_ActionVerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_VerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item;
             if (m_comboBox_verbType.SelectedItem != null && (item = m_comboBox_verbType.SelectedItem as ComboBox_VerbType.ComboBoxItem_VerbType) != null)
                 ActionVerbType = item.VerbTypeId;
         }
 
-        private void ComboBox_ActionNoun_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_Noun_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Noun.ComboBoxItem_Noun item;
             if (m_comboBox_noun.SelectedItem != null && (item = m_comboBox_noun.SelectedItem as ComboBox_Noun.ComboBoxItem_Noun) != null)

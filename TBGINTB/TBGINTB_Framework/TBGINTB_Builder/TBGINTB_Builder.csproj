@@ -70,13 +70,25 @@
     </ApplicationDefinition>
     <Compile Include="BuilderControls\CoalescingGrids\Grid_ActionResultsAndRequirements.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Action.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Character.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Event.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Item.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Result.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_CharacterModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_EventModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultTypeJSONPropertyModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ItemModification.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ActionResultData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_CharacterData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_EventData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ItemData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ActionResultData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_CharacterData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_EventData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ItemData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeJSONPropertyData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultData.cs" />

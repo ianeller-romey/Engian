@@ -90,13 +90,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)
+        private void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)
         {
             if (!Items.OfType<ComboBoxItem_VerbType>().Any(i => i.VerbTypeId == args.Id))
                 Items.Add(new ComboBoxItem_VerbType(args.Id, args.Name));
         }
 
-        void GinTubBuilderManager_VerbTypeModified(object sender, GinTubBuilderManager.VerbTypeModifiedEventArgs args)
+        private void GinTubBuilderManager_VerbTypeModified(object sender, GinTubBuilderManager.VerbTypeModifiedEventArgs args)
         {
             ComboBoxItem_VerbType item = Items.OfType<ComboBoxItem_VerbType>().SingleOrDefault(i => i.VerbTypeId == args.Id);
             if (item != null)

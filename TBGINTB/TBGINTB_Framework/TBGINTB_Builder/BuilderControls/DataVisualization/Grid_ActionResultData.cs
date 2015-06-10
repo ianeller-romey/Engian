@@ -96,15 +96,15 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Id
-            TextBlock textBlock_nounId =
+            TextBlock textBlock_id =
                 new TextBlock()
                 {
                     VerticalAlignment = VerticalAlignment.Center,
                     Text = (ActionResultId.HasValue) ? ActionResultId.ToString() : "NewActionResult"
                 };
-            Label label_nounId = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_id.SetGridRowColumn(textBlock_nounId, 0, 1);
-            grid_id.SetGridRowColumn(label_nounId, 0, 0);
+            Label label_id = new Label() { Content = "Id:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            grid_id.SetGridRowColumn(textBlock_id, 0, 1);
+            grid_id.SetGridRowColumn(label_id, 0, 0);
 
             ////////
             // Result Grid
@@ -117,10 +117,10 @@ namespace TBGINTB_Builder.BuilderControls
             // Result
             m_comboBox_result = new ComboBox_Result();
             m_comboBox_result.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_result.SelectionChanged += ComboBox_ActionResultResult_SelectionChanged;
-            Label label_actionResultResult = new Label() { Content = "Result:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_comboBox_result.SelectionChanged += ComboBox_Result_SelectionChanged;
+            Label label_result = new Label() { Content = "Result:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_result.SetGridRowColumn(m_comboBox_result, 1, 0);
-            grid_result.SetGridRowColumn(label_actionResultResult, 0, 0);
+            grid_result.SetGridRowColumn(label_result, 0, 0);
 
             ////////
             // Action Grid
@@ -133,10 +133,10 @@ namespace TBGINTB_Builder.BuilderControls
             // Action
             m_comboBox_action = new ComboBox_Action(NounId, ParagraphStateId);
             m_comboBox_action.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_action.SelectionChanged += ComboBox_ActionResultAction_SelectionChanged;
-            Label label_actionResultAction = new Label() { Content = "Action:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
+            m_comboBox_action.SelectionChanged += ComboBox_Action_SelectionChanged;
+            Label label_action = new Label() { Content = "Action:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_action.SetGridRowColumn(m_comboBox_action, 1, 0);
-            grid_action.SetGridRowColumn(label_actionResultAction, 0, 0);
+            grid_action.SetGridRowColumn(label_action, 0, 0);
         }
 
         void GinTubBuilderManager_ActionResultModified(object sender, GinTubBuilderManager.ActionResultModifiedEventArgs args)
@@ -193,14 +193,14 @@ namespace TBGINTB_Builder.BuilderControls
                 m_comboBox_action.SelectedItem = item;
         }
 
-        void ComboBox_ActionResultResult_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ComboBox_Result_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Result.ComboBoxItem_Result item;
             if (m_comboBox_result.SelectedItem != null && (item = m_comboBox_result.SelectedItem as ComboBox_Result.ComboBoxItem_Result) != null)
                 ActionResultResult = item.ResultId;
         }
 
-        void ComboBox_ActionResultAction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ComboBox_Action_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Action.ComboBoxItem_Action item;
             if (m_comboBox_action.SelectedItem != null && (item = m_comboBox_action.SelectedItem as ComboBox_Action.ComboBoxItem_Action) != null)

@@ -61,7 +61,7 @@ namespace TBGINTB_Builder.BuilderControls
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             Button button_modifyParagraphState = new Button() { Content = "Modify Paragraph State" };
-            button_modifyParagraphState.Click += Button_ModifyParagraph_Click;
+            button_modifyParagraphState.Click += Button_ModifyParagraphState_Click;
             this.SetGridRowColumn(button_modifyParagraphState, 0, 0);
 
             m_grid_paragraphState = new Grid_ParagraphStateData(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId, false);
@@ -69,7 +69,7 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_paragraphState.SetActiveAndRegisterForGinTubEvents();
         }
 
-        private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
+        private void Button_ModifyParagraphState_Click(object sender, RoutedEventArgs e)
         {
             Window_ParagraphStateData window = 
                 new Window_ParagraphStateData

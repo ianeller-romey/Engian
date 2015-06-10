@@ -908,6 +908,195 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region Items
+
+        public class ItemEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public ItemEventArgs(int id, string name, string description)
+            {
+                Id = id;
+                Name = name;
+                Description = description;
+            }
+        }
+
+
+        public class ItemAddedEventArgs : ItemEventArgs
+        {
+            public ItemAddedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void ItemAddedEventHandler(object sender, ItemAddedEventArgs args);
+        public static event ItemAddedEventHandler ItemAdded;
+        private static void OnItemAdded(Item item)
+        {
+            if (ItemAdded != null)
+                ItemAdded(typeof(GinTubBuilderManager),
+                    new ItemAddedEventArgs(item.Id, item.Name, item.Description));
+        }
+
+
+        public class ItemModifiedEventArgs : ItemEventArgs
+        {
+            public ItemModifiedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void ItemModifiedEventHandler(object sender, ItemModifiedEventArgs args);
+        public static event ItemModifiedEventHandler ItemModified;
+        private static void OnItemModified(Item item)
+        {
+            if (ItemModified != null)
+                ItemModified(typeof(GinTubBuilderManager),
+                    new ItemModifiedEventArgs(item.Id, item.Name, item.Description));
+        }
+
+
+        public class ItemGetEventArgs : ItemEventArgs
+        {
+            public ItemGetEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void ItemGetEventHandler(object sender, ItemGetEventArgs args);
+        public static event ItemGetEventHandler ItemGet;
+        private static void OnItemGet(Item item)
+        {
+            if (ItemGet != null)
+                ItemGet(typeof(GinTubBuilderManager),
+                    new ItemGetEventArgs(item.Id, item.Name, item.Description));
+        }
+
+        #endregion
+
+
+        #region Events
+
+        public class EventEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public EventEventArgs(int id, string name, string description)
+            {
+                Id = id;
+                Name = name;
+                Description = description;
+            }
+        }
+
+
+        public class EventAddedEventArgs : EventEventArgs
+        {
+            public EventAddedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void EventAddedEventHandler(object sender, EventAddedEventArgs args);
+        public static event EventAddedEventHandler EventAdded;
+        private static void OnEventAdded(Event evnt)
+        {
+            if (EventAdded != null)
+                EventAdded(typeof(GinTubBuilderManager),
+                    new EventAddedEventArgs(evnt.Id, evnt.Name, evnt.Description));
+        }
+
+
+        public class EventModifiedEventArgs : EventEventArgs
+        {
+            public EventModifiedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void EventModifiedEventHandler(object sender, EventModifiedEventArgs args);
+        public static event EventModifiedEventHandler EventModified;
+        private static void OnEventModified(Event evnt)
+        {
+            if (EventModified != null)
+                EventModified(typeof(GinTubBuilderManager),
+                    new EventModifiedEventArgs(evnt.Id, evnt.Name, evnt.Description));
+        }
+
+
+        public class EventGetEventArgs : EventEventArgs
+        {
+            public EventGetEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void EventGetEventHandler(object sender, EventGetEventArgs args);
+        public static event EventGetEventHandler EventGet;
+        private static void OnEventGet(Event evnt)
+        {
+            if (EventGet != null)
+                EventGet(typeof(GinTubBuilderManager),
+                    new EventGetEventArgs(evnt.Id, evnt.Name, evnt.Description));
+        }
+
+        #endregion
+
+
+        #region Characters
+
+        public class CharacterEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public CharacterEventArgs(int id, string name, string description)
+            {
+                Id = id;
+                Name = name;
+                Description = description;
+            }
+        }
+
+
+        public class CharacterAddedEventArgs : CharacterEventArgs
+        {
+            public CharacterAddedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void CharacterAddedCharacterHandler(object sender, CharacterAddedEventArgs args);
+        public static event CharacterAddedCharacterHandler CharacterAdded;
+        private static void OnCharacterAdded(Character character)
+        {
+            if (CharacterAdded != null)
+                CharacterAdded(typeof(GinTubBuilderManager),
+                    new CharacterAddedEventArgs(character.Id, character.Name, character.Description));
+        }
+
+
+        public class CharacterModifiedEventArgs : CharacterEventArgs
+        {
+            public CharacterModifiedEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void CharacterModifiedCharacterHandler(object sender, CharacterModifiedEventArgs args);
+        public static event CharacterModifiedCharacterHandler CharacterModified;
+        private static void OnCharacterModified(Character character)
+        {
+            if (CharacterModified != null)
+                CharacterModified(typeof(GinTubBuilderManager),
+                    new CharacterModifiedEventArgs(character.Id, character.Name, character.Description));
+        }
+
+
+        public class CharacterGetEventArgs : CharacterEventArgs
+        {
+            public CharacterGetEventArgs(int id, string name, string description) :
+                base(id, name, description) { }
+        }
+        public delegate void CharacterGetCharacterHandler(object sender, CharacterGetEventArgs args);
+        public static event CharacterGetCharacterHandler CharacterGet;
+        private static void OnCharacterGet(Character character)
+        {
+            if (CharacterGet != null)
+                CharacterGet(typeof(GinTubBuilderManager),
+                    new CharacterGetEventArgs(character.Id, character.Name, character.Description));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -960,6 +1149,15 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetActionResult_Result, ActionResult>();
             Mapper.CreateMap<dev_GetAllActionResultsForAction_Result, ActionResult>();
+
+            Mapper.CreateMap<dev_GetItem_Result, Item>();
+            Mapper.CreateMap<dev_GetAllItems_Result, Item>();
+
+            Mapper.CreateMap<dev_GetEvent_Result, Event>();
+            Mapper.CreateMap<dev_GetAllEvents_Result, Event>();
+
+            Mapper.CreateMap<dev_GetCharacter_Result, Character>();
+            Mapper.CreateMap<dev_GetAllCharacters_Result, Character>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -1533,6 +1731,102 @@ namespace TBGINTB_Builder.Lib
             List<ActionResult> actionResults = SelectAllActionResultsForAction(actionId);
             foreach (var actionResult in actionResults)
                 OnActionResultGet(actionResult);
+        }
+
+        #endregion
+
+
+        #region Items
+
+        public static void AddItem(string itemName, string itemDescription)
+        {
+            int id = InsertItem(itemName, itemDescription);
+            Item item = SelectItem(id);
+            OnItemAdded(item);
+        }
+
+        public static void ModifyItem(int itemId, string itemName, string itemDescription)
+        {
+            UpdateItem(itemId, itemName, itemDescription);
+            Item item = SelectItem(itemId);
+            OnItemModified(item);
+        }
+
+        public static void GetItem(int itemId)
+        {
+            Item item = SelectItem(itemId);
+            OnItemGet(item);
+        }
+
+        public static void LoadAllItems()
+        {
+            List<Item> items = SelectAllItems();
+            foreach (var item in items)
+                OnItemAdded(item);
+        }
+
+        #endregion
+
+
+        #region Events
+
+        public static void AddEvent(string evntName, string evntDescription)
+        {
+            int id = InsertEvent(evntName, evntDescription);
+            Event evnt = SelectEvent(id);
+            OnEventAdded(evnt);
+        }
+
+        public static void ModifyEvent(int evntId, string evntName, string evntDescription)
+        {
+            UpdateEvent(evntId, evntName, evntDescription);
+            Event evnt = SelectEvent(evntId);
+            OnEventModified(evnt);
+        }
+
+        public static void GetEvent(int evntId)
+        {
+            Event evnt = SelectEvent(evntId);
+            OnEventGet(evnt);
+        }
+
+        public static void LoadAllEvents()
+        {
+            List<Event> evnts = SelectAllEvents();
+            foreach (var evnt in evnts)
+                OnEventAdded(evnt);
+        }
+
+        #endregion
+
+
+        #region Characters
+
+        public static void AddCharacter(string characterName, string characterDescription)
+        {
+            int id = InsertCharacter(characterName, characterDescription);
+            Character character = SelectCharacter(id);
+            OnCharacterAdded(character);
+        }
+
+        public static void ModifyCharacter(int characterId, string characterName, string characterDescription)
+        {
+            UpdateCharacter(characterId, characterName, characterDescription);
+            Character character = SelectCharacter(characterId);
+            OnCharacterModified(character);
+        }
+
+        public static void GetCharacter(int characterId)
+        {
+            Character character = SelectCharacter(characterId);
+            OnCharacterGet(character);
+        }
+
+        public static void LoadAllCharacters()
+        {
+            List<Character> characters = SelectAllCharacters();
+            foreach (var character in characters)
+                OnCharacterAdded(character);
         }
 
         #endregion
@@ -2567,6 +2861,219 @@ namespace TBGINTB_Builder.Lib
 
             List<ActionResult> actionResults = databaseResult.Select(r => Mapper.Map<ActionResult>(r)).ToList();
             return actionResults;
+        }
+
+        #endregion
+
+
+        #region Items
+
+        private static int InsertItem(string name, string description)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddItem(name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddItem", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddItem", new Exception("No [Id] was returned after [Item] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateItem(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_UpdateItem(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateItem", e);
+            }
+        }
+
+        private static Item SelectItem(int id)
+        {
+            ObjectResult<dev_GetItem_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetItem(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetItem", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetItem", new Exception(string.Format("No [Items] record found with [Id] = {0}.", id)));
+
+            Item item = Mapper.Map<Item>(databaseResult.Single());
+            return item;
+        }
+
+        private static List<Item> SelectAllItems()
+        {
+            ObjectResult<dev_GetAllItems_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllItems();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllItems", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllItems", new Exception("No [Items] records found."));
+
+            List<Item> items = databaseResult.Select(r => Mapper.Map<Item>(r)).ToList();
+            return items;
+        }
+
+        #endregion
+
+
+        #region Events
+
+        private static int InsertEvent(string name, string description)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddEvent(name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddEvent", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddEvent", new Exception("No [Id] was returned after [Event] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateEvent(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_UpdateEvent(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateEvent", e);
+            }
+        }
+
+        private static Event SelectEvent(int id)
+        {
+            ObjectResult<dev_GetEvent_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetEvent(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetEvent", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetEvent", new Exception(string.Format("No [Events] record found with [Id] = {0}.", id)));
+
+            Event evnt = Mapper.Map<Event>(databaseResult.Single());
+            return evnt;
+        }
+
+        private static List<Event> SelectAllEvents()
+        {
+            ObjectResult<dev_GetAllEvents_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllEvents();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllEvents", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllEvents", new Exception("No [Events] records found."));
+
+            List<Event> evnts = databaseResult.Select(r => Mapper.Map<Event>(r)).ToList();
+            return evnts;
+        }
+
+        #endregion
+
+
+        #region Characters
+
+        private static int InsertCharacter(string name, string description)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddCharacter(name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddCharacter", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddCharacter", new Exception("No [Id] was returned after [Character] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateCharacter(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_UpdateCharacter(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateCharacter", e);
+            }
+        }
+
+        private static Character SelectCharacter(int id)
+        {
+            ObjectResult<dev_GetCharacter_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetCharacter(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetCharacter", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetCharacter", new Exception(string.Format("No [Characters] record found with [Id] = {0}.", id)));
+
+            Character character = Mapper.Map<Character>(databaseResult.Single());
+            return character;
+        }
+
+        private static List<Character> SelectAllCharacters()
+        {
+            ObjectResult<dev_GetAllCharacters_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllCharacters();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllCharacters", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllCharacters", new Exception("No [Characters] records found."));
+
+            List<Character> characters = databaseResult.Select(r => Mapper.Map<Character>(r)).ToList();
+            return characters;
         }
 
         #endregion

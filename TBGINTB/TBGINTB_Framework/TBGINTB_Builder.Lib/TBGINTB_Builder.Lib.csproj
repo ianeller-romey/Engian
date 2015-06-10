@@ -60,6 +60,9 @@
     <Compile Include="Model\DbModel\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Model\DbModel\Action.cs" />
+    <Compile Include="Model\DbModel\Character.cs" />
+    <Compile Include="Model\DbModel\Event.cs" />
+    <Compile Include="Model\DbModel\Item.cs" />
     <Compile Include="Model\DbModel\ResultTypeJSONField.cs" />
     <Compile Include="Model\DbModel\Result.cs" />
     <Compile Include="Model\DbModel\Verb.cs" />
