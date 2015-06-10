@@ -16,7 +16,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_RoomData m_grid_roomData;
+        Grid_RoomData m_grid_rooms;
         StackPanel m_stackPanel_roomStates;
 
         #endregion
@@ -39,7 +39,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             GinTubBuilderManager.RoomStateAdded += GinTubBuilderManager_RoomStateAdded;
 
-            m_grid_roomData.SetActiveAndRegisterForGinTubEvents();
+            m_grid_rooms.SetActiveAndRegisterForGinTubEvents();
             foreach (var grid in m_stackPanel_roomStates.Children.OfType<Grid_RoomStateModification>())
                 grid.SetActiveAndRegisterForGinTubEvents();
         }
@@ -48,7 +48,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             GinTubBuilderManager.RoomStateAdded -= GinTubBuilderManager_RoomStateAdded;
 
-            m_grid_roomData.SetInactiveAndUnregisterFromGinTubEvents();
+            m_grid_rooms.SetInactiveAndUnregisterFromGinTubEvents();
             foreach (var grid in m_stackPanel_roomStates.Children.OfType<Grid_RoomStateModification>())
                 grid.SetInactiveAndUnregisterFromGinTubEvents();
         }
@@ -71,9 +71,9 @@ namespace TBGINTB_Builder.BuilderControls
             button_modifyRoom.Click += Button_ModifyRoom_Click;
             this.SetGridRowColumn(button_modifyRoom, 0, 0);
 
-            m_grid_roomData = new Grid_RoomData(roomId, roomName, roomX, roomY, roomZ, areaId, false);
-            this.SetGridRowColumn(m_grid_roomData, 1, 0);
-            m_grid_roomData.SetActiveAndRegisterForGinTubEvents();
+            m_grid_rooms = new Grid_RoomData(roomId, roomName, roomX, roomY, roomZ, areaId, false);
+            this.SetGridRowColumn(m_grid_rooms, 1, 0);
+            m_grid_rooms.SetActiveAndRegisterForGinTubEvents();
 
             ////////
             // RoomStates
@@ -110,12 +110,12 @@ namespace TBGINTB_Builder.BuilderControls
             Window_RoomData window =
                 new Window_RoomData
                 (
-                    m_grid_roomData.RoomId,
-                    m_grid_roomData.RoomName,
-                    m_grid_roomData.RoomX,
-                    m_grid_roomData.RoomY,
-                    m_grid_roomData.RoomZ,
-                    m_grid_roomData.AreaId
+                    m_grid_rooms.RoomId,
+                    m_grid_rooms.RoomName,
+                    m_grid_rooms.RoomX,
+                    m_grid_rooms.RoomY,
+                    m_grid_rooms.RoomZ,
+                    m_grid_rooms.AreaId
                 );
             window.ShowDialog();
             if (window.Accepted)
@@ -126,17 +126,17 @@ namespace TBGINTB_Builder.BuilderControls
                     window.RoomX, 
                     window.RoomY, 
                     window.RoomZ, 
-                    m_grid_roomData.AreaId
+                    m_grid_rooms.AreaId
                 );
         }
 
         void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
         {
             Window_RoomStateData window = 
-                new Window_RoomStateData(null, null, null, null, m_grid_roomData.RoomId.Value);
+                new Window_RoomStateData(null, null, null, null, m_grid_rooms.RoomId.Value);
             window.ShowDialog();
             if (window.Accepted)
-                GinTubBuilderManager.AddRoomState(window.RoomStateTime, window.LocationId.Value, m_grid_roomData.RoomId.Value);
+                GinTubBuilderManager.AddRoomState(window.RoomStateTime, window.LocationId.Value, m_grid_rooms.RoomId.Value);
         }
 
         #endregion

@@ -15,6 +15,7 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         int m_id;
         int m_verbType;
         int m_noun;
+        string m_name;
 
         [DataMember]
         public int Id
@@ -46,6 +47,16 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
             {
                 if (m_noun != value)
                     m_noun = value;
+            }
+        }
+
+        public string Name
+        {
+            get { return m_name; }
+            private set
+            {
+                if (m_name != value)
+                    m_name = value;
             }
         }
     }

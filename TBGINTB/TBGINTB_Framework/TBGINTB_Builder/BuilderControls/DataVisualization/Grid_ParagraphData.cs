@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBox m_textBox_paragraphOrder;
+        TextBox m_textBox_order;
 
         #endregion
 
@@ -35,7 +35,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_textBox_paragraphOrder
+                    m_textBox_order
                 };
             }
         }
@@ -109,11 +109,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // State
-            m_textBox_paragraphOrder = new TextBox() { VerticalAlignment = VerticalAlignment.Center };
-            m_textBox_paragraphOrder.TextChanged += TextBox_ParagraphOrder_TextChanged;
-            m_textBox_paragraphOrder.Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0";
+            m_textBox_order = new TextBox() { VerticalAlignment = VerticalAlignment.Center };
+            m_textBox_order.TextChanged += TextBox_ParagraphOrder_TextChanged;
+            m_textBox_order.Text = (ParagraphOrder.HasValue) ? ParagraphOrder.ToString() : "0";
             Label label_paragraphOrder = new Label() { Content = "Order:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBox_paragraphOrder, 0, 1);
+            grid_state.SetGridRowColumn(m_textBox_order, 0, 1);
             grid_state.SetGridRowColumn(label_paragraphOrder, 0, 0);
         }
 
@@ -130,14 +130,14 @@ namespace TBGINTB_Builder.BuilderControls
         private void SetParagraphOrder(int order)
         {
             ParagraphOrder = order;
-            m_textBox_paragraphOrder.Text = ParagraphOrder.ToString();
+            m_textBox_order.Text = ParagraphOrder.ToString();
         }
 
         void TextBox_ParagraphOrder_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             int newOrder = 0;
-            if (tb != null && tb == m_textBox_paragraphOrder && int.TryParse(m_textBox_paragraphOrder.Text, out newOrder))
+            if (tb != null && tb == m_textBox_order && int.TryParse(m_textBox_order.Text, out newOrder))
                 ParagraphOrder = newOrder;
         }
 

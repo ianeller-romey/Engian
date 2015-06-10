@@ -598,51 +598,53 @@ namespace TBGINTB_Builder.Lib
             public int Id { get; set; }
             public int VerbType { get; set; }
             public int Noun { get; set; }
-            public ActionEventArgs(int id, int verbType, int noun)
+            public string Name { get; set; }
+            public ActionEventArgs(int id, int verbType, int noun, string name)
             {
                 Id = id;
                 VerbType = verbType;
                 Noun = noun;
+                Name = name;
             }
         }
 
 
         public class ActionAddedEventArgs : ActionEventArgs
         {
-            public ActionAddedEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+            public ActionAddedEventArgs(int id, int verbType, int noun, string name) : base(id, verbType, noun, name) { }
         }
         public delegate void ActionAddedEventHandler(object sender, ActionAddedEventArgs args);
         public static event ActionAddedEventHandler ActionAdded;
         private static void OnActionAdded(Db.Action action)
         {
             if (ActionAdded != null)
-                ActionAdded(typeof(GinTubBuilderManager), new ActionAddedEventArgs(action.Id, action.VerbType, action.Noun));
+                ActionAdded(typeof(GinTubBuilderManager), new ActionAddedEventArgs(action.Id, action.VerbType, action.Noun, action.Name));
         }
 
 
         public class ActionModifiedEventArgs : ActionEventArgs
         {
-            public ActionModifiedEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+            public ActionModifiedEventArgs(int id, int verbType, int noun, string name) : base(id, verbType, noun, name) { }
         }
         public delegate void ActionModifiedEventHandler(object sender, ActionModifiedEventArgs args);
         public static event ActionModifiedEventHandler ActionModified;
         private static void OnActionModified(Db.Action action)
         {
             if (ActionModified != null)
-                ActionModified(typeof(GinTubBuilderManager), new ActionModifiedEventArgs(action.Id, action.VerbType, action.Noun));
+                ActionModified(typeof(GinTubBuilderManager), new ActionModifiedEventArgs(action.Id, action.VerbType, action.Noun, action.Name));
         }
 
 
         public class ActionGetEventArgs : ActionEventArgs
         {
-            public ActionGetEventArgs(int id, int verbType, int noun) : base(id, verbType, noun) { }
+            public ActionGetEventArgs(int id, int verbType, int noun, string name) : base(id, verbType, noun, name) { }
         }
         public delegate void ActionGetEventHandler(object sender, ActionGetEventArgs args);
         public static event ActionGetEventHandler ActionGet;
         private static void OnActionGet(Db.Action action)
         {
             if (ActionGet != null)
-                ActionGet(typeof(GinTubBuilderManager), new ActionGetEventArgs(action.Id, action.VerbType, action.Noun));
+                ActionGet(typeof(GinTubBuilderManager), new ActionGetEventArgs(action.Id, action.VerbType, action.Noun, action.Name));
         }
 
         #endregion
@@ -1901,10 +1903,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", e);
+                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoomAndRoomState", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", new Exception("No [Paragraphs] records found."));
+                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoomAndRoomState", new Exception("No [Paragraphs] records found."));
 
             List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
             return paragraphs;
@@ -1972,10 +1974,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForRoom", e);
+                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForParagraph", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForRoom", new Exception("No [ParagraphStates] records found."));
+                throw new GinTubDatabaseException("dev_GetAllParagraphStatesForParagraph", new Exception("No [ParagraphStates] records found."));
 
             List<ParagraphState> paragraphStates = databaseResult.Select(r => Mapper.Map<ParagraphState>(r)).ToList();
             return paragraphStates;
@@ -2043,10 +2045,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllNounsForRoom", e);
+                throw new GinTubDatabaseException("dev_GetAllNounsForParagraphState", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllNounsForRoom", new Exception("No [Nouns] records found."));
+                throw new GinTubDatabaseException("dev_GetAllNounsForParagraphState", new Exception("No [Nouns] records found."));
 
             List<Noun> nouns = databaseResult.Select(r => Mapper.Map<Noun>(r)).ToList();
             return nouns;
@@ -2185,10 +2187,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllVerbs", e);
+                throw new GinTubDatabaseException("dev_GetAllVerbsForVerbType", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllVerbs", new Exception("No [Verbs] records found."));
+                throw new GinTubDatabaseException("dev_GetAllVerbsForVerbType", new Exception("No [Verbs] records found."));
 
             List<Verb> verbs = databaseResult.Select(r => Mapper.Map<Verb>(r)).ToList();
             return verbs;
@@ -2256,10 +2258,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllActions", e);
+                throw new GinTubDatabaseException("dev_GetAllActionsForNoun", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllActions", new Exception("No [Actions] records found."));
+                throw new GinTubDatabaseException("dev_GetAllActionsForNoun", new Exception("No [Actions] records found."));
 
             List<Db.Action> actions = databaseResult.Select(r => Mapper.Map<Db.Action>(r)).ToList();
             return actions;
@@ -2398,10 +2400,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONProperties", e);
+                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONPropertiesForResultType", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONProperties", new Exception("No [ResultTypeJSONProperties] records found."));
+                throw new GinTubDatabaseException("dev_GetAllResultTypeJSONPropertiesForResultType", new Exception("No [ResultTypeJSONProperties] records found."));
 
             List<ResultTypeJSONProperty> resultTypeJSONProperties = databaseResult.Select(r => Mapper.Map<ResultTypeJSONProperty>(r)).ToList();
             return resultTypeJSONProperties;
@@ -2469,10 +2471,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllResults", e);
+                throw new GinTubDatabaseException("dev_GetAllResultsForResultType", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllResults", new Exception("No [Results] records found."));
+                throw new GinTubDatabaseException("dev_GetAllResultsForResultType", new Exception("No [Results] records found."));
 
             List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
             return results;
@@ -2487,10 +2489,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllResults", e);
+                throw new GinTubDatabaseException("dev_GetAllResultsForAction", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllResults", new Exception("No [Results] records found."));
+                throw new GinTubDatabaseException("dev_GetAllResultsForAction", new Exception("No [Results] records found."));
 
             List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
             return results;
@@ -2558,10 +2560,10 @@ namespace TBGINTB_Builder.Lib
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllActionResultsForRoom", e);
+                throw new GinTubDatabaseException("dev_GetAllActionResultsForAction", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllActionResultsForRoom", new Exception("No [ActionResults] records found."));
+                throw new GinTubDatabaseException("dev_GetAllActionResultsForAction", new Exception("No [ActionResults] records found."));
 
             List<ActionResult> actionResults = databaseResult.Select(r => Mapper.Map<ActionResult>(r)).ToList();
             return actionResults;

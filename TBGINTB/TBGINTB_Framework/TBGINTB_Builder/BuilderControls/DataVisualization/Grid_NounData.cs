@@ -16,7 +16,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        ComboBox_ParagraphStateNouns m_comboBox_nounText;
+        ComboBox_ParagraphStateNouns m_comboBox_text;
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_comboBox_nounText
+                    m_comboBox_text
                 };
             }
         }
@@ -109,11 +109,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Text
-            m_comboBox_nounText = new ComboBox_ParagraphStateNouns(ParagraphStateId);
-            m_comboBox_nounText.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_nounText.SelectionChanged += m_comboBox_nounText_SelectionChanged;
+            m_comboBox_text = new ComboBox_ParagraphStateNouns(ParagraphStateId);
+            m_comboBox_text.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
+            m_comboBox_text.SelectionChanged += m_comboBox_nounText_SelectionChanged;
             Label label_nounText = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_text.SetGridRowColumn(m_comboBox_nounText, 1, 0);
+            grid_text.SetGridRowColumn(m_comboBox_text, 1, 0);
             grid_text.SetGridRowColumn(label_nounText, 0, 0);
         }
 
@@ -129,19 +129,19 @@ namespace TBGINTB_Builder.BuilderControls
         void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
         {
             if (ParagraphStateId == args.Id)
-                m_comboBox_nounText.SelectedItem = m_comboBox_nounText.Items.OfType<ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun>().SingleOrDefault(i => i.PossibleNounText == NounText);
+                m_comboBox_text.SelectedItem = m_comboBox_text.Items.OfType<ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun>().SingleOrDefault(i => i.PossibleNounText == NounText);
         }
 
         private void SetNounText(string nounText)
         {
             NounText = nounText;
-            m_comboBox_nounText.SelectedItem = m_comboBox_nounText.Items.OfType<ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun>().SingleOrDefault(n => n.PossibleNounText == nounText);
+            m_comboBox_text.SelectedItem = m_comboBox_text.Items.OfType<ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun>().SingleOrDefault(n => n.PossibleNounText == nounText);
         }
 
         void m_comboBox_nounText_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun item;
-            if (m_comboBox_nounText.SelectedItem != null && (item = m_comboBox_nounText.SelectedItem as ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun) != null)
+            if (m_comboBox_text.SelectedItem != null && (item = m_comboBox_text.SelectedItem as ComboBox_ParagraphStateNouns.ComboBoxItem_PossibleNoun) != null)
                 NounText = item.PossibleNounText;
         }
 

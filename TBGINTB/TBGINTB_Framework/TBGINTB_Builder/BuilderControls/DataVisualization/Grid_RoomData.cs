@@ -16,11 +16,11 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBox m_textBox_roomName;
+        TextBox m_textBox_name;
         TextBlock
-            m_textBlock_roomX,
-            m_textBlock_roomY,
-            m_textBlock_roomZ;
+            m_textBlock_x,
+            m_textBlock_y,
+            m_textBlock_z;
 
         #endregion
 
@@ -40,7 +40,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_textBox_roomName
+                    m_textBox_name
                 };
             }
         }
@@ -120,23 +120,23 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // X
-            m_textBlock_roomX = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomX.ToString() };
+            m_textBlock_x = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomX.ToString() };
             Label label_roomX = new Label() { Content = "X:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_XYZ.SetGridRowColumn(m_textBlock_roomX, 0, 1);
+            grid_XYZ.SetGridRowColumn(m_textBlock_x, 0, 1);
             grid_XYZ.SetGridRowColumn(label_roomX, 0, 0);
 
             ////////
             // Y
-            m_textBlock_roomY = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomY.ToString() };
+            m_textBlock_y = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomY.ToString() };
             Label label_roomY = new Label() { Content = "Y:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_XYZ.SetGridRowColumn(m_textBlock_roomY, 0, 3);
+            grid_XYZ.SetGridRowColumn(m_textBlock_y, 0, 3);
             grid_XYZ.SetGridRowColumn(label_roomY, 0, 2);
 
             ////////
             // Z
-            m_textBlock_roomZ = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomZ.ToString() };
+            m_textBlock_z = new TextBlock() { VerticalAlignment = VerticalAlignment.Center, Text = RoomZ.ToString() };
             Label label_roomZ = new Label() { Content = "Z:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_XYZ.SetGridRowColumn(m_textBlock_roomZ, 0, 5);
+            grid_XYZ.SetGridRowColumn(m_textBlock_z, 0, 5);
             grid_XYZ.SetGridRowColumn(label_roomZ, 0, 4);
 
             ////////
@@ -148,10 +148,10 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Name
-            m_textBox_roomName = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = RoomName };
-            m_textBox_roomName.TextChanged += TextBox_RoomName_TextChanged;
+            m_textBox_name = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = RoomName };
+            m_textBox_name.TextChanged += TextBox_RoomName_TextChanged;
             Label label_roomName = new Label() { Content = "Name: ", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_name.SetGridRowColumn(m_textBox_roomName, 0, 1);
+            grid_name.SetGridRowColumn(m_textBox_name, 0, 1);
             grid_name.SetGridRowColumn(label_roomName, 0, 0);
 
         }
@@ -171,33 +171,33 @@ namespace TBGINTB_Builder.BuilderControls
         private void SetRoomX(int roomX)
         {
             RoomX = roomX;
-            m_textBlock_roomX.Text = RoomX.ToString();
+            m_textBlock_x.Text = RoomX.ToString();
         }
 
         private void SetRoomY(int roomY)
         {
             RoomY = roomY;
-            m_textBlock_roomY.Text = RoomY.ToString();
+            m_textBlock_y.Text = RoomY.ToString();
         }
 
         private void SetRoomZ(int roomZ)
         {
             RoomZ = roomZ;
-            m_textBlock_roomZ.Text = RoomZ.ToString();
+            m_textBlock_z.Text = RoomZ.ToString();
         }
 
         private void SetRoomName(string roomName)
         {
-            m_textBox_roomName.Text = roomName;
-            if (!m_textBox_roomName.IsEnabled)
-                TextBox_RoomName_TextChanged(m_textBox_roomName, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+            m_textBox_name.Text = roomName;
+            if (!m_textBox_name.IsEnabled)
+                TextBox_RoomName_TextChanged(m_textBox_name, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
         private void TextBox_RoomName_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            if (tb != null && tb == m_textBox_roomName)
-                RoomName = m_textBox_roomName.Text;
+            if (tb != null && tb == m_textBox_name)
+                RoomName = m_textBox_name.Text;
         }
 
         #endregion

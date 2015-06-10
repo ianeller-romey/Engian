@@ -98,13 +98,13 @@ BEGIN
 
 	SELECT a.[Id],
 		   a.[Name],
-		   ISNULL(MAX(r.[X]), 0) as [MaxX],
-		   ISNULL(MIN(r.[X]), 0) as [MinX],
-		   ISNULL(MAX(r.[Y]), 0) as [MaxY],
-		   ISNULL(MIN(r.[Y]), 0) as [MinY],
-		   ISNULL(MAX(r.[Z]), 0) as [MaxZ],
-		   ISNULL(MIN(r.[Z]), 0) as [MinZ],
-		   COUNT(r.[Id]) as [NumRooms]
+		   ISNULL(MAX(r.[X]), 0) AS [MaxX],
+		   ISNULL(MIN(r.[X]), 0) AS [MinX],
+		   ISNULL(MAX(r.[Y]), 0) AS [MaxY],
+		   ISNULL(MIN(r.[Y]), 0) AS [MinY],
+		   ISNULL(MAX(r.[Z]), 0) AS [MaxZ],
+		   ISNULL(MIN(r.[Z]), 0) AS [MinZ],
+		   COUNT(r.[Id]) AS [NumRooms]
 	FROM [dbo].[Areas] a
 	LEFT JOIN [dbo].[Rooms] r
 	ON r.[Area] = a.[Id]
@@ -1307,10 +1307,17 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Results] ([Name], [JSONData], [ResultType])
-	VALUES (@name, @jsondata, @resulttype)
+	DECLARE @resultid decimal
+
+	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+	VALUES (@jsondata, @resulttype)
 	
-	SELECT SCOPE_IDENTITY()
+	SELECT @resultid = SCOPE_IDENTITY()
+	
+	INSERT INTO [dev].[ResultNames] ([Result], [Name])
+	VALUES(@resultid, @name)
+	
+	SELECT @resultid
 
 END
 GO
@@ -1335,10 +1342,13 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[Results] 
-	SET	[Name] = ISNULL(@name, [Name]),
-		[JSONData] = @jsondata, 
+	SET	[JSONData] = @jsondata, 
 		[ResultType] = ISNULL(@resulttype, [ResultType])
 	WHERE [Id] = @id
+	
+	UPDATE [dev].[ResultNames]
+	SET [Name] = ISNULL(@name, [Name])
+	WHERE [Result] = @id
 
 END
 GO
@@ -1363,7 +1373,7 @@ BEGIN
 		   [Name],
 		   [JSONData],
 		   [ResultType]
-	FROM [dbo].[Results]
+	FROM [dev].[Results] r
 	WHERE [ResultType] = @resulttype
 
 END
@@ -1389,7 +1399,7 @@ BEGIN
 		   r.[Name],
 		   r.[JSONData],
 		   r.[ResultType]
-	FROM [dbo].[Results] r
+	FROM [dev].[Results] r
 	INNER JOIN [dbo].[ActionResults] ar
 	ON ar.[Result] = r.[Id]
 	INNER JOIN [dbo].[Actions] a
@@ -1421,10 +1431,8 @@ BEGIN
 		   [Name],
 		   [JSONData],
 		   [ResultType]
-	FROM [dbo].[Results]
+	FROM [dev].[Results]
 	WHERE [Id] = @id
-	
-	SELECT SCOPE_IDENTITY()
 
 END
 GO
@@ -1500,11 +1508,14 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT [Id],
-		   [VerbType],
-		   [Noun]
-	FROM [dbo].[Actions]
-	WHERE [Noun] = @noun
+	SELECT a.[Id],
+		   a.[VerbType],
+		   a.[Noun],
+		   an.[Name]
+	FROM [dbo].[Actions] a
+	INNER JOIN [dev].[ActionNames] an
+	ON a.[Id] = an.[Action]
+	WHERE a.[Noun] = @noun
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1527,11 +1538,14 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT [Id],
-		   [VerbType],
-		   [Noun]
-	FROM [dbo].[Actions]
-	WHERE [Id] = @id
+	SELECT a.[Id],
+		   a.[VerbType],
+		   a.[Noun],
+		   an.[Name]
+	FROM [dbo].[Actions] a
+	INNER JOIN [dev].[ActionNames] an
+	ON a.[Id] = an.[Action]
+	WHERE a.[Id] = @id
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -1644,52 +1658,309 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*RequirementSourceType********************************************************************************************************************/
+/*Item*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddRequirementSourceType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_AddItem] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a RequirementSourceType record and returns the newly generated ID
+-- Description:	Adds an Item record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddRequirementSourceType]
-	@name varchar(500)
+ALTER PROCEDURE [dev].[dev_AddItem]
+	@name varchar(500),
+	@description varchar(MAX)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[RequirementSourceTypes] ([Name])
-	VALUES (@name)
+	INSERT INTO [dbo].[Items] ([Name], [Description])
+	VALUES (@name, @description)
 	
 	SELECT SCOPE_IDENTITY()
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirementSourceType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRequirementSourceType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateItem] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Updates a RequirementSourceType record
+-- Description:	Updates an Item record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateRequirementSourceType]
+ALTER PROCEDURE [dev].[dev_UpdateItem]
 	@id int,
-	@name varchar(500)
+	@name varchar(500),
+	@description varchar(MAX)
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[RequirementSourceTypes] 
-	SET	[Name] = ISNULL(@name, [Name])
+	UPDATE [dbo].[Items]
+	SET [Name] = ISNULL(@name, [Name]),
+		[Description] = ISNULL(@description, [Description])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllItems]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllItems] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about all Item records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllItems]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Items]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetItem] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about an Item record from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetItem]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Items]
+	WHERE [Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*Event************************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_AddEvent] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Adds an Event record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddEvent]
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Events] ([Name], [Description])
+	VALUES (@name, @description)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEvent] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Updates an Event record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateEvent]
+	@id int,
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[Events]
+	SET [Name] = ISNULL(@name, [Name]),
+		[Description] = ISNULL(@description, [Description])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllEvents]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllEvents] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about all Event records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllEvents]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Events]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetEvent] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about an Event record from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetEvent]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Events]
+	WHERE [Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*Character********************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_AddCharacter] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Adds an Character record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddCharacter]
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[Characters] ([Name], [Description])
+	VALUES (@name, @description)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateCharacter] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 5/12/2015
+-- Description:	Updates an Character record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateCharacter]
+	@id int,
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[Characters]
+	SET [Name] = ISNULL(@name, [Name]),
+		[Description] = ISNULL(@description, [Description])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllCharacters]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllCharacters] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about all Character records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllCharacters]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Characters]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetCharacter] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/10/2015
+-- Description:	Gets data about an Character record from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetCharacter]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Name],
+		   [Description]
+	FROM [dbo].[Characters]
 	WHERE [Id] = @id
 
 END
@@ -1916,61 +2187,6 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*Item*************************************************************************************************************************************/
-/******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddItem] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds an Item record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddItem]
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[Items] ([Name], [Description])
-	VALUES (@name, @description)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateItem] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates an Item record
--- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateItem]
-	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	UPDATE [dbo].[Items]
-	SET [Name] = ISNULL(@name, [Name]),
-		[Description] = ISNULL(@description, [Description])
-	WHERE [Id] = @id
-
-END
-GO
-
-/******************************************************************************************************************************************/
 /*PlayerInventory**************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
@@ -2026,63 +2242,8 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*Event************************************************************************************************************************************/
-/******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddEvent] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds an Event record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddEvent]
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[Events] ([Name], [Description])
-	VALUES (@name, @description)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
-/******************************************************************************************************************************************/
 /*PlayerHistory****************************************************************************************************************************/
 /******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEvent] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates an Event record
--- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateEvent]
-	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	UPDATE [dbo].[Events]
-	SET [Name] = ISNULL(@name, [Name]),
-		[Description] = ISNULL(@description, [Description])
-	WHERE [Id] = @id
-
-END
-GO
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerHistory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerHistory] AS SELECT 1')
@@ -2105,61 +2266,6 @@ BEGIN
 	VALUES (@player, @event)
 	
 	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
-/******************************************************************************************************************************************/
-/*Character********************************************************************************************************************************/
-/******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddCharacter] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds an Character record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddCharacter]
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[Characters] ([Name], [Description])
-	VALUES (@name, @description)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateCharacter] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates an Character record
--- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateCharacter]
-	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	UPDATE [dbo].[Characters]
-	SET [Name] = ISNULL(@name, [Name]),
-		[Description] = ISNULL(@description, [Description])
-	WHERE [Id] = @id
 
 END
 GO

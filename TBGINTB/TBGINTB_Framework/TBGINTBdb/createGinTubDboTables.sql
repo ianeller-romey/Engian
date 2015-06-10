@@ -101,9 +101,13 @@ CREATE TABLE [dev].[ResultTypeJSONProperties] (
 
 CREATE TABLE [dbo].[Results] (
 	[Id] int PRIMARY KEY IDENTITY,
-	[Name] varchar(500) NOT NULL,
 	[JSONData] varchar(MAX) NULL,
 	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
+)
+
+CREATE TABLE [dev].[ResultNames] (
+	[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
+	[Name] varchar(500) NOT NULL
 )
 
 CREATE TABLE [dbo].[Actions] (
@@ -228,3 +232,27 @@ CREATE TABLE [dbo].[PlayerParty] (
 	[Active] bit NOT NULL,
 	[CheckpointDate] datetime NOT NULL
 )
+
+GO
+
+CREATE VIEW [dev].[ActionNames] AS
+	SELECT a.[Id] AS [Action],
+		   vt.[Name] + ' on ' + n.[Text] AS [Name]
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[VerbTypes] vt
+	ON a.[VerbType] = vt.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	
+GO
+
+CREATE VIEW [dev].[Results] AS
+	SELECT r.[Id],
+		   rn.[Name],
+		   r.[JSONData],
+		   r.[ResultType]
+	FROM [dbo].[Results] r
+	INNER JOIN [dev].[ResultNames] rn
+	ON rn.[Result] = r.[Id]
+	
+GO

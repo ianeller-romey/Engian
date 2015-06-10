@@ -16,8 +16,8 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        ComboBox_VerbType m_comboBox_actionVerbType;
-        ComboBox_Noun m_comboBox_actionNoun;
+        ComboBox_VerbType m_comboBox_verbType;
+        ComboBox_Noun m_comboBox_noun;
 
         #endregion
 
@@ -35,8 +35,8 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_comboBox_actionVerbType,
-                    m_comboBox_actionNoun
+                    m_comboBox_verbType,
+                    m_comboBox_noun
                 };
             }
         }
@@ -115,11 +115,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // VerbType
-            m_comboBox_actionVerbType = new ComboBox_VerbType();
-            m_comboBox_actionVerbType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_actionVerbType.SelectionChanged += ComboBox_ActionVerbType_SelectionChanged;
+            m_comboBox_verbType = new ComboBox_VerbType();
+            m_comboBox_verbType.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
+            m_comboBox_verbType.SelectionChanged += ComboBox_ActionVerbType_SelectionChanged;
             Label label_actionVerbType = new Label() { Content = "Verb Type:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_verbType.SetGridRowColumn(m_comboBox_actionVerbType, 1, 0);
+            grid_verbType.SetGridRowColumn(m_comboBox_verbType, 1, 0);
             grid_verbType.SetGridRowColumn(label_actionVerbType, 0, 0);
 
             ////////
@@ -131,11 +131,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Noun
-            m_comboBox_actionNoun = new ComboBox_Noun(ParagraphStateId);
-            m_comboBox_actionNoun.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_actionNoun.SelectionChanged += ComboBox_ActionNoun_SelectionChanged;
+            m_comboBox_noun = new ComboBox_Noun(ParagraphStateId);
+            m_comboBox_noun.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
+            m_comboBox_noun.SelectionChanged += ComboBox_ActionNoun_SelectionChanged;
             Label label_actionNoun = new Label() { Content = "Noun:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_noun.SetGridRowColumn(m_comboBox_actionNoun, 1, 0);
+            grid_noun.SetGridRowColumn(m_comboBox_noun, 1, 0);
             grid_noun.SetGridRowColumn(label_actionNoun, 0, 0);
         }
 
@@ -162,48 +162,48 @@ namespace TBGINTB_Builder.BuilderControls
         private void SetActionVerbType(int actionVerbType)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item =
-                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
+                m_comboBox_verbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
                 SingleOrDefault(i => i.VerbTypeId == actionVerbType);
             if (item != null)
-                m_comboBox_actionVerbType.SelectedItem = item;
+                m_comboBox_verbType.SelectedItem = item;
         }
 
         private void SetActionNoun(int actionNoun)
         {
-            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
+            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_noun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
                 SingleOrDefault(i => i.NounId == actionNoun);
             if (item != null)
-                m_comboBox_actionNoun.SelectedItem = item;
+                m_comboBox_noun.SelectedItem = item;
         }
 
         private void ResetActionVerbType(int actionVerbType)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item =
-                m_comboBox_actionVerbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
+                m_comboBox_verbType.Items.OfType<ComboBox_VerbType.ComboBoxItem_VerbType>().
                 SingleOrDefault(i => ActionVerbType.HasValue && ActionVerbType.Value == actionVerbType && i.VerbTypeId == actionVerbType);
             if (item != null)
-                m_comboBox_actionVerbType.SelectedItem = item;
+                m_comboBox_verbType.SelectedItem = item;
         }
 
         private void ResetActionNoun(int actionNoun)
         {
-            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_actionNoun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
+            ComboBox_Noun.ComboBoxItem_Noun item = m_comboBox_noun.Items.OfType<ComboBox_Noun.ComboBoxItem_Noun>().
                 SingleOrDefault(i => ActionNoun.HasValue && ActionNoun.Value == actionNoun && i.NounId == actionNoun);
             if (item != null)
-                m_comboBox_actionNoun.SelectedItem = item;
+                m_comboBox_noun.SelectedItem = item;
         }
 
         private void ComboBox_ActionVerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_VerbType.ComboBoxItem_VerbType item;
-            if (m_comboBox_actionVerbType.SelectedItem != null && (item = m_comboBox_actionVerbType.SelectedItem as ComboBox_VerbType.ComboBoxItem_VerbType) != null)
+            if (m_comboBox_verbType.SelectedItem != null && (item = m_comboBox_verbType.SelectedItem as ComboBox_VerbType.ComboBoxItem_VerbType) != null)
                 ActionVerbType = item.VerbTypeId;
         }
 
         private void ComboBox_ActionNoun_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Noun.ComboBoxItem_Noun item;
-            if (m_comboBox_actionNoun.SelectedItem != null && (item = m_comboBox_actionNoun.SelectedItem as ComboBox_Noun.ComboBoxItem_Noun) != null)
+            if (m_comboBox_noun.SelectedItem != null && (item = m_comboBox_noun.SelectedItem as ComboBox_Noun.ComboBoxItem_Noun) != null)
                 ActionNoun = item.NounId;
         }
 

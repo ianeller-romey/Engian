@@ -16,5 +16,6 @@ namespace TBGINTB_Builder.Lib.Repository
         public int Id { get; set; }
         public int VerbType { get; set; }
         public int Noun { get; set; }
+        public string Name { get; set; }
     }
 }

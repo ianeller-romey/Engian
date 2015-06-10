@@ -1197,5 +1197,47 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultsForAction_Result>("dev_GetAllResultsForAction", actionParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAllCharacters_Result> dev_GetAllCharacters()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllCharacters_Result>("dev_GetAllCharacters");
+        }
+    
+        public virtual ObjectResult<dev_GetAllEvents_Result> dev_GetAllEvents()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllEvents_Result>("dev_GetAllEvents");
+        }
+    
+        public virtual ObjectResult<dev_GetAllItems_Result> dev_GetAllItems()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllItems_Result>("dev_GetAllItems");
+        }
+    
+        public virtual ObjectResult<dev_GetCharacter_Result> dev_GetCharacter(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetCharacter_Result>("dev_GetCharacter", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetEvent_Result> dev_GetEvent(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetEvent_Result>("dev_GetEvent", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetItem_Result> dev_GetItem(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetItem_Result>("dev_GetItem", idParameter);
+        }
     }
 }

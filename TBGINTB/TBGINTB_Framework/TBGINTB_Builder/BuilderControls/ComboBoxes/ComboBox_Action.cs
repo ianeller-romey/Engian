@@ -39,6 +39,7 @@ namespace TBGINTB_Builder.BuilderControls
             public int ActionId { get; private set; }
             public int ActionVerbType { get; private set; }
             public int ActionNoun { get; private set; }
+            public string ActionName { get; private set; }
 
             #endregion
 
@@ -47,23 +48,28 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public ComboBoxItem_Action(int actionId, int actionVerbType, int actionNoun)
+            public ComboBoxItem_Action(int actionId, int actionVerbType, int actionNoun, string actionName)
             {
                 ActionId = actionId;
                 SetActionVerbType(actionVerbType);
                 SetActionNoun(actionNoun);
+                SetActionName(actionName);
             }
 
             public void SetActionVerbType(int actionVerbType)
             {
                 ActionVerbType = actionVerbType;
-                Content = string.Format("{0} - {1}", ActionVerbType, ActionNoun);
             }
 
             public void SetActionNoun(int actionNoun)
             {
                 ActionNoun = actionNoun;
-                Content = string.Format("{0} - {1}", ActionVerbType, ActionNoun);
+            }
+
+            public void SetActionName(string actionName)
+            {
+                ActionName = actionName;
+                Content = ActionName;
             }
 
             #endregion
@@ -110,7 +116,7 @@ namespace TBGINTB_Builder.BuilderControls
             if (NounId == args.Id)
             {
                 if (!Items.OfType<ComboBoxItem_Action>().Any(i => i.ActionId == args.Id))
-                    Items.Add(new ComboBoxItem_Action(args.Id, args.Noun, args.VerbType));
+                    Items.Add(new ComboBoxItem_Action(args.Id, args.Noun, args.VerbType, args.Name));
             }
         }
 
@@ -123,6 +129,7 @@ namespace TBGINTB_Builder.BuilderControls
                 {
                     item.SetActionVerbType(args.VerbType);
                     item.SetActionNoun(args.Noun);
+                    item.SetActionName(args.Name);
                 }
             }
         }

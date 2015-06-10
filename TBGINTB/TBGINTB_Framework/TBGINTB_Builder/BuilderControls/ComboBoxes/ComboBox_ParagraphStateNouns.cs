@@ -102,7 +102,7 @@ namespace TBGINTB_Builder.BuilderControls
             if(item != null)
                 currentText = item.PossibleNounText;
             Items.Clear();
-            foreach (string noun in paragraphStateText.Split(c_splitter))
+            foreach (string noun in paragraphStateText.Split(c_splitter, StringSplitOptions.RemoveEmptyEntries))
                 Items.Add(new ComboBoxItem_PossibleNoun(noun));
             SelectedItem = Items.OfType<ComboBoxItem_PossibleNoun>().FirstOrDefault(i => i.PossibleNounText == currentText);
         }

@@ -16,8 +16,8 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBox m_textBox_paragraphStateText;
-        TextBlock m_textBlock_paragraphStateState;
+        TextBox m_textBox_text;
+        TextBlock m_textBlock_state;
 
         #endregion
 
@@ -35,8 +35,8 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_textBox_paragraphStateText,
-                    m_textBlock_paragraphStateState
+                    m_textBox_text,
+                    m_textBlock_state
                 };
             }
         }
@@ -112,10 +112,10 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Text
-            m_textBox_paragraphStateText = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ParagraphStateText };
-            m_textBox_paragraphStateText.TextChanged += TextBox_ParagraphStateText_TextChanged;
+            m_textBox_text = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ParagraphStateText };
+            m_textBox_text.TextChanged += TextBox_ParagraphStateText_TextChanged;
             Label label_paragraphStateText = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_text.SetGridRowColumn(m_textBox_paragraphStateText, 1, 0);
+            grid_text.SetGridRowColumn(m_textBox_text, 1, 0);
             grid_text.SetGridRowColumn(label_paragraphStateText, 0, 0);
             
             ////////
@@ -127,10 +127,10 @@ namespace TBGINTB_Builder.BuilderControls
             
             ////////
             // State
-            m_textBlock_paragraphStateState = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
+            m_textBlock_state = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
             SetParagraphStateState(ParagraphStateState);
             Label label_paragraphStateState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBlock_paragraphStateState, 0, 1);
+            grid_state.SetGridRowColumn(m_textBlock_state, 0, 1);
             grid_state.SetGridRowColumn(label_paragraphStateState, 0, 0);
         }
 
@@ -146,21 +146,21 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void SetParagraphStateState(int? paragraphStateState)
         {
-            m_textBlock_paragraphStateState.Text = (paragraphStateState.HasValue) ? paragraphStateState.ToString() : "NewState";
+            m_textBlock_state.Text = (paragraphStateState.HasValue) ? paragraphStateState.ToString() : "NewState";
         }
 
         private void SetParagraphStateText(string paragraphStateText)
         {
-            m_textBox_paragraphStateText.Text = paragraphStateText;
-            if (!m_textBox_paragraphStateText.IsEnabled)
-                TextBox_ParagraphStateText_TextChanged(m_textBox_paragraphStateText, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
+            m_textBox_text.Text = paragraphStateText;
+            if (!m_textBox_text.IsEnabled)
+                TextBox_ParagraphStateText_TextChanged(m_textBox_text, new TextChangedEventArgs(TextBox.TextChangedEvent, UndoAction.Undo));
         }
 
         void TextBox_ParagraphStateText_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
-            if (tb != null && tb == m_textBox_paragraphStateText)
-                ParagraphStateText = m_textBox_paragraphStateText.Text;
+            if (tb != null && tb == m_textBox_text)
+                ParagraphStateText = m_textBox_text.Text;
         }
 
         private void Grid_ParagraphStateData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

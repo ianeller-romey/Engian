@@ -11,11 +11,10 @@ namespace TBGINTB_Builder.Lib.Repository
 {
     using System;
     
-    public partial class dev_GetAction_Result
+    public partial class dev_GetAllEvents_Result
     {
         public int Id { get; set; }
-        public int VerbType { get; set; }
-        public int Noun { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

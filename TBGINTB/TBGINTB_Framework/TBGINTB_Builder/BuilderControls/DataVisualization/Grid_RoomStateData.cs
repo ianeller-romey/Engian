@@ -16,8 +16,8 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        TextBlock m_textBlock_roomStateState;
-        ComboBox_Location m_comboBox_locationId;
+        TextBlock m_textBlock_state;
+        ComboBox_Location m_comboBox_location;
         ComboBox
             m_comboBox_roomStateTime_hour,
             m_comboBox_roomStateTime_minute;
@@ -39,7 +39,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 return new List<UIElement>
                 {
-                    m_comboBox_locationId,
+                    m_comboBox_location,
                     m_comboBox_roomStateTime_hour,
                     m_comboBox_roomStateTime_minute
                 };
@@ -103,10 +103,10 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // State
-            m_textBlock_roomStateState = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
+            m_textBlock_state = new TextBlock() { VerticalAlignment = VerticalAlignment.Center };
             SetRoomStateState(RoomStateState);
             Label label_roomState = new Label() { Content = "State:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
-            grid_state.SetGridRowColumn(m_textBlock_roomStateState, 0, 1);
+            grid_state.SetGridRowColumn(m_textBlock_state, 0, 1);
             grid_state.SetGridRowColumn(label_roomState, 0, 0);
 
             ////////
@@ -122,10 +122,10 @@ namespace TBGINTB_Builder.BuilderControls
             Label label_location = new Label() { Content = "Location: ", FontWeight = FontWeights.Bold };
             stackPanel_location.Children.Add(label_location);
 
-            m_comboBox_locationId = new ComboBox_Location();
-            m_comboBox_locationId.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
-            m_comboBox_locationId.SelectionChanged += ComboBox_Location_SelectionChanged;
-            stackPanel_location.Children.Add(m_comboBox_locationId);
+            m_comboBox_location = new ComboBox_Location();
+            m_comboBox_location.SetActiveAndRegisterForGinTubEvents(); // never unregister; we want updates no matter where we are
+            m_comboBox_location.SelectionChanged += ComboBox_Location_SelectionChanged;
+            stackPanel_location.Children.Add(m_comboBox_location);
 
             ////////
             // Time
@@ -175,18 +175,18 @@ namespace TBGINTB_Builder.BuilderControls
         private void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)
         {
             if (LocationId == args.Id)
-                m_comboBox_locationId.SelectedItem = m_comboBox_locationId.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
+                m_comboBox_location.SelectedItem = m_comboBox_location.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(i => i.LocationId == args.Id);
         }
 
         private void SetRoomStateLocation(int locationId)
         {
             LocationId = locationId;
-            m_comboBox_locationId.SelectedItem = m_comboBox_locationId.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(l => l.LocationId == locationId);
+            m_comboBox_location.SelectedItem = m_comboBox_location.Items.OfType<ComboBox_Location.ComboBoxItem_Location>().SingleOrDefault(l => l.LocationId == locationId);
         }
 
         private void SetRoomStateState(int? roomStateState)
         {
-            m_textBlock_roomStateState.Text = (roomStateState.HasValue) ? roomStateState.ToString() : "NewState";
+            m_textBlock_state.Text = (roomStateState.HasValue) ? roomStateState.ToString() : "NewState";
         }
 
         private void SetRoomStateTime(DateTime? roomStateTime)
@@ -207,7 +207,7 @@ namespace TBGINTB_Builder.BuilderControls
         private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ComboBox_Location.ComboBoxItem_Location item;
-            if (m_comboBox_locationId.SelectedItem != null && (item = m_comboBox_locationId.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null)
+            if (m_comboBox_location.SelectedItem != null && (item = m_comboBox_location.SelectedItem as ComboBox_Location.ComboBoxItem_Location) != null)
                 LocationId = item.LocationId;
         }
 
