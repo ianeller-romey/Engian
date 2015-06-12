@@ -19,7 +19,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_LocationData m_grid_locationData;
+        Grid_LocationData m_grid_location;
 
         #endregion
 
@@ -36,14 +36,14 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            m_grid_locationData.SetActiveAndRegisterForGinTubEvents();
+            m_grid_location.SetActiveAndRegisterForGinTubEvents();
 
             GinTubBuilderManager.LoadAllLocations();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            m_grid_locationData.SetInactiveAndUnregisterFromGinTubEvents();
+            m_grid_location.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -53,9 +53,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls()
         {
-            m_grid_locationData = new Grid_LocationData(true);
+            m_grid_location = new Grid_LocationData(true);
 
-            return m_grid_locationData;
+            return m_grid_location;
         }
 
         #endregion

@@ -39,12 +39,12 @@ namespace TBGINTB_Builder.BuilderControls
             CreateControls(characterId, characterName, characterDescription);
         }
 
-        public void SetActiveAndRegisterForGinTubCharacters()
+        public void SetActiveAndRegisterForGinTubEvents()
         {
             m_grid_character.SetActiveAndRegisterForGinTubCharacters();
         }
 
-        public void SetInactiveAndUnregisterFromGinTubCharacters()
+        public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             m_grid_character.SetInactiveAndUnregisterFromGinTubCharacters();
         }

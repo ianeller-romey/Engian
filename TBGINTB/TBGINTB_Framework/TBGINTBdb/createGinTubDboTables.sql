@@ -246,6 +246,19 @@ CREATE VIEW [dev].[ActionNames] AS
 	
 GO
 
+CREATE VIEW [dev].[ActionResultTypes] AS
+	SELECT a.[Id] as [Action],
+		   rt.[Id] as [ResultType]
+	FROM [dbo].[ResultTypes] rt 
+	INNER JOIN [dbo].[Results] r
+	ON rt.[Id] = r.[ResultType]
+	INNER JOIN [dbo].[ActionResults] ar
+	ON ar.[Result] = r.[Id]
+	INNER JOIN [dbo].[Actions] a
+	on a.[Id] = ar.[Action]
+	
+GO
+
 CREATE VIEW [dev].[Results] AS
 	SELECT r.[Id],
 		   rn.[Name],

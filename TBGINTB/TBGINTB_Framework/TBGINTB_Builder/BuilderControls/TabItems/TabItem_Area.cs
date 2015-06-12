@@ -24,7 +24,8 @@ namespace TBGINTB_Builder.BuilderControls
         private Grid_RoomAndStates m_grid_roomAndState;
         private Grid_ParagraphsAndStates m_grid_paragraphsAndStates;
         private Grid_NounsAndActions m_grid_nounsAndActions;
-        private Grid_ActionResultsAndRequirements m_grid_actionResultsAndRequirements;
+        private ItemsControl_ActionResult m_itemsControl_actionResults;
+        private Grid_ActionRequirements m_grid_actionRequirements;
         private Grid 
             m_grid_main,
             m_grid_sub;
@@ -256,6 +257,8 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5.0, GridUnitType.Pixel) });
             m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(5.0, GridUnitType.Pixel) });
+            m_grid_sub.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(100.0, GridUnitType.Star) });
             m_grid_main.SetGridRowColumn(m_grid_sub, 2, 0);
 
             Rectangle rectangle_roomsOnFloor = new Rectangle() { Fill = Brushes.Lavender };
@@ -269,6 +272,8 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_sub.SetGridRowColumn(gridSplitter3, 0, 5);
             GridSplitter gridSplitter4 = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
             m_grid_sub.SetGridRowColumn(gridSplitter4, 0, 7);
+            GridSplitter gridSplitter5 = new GridSplitter() { Width = 5, HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch, Background = Brushes.Black };
+            m_grid_sub.SetGridRowColumn(gridSplitter5, 0, 9);
 
             return m_grid_main;
         }
@@ -400,16 +405,30 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadAction();
 
-            m_grid_actionResultsAndRequirements = 
-                new Grid_ActionResultsAndRequirements
+            m_itemsControl_actionResults = 
+                new ItemsControl_ActionResult
                 (
                     actionId,
                     m_grid_nounsAndActions.SelectedNounId,
                     m_grid_paragraphsAndStates.SelectedParagraphId
                 );
-            m_grid_sub.SetGridRowColumn(m_grid_actionResultsAndRequirements, 0, 8);
-            m_grid_actionResultsAndRequirements.SetActiveAndRegisterForGinTubEvents();
+            m_grid_sub.SetGridRowColumn(m_itemsControl_actionResults, 0, 8);
+            m_itemsControl_actionResults.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllActionResultsForAction(actionId);
+
+            m_grid_actionRequirements =
+                new Grid_ActionRequirements
+                (
+                    actionId,
+                    m_grid_nounsAndActions.SelectedNounId,
+                    m_grid_paragraphsAndStates.SelectedParagraphId
+                );
+            m_grid_sub.SetGridRowColumn(m_grid_actionRequirements, 0, 10);
+            m_grid_actionRequirements.SetActiveAndRegisterForGinTubEvents();
+            GinTubBuilderManager.LoadAllItemActionRequirementsForAction(actionId);
+            GinTubBuilderManager.LoadAllEventActionRequirementsForAction(actionId);
+            GinTubBuilderManager.LoadAllCharacterActionRequirementsForAction(actionId);
+            GinTubBuilderManager.LoadAllActionsForNoun(m_grid_nounsAndActions.SelectedNounId);
         }
 
         private void UnloadRoom()
@@ -436,8 +455,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void UnloadAction()
         {
-            if (m_grid_actionResultsAndRequirements != null)
-                m_grid_sub.Children.Remove(m_grid_actionResultsAndRequirements);
+            if (m_itemsControl_actionResults != null)
+                m_grid_sub.Children.Remove(m_itemsControl_actionResults);
+            if (m_grid_actionRequirements != null)
+                m_grid_sub.Children.Remove(m_grid_actionRequirements);
         }
 
         private void AddFloorAbove()

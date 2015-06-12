@@ -19,7 +19,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_VerbTypeData m_grid_verbTypeData;
+        Grid_VerbTypeData m_grid_verbType;
 
         #endregion
 
@@ -36,14 +36,14 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            m_grid_verbTypeData.SetActiveAndRegisterForGinTubEvents();
+            m_grid_verbType.SetActiveAndRegisterForGinTubEvents();
 
             GinTubBuilderManager.LoadAllVerbTypes();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            m_grid_verbTypeData.SetInactiveAndUnregisterFromGinTubEvents();
+            m_grid_verbType.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -53,9 +53,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls()
         {
-            m_grid_verbTypeData = new Grid_VerbTypeData(true);
+            m_grid_verbType = new Grid_VerbTypeData(true);
 
-            return m_grid_verbTypeData;
+            return m_grid_verbType;
         }
 
         #endregion

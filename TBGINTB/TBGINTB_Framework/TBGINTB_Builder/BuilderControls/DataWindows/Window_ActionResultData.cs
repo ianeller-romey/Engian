@@ -54,7 +54,7 @@ namespace TBGINTB_Builder.BuilderControls
             Content = CreateControls(actionResultId, actionResultResult, actionResultAction, nounId, paragraphStateId);
             m_grid_actionResult.SetActiveAndRegisterForGinTubEvents(); // needed for possible results, actions
             if(actionResultAction.HasValue)
-                GinTubBuilderManager.LoadAllResultsForAction(actionResultAction.Value);
+                GinTubBuilderManager.LoadAllResultsForActionResultType(actionResultAction.Value);
             GinTubBuilderManager.LoadAllActionsForNoun(nounId);
         }
 

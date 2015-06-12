@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\DatabaseException.cs" />
+    <Compile Include="Model\DbModel\CharacterActionRequirement.cs" />
+    <Compile Include="Model\DbModel\EventActionRequirement.cs" />
+    <Compile Include="Model\DbModel\ItemActionRequirement.cs" />
     <Compile Include="Model\DbModel\Area.cs" />
     <Compile Include="GinTubBuilderManager.cs" />
     <Compile Include="Model\DbModel\Action.cs" />
@@ -106,10 +109,19 @@
     <Compile Include="Repository\dev_GetAllAreas_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllCharacterActionRequirementsForAction_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllCharacters_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllEventActionRequirementsForAction_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllEvents_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllItemActionRequirementsForAction_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllItems_Result.cs">
@@ -127,13 +139,10 @@
     <Compile Include="Repository\dev_GetAllParagraphStatesForParagraph_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\dev_GetAllResultsForAction_Result.cs">
+    <Compile Include="Repository\dev_GetAllResultsForActionResultType_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllResultsForResultType_Result.cs">
-      <DependentUpon>devSchema.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\dev_GetAllResultTypeJSONFieldsForResultType_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllResultTypeJSONPropertiesForResultType_Result.cs">
@@ -160,10 +169,19 @@
     <Compile Include="Repository\dev_GetArea_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetCharacterActionRequirement_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetCharacter_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetEventActionRequirement_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetEvent_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetItemActionRequirement_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetItem_Result.cs">
@@ -179,9 +197,6 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetParagraph_Result.cs">
-      <DependentUpon>devSchema.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\dev_GetResultTypeJSONField_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetResultTypeJSONProperty_Result.cs">
@@ -230,6 +245,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

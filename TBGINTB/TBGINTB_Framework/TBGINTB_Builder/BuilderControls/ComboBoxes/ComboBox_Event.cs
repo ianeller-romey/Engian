@@ -28,7 +28,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER CLASSES
     
-        public class ComboBoxEvent_Event : ComboBoxItem
+        public class ComboBoxItem_Event : ComboBoxItem
         {
             #region MEMBER PROPERTIES
 
@@ -43,7 +43,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public ComboBoxEvent_Event(int evntId, string evntName, string evntDescription)
+            public ComboBoxItem_Event(int evntId, string evntName, string evntDescription)
             {
                 EventId = evntId;
                 SetEventName(evntName);
@@ -99,13 +99,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_EventAdded(object sender, GinTubBuilderManager.EventAddedEventArgs args)
         {
-            if (!Items.OfType<ComboBoxEvent_Event>().Any(i => i.EventId == args.Id))
-                Items.Add(new ComboBoxEvent_Event(args.Id, args.Name, args.Description));
+            if (!Items.OfType<ComboBoxItem_Event>().Any(i => i.EventId == args.Id))
+                Items.Add(new ComboBoxItem_Event(args.Id, args.Name, args.Description));
         }
 
         private void GinTubBuilderManager_EventModified(object sender, GinTubBuilderManager.EventModifiedEventArgs args)
         {
-            ComboBoxEvent_Event evnt = Items.OfType<ComboBoxEvent_Event>().SingleOrDefault(i => i.EventId == args.Id);
+            ComboBoxItem_Event evnt = Items.OfType<ComboBoxItem_Event>().SingleOrDefault(i => i.EventId == args.Id);
             if (evnt != null)
             {
                 evnt.SetEventName(args.Name);

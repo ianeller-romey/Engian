@@ -1379,15 +1379,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForActionResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForActionResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/9/2015
 -- Description:	Gets all Result records associated with all ResultTypes associated with the specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultsForAction]
+ALTER PROCEDURE [dev].[dev_GetAllResultsForActionResultType]
 	@action int
 AS
 BEGIN
@@ -1400,13 +1400,9 @@ BEGIN
 		   r.[JSONData],
 		   r.[ResultType]
 	FROM [dev].[Results] r
-	INNER JOIN [dbo].[ActionResults] ar
-	ON ar.[Result] = r.[Id]
-	INNER JOIN [dbo].[Actions] a
-	ON ar.[Action] = a.[Id]
-	INNER JOIN [dbo].[ResultTypes] rt
-	ON r.[ResultType] = rt.[Id]
-	WHERE a.[Id] = @action
+	INNER JOIN [dev].[ActionResultTypes] art
+	ON r.[ResultType] = art.[ResultType]
+	WHERE art.[Action] = @action
 
 END
 GO
@@ -1967,21 +1963,19 @@ END
 GO
 
 /******************************************************************************************************************************************/
-/*Requirement******************************************************************************************************************************/
+/*ItemActionRequirement********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddItemActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds a Requirement record and returns the newly generated ID; remember that the @requirement parameter
--- corresponds to the ID of an item, event, or character depending on the @requirementsourcetype
+-- Create date: 6/11/2015
+-- Description:	Adds an ItemActionRequirement record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddRequirement]
-	@requirement int,
-	@requirementsourcetype int,
+ALTER PROCEDURE [dev].[dev_AddItemActionRequirement]
+	@item int,
 	@action int
 AS
 BEGIN
@@ -1989,27 +1983,25 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[Requirements] ([Requirement], [RequirementSourceType], [Action])
-	VALUES (@requirement, @requirementsourcetype, @action)
+	INSERT INTO [dbo].[ItemActionRequirements] ([Item], [Action])
+	VALUES (@item, @action)
 	
 	SELECT SCOPE_IDENTITY()
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateItemActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Updates a Requirement record; remember that the @requirement parameter
--- corresponds to the ID of an item, event, or character depending on the @requirementsourcetype
+-- Create date: 6/11/2015
+-- Description:	Updates an ItemActionRequirement record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_UpdateRequirement]
+ALTER PROCEDURE [dev].[dev_UpdateItemActionRequirement]
 	@id int,
-	@requirement int,
-	@requirementsourcetype int,
+	@item int,
 	@action int
 AS
 BEGIN
@@ -2017,11 +2009,306 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	UPDATE [dbo].[Requirements] 
-	SET	[Requirement] = ISNULL(@requirement, [Requirement]), 
-		[RequirementSourceType] = ISNULL(@requirementsourcetype, [RequirementSourceType]),
+	UPDATE [dbo].[ItemActionRequirements] 
+	SET	[Item] = ISNULL(@item, [Item]), 
 		[Action] = ISNULL(@action, [Action])
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllItemActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllItemActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets all ItemActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllItemActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Item],
+		   i.[Name] as [ItemName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Items] i
+	on ar.[Item] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Action] = @action
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetItemActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets an ItemActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetItemActionRequirement]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Item],
+		   i.[Name] as [ItemName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Items] i
+	on ar.[Item] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*EventActionRequirement*******************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddEventActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Adds an EventActionRequirement record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddEventActionRequirement]
+	@item int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[EventActionRequirements] ([Event], [Action])
+	VALUES (@item, @action)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEventActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Updates an EventActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateEventActionRequirement]
+	@id int,
+	@item int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[EventActionRequirements] 
+	SET	[Event] = ISNULL(@item, [Event]), 
+		[Action] = ISNULL(@action, [Action])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllEventActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllEventActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets all EventActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllEventActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Event],
+		   i.[Name] as [EventName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Events] i
+	on ar.[Event] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Action] = @action
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetEventActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets an EventActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetEventActionRequirement]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Event],
+		   i.[Name] as [EventName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Events] i
+	on ar.[Event] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Id] = @id
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*CharacterActionRequirement***************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddCharacterActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Adds an CharacterActionRequirement record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddCharacterActionRequirement]
+	@item int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[CharacterActionRequirements] ([Character], [Action])
+	VALUES (@item, @action)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateCharacterActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Updates an CharacterActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateCharacterActionRequirement]
+	@id int,
+	@item int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[CharacterActionRequirements] 
+	SET	[Character] = ISNULL(@item, [Character]), 
+		[Action] = ISNULL(@action, [Action])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllCharacterActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllCharacterActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets all CharacterActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllCharacterActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Character],
+		   i.[Name] as [CharacterName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Characters] i
+	on ar.[Character] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Action] = @action
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetCharacterActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/11/2015
+-- Description:	Gets an CharacterActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetCharacterActionRequirement]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ar.[Id],
+		   ar.[Character],
+		   i.[Name] as [CharacterName],
+		   ar.[Action],
+		   an.[Name] as [ActionName]
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Characters] i
+	on ar.[Character] = i.[Id]
+	INNER JOIN [dev].[ActionNames] an
+	ON ar.[Action] = an.[Action]
+	WHERE ar.[Id] = @id
 
 END
 GO

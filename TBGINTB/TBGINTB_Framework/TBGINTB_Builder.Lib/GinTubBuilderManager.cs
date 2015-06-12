@@ -1097,6 +1097,195 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region ItemActionRequirements
+
+        public class ItemActionRequirementEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Item { get; set; }
+            public int Action { get; set; }
+            public ItemActionRequirementEventArgs(int id, int item, int action)
+            {
+                Id = id;
+                Item = item;
+                Action = action;
+            }
+        }
+
+
+        public class ItemActionRequirementAddedEventArgs : ItemActionRequirementEventArgs
+        {
+            public ItemActionRequirementAddedEventArgs(int id, int item, int action) :
+                base(id, item, action) { }
+        }
+        public delegate void ItemActionRequirementAddedEventHandler(object sender, ItemActionRequirementAddedEventArgs args);
+        public static event ItemActionRequirementAddedEventHandler ItemActionRequirementAdded;
+        private static void OnItemActionRequirementAdded(ItemActionRequirement itemActionRequirement)
+        {
+            if (ItemActionRequirementAdded != null)
+                ItemActionRequirementAdded(typeof(GinTubBuilderManager),
+                    new ItemActionRequirementAddedEventArgs(itemActionRequirement.Id, itemActionRequirement.Item, itemActionRequirement.Action));
+        }
+
+
+        public class ItemActionRequirementModifiedEventArgs : ItemActionRequirementEventArgs
+        {
+            public ItemActionRequirementModifiedEventArgs(int id, int item, int action) :
+                base(id, item, action) { }
+        }
+        public delegate void ItemActionRequirementModifiedEventHandler(object sender, ItemActionRequirementModifiedEventArgs args);
+        public static event ItemActionRequirementModifiedEventHandler ItemActionRequirementModified;
+        private static void OnItemActionRequirementModified(ItemActionRequirement itemActionRequirement)
+        {
+            if (ItemActionRequirementModified != null)
+                ItemActionRequirementModified(typeof(GinTubBuilderManager),
+                    new ItemActionRequirementModifiedEventArgs(itemActionRequirement.Id, itemActionRequirement.Item, itemActionRequirement.Action));
+        }
+
+
+        public class ItemActionRequirementGetEventArgs : ItemActionRequirementEventArgs
+        {
+            public ItemActionRequirementGetEventArgs(int id, int item, int action) :
+                base(id, item, action) { }
+        }
+        public delegate void ItemActionRequirementGetEventHandler(object sender, ItemActionRequirementGetEventArgs args);
+        public static event ItemActionRequirementGetEventHandler ItemActionRequirementGet;
+        private static void OnItemActionRequirementGet(ItemActionRequirement itemActionRequirement)
+        {
+            if (ItemActionRequirementGet != null)
+                ItemActionRequirementGet(typeof(GinTubBuilderManager),
+                    new ItemActionRequirementGetEventArgs(itemActionRequirement.Id, itemActionRequirement.Item, itemActionRequirement.Action));
+        }
+
+        #endregion
+
+
+        #region EventActionRequirements
+
+        public class EventActionRequirementEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Event { get; set; }
+            public int Action { get; set; }
+            public EventActionRequirementEventArgs(int id, int evnt, int action)
+            {
+                Id = id;
+                Event = evnt;
+                Action = action;
+            }
+        }
+
+
+        public class EventActionRequirementAddedEventArgs : EventActionRequirementEventArgs
+        {
+            public EventActionRequirementAddedEventArgs(int id, int evnt, int action) :
+                base(id, evnt, action) { }
+        }
+        public delegate void EventActionRequirementAddedEventHandler(object sender, EventActionRequirementAddedEventArgs args);
+        public static event EventActionRequirementAddedEventHandler EventActionRequirementAdded;
+        private static void OnEventActionRequirementAdded(EventActionRequirement evntActionRequirement)
+        {
+            if (EventActionRequirementAdded != null)
+                EventActionRequirementAdded(typeof(GinTubBuilderManager),
+                    new EventActionRequirementAddedEventArgs(evntActionRequirement.Id, evntActionRequirement.Event, evntActionRequirement.Action));
+        }
+
+
+        public class EventActionRequirementModifiedEventArgs : EventActionRequirementEventArgs
+        {
+            public EventActionRequirementModifiedEventArgs(int id, int evnt, int action) :
+                base(id, evnt, action) { }
+        }
+        public delegate void EventActionRequirementModifiedEventHandler(object sender, EventActionRequirementModifiedEventArgs args);
+        public static event EventActionRequirementModifiedEventHandler EventActionRequirementModified;
+        private static void OnEventActionRequirementModified(EventActionRequirement evntActionRequirement)
+        {
+            if (EventActionRequirementModified != null)
+                EventActionRequirementModified(typeof(GinTubBuilderManager),
+                    new EventActionRequirementModifiedEventArgs(evntActionRequirement.Id, evntActionRequirement.Event, evntActionRequirement.Action));
+        }
+
+
+        public class EventActionRequirementGetEventArgs : EventActionRequirementEventArgs
+        {
+            public EventActionRequirementGetEventArgs(int id, int evnt, int action) :
+                base(id, evnt, action) { }
+        }
+        public delegate void EventActionRequirementGetEventHandler(object sender, EventActionRequirementGetEventArgs args);
+        public static event EventActionRequirementGetEventHandler EventActionRequirementGet;
+        private static void OnEventActionRequirementGet(EventActionRequirement evntActionRequirement)
+        {
+            if (EventActionRequirementGet != null)
+                EventActionRequirementGet(typeof(GinTubBuilderManager),
+                    new EventActionRequirementGetEventArgs(evntActionRequirement.Id, evntActionRequirement.Event, evntActionRequirement.Action));
+        }
+
+        #endregion
+
+
+        #region CharacterActionRequirements
+
+        public class CharacterActionRequirementEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Character { get; set; }
+            public int Action { get; set; }
+            public CharacterActionRequirementEventArgs(int id, int character, int action)
+            {
+                Id = id;
+                Character = character;
+                Action = action;
+            }
+        }
+
+
+        public class CharacterActionRequirementAddedEventArgs : CharacterActionRequirementEventArgs
+        {
+            public CharacterActionRequirementAddedEventArgs(int id, int character, int action) :
+                base(id, character, action) { }
+        }
+        public delegate void CharacterActionRequirementAddedEventHandler(object sender, CharacterActionRequirementAddedEventArgs args);
+        public static event CharacterActionRequirementAddedEventHandler CharacterActionRequirementAdded;
+        private static void OnCharacterActionRequirementAdded(CharacterActionRequirement characterActionRequirement)
+        {
+            if (CharacterActionRequirementAdded != null)
+                CharacterActionRequirementAdded(typeof(GinTubBuilderManager),
+                    new CharacterActionRequirementAddedEventArgs(characterActionRequirement.Id, characterActionRequirement.Character, characterActionRequirement.Action));
+        }
+
+
+        public class CharacterActionRequirementModifiedEventArgs : CharacterActionRequirementEventArgs
+        {
+            public CharacterActionRequirementModifiedEventArgs(int id, int character, int action) :
+                base(id, character, action) { }
+        }
+        public delegate void CharacterActionRequirementModifiedEventHandler(object sender, CharacterActionRequirementModifiedEventArgs args);
+        public static event CharacterActionRequirementModifiedEventHandler CharacterActionRequirementModified;
+        private static void OnCharacterActionRequirementModified(CharacterActionRequirement characterActionRequirement)
+        {
+            if (CharacterActionRequirementModified != null)
+                CharacterActionRequirementModified(typeof(GinTubBuilderManager),
+                    new CharacterActionRequirementModifiedEventArgs(characterActionRequirement.Id, characterActionRequirement.Character, characterActionRequirement.Action));
+        }
+
+
+        public class CharacterActionRequirementGetEventArgs : CharacterActionRequirementEventArgs
+        {
+            public CharacterActionRequirementGetEventArgs(int id, int character, int action) :
+                base(id, character, action) { }
+        }
+        public delegate void CharacterActionRequirementGetEventHandler(object sender, CharacterActionRequirementGetEventArgs args);
+        public static event CharacterActionRequirementGetEventHandler CharacterActionRequirementGet;
+        private static void OnCharacterActionRequirementGet(CharacterActionRequirement characterActionRequirement)
+        {
+            if (CharacterActionRequirementGet != null)
+                CharacterActionRequirementGet(typeof(GinTubBuilderManager),
+                    new CharacterActionRequirementGetEventArgs(characterActionRequirement.Id, characterActionRequirement.Character, characterActionRequirement.Action));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -1145,7 +1334,7 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetResult_Result, Result>();
             Mapper.CreateMap<dev_GetAllResultsForResultType_Result, Result>();
-            Mapper.CreateMap<dev_GetAllResultsForAction_Result, Result>();
+            Mapper.CreateMap<dev_GetAllResultsForActionResultType_Result, Result>();
 
             Mapper.CreateMap<dev_GetActionResult_Result, ActionResult>();
             Mapper.CreateMap<dev_GetAllActionResultsForAction_Result, ActionResult>();
@@ -1158,6 +1347,12 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetCharacter_Result, Character>();
             Mapper.CreateMap<dev_GetAllCharacters_Result, Character>();
+
+            Mapper.CreateMap<dev_GetAllItemActionRequirementsForAction_Result, ItemActionRequirement>();
+            Mapper.CreateMap<dev_GetItemActionRequirement_Result, ItemActionRequirement>();
+
+            Mapper.CreateMap<dev_GetAllEventActionRequirementsForAction_Result, EventActionRequirement>();
+            Mapper.CreateMap<dev_GetEventActionRequirement_Result, EventActionRequirement>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -1680,16 +1875,16 @@ namespace TBGINTB_Builder.Lib
                 OnResultGet(result);
         }
 
-        public static void LoadAllResultsForAction(int actionId)
+        public static void LoadAllResultsForActionResultType(int actionId)
         {
-            List<Result> results = SelectAllResultsForAction(actionId);
+            List<Result> results = SelectAllResultsForActionResultType(actionId);
             foreach (var result in results)
                 OnResultAdded(result);
         }
 
-        public static void GetAllResultsForAction(int actionId)
+        public static void GetAllResultsForActionResultType(int actionId)
         {
-            List<Result> results = SelectAllResultsForAction(actionId);
+            List<Result> results = SelectAllResultsForActionResultType(actionId);
             foreach (var result in results)
                 OnResultGet(result);
         }
@@ -1827,6 +2022,102 @@ namespace TBGINTB_Builder.Lib
             List<Character> characters = SelectAllCharacters();
             foreach (var character in characters)
                 OnCharacterAdded(character);
+        }
+
+        #endregion
+
+
+        #region ItemActionRequirements
+
+        public static void AddItemActionRequirement(int itemActionRequirementItem, int itemActionRequirementAction)
+        {
+            int id = InsertItemActionRequirement(itemActionRequirementItem, itemActionRequirementAction);
+            ItemActionRequirement itemActionRequirement = SelectItemActionRequirement(id);
+            OnItemActionRequirementAdded(itemActionRequirement);
+        }
+
+        public static void ModifyItemActionRequirement(int itemActionRequirementId, int itemActionRequirementItem, int itemActionRequirementAction)
+        {
+            UpdateItemActionRequirement(itemActionRequirementId, itemActionRequirementItem, itemActionRequirementAction);
+            ItemActionRequirement itemActionRequirement = SelectItemActionRequirement(itemActionRequirementId);
+            OnItemActionRequirementModified(itemActionRequirement);
+        }
+
+        public static void GetItemActionRequirement(int itemActionRequirementId)
+        {
+            ItemActionRequirement itemActionRequirement = SelectItemActionRequirement(itemActionRequirementId);
+            OnItemActionRequirementGet(itemActionRequirement);
+        }
+
+        public static void LoadAllItemActionRequirementsForAction(int action)
+        {
+            List<ItemActionRequirement> itemActionRequirements = SelectAllItemActionRequirementsForAction(action);
+            foreach (var itemActionRequirement in itemActionRequirements)
+                OnItemActionRequirementAdded(itemActionRequirement);
+        }
+
+        #endregion
+
+
+        #region EventActionRequirements
+
+        public static void AddEventActionRequirement(int evntActionRequirementEvent, int evntActionRequirementAction)
+        {
+            int id = InsertEventActionRequirement(evntActionRequirementEvent, evntActionRequirementAction);
+            EventActionRequirement evntActionRequirement = SelectEventActionRequirement(id);
+            OnEventActionRequirementAdded(evntActionRequirement);
+        }
+
+        public static void ModifyEventActionRequirement(int evntActionRequirementId, int evntActionRequirementEvent, int evntActionRequirementAction)
+        {
+            UpdateEventActionRequirement(evntActionRequirementId, evntActionRequirementEvent, evntActionRequirementAction);
+            EventActionRequirement evntActionRequirement = SelectEventActionRequirement(evntActionRequirementId);
+            OnEventActionRequirementModified(evntActionRequirement);
+        }
+
+        public static void GetEventActionRequirement(int evntActionRequirementId)
+        {
+            EventActionRequirement evntActionRequirement = SelectEventActionRequirement(evntActionRequirementId);
+            OnEventActionRequirementGet(evntActionRequirement);
+        }
+
+        public static void LoadAllEventActionRequirementsForAction(int action)
+        {
+            List<EventActionRequirement> evntActionRequirements = SelectAllEventActionRequirementsForAction(action);
+            foreach (var evntActionRequirement in evntActionRequirements)
+                OnEventActionRequirementAdded(evntActionRequirement);
+        }
+
+        #endregion
+
+
+        #region CharacterActionRequirements
+
+        public static void AddCharacterActionRequirement(int characterActionRequirementCharacter, int characterActionRequirementAction)
+        {
+            int id = InsertCharacterActionRequirement(characterActionRequirementCharacter, characterActionRequirementAction);
+            CharacterActionRequirement characterActionRequirement = SelectCharacterActionRequirement(id);
+            OnCharacterActionRequirementAdded(characterActionRequirement);
+        }
+
+        public static void ModifyCharacterActionRequirement(int characterActionRequirementId, int characterActionRequirementCharacter, int characterActionRequirementAction)
+        {
+            UpdateCharacterActionRequirement(characterActionRequirementId, characterActionRequirementCharacter, characterActionRequirementAction);
+            CharacterActionRequirement characterActionRequirement = SelectCharacterActionRequirement(characterActionRequirementId);
+            OnCharacterActionRequirementModified(characterActionRequirement);
+        }
+
+        public static void GetCharacterActionRequirement(int characterActionRequirementId)
+        {
+            CharacterActionRequirement characterActionRequirement = SelectCharacterActionRequirement(characterActionRequirementId);
+            OnCharacterActionRequirementGet(characterActionRequirement);
+        }
+
+        public static void LoadAllCharacterActionRequirementsForAction(int action)
+        {
+            List<CharacterActionRequirement> characterActionRequirements = SelectAllCharacterActionRequirementsForAction(action);
+            foreach (var characterActionRequirement in characterActionRequirements)
+                OnCharacterActionRequirementAdded(characterActionRequirement);
         }
 
         #endregion
@@ -2774,19 +3065,19 @@ namespace TBGINTB_Builder.Lib
             return results;
         }
 
-        private static List<Result> SelectAllResultsForAction(int action)
+        private static List<Result> SelectAllResultsForActionResultType(int action)
         {
-            ObjectResult<dev_GetAllResultsForAction_Result> databaseResult = null;
+            ObjectResult<dev_GetAllResultsForActionResultType_Result> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_GetAllResultsForAction(action);
+                databaseResult = m_entities.dev_GetAllResultsForActionResultType(action);
             }
             catch (Exception e)
             {
-                throw new GinTubDatabaseException("dev_GetAllResultsForAction", e);
+                throw new GinTubDatabaseException("dev_GetAllResultsForActionResultType", e);
             }
             if (databaseResult == null)
-                throw new GinTubDatabaseException("dev_GetAllResultsForAction", new Exception("No [Results] records found."));
+                throw new GinTubDatabaseException("dev_GetAllResultsForActionResultType", new Exception("No [Results] records found."));
 
             List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
             return results;
@@ -3074,6 +3365,219 @@ namespace TBGINTB_Builder.Lib
 
             List<Character> characters = databaseResult.Select(r => Mapper.Map<Character>(r)).ToList();
             return characters;
+        }
+
+        #endregion
+
+
+        #region ItemActionRequirements
+
+        private static int InsertItemActionRequirement(int item, int action)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddItemActionRequirement(item, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddItemActionRequirement", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddItemActionRequirement", new Exception("No [Id] was returned after [ItemActionRequirement] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateItemActionRequirement(int id, int item, int action)
+        {
+            try
+            {
+                m_entities.dev_UpdateItemActionRequirement(id, item, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateItemActionRequirement", e);
+            }
+        }
+
+        private static ItemActionRequirement SelectItemActionRequirement(int id)
+        {
+            ObjectResult<dev_GetItemActionRequirement_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetItemActionRequirement(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetItemActionRequirement", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetItemActionRequirement", new Exception(string.Format("No [ItemActionRequirements] record found with [Id] = {0}.", id)));
+
+            ItemActionRequirement itemActionRequirement = Mapper.Map<ItemActionRequirement>(databaseResult.Single());
+            return itemActionRequirement;
+        }
+
+        private static List<ItemActionRequirement> SelectAllItemActionRequirementsForAction(int action)
+        {
+            ObjectResult<dev_GetAllItemActionRequirementsForAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllItemActionRequirementsForAction(action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllItemActionRequirementsForAction", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllItemActionRequirementsForAction", new Exception("No [ItemActionRequirements] records found."));
+
+            List<ItemActionRequirement> itemActionRequirements = databaseResult.Select(r => Mapper.Map<ItemActionRequirement>(r)).ToList();
+            return itemActionRequirements;
+        }
+
+        #endregion
+
+
+        #region EventActionRequirements
+
+        private static int InsertEventActionRequirement(int evnt, int action)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddEventActionRequirement(evnt, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddEventActionRequirement", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddEventActionRequirement", new Exception("No [Id] was returned after [EventActionRequirement] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateEventActionRequirement(int id, int evnt, int action)
+        {
+            try
+            {
+                m_entities.dev_UpdateEventActionRequirement(id, evnt, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateEventActionRequirement", e);
+            }
+        }
+
+        private static EventActionRequirement SelectEventActionRequirement(int id)
+        {
+            ObjectResult<dev_GetEventActionRequirement_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetEventActionRequirement(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetEventActionRequirement", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetEventActionRequirement", new Exception(string.Format("No [EventActionRequirements] record found with [Id] = {0}.", id)));
+
+            EventActionRequirement evntActionRequirement = Mapper.Map<EventActionRequirement>(databaseResult.Single());
+            return evntActionRequirement;
+        }
+
+        private static List<EventActionRequirement> SelectAllEventActionRequirementsForAction(int action)
+        {
+            ObjectResult<dev_GetAllEventActionRequirementsForAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllEventActionRequirementsForAction(action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllEventActionRequirementsForAction", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllEventActionRequirementsForAction", new Exception("No [EventActionRequirements] records found."));
+
+            List<EventActionRequirement> evntActionRequirements = databaseResult.Select(r => Mapper.Map<EventActionRequirement>(r)).ToList();
+            return evntActionRequirements;
+        }
+
+        #endregion
+
+
+        #region CharacterActionRequirements
+
+        private static int InsertCharacterActionRequirement(int character, int action)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddCharacterActionRequirement(character, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddCharacterActionRequirement", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddCharacterActionRequirement", new Exception("No [Id] was returned after [CharacterActionRequirement] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateCharacterActionRequirement(int id, int character, int action)
+        {
+            try
+            {
+                m_entities.dev_UpdateCharacterActionRequirement(id, character, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateCharacterActionRequirement", e);
+            }
+        }
+
+        private static CharacterActionRequirement SelectCharacterActionRequirement(int id)
+        {
+            ObjectResult<dev_GetCharacterActionRequirement_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetCharacterActionRequirement(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetCharacterActionRequirement", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetCharacterActionRequirement", new Exception(string.Format("No [CharacterActionRequirements] record found with [Id] = {0}.", id)));
+
+            CharacterActionRequirement characterActionRequirement = Mapper.Map<CharacterActionRequirement>(databaseResult.Single());
+            return characterActionRequirement;
+        }
+
+        private static List<CharacterActionRequirement> SelectAllCharacterActionRequirementsForAction(int action)
+        {
+            ObjectResult<dev_GetAllCharacterActionRequirementsForAction_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllCharacterActionRequirementsForAction(action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllCharacterActionRequirementsForAction", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllCharacterActionRequirementsForAction", new Exception("No [CharacterActionRequirements] records found."));
+
+            List<CharacterActionRequirement> characterActionRequirements = databaseResult.Select(r => Mapper.Map<CharacterActionRequirement>(r)).ToList();
+            return characterActionRequirements;
         }
 
         #endregion

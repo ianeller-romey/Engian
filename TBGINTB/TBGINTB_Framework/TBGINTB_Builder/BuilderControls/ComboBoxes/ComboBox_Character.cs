@@ -28,7 +28,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER CLASSES
     
-        public class ComboBoxCharacter_Character : ComboBoxItem
+        public class ComboBoxItem_Character : ComboBoxItem
         {
             #region MEMBER PROPERTIES
 
@@ -43,7 +43,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             #region Public Functionality
 
-            public ComboBoxCharacter_Character(int characterId, string characterName, string characterDescription)
+            public ComboBoxItem_Character(int characterId, string characterName, string characterDescription)
             {
                 CharacterId = characterId;
                 SetCharacterName(characterName);
@@ -80,13 +80,13 @@ namespace TBGINTB_Builder.BuilderControls
             SelectionChanged += ComboBox_Character_SelectionChanged;
         }
 
-        public void SetActiveAndRegisterForGinTubCharacters()
+        public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.CharacterAdded += GinTubBuilderManager_CharacterAdded;
             GinTubBuilderManager.CharacterModified += GinTubBuilderManager_CharacterModified;
         }
 
-        public void SetInactiveAndUnregisterFromGinTubCharacters()
+        public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.CharacterAdded -= GinTubBuilderManager_CharacterAdded;
             GinTubBuilderManager.CharacterModified -= GinTubBuilderManager_CharacterModified;
@@ -99,13 +99,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_CharacterAdded(object sender, GinTubBuilderManager.CharacterAddedEventArgs args)
         {
-            if (!Items.OfType<ComboBoxCharacter_Character>().Any(i => i.CharacterId == args.Id))
-                Items.Add(new ComboBoxCharacter_Character(args.Id, args.Name, args.Description));
+            if (!Items.OfType<ComboBoxItem_Character>().Any(i => i.CharacterId == args.Id))
+                Items.Add(new ComboBoxItem_Character(args.Id, args.Name, args.Description));
         }
 
         private void GinTubBuilderManager_CharacterModified(object sender, GinTubBuilderManager.CharacterModifiedEventArgs args)
         {
-            ComboBoxCharacter_Character character = Items.OfType<ComboBoxCharacter_Character>().SingleOrDefault(i => i.CharacterId == args.Id);
+            ComboBoxItem_Character character = Items.OfType<ComboBoxItem_Character>().SingleOrDefault(i => i.CharacterId == args.Id);
             if (character != null)
             {
                 character.SetCharacterName(args.Name);

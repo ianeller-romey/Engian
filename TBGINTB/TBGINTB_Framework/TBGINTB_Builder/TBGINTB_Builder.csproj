@@ -68,23 +68,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BuilderControls\CoalescingGrids\Grid_ActionResultsAndRequirements.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Action.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Character.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Event.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Item.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Result.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ItemActionRequirementModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_EventActionRequirementModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_CharacterActionRequirementModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_CharacterModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_EventModification.cs" />
+    <Compile Include="BuilderControls\DataModification\Grid_ActionResultModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultTypeJSONPropertyModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ItemModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_ItemActionRequirementData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_EventActionRequirementData.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Grid_CharacterActionRequirementData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ActionResultData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_CharacterData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_EventData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ItemData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_ResultData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_ItemActionRequirementData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_EventActionRequirementData.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_CharacterActionRequirementData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ActionResultData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_CharacterData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_EventData.cs" />
@@ -92,6 +101,8 @@
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeJSONPropertyData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultData.cs" />
+    <Compile Include="BuilderControls\CoalescingGrids\Grid_ActionRequirements.cs" />
+    <Compile Include="BuilderControls\ItemsControls\ItemsControl_ActionResult.cs" />
     <Compile Include="BuilderControls\ItemsControls\ItemsControl_Result.cs" />
     <Compile Include="BuilderControls\Misc\GroupBox_JSONPropertyValueEditor.cs" />
     <Compile Include="BuilderControls\Misc\Button_RoomOnFloor.cs" />
@@ -130,6 +141,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BuilderControls\TabItems\TabItem_Characters.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Events.cs" />
+    <Compile Include="BuilderControls\TabItems\TabItem_Items.cs" />
     <Compile Include="BuilderControls\TabItems\TabItem_Results.cs" />
     <Compile Include="BuilderControls\TabItems\TabItem_Verbs.cs" />
     <Compile Include="BuilderControls\TabItems\TabItem_Locations.cs" />
