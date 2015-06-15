@@ -1407,6 +1407,34 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForMessageChoiceResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForMessageChoiceResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/15/2015
+-- Description:	Gets all Result records associated with all ResultTypes associated with the specified MessageChoice
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllResultsForMessageChoiceResultType]
+	@messagechoice int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT r.[Id],
+		   r.[Name],
+		   r.[JSONData],
+		   r.[ResultType]
+	FROM [dev].[Results] r
+	INNER JOIN [dev].[MessageChoiceResultTypes] mcrt
+	ON r.[ResultType] = mcrt.[ResultType]
+	WHERE mcrt.[MessageChoice] = @messagechoice
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetResult] AS SELECT 1')
 GO
@@ -2326,6 +2354,7 @@ GO
 -- Description:	Adds an Message record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessage]
+	@name varchar(500),
 	@text varchar(MAX)
 AS
 BEGIN
@@ -2333,10 +2362,17 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+	DECLARE @messageid decimal
+
 	INSERT INTO [dbo].[Messages] ([Text])
 	VALUES (@text)
 	
-	SELECT SCOPE_IDENTITY()
+	SELECT @messageid = SCOPE_IDENTITY()
+	
+	INSERT INTO [dev].[MessageNames] ([Message], [Name])
+	VALUES (@messageid, @name)
+	
+	SELECT @messageid
 
 END
 GO
@@ -2351,6 +2387,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateMessage]
 	@id int,
+	@name varchar(500),
 	@text varchar(MAX)
 AS
 BEGIN
@@ -2361,6 +2398,62 @@ BEGIN
 	UPDATE [dbo].[Messages]
 	SET [Text] = ISNULL(@text, [Text])
 	WHERE [Id] = @id
+	
+	UPDATE [dev].[MessageNames]
+	SET [Name] = ISNULL(@name, [Name])
+	WHERE [Message] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessages]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessages] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/12/2015
+-- Description:	Gets all Message records from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllMessages]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT m.[Id],
+		   mn.[Name],
+		   m.[Text]
+	FROM [dbo].[Messages] m
+	INNER JOIN [dev].[MessageNames] mn
+	ON mn.[Message] = m.[Id]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/12/2015
+-- Description:	Gets a Message record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetMessage]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT m.[Id],
+		   mn.[Name],
+		   m.[Text]
+	FROM [dbo].[Messages] m
+	INNER JOIN [dev].[MessageNames] mn
+	ON mn.[Message] = m.[Id]
+	WHERE m.[Id] = @id
 
 END
 GO
@@ -2378,6 +2471,7 @@ GO
 -- Description:	Adds an MessageChoice record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessageChoice]
+	@name varchar(500),
 	@text varchar(MAX),
 	@message int
 AS
@@ -2386,10 +2480,17 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
+	DECLARE @messageid decimal
+
 	INSERT INTO [dbo].[MessageChoices] ([Text], [Message])
 	VALUES (@text, @message)
 	
-	SELECT SCOPE_IDENTITY()
+	SELECT @messageid = SCOPE_IDENTITY()
+	
+	INSERT INTO [dev].[MessageChoiceNames] ([MessageChoice], [Name])
+	VALUES (@messageid, @name)
+	
+	SELECT @messageid
 
 END
 GO
@@ -2404,7 +2505,9 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateMessageChoice]
 	@id int,
-	@text varchar(MAX)
+	@name varchar(500),
+	@text varchar(MAX),
+	@message int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2412,8 +2515,69 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[MessageChoices]
-	SET [Text] = ISNULL(@text, [Text])
+	SET [Text] = ISNULL(@text, [Text]),
+		[Message] = ISNULL(@message, [Message])
 	WHERE [Id] = @id
+	
+	UPDATE [dev].[MessageChoiceNames]
+	SET [Name] = ISNULL(@name, [Name])
+	WHERE [MessageChoice] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessageChoicesForMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/12/2015
+-- Description:	Gets all MessageChoice records from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllMessageChoicesForMessage]
+	@message int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT m.[Id],
+		   mn.[Name],
+		   m.[Text],
+		   m.[Message]
+	FROM [dbo].[MessageChoices] m
+	INNER JOIN [dev].[MessageChoiceNames] mn
+	ON mn.[MessageChoice] = m.[Id]
+	WHERE m.[Message] = @message
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetMessageChoice] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/12/2015
+-- Description:	Gets a MessageChoice record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetMessageChoice]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT m.[Id],
+		   mn.[Name],
+		   m.[Text],
+		   m.[Message]
+	FROM [dbo].[MessageChoices] m
+	INNER JOIN [dev].[MessageChoiceNames] mn
+	ON mn.[MessageChoice] = m.[Id]
+	WHERE m.[Id] = @id
 
 END
 GO
@@ -2468,6 +2632,56 @@ BEGIN
 	UPDATE [dbo].[MessageChoiceResults]
 	SET [Result] = ISNULL(@result, [Result]),
 		[MessageChoice] = ISNULL(@messagechoice, [MessageChoice])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessageChoiceResultsForMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessageChoiceResultsForMessageChoice] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/13/2015
+-- Description:	Gets all MessageChoiceResult records associated with the specified MessageChoice
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllMessageChoiceResultsForMessageChoice]
+	@messagechoice int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Result],
+		   [MessageChoice]
+	FROM [dbo].[MessageChoiceResults]
+	WHERE [MessageChoice] = @messagechoice
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetMessageChoiceResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/13/2015
+-- Description:	Gets data about a MessageChoiceResult record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetMessageChoiceResult]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Result],
+		   [MessageChoice]
+	FROM [dbo].[MessageChoiceResults]
 	WHERE [Id] = @id
 
 END

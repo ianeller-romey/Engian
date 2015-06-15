@@ -19,9 +19,9 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER FIELDS
 
         private readonly Button
-            c_button_newItemActionRequirement = new Button() { Content = "++" },
-            c_button_newEventActionRequirement = new Button() { Content = "++" },
-            c_button_newCharacterActionRequirement = new Button() { Content = "++" };
+            c_button_newItemActionRequirement = new Button() { Content = "Add Item Req." },
+            c_button_newEventActionRequirement = new Button() { Content = "Add Event Req." },
+            c_button_newCharacterActionRequirement = new Button() { Content = "Add Character Req." };
 
         private StackPanel
             m_stackPanel_itemActionRequirements,

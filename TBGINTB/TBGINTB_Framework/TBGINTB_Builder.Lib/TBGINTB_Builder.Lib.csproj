@@ -57,6 +57,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\DatabaseException.cs" />
+    <Compile Include="Model\DbModel\MessageChoiceResult.cs" />
+    <Compile Include="Model\DbModel\MessageChoice.cs" />
+    <Compile Include="Model\DbModel\Message.cs" />
     <Compile Include="Model\DbModel\CharacterActionRequirement.cs" />
     <Compile Include="Model\DbModel\EventActionRequirement.cs" />
     <Compile Include="Model\DbModel\ItemActionRequirement.cs" />
@@ -130,6 +133,15 @@
     <Compile Include="Repository\dev_GetAllLocations_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllMessageChoiceResultsForMessageChoice_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllMessageChoicesForMessage_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllMessages_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllNounsForParagraphState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
@@ -140,6 +152,9 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllResultsForActionResultType_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAllResultsForMessageChoiceResultType_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllResultsForResultType_Result.cs">
@@ -188,6 +203,15 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetLocation_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetMessageChoiceResult_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetMessageChoice_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetMessage_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetNoun_Result.cs">

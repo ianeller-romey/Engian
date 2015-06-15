@@ -1286,6 +1286,194 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region Messages
+
+        public class MessageEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Text { get; set; }
+            public MessageEventArgs(int id, string name, string text)
+            {
+                Id = id;
+                Name = name;
+                Text = text;
+            }
+        }
+
+
+        public class MessageAddedEventArgs : MessageEventArgs
+        {
+            public MessageAddedEventArgs(int id, string name, string text) :
+                base(id, name, text) { }
+        }
+        public delegate void MessageAddedMessageHandler(object sender, MessageAddedEventArgs args);
+        public static event MessageAddedMessageHandler MessageAdded;
+        private static void OnMessageAdded(Message message)
+        {
+            if (MessageAdded != null)
+                MessageAdded(typeof(GinTubBuilderManager),
+                    new MessageAddedEventArgs(message.Id, message.Name, message.Text));
+        }
+
+
+        public class MessageModifiedEventArgs : MessageEventArgs
+        {
+            public MessageModifiedEventArgs(int id, string name, string text) :
+                base(id, name, text) { }
+        }
+        public delegate void MessageModifiedMessageHandler(object sender, MessageModifiedEventArgs args);
+        public static event MessageModifiedMessageHandler MessageModified;
+        private static void OnMessageModified(Message message)
+        {
+            if (MessageModified != null)
+                MessageModified(typeof(GinTubBuilderManager),
+                    new MessageModifiedEventArgs(message.Id, message.Name, message.Text));
+        }
+
+
+        public class MessageGetEventArgs : MessageEventArgs
+        {
+            public MessageGetEventArgs(int id, string name, string text) :
+                base(id, name, text) { }
+        }
+        public delegate void MessageGetMessageHandler(object sender, MessageGetEventArgs args);
+        public static event MessageGetMessageHandler MessageGet;
+        private static void OnMessageGet(Message message)
+        {
+            if (MessageGet != null)
+                MessageGet(typeof(GinTubBuilderManager),
+                    new MessageGetEventArgs(message.Id, message.Name, message.Text));
+        }
+
+        #endregion
+
+
+        #region MessageChoices
+
+        public class MessageChoiceEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Text { get; set; }
+            public int Message { get; set; }
+            public MessageChoiceEventArgs(int id, string name, string text, int message)
+            {
+                Id = id;
+                Name = name;
+                Text = text;
+                Message = message;
+            }
+        }
+
+
+        public class MessageChoiceAddedEventArgs : MessageChoiceEventArgs
+        {
+            public MessageChoiceAddedEventArgs(int id, string name, string text, int message) :
+                base(id, name, text, message) { }
+        }
+        public delegate void MessageChoiceAddedMessageChoiceHandler(object sender, MessageChoiceAddedEventArgs args);
+        public static event MessageChoiceAddedMessageChoiceHandler MessageChoiceAdded;
+        private static void OnMessageChoiceAdded(MessageChoice messageChoice)
+        {
+            if (MessageChoiceAdded != null)
+                MessageChoiceAdded(typeof(GinTubBuilderManager),
+                    new MessageChoiceAddedEventArgs(messageChoice.Id, messageChoice.Name, messageChoice.Text, messageChoice.Message));
+        }
+
+
+        public class MessageChoiceModifiedEventArgs : MessageChoiceEventArgs
+        {
+            public MessageChoiceModifiedEventArgs(int id, string name, string text, int message) :
+                base(id, name, text, message) { }
+        }
+        public delegate void MessageChoiceModifiedMessageChoiceHandler(object sender, MessageChoiceModifiedEventArgs args);
+        public static event MessageChoiceModifiedMessageChoiceHandler MessageChoiceModified;
+        private static void OnMessageChoiceModified(MessageChoice messageChoice)
+        {
+            if (MessageChoiceModified != null)
+                MessageChoiceModified(typeof(GinTubBuilderManager),
+                    new MessageChoiceModifiedEventArgs(messageChoice.Id, messageChoice.Name, messageChoice.Text, messageChoice.Message));
+        }
+
+
+        public class MessageChoiceGetEventArgs : MessageChoiceEventArgs
+        {
+            public MessageChoiceGetEventArgs(int id, string name, string text, int message) :
+                base(id, name, text, message) { }
+        }
+        public delegate void MessageChoiceGetMessageChoiceHandler(object sender, MessageChoiceGetEventArgs args);
+        public static event MessageChoiceGetMessageChoiceHandler MessageChoiceGet;
+        private static void OnMessageChoiceGet(MessageChoice messageChoice)
+        {
+            if (MessageChoiceGet != null)
+                MessageChoiceGet(typeof(GinTubBuilderManager),
+                    new MessageChoiceGetEventArgs(messageChoice.Id, messageChoice.Name, messageChoice.Text, messageChoice.Message));
+        }
+
+        #endregion
+
+
+        #region MessageChoiceResults
+
+        public class MessageChoiceResultEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public int Result { get; set; }
+            public int MessageChoice { get; set; }
+            public MessageChoiceResultEventArgs(int id, int result, int messageChoice)
+            {
+                Id = id;
+                Result = result;
+                MessageChoice = messageChoice;
+            }
+        }
+
+
+        public class MessageChoiceResultAddedEventArgs : MessageChoiceResultEventArgs
+        {
+            public MessageChoiceResultAddedEventArgs(int id, int result, int messageChoice) : base(id, result, messageChoice) { }
+        }
+        public delegate void MessageChoiceResultAddedEventHandler(object sender, MessageChoiceResultAddedEventArgs args);
+        public static event MessageChoiceResultAddedEventHandler MessageChoiceResultAdded;
+        private static void OnMessageChoiceResultAdded(MessageChoiceResult messageChoiceResult)
+        {
+            if (MessageChoiceResultAdded != null)
+                MessageChoiceResultAdded(typeof(GinTubBuilderManager),
+                    new MessageChoiceResultAddedEventArgs(messageChoiceResult.Id, messageChoiceResult.Result, messageChoiceResult.MessageChoice));
+        }
+
+
+        public class MessageChoiceResultModifiedEventArgs : MessageChoiceResultEventArgs
+        {
+            public MessageChoiceResultModifiedEventArgs(int id, int result, int messageChoice) : base(id, result, messageChoice) { }
+        }
+        public delegate void MessageChoiceResultModifiedEventHandler(object sender, MessageChoiceResultModifiedEventArgs args);
+        public static event MessageChoiceResultModifiedEventHandler MessageChoiceResultModified;
+        private static void OnMessageChoiceResultModified(MessageChoiceResult messageChoiceResult)
+        {
+            if (MessageChoiceResultModified != null)
+                MessageChoiceResultModified(typeof(GinTubBuilderManager),
+                    new MessageChoiceResultModifiedEventArgs(messageChoiceResult.Id, messageChoiceResult.Result, messageChoiceResult.MessageChoice));
+        }
+
+
+        public class MessageChoiceResultGetEventArgs : MessageChoiceResultEventArgs
+        {
+            public MessageChoiceResultGetEventArgs(int id, int result, int messageChoice) : base(id, result, messageChoice) { }
+        }
+        public delegate void MessageChoiceResultGetEventHandler(object sender, MessageChoiceResultGetEventArgs args);
+        public static event MessageChoiceResultGetEventHandler MessageChoiceResultGet;
+        private static void OnMessageChoiceResultGet(MessageChoiceResult messageChoiceResult)
+        {
+            if (MessageChoiceResultGet != null)
+                MessageChoiceResultGet(typeof(GinTubBuilderManager),
+                    new MessageChoiceResultGetEventArgs(messageChoiceResult.Id, messageChoiceResult.Result, messageChoiceResult.MessageChoice));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -1334,6 +1522,7 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetResult_Result, Result>();
             Mapper.CreateMap<dev_GetAllResultsForResultType_Result, Result>();
+            Mapper.CreateMap<dev_GetAllResultsForMessageChoiceResultType_Result, Result>();
             Mapper.CreateMap<dev_GetAllResultsForActionResultType_Result, Result>();
 
             Mapper.CreateMap<dev_GetActionResult_Result, ActionResult>();
@@ -1353,6 +1542,15 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetAllEventActionRequirementsForAction_Result, EventActionRequirement>();
             Mapper.CreateMap<dev_GetEventActionRequirement_Result, EventActionRequirement>();
+
+            Mapper.CreateMap<dev_GetMessage_Result, Message>();
+            Mapper.CreateMap<dev_GetAllMessages_Result, Message>();
+
+            Mapper.CreateMap<dev_GetMessageChoice_Result, MessageChoice>();
+            Mapper.CreateMap<dev_GetAllMessageChoicesForMessage_Result, MessageChoice>();
+
+            Mapper.CreateMap<dev_GetMessageChoiceResult_Result, MessageChoiceResult>();
+            Mapper.CreateMap<dev_GetAllMessageChoiceResultsForMessageChoice_Result, MessageChoiceResult>();
 
             m_entities = new GinTubEntities();
             m_entities.Configuration.AutoDetectChangesEnabled = false;
@@ -1868,13 +2066,6 @@ namespace TBGINTB_Builder.Lib
                 OnResultAdded(result);
         }
 
-        public static void GetAllResultsForResultType(int resultTypeId)
-        {
-            List<Result> results = SelectAllResultsForResultType(resultTypeId);
-            foreach (var result in results)
-                OnResultGet(result);
-        }
-
         public static void LoadAllResultsForActionResultType(int actionId)
         {
             List<Result> results = SelectAllResultsForActionResultType(actionId);
@@ -1882,11 +2073,11 @@ namespace TBGINTB_Builder.Lib
                 OnResultAdded(result);
         }
 
-        public static void GetAllResultsForActionResultType(int actionId)
+        public static void LoadAllResultsForMessageChoiceResultType(int messageChoiceId)
         {
-            List<Result> results = SelectAllResultsForActionResultType(actionId);
+            List<Result> results = SelectAllResultsForMessageChoiceResultType(messageChoiceId);
             foreach (var result in results)
-                OnResultGet(result);
+                OnResultAdded(result);
         }
 
         #endregion
@@ -2118,6 +2309,109 @@ namespace TBGINTB_Builder.Lib
             List<CharacterActionRequirement> characterActionRequirements = SelectAllCharacterActionRequirementsForAction(action);
             foreach (var characterActionRequirement in characterActionRequirements)
                 OnCharacterActionRequirementAdded(characterActionRequirement);
+        }
+
+        #endregion
+
+
+        #region Messages
+
+        public static void AddMessage(string messageName, string messageText)
+        {
+            int id = InsertMessage(messageName, messageText);
+            Message message = SelectMessage(id);
+            OnMessageAdded(message);
+        }
+
+        public static void ModifyMessage(int messageId, string messageName, string messageText)
+        {
+            UpdateMessage(messageId, messageName, messageText);
+            Message message = SelectMessage(messageId);
+            OnMessageModified(message);
+        }
+
+        public static void GetMessage(int messageId)
+        {
+            Message message = SelectMessage(messageId);
+            OnMessageGet(message);
+        }
+
+        public static void LoadAllMessages()
+        {
+            List<Message> messages = SelectAllMessages();
+            foreach (var message in messages)
+                OnMessageAdded(message);
+        }
+
+        #endregion
+
+
+        #region MessageChoiceChoices
+
+        public static void AddMessageChoice(string messageChoiceName, string messageChoiceText, int messageChoiceMessage)
+        {
+            int id = InsertMessageChoice(messageChoiceName, messageChoiceText, messageChoiceMessage);
+            MessageChoice messageChoice = SelectMessageChoice(id);
+            OnMessageChoiceAdded(messageChoice);
+        }
+
+        public static void ModifyMessageChoice(int messageChoiceId, string messageChoiceName, string messageChoiceText, int messageChoiceMessage)
+        {
+            UpdateMessageChoice(messageChoiceId, messageChoiceName, messageChoiceText, messageChoiceMessage);
+            MessageChoice messageChoice = SelectMessageChoice(messageChoiceId);
+            OnMessageChoiceModified(messageChoice);
+        }
+
+        public static void GetMessageChoice(int messageChoiceId)
+        {
+            MessageChoice messageChoice = SelectMessageChoice(messageChoiceId);
+            OnMessageChoiceGet(messageChoice);
+        }
+
+        public static void LoadAllMessageChoicesForMessage(int messageId)
+        {
+            List<MessageChoice> messageChoices = SelectAllMessageChoicesForMessage(messageId);
+            foreach (var messageChoice in messageChoices)
+                OnMessageChoiceAdded(messageChoice);
+        }
+
+        #endregion
+
+
+        #region MessageChoiceResults
+
+        public static void AddMessageChoiceResult(int messageChoiceResultResult, int messageChoiceResultMessageChoice)
+        {
+            int id = InsertMessageChoiceResult(messageChoiceResultResult, messageChoiceResultMessageChoice);
+            MessageChoiceResult messageChoiceResult = SelectMessageChoiceResult(id);
+            OnMessageChoiceResultAdded(messageChoiceResult);
+        }
+
+        public static void ModifyMessageChoiceResult(int messageChoiceResultId, int messageChoiceResultResult, int messageChoiceResultMessageChoice)
+        {
+            UpdateMessageChoiceResult(messageChoiceResultId, messageChoiceResultResult, messageChoiceResultMessageChoice);
+            MessageChoiceResult messageChoiceResult = SelectMessageChoiceResult(messageChoiceResultId);
+            OnMessageChoiceResultModified(messageChoiceResult);
+        }
+
+        public static void GetMessageChoiceResult(int messageChoiceResultId)
+        {
+            MessageChoiceResult messageChoiceResult = SelectMessageChoiceResult(messageChoiceResultId);
+            OnMessageChoiceResultGet(messageChoiceResult);
+        }
+
+        public static void LoadAllMessageChoiceResultsForMessageChoice(int messageChoiceId)
+        {
+            List<MessageChoiceResult> messageChoiceResults = SelectAllMessageChoiceResultsForMessageChoice(messageChoiceId);
+            foreach (var messageChoiceResult in messageChoiceResults)
+                OnMessageChoiceResultAdded(messageChoiceResult);
+        }
+
+        public static void GetAllMessageChoiceResultsForMessageChoice(int messageChoiceId)
+        {
+            List<MessageChoiceResult> messageChoiceResults = SelectAllMessageChoiceResultsForMessageChoice(messageChoiceId);
+            foreach (var messageChoiceResult in messageChoiceResults)
+                OnMessageChoiceResultGet(messageChoiceResult);
         }
 
         #endregion
@@ -3083,6 +3377,24 @@ namespace TBGINTB_Builder.Lib
             return results;
         }
 
+        private static List<Result> SelectAllResultsForMessageChoiceResultType(int messageChoice)
+        {
+            ObjectResult<dev_GetAllResultsForMessageChoiceResultType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllResultsForMessageChoiceResultType(messageChoice);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllResultsForMessageChoiceResultType", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllResultsForMessageChoiceResultType", new Exception("No [Results] records found."));
+
+            List<Result> results = databaseResult.Select(r => Mapper.Map<Result>(r)).ToList();
+            return results;
+        }
+
         #endregion
 
 
@@ -3578,6 +3890,219 @@ namespace TBGINTB_Builder.Lib
 
             List<CharacterActionRequirement> characterActionRequirements = databaseResult.Select(r => Mapper.Map<CharacterActionRequirement>(r)).ToList();
             return characterActionRequirements;
+        }
+
+        #endregion
+
+
+        #region Messages
+
+        private static int InsertMessage(string name, string text)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddMessage(name, text);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddMessage", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddMessage", new Exception("No [Id] was returned after [Message] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateMessage(int id, string name, string text)
+        {
+            try
+            {
+                m_entities.dev_UpdateMessage(id, name, text);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateMessage", e);
+            }
+        }
+
+        private static Message SelectMessage(int id)
+        {
+            ObjectResult<dev_GetMessage_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetMessage(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetMessage", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetMessage", new Exception(string.Format("No [Messages] record found with [Id] = {0}.", id)));
+
+            Message message = Mapper.Map<Message>(databaseResult.Single());
+            return message;
+        }
+
+        private static List<Message> SelectAllMessages()
+        {
+            ObjectResult<dev_GetAllMessages_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllMessages();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllMessages", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllMessages", new Exception("No [Messages] records found."));
+
+            List<Message> messages = databaseResult.Select(r => Mapper.Map<Message>(r)).ToList();
+            return messages;
+        }
+
+        #endregion
+
+
+        #region MessageChoices
+
+        private static int InsertMessageChoice(string name, string text, int message)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddMessageChoice(name, text, message);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddMessageChoice", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddMessageChoice", new Exception("No [Id] was returned after [MessageChoice] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateMessageChoice(int id, string name, string text, int message)
+        {
+            try
+            {
+                m_entities.dev_UpdateMessageChoice(id, name, text, message);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateMessageChoice", e);
+            }
+        }
+
+        private static MessageChoice SelectMessageChoice(int id)
+        {
+            ObjectResult<dev_GetMessageChoice_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetMessageChoice(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetMessageChoice", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetMessageChoice", new Exception(string.Format("No [MessageChoices] record found with [Id] = {0}.", id)));
+
+            MessageChoice messageChoice = Mapper.Map<MessageChoice>(databaseResult.Single());
+            return messageChoice;
+        }
+
+        private static List<MessageChoice> SelectAllMessageChoicesForMessage(int message)
+        {
+            ObjectResult<dev_GetAllMessageChoicesForMessage_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllMessageChoicesForMessage(message);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllMessageChoicesForMessage", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllMessageChoicesForMessage", new Exception("No [MessageChoices] records found."));
+
+            List<MessageChoice> messageChoices = databaseResult.Select(r => Mapper.Map<MessageChoice>(r)).ToList();
+            return messageChoices;
+        }
+
+        #endregion
+
+
+        #region MessageChoiceResults
+
+        private static int InsertMessageChoiceResult(int result, int messageChoice)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddMessageChoiceResult(result, messageChoice);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddMessageChoiceResult", e);
+            }
+            var reslt = databaseResult.FirstOrDefault();
+            if (!reslt.HasValue)
+                throw new GinTubDatabaseException("dev_AddMessageChoiceResult", new Exception("No [Id] was returned after [MessageChoiceResult] INSERT."));
+
+            return (int)reslt.Value;
+        }
+
+        private static void UpdateMessageChoiceResult(int id, int result, int messageChoice)
+        {
+            try
+            {
+                m_entities.dev_UpdateMessageChoiceResult(id, result, messageChoice);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateMessageChoiceResult", e);
+            }
+        }
+
+        private static MessageChoiceResult SelectMessageChoiceResult(int id)
+        {
+            ObjectResult<dev_GetMessageChoiceResult_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetMessageChoiceResult(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetMessageChoiceResult", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetMessageChoiceResult", new Exception(string.Format("No [MessageChoiceResults] record found with [Id] = {0}.", id)));
+
+            MessageChoiceResult messageChoiceResult = Mapper.Map<MessageChoiceResult>(databaseResult.Single());
+            return messageChoiceResult;
+        }
+
+        private static List<MessageChoiceResult> SelectAllMessageChoiceResultsForMessageChoice(int messageChoice)
+        {
+            ObjectResult<dev_GetAllMessageChoiceResultsForMessageChoice_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllMessageChoiceResultsForMessageChoice(messageChoice);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllMessageChoiceResultsForMessageChoice", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllMessageChoiceResultsForMessageChoice", new Exception("No [MessageChoiceResults] records found."));
+
+            List<MessageChoiceResult> messageChoiceResults = databaseResult.Select(r => Mapper.Map<MessageChoiceResult>(r)).ToList();
+            return messageChoiceResults;
         }
 
         #endregion

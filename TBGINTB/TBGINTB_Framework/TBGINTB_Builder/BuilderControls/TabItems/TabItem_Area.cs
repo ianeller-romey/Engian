@@ -24,7 +24,7 @@ namespace TBGINTB_Builder.BuilderControls
         private Grid_RoomAndStates m_grid_roomAndState;
         private Grid_ParagraphsAndStates m_grid_paragraphsAndStates;
         private Grid_NounsAndActions m_grid_nounsAndActions;
-        private ItemsControl_ActionResult m_itemsControl_actionResults;
+        private Grid_ActionResults m_grid_actionResults;
         private Grid_ActionRequirements m_grid_actionRequirements;
         private Grid 
             m_grid_main,
@@ -405,15 +405,15 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadAction();
 
-            m_itemsControl_actionResults = 
-                new ItemsControl_ActionResult
+            m_grid_actionResults = 
+                new Grid_ActionResults
                 (
                     actionId,
                     m_grid_nounsAndActions.SelectedNounId,
                     m_grid_paragraphsAndStates.SelectedParagraphId
                 );
-            m_grid_sub.SetGridRowColumn(m_itemsControl_actionResults, 0, 8);
-            m_itemsControl_actionResults.SetActiveAndRegisterForGinTubEvents();
+            m_grid_sub.SetGridRowColumn(m_grid_actionResults, 0, 8);
+            m_grid_actionResults.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllActionResultsForAction(actionId);
 
             m_grid_actionRequirements =
@@ -455,8 +455,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void UnloadAction()
         {
-            if (m_itemsControl_actionResults != null)
-                m_grid_sub.Children.Remove(m_itemsControl_actionResults);
+            if (m_grid_actionResults != null)
+                m_grid_sub.Children.Remove(m_grid_actionResults);
             if (m_grid_actionRequirements != null)
                 m_grid_sub.Children.Remove(m_grid_actionRequirements);
         }

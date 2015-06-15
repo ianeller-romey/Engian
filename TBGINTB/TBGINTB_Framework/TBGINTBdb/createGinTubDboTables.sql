@@ -163,10 +163,20 @@ CREATE TABLE [dbo].[Messages] (
 	[Text] varchar(MAX) NOT NULL
 )
 
+CREATE TABLE [dev].[MessageNames] (
+	[Message] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Messages]([Id]),
+	[Name] varchar(500) NOT NULL
+)
+
 CREATE TABLE [dbo].[MessageChoices] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[Text] varchar(MAX) NOT NULL,
 	[Message] int FOREIGN KEY REFERENCES [dbo].[Messages]([Id])
+)
+
+CREATE TABLE [dev].[MessageChoiceNames] (
+	[MessageChoice] int NOT NULL FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id]),
+	[Name] varchar(500) NOT NULL
 )
 
 CREATE TABLE [dbo].[MessageChoiceResults] (
@@ -235,6 +245,17 @@ CREATE TABLE [dbo].[PlayerParty] (
 
 GO
 
+CREATE VIEW [dev].[Results] AS
+	SELECT r.[Id],
+		   rn.[Name],
+		   r.[JSONData],
+		   r.[ResultType]
+	FROM [dbo].[Results] r
+	INNER JOIN [dev].[ResultNames] rn
+	ON rn.[Result] = r.[Id]
+	
+GO
+
 CREATE VIEW [dev].[ActionNames] AS
 	SELECT a.[Id] AS [Action],
 		   vt.[Name] + ' on ' + n.[Text] AS [Name]
@@ -259,13 +280,15 @@ CREATE VIEW [dev].[ActionResultTypes] AS
 	
 GO
 
-CREATE VIEW [dev].[Results] AS
-	SELECT r.[Id],
-		   rn.[Name],
-		   r.[JSONData],
-		   r.[ResultType]
-	FROM [dbo].[Results] r
-	INNER JOIN [dev].[ResultNames] rn
-	ON rn.[Result] = r.[Id]
+CREATE VIEW [dev].[MessageChoiceResultTypes] AS
+	SELECT a.[Id] as [MessageChoice],
+		   rt.[Id] as [ResultType]
+	FROM [dbo].[ResultTypes] rt 
+	INNER JOIN [dbo].[Results] r
+	ON rt.[Id] = r.[ResultType]
+	INNER JOIN [dbo].[MessageChoiceResults] ar
+	ON ar.[Result] = r.[Id]
+	INNER JOIN [dbo].[MessageChoices] a
+	on a.[Id] = ar.[MessageChoice]
 	
 GO

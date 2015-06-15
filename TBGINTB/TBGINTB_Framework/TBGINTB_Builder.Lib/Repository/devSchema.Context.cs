@@ -154,17 +154,25 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddLocation", nameParameter, locationfileParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddMessage(string text)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddMessage(string name, string text)
         {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessage", textParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessage", nameParameter, textParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoice(string text, Nullable<int> message)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoice(string name, string text, Nullable<int> message)
         {
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
@@ -173,7 +181,7 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("message", message) :
                 new ObjectParameter("message", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoice", textParameter, messageParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddMessageChoice", nameParameter, textParameter, messageParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddMessageChoiceResult(Nullable<int> result, Nullable<int> messagechoice)
@@ -953,30 +961,42 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateLocation", idParameter, nameParameter, locationfileParameter);
         }
     
-        public virtual int dev_UpdateMessage(Nullable<int> id, string text)
+        public virtual int dev_UpdateMessage(Nullable<int> id, string name, string text)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessage", idParameter, textParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessage", idParameter, nameParameter, textParameter);
         }
     
-        public virtual int dev_UpdateMessageChoice(Nullable<int> id, string text)
+        public virtual int dev_UpdateMessageChoice(Nullable<int> id, string name, string text, Nullable<int> message)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
                 new ObjectParameter("id", typeof(int));
     
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
             var textParameter = text != null ?
                 new ObjectParameter("text", text) :
                 new ObjectParameter("text", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoice", idParameter, textParameter);
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateMessageChoice", idParameter, nameParameter, textParameter, messageParameter);
         }
     
         public virtual int dev_UpdateMessageChoiceResult(Nullable<int> id, Nullable<int> result, Nullable<int> messagechoice)
@@ -1222,6 +1242,65 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("name", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateVerbType", idParameter, nameParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllMessageChoicesForMessage_Result> dev_GetAllMessageChoicesForMessage(Nullable<int> message)
+        {
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllMessageChoicesForMessage_Result>("dev_GetAllMessageChoicesForMessage", messageParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllMessages_Result> dev_GetAllMessages()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllMessages_Result>("dev_GetAllMessages");
+        }
+    
+        public virtual ObjectResult<dev_GetMessage_Result> dev_GetMessage(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetMessage_Result>("dev_GetMessage", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetMessageChoice_Result> dev_GetMessageChoice(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetMessageChoice_Result>("dev_GetMessageChoice", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllMessageChoiceResultsForMessageChoice_Result> dev_GetAllMessageChoiceResultsForMessageChoice(Nullable<int> messagechoice)
+        {
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllMessageChoiceResultsForMessageChoice_Result>("dev_GetAllMessageChoiceResultsForMessageChoice", messagechoiceParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetMessageChoiceResult_Result> dev_GetMessageChoiceResult(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetMessageChoiceResult_Result>("dev_GetMessageChoiceResult", idParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllResultsForMessageChoiceResultType_Result> dev_GetAllResultsForMessageChoiceResultType(Nullable<int> messagechoice)
+        {
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultsForMessageChoiceResultType_Result>("dev_GetAllResultsForMessageChoiceResultType", messagechoiceParameter);
         }
     }
 }

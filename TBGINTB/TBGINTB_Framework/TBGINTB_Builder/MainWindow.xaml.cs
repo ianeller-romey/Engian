@@ -88,6 +88,7 @@ namespace TBGINTB_Builder
             m_tabControl_controls.Items.Add(new TabItem_Items());
             m_tabControl_controls.Items.Add(new TabItem_Events());
             m_tabControl_controls.Items.Add(new TabItem_Characters());
+            m_tabControl_controls.Items.Add(new TabItem_Messages());
 
             ////////
             // grid
