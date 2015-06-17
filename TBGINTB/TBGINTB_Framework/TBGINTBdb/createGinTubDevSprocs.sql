@@ -68,6 +68,35 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportArea] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Area record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportArea]
+	@id int,
+	@name varchar(500)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Areas] ON ' + 
+						N'INSERT INTO [dbo].[Areas] ([Id], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Areas] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500)',
+					   @id, @name
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateArea] AS SELECT 1')
 GO
@@ -240,6 +269,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportLocation] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Location record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportLocation]
+	@id int,
+	@name varchar(500),
+	@locationfile varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Locations] ON ' + 
+						N'INSERT INTO [dbo].[Locations] ([Id], [Name], [LocationFile]) VALUES (@id_, @name_, @locationfile_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Locations] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @locationfile_ varchar(MAX)',
+					   @id, @name, @locationfile
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateLocation] AS SELECT 1')
 GO
@@ -401,6 +460,39 @@ BEGIN
 	VALUES (@name, @x, @y, @z, @area)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Room record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportRoom]
+	@id int,
+	@name varchar(500),
+	@x int,
+	@y int,
+	@z int,
+	@area int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Rooms] ON ' + 
+						N'INSERT INTO [dbo].[Rooms] ([Id], [Name], [X], [Y], [Z], [Area]) VALUES (@id_, @name_, @x_, @y_, @z_, @area_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Rooms] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @x_ int, @y_ int, @z_ int, @area_ int',
+					   @id, @name, @x, @y, @z, @area
 
 END
 GO
@@ -840,6 +932,37 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an RoomState record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportRoomState]
+	@id int,
+	@time datetime,
+	@location int,
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[RoomStates] ON ' + 
+						N'INSERT INTO [dbo].[RoomStates] ([Id], [Time], [Location], [Room]) VALUES (@id_, @time_, @location_, @room_) ' +
+						N'SET IDENTITY_INSERT [dbo].[RoomStates] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @time_ datetime, @location_ int, @room_ int',
+					   @id, @time, @location, @room
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateRoomState] AS SELECT 1')
 GO
@@ -1069,6 +1192,37 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Paragraph record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportParagraph]
+	@id int,
+	@order int,
+	@room int,
+	@roomstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Paragraphs] ON ' + 
+						N'INSERT INTO [dbo].[Paragraphs] ([Id], [Order], [Room], [RoomState]) VALUES (@id_, @order_, @room_, @roomstate_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Paragraphs] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @order_ int, @room_ int, @roomstate_ int',
+					   @id, @order, @room, @roomstate
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraph] AS SELECT 1')
 GO
@@ -1290,6 +1444,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportParagraphState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an ParagraphState record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportParagraphState]
+	@id int,
+	@text varchar(MAX),
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ParagraphStates] ON ' + 
+						N'INSERT INTO [dbo].[ParagraphStates] ([Id], [Text], [Paragraph]) VALUES (@id_, @text_, @paragraph_) ' +
+						N'SET IDENTITY_INSERT [dbo].[ParagraphStates] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @text_ varchar(MAX), @paragraph_ int',
+					   @id, @text, @paragraph
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraphState] AS SELECT 1')
 GO
@@ -1487,6 +1671,45 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportNoun] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Noun record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportNoun]
+	@id int,
+	@text varchar(MAX),
+	@paragraphstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	IF NOT EXISTS (SELECT 1
+				   FROM [dbo].[ParagraphStates] p
+				   WHERE p.[Id] = @paragraphstate AND p.[Text] LIKE '%' + @text + '%')
+	BEGIN
+		RAISERROR (N'The [Text] value of a Noun must be present in the [Text] value of the ParagraphState to which it is associated.',
+				   1,
+				   1)
+	END
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Nouns] ON ' + 
+						N'INSERT INTO [dbo].[Nouns] ([Id], [Text], [ParagraphState]) VALUES (@id_, @text_, @paragraphstate_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Nouns] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @text_ varchar(MAX), @paragraphstate_ int',
+					   @id, @text, @paragraphstate
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateNoun] AS SELECT 1')
 GO
@@ -1648,6 +1871,35 @@ BEGIN
 	VALUES (@name)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportVerbType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an VerbType record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportVerbType]
+	@id int,
+	@name varchar(500)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[VerbTypes] ON ' + 
+						N'INSERT INTO [dbo].[VerbTypes] ([Id], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[VerbTypes] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500)',
+					   @id, @name
 
 END
 GO
@@ -1814,6 +2066,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportVerb] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Verb record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportVerb]
+	@id int,
+	@name varchar(500),
+	@verbtype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Verbs] ON ' + 
+						N'INSERT INTO [dbo].[Verbs] ([Id], [Name], [VerbType]) VALUES (@id_, @name_, @verbtype_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Verbs] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @verbtype_ int',
+					   @id, @name, @verbtype
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateVerb] AS SELECT 1')
 GO
@@ -1937,6 +2219,35 @@ BEGIN
 	VALUES (@name)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an ResultType record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportResultType]
+	@id int,
+	@name varchar(500)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ResultTypes] ON ' + 
+						N'INSERT INTO [dbo].[ResultTypes] ([Id], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[ResultTypes] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500)',
+					   @id, @name
 
 END
 GO
@@ -2082,6 +2393,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportResultTypeJSONProperty] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an ResultTypeJSONProperty record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportResultTypeJSONProperty]
+	@id int,
+	@jsonproperty varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dev].[ResultTypeJSONPropertys] ON ' + 
+						N'INSERT INTO [dev].[ResultTypeJSONPropertys] ([Id], [JSONProperty], [ResultType]) VALUES (@id_, @jsonproperty_, @resulttype_) ' +
+						N'SET IDENTITY_INSERT [dev].[ResultTypeJSONPropertys] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @jsonproperty_ varchar(MAX), @resulttype_ int',
+					   @id, @jsonproperty, @resulttype
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateResultTypeJSONProperty] AS SELECT 1')
 GO
@@ -2214,6 +2555,38 @@ BEGIN
 	VALUES(@resultid, @name)
 	
 	SELECT @resultid
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Result record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportResult]
+	@id int,
+	@name varchar(500),
+	@jsondata varchar(MAX),
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Results] ON ' + 
+						N'INSERT INTO [dbo].[Results] ([Id], [JSONData], [ResultType]) VALUES (@id_, @jsondata_, @resulttype_) ' +
+						N'INSERT INTO [dev].[ResultNames] ([Result], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Results] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @jsondata_ varchar(MAX), @resulttype_ int',
+					   @id, @name, @jsondata, @resulttype
 
 END
 GO
@@ -2481,6 +2854,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Action record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportAction]
+	@id int,
+	@verbtype int,
+	@noun int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Actions] ON ' + 
+						N'INSERT INTO [dbo].[Actions] ([Id], [VerbType], [Noun]) VALUES (@id_, @verbtype_, @noun_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Actions] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @verbtype_ int, @noun_ int',
+					   @id, @verbtype, @noun
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateAction] AS SELECT 1')
 GO
@@ -2643,6 +3046,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportActionResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an ActionResult record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportActionResult]
+	@id int,
+	@result int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ActionResults] ON ' + 
+						N'INSERT INTO [dbo].[ActionResults] ([Id], [Result], [Action]) VALUES (@id_, @result_, @action_) ' +
+						N'SET IDENTITY_INSERT [dbo].[ActionResults] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @result_ int, @action_ int',
+					   @id, @result, @action
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateActionResult] AS SELECT 1')
 GO
@@ -2767,6 +3200,36 @@ BEGIN
 	VALUES (@name, @description)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportItem] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Item record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportItem]
+	@id int,
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Items] ON ' + 
+						N'INSERT INTO [dbo].[Items] ([Id], [Name], [Description]) VALUES (@id_, @name_, @description_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Items] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   @id, @name, @description
 
 END
 GO
@@ -2901,6 +3364,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportEvent] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Event record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportEvent]
+	@id int,
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Events] ON ' + 
+						N'INSERT INTO [dbo].[Events] ([Id], [Name], [Description]) VALUES (@id_, @name_, @description_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Events] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   @id, @name, @description
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEvent] AS SELECT 1')
 GO
@@ -3031,6 +3524,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportCharacter] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Character record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportCharacter]
+	@id int,
+	@name varchar(500),
+	@description varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Characters] ON ' + 
+						N'INSERT INTO [dbo].[Characters] ([Id], [Name], [Description]) VALUES (@id_, @name_, @description_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Characters] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   @id, @name, @description
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateCharacter] AS SELECT 1')
 GO
@@ -3157,6 +3680,36 @@ BEGIN
 	VALUES (@item, @action)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportItemActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an ItemActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportItemActionRequirement]
+	@id int,
+	@item int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ItemActionRequirements] ON ' + 
+						N'INSERT INTO [dbo].[ItemActionRequirements] ([Id], [Item], [Action]) VALUES (@id_, @item_, @action_) ' +
+						N'SET IDENTITY_INSERT [dbo].[ItemActionRequirements] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @item_ int, @action_ int',
+					   @id, @item, @action
 
 END
 GO
@@ -3301,6 +3854,36 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportEventActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an EventActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportEventActionRequirement]
+	@id int,
+	@event int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[EventActionRequirements] ON ' + 
+						N'INSERT INTO [dbo].[EventActionRequirements] ([Id], [Event], [Action]) VALUES (@id_, @event_, @action_) ' +
+						N'SET IDENTITY_INSERT [dbo].[EventActionRequirements] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @event_ int, @action_ int',
+					   @id, @event, @action
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateEventActionRequirement] AS SELECT 1')
 GO
@@ -3437,6 +4020,36 @@ BEGIN
 	VALUES (@item, @action)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportCharacterActionRequirement] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an CharacterActionRequirement record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportCharacterActionRequirement]
+	@id int,
+	@character int,
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[CharacterActionRequirements] ON ' + 
+						N'INSERT INTO [dbo].[CharacterActionRequirements] ([Id], [Character], [Action]) VALUES (@id_, @character_, @action_) ' +
+						N'SET IDENTITY_INSERT [dbo].[CharacterActionRequirements] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @character_ int, @action_ int',
+					   @id, @character, @action
 
 END
 GO
@@ -3584,6 +4197,37 @@ BEGIN
 	VALUES (@messageid, @name)
 	
 	SELECT @messageid
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an Message record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportMessage]
+	@id int,
+	@name varchar(500),
+	@text varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Messages] ON ' + 
+						N'INSERT INTO [dbo].[Messages] ([Id], [Text],) VALUES (@id_, @text_) ' +
+						N'INSERT INTO [dev].[MessageNames] ([Message], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[Messages] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @text_ varchar(MAX)',
+					   @id, @name, @text
 
 END
 GO
@@ -3743,6 +4387,38 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportMessageChoice] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an MessageChoice record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportMessageChoice]
+	@id int,
+	@name varchar(500),
+	@text varchar(MAX),
+	@message int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[MessageChoices] ON ' + 
+						N'INSERT INTO [dbo].[MessageChoices] ([Id], [Text], [Message]) VALUES (@id_, @text_, @message_) ' +
+						N'INSERT INTO [dev].[MessageChoiceNames] ([MessageChoice], [Name]) VALUES (@id_, @name_) ' +
+						N'SET IDENTITY_INSERT [dbo].[MessageChoices] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @name_ varchar(500), @text_ varchar(MAX), @message_ int',
+					   @id, @name, @text, @message
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdateMessageChoice] AS SELECT 1')
 GO
@@ -3890,6 +4566,36 @@ BEGIN
 	VALUES (@result, @messagechoice)
 	
 	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportMessageChoiceResult] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/17/2015
+-- Description:	Imports an MessageChoiceResult record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportMessageChoiceResult]
+	@id int,
+	@result int,
+	@messagechoice int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[MessageChoiceResults] ON ' + 
+						N'INSERT INTO [dbo].[MessageChoiceResults] ([Id], [Result], [MessageChoice]) VALUES (@id_, @result_, @messagechoice_) ' +
+						N'SET IDENTITY_INSERT [dbo].[MessageChoiceResults] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @result_ int, @messagechoice_ int',
+					   @id, @result, @messagechoice
 
 END
 GO
