@@ -1,0 +1,10 @@
+- Work item tracking software
+	- I need this
+- Delete items from UI
+	- Shouldn't be too hard ...
+- RoomState [Time] should not be nullable
+	- It just causes too much heartache
+- Location [Name] should be in a separate [dev] table
+	- This information is only needed for development purposes
+- RoomState and ParagraphState should start at 1, not 0
+	- Do I really need this?
