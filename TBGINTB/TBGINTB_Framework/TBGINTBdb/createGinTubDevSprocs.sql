@@ -942,6 +942,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportRoomState]
 	@id int,
+	@state int,
 	@time datetime,
 	@location int,
 	@room int
@@ -953,12 +954,12 @@ BEGIN
 
 	DECLARE @insertstring nvarchar(MAX)
 	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[RoomStates] ON ' + 
-						N'INSERT INTO [dbo].[RoomStates] ([Id], [Time], [Location], [Room]) VALUES (@id_, @time_, @location_, @room_) ' +
+						N'INSERT INTO [dbo].[RoomStates] ([Id], [State], [Time], [Location], [Room]) VALUES (@id_, @state_, @time_, @location_, @room_) ' +
 						N'SET IDENTITY_INSERT [dbo].[RoomStates] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @time_ datetime, @location_ int, @room_ int',
-					   @id, @time, @location, @room
+					   N'@id_ int, @state_ int, @time_ datetime, @location_ int, @room_ int',
+					   @id, @state, @time, @location, @room
 
 END
 GO
@@ -1454,6 +1455,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportParagraphState]
 	@id int,
+	@state int,
 	@text varchar(MAX),
 	@paragraph int
 AS
@@ -1464,12 +1466,12 @@ BEGIN
 
 	DECLARE @insertstring nvarchar(MAX)
 	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ParagraphStates] ON ' + 
-						N'INSERT INTO [dbo].[ParagraphStates] ([Id], [Text], [Paragraph]) VALUES (@id_, @text_, @paragraph_) ' +
+						N'INSERT INTO [dbo].[ParagraphStates] ([Id], [State], [Text], [Paragraph]) VALUES (@id_, @state_, @text_, @paragraph_) ' +
 						N'SET IDENTITY_INSERT [dbo].[ParagraphStates] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @text_ varchar(MAX), @paragraph_ int',
-					   @id, @text, @paragraph
+					   N'@id_ int, @state_ int, @text_ varchar(MAX), @paragraph_ int',
+					   @id, @state, @text, @paragraph
 
 END
 GO

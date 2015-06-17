@@ -40,10 +40,14 @@ namespace TBGINTB_Builder.Lib
 
         public static void ImportFromXml(string fileName, string backupFile)
         {
-            if (backupFile.Any(c => Path.GetInvalidPathChars().Contains(c)) || 
-                backupFile.Any(c => char.IsWhiteSpace(c)) ||
-                backupFile.Contains('\''))
-                throw new ArgumentException("Incorrectly formatted or potentially dangerous file name provided.", "backupFile");
+            if (backupFile != null)
+            {
+                if (backupFile.Any(c => Path.GetInvalidPathChars().Contains(c)) ||
+                    backupFile.Any(c => char.IsWhiteSpace(c)) ||
+                    backupFile.Contains('\'') ||
+                    backupFile == string.Empty)
+                    throw new ArgumentException("Incorrectly formatted or potentially dangerous file name provided.", "backupFile");
+            }
             Xml.GinTub ginTub;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Xml.GinTub));
@@ -258,20 +262,22 @@ namespace TBGINTB_Builder.Lib
 
         #region Import
 
+        #region XmlModel
+
         private static void ImportGinTubFromXml(Xml.GinTub ginTub)
         {
-            foreach(var item in ginTub.Items)
-                InsertItem(item.Name, item.Description);
+            foreach (var item in ginTub.Items)
+                ImportItem(item.Id, item.Name, item.Description);
             foreach (var evnt in ginTub.Events)
-                InsertEvent(evnt.Name, evnt.Description);
+                ImportEvent(evnt.Id, evnt.Name, evnt.Description);
             foreach (var character in ginTub.Characters)
-                InsertCharacter(character.Name, character.Description);
+                ImportCharacter(character.Id, character.Name, character.Description);
             foreach (var resultType in ginTub.ResultTypes)
                 ImportResultTypeFromXml(resultType);
             foreach (var verbType in ginTub.VerbTypes)
                 ImportVerbTypeFromXml(verbType);
             foreach (var location in ginTub.Locations)
-                InsertLocation(location.Name, location.LocationFile);
+                ImportLocation(location.Id, location.Name, location.LocationFile);
             foreach (var message in ginTub.Messages)
                 ImportMessageFromXml(message);
             foreach (var area in ginTub.Areas)
@@ -280,87 +286,370 @@ namespace TBGINTB_Builder.Lib
 
         private static void ImportResultTypeFromXml(Xml.ResultType resultType)
         {
-            int resultTypeId = InsertResultType(resultType.Name);
+            ImportResultType(resultType.Id, resultType.Name);
             foreach (var resultTypeJSONProperty in resultType.ResultTypeJSONProperties)
-                InsertResultTypeJSONProperty(resultTypeJSONProperty.JSONProperty, resultTypeId);
+                ImportResultTypeJSONProperty(resultTypeJSONProperty.Id, resultTypeJSONProperty.JSONProperty, resultType.Id);
             foreach (var result in resultType.Results)
-                InsertResult(result.Name, result.JSONData, resultTypeId);
+                ImportResult(result.Id, result.Name, result.JSONData, resultType.Id);
         }
 
         private static void ImportVerbTypeFromXml(Xml.VerbType verbType)
         {
-            int verbTypeId = InsertVerbType(verbType.Name);
+            ImportVerbType(verbType.Id, verbType.Name);
             foreach (var verb in verbType.Verbs)
-                InsertVerb(verb.Name, verbTypeId);
+                ImportVerb(verb.Id, verb.Name, verbType.Id);
         }
 
         private static void ImportMessageFromXml(Xml.Message message)
         {
-            int messageId = InsertMessage(message.Name, message.Text);
+            ImportMessage(message.Id, message.Name, message.Text);
             foreach (var messageChoice in message.MessageChoices)
-                ImportMessageChoiceFromXml(messageChoice, messageId);
+                ImportMessageChoiceFromXml(messageChoice, message.Id);
         }
 
         private static void ImportMessageChoiceFromXml(Xml.MessageChoice messageChoice, int messageId)
         {
-            int messageChoiceId = InsertMessageChoice(messageChoice.Name, messageChoice.Text, messageId);
+            ImportMessageChoice(messageChoice.Id, messageChoice.Name, messageChoice.Text, messageId);
             foreach (var messageChoiceResult in messageChoice.MessageChoiceResults)
-                InsertMessageChoiceResult(messageChoiceResult.Result, messageChoiceId);
+                ImportMessageChoiceResult(messageChoiceResult.Id, messageChoiceResult.Result, messageChoice.Id);
         }
 
         private static void ImportAreaFromXml(Xml.Area area)
         {
-            int areaId = InsertArea(area.Name);
+            ImportArea(area.Id, area.Name);
             foreach (var room in area.Rooms)
-                ImportRoomFromXml(room, areaId);
+                ImportRoomFromXml(room, area.Id);
         }
 
         private static void ImportRoomFromXml(Xml.Room room, int areaId)
         {
-            int roomId = InsertRoom(room.Name, room.X, room.Y, room.Z, areaId);
+            ImportRoom(room.Id, room.Name, room.X, room.Y, room.Z, areaId);
             foreach (var paragraph in room.Paragraphs)
-                ImportParagraphFromXml(paragraph, roomId, null);
+                ImportParagraphFromXml(paragraph, room.Id, null);
             foreach(var roomState in room.RoomStates)
             {
-                int roomStateId = InsertRoomState(roomState.Time, roomState.Location, roomId);
+                ImportRoomState(roomState.Id, roomState.State, roomState.Time, roomState.Location, room.Id);
                 foreach (var paragraph in roomState.Paragraphs)
-                    ImportParagraphFromXml(paragraph, roomId, roomStateId);
+                    ImportParagraphFromXml(paragraph, room.Id, roomState.Id);
             }
         }
 
         private static void ImportParagraphFromXml(Xml.Paragraph paragraph, int roomId, int? roomStateId)
         {
-            int paragraphId = InsertParagraph(paragraph.Order, roomId, roomStateId);
+            ImportParagraph(paragraph.Id, paragraph.Order, roomId, roomStateId);
             foreach (var paragraphState in paragraph.ParagraphStates)
-                ImportParagraphStateFromXml(paragraphState, paragraphId);
+                ImportParagraphStateFromXml(paragraphState, paragraph.Id);
         }
 
         private static void ImportParagraphStateFromXml(Xml.ParagraphState paragraphState, int paragraphId)
         {
-            int paragraphStateId = InsertParagraphState(paragraphState.Text, paragraphId);
+            ImportParagraphState(paragraphState.Id, paragraphState.State, paragraphState.Text, paragraphId);
             foreach (var noun in paragraphState.Nouns)
-                ImportNounFromXml(noun, paragraphStateId);
+                ImportNounFromXml(noun, paragraphState.Id);
         }
 
         private static void ImportNounFromXml(Xml.Noun noun, int paragraphStateId)
         {
-            int nounId = InsertNoun(noun.Text, paragraphStateId);
+            ImportNoun(noun.Id, noun.Text, paragraphStateId);
             foreach (var action in noun.Actions)
-                ImportActionFromXml(action, nounId);
+                ImportActionFromXml(action, noun.Id);
         }
 
         private static void ImportActionFromXml(Xml.Action action, int nounId)
         {
-            int actionId = InsertAction(action.VerbType, nounId);
+            ImportAction(action.Id, action.VerbType, nounId);
             foreach (var actionResult in action.ActionResults)
-                InsertActionResult(actionResult.Result, actionId);
+                ImportActionResult(actionResult.Id, actionResult.Result, action.Id);
             foreach (var requirement in action.ItemActionRequirements)
-                InsertItemActionRequirement(requirement.Item, actionId);
+                ImportItemActionRequirement(requirement.Id, requirement.Item, action.Id);
             foreach (var requirement in action.EventActionRequirements)
-                InsertEventActionRequirement(requirement.Event, actionId);
-            foreach (var requirement in action.EventActionRequirements)
-                InsertEventActionRequirement(requirement.Event, actionId);
+                ImportEventActionRequirement(requirement.Id, requirement.Event, action.Id);
+            foreach (var requirement in action.CharacterActionRequirements)
+                ImportCharacterActionRequirement(requirement.Id, requirement.Character, action.Id);
         }
+
+        #endregion
+
+
+        #region DbModel
+
+        private static void ImportItem(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_ImportItem(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportItem", e);
+            }
+        }
+
+        private static void ImportEvent(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_ImportEvent(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportEvent", e);
+            }
+        }
+
+        private static void ImportCharacter(int id, string name, string description)
+        {
+            try
+            {
+                m_entities.dev_ImportCharacter(id, name, description);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportCharacter", e);
+            }
+        }
+
+        private static void ImportLocation(int id, string name, string locationFile)
+        {
+            try
+            {
+                m_entities.dev_ImportLocation(id, name, locationFile);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportLocation", e);
+            }
+        }
+
+        private static void ImportResultType(int id, string name)
+        {
+            try
+            {
+                m_entities.dev_ImportResultType(id, name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportResultType", e);
+            }
+        }
+
+        private static void ImportResultTypeJSONProperty(int id, string jsonProperty, int resultType)
+        {
+            try
+            {
+                m_entities.dev_ImportResultTypeJSONProperty(id, jsonProperty, resultType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportResultTypeJSONProperty", e);
+            }
+        }
+
+        private static void ImportResult(int id, string name, string jsonData, int resultType)
+        {
+            try
+            {
+                m_entities.dev_ImportResult(id, name, jsonData, resultType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportResult", e);
+            }
+        }
+
+        private static void ImportVerbType(int id, string name)
+        {
+            try
+            {
+                m_entities.dev_ImportVerbType(id, name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportVerbType", e);
+            }
+        }
+
+        private static void ImportVerb(int id, string name, int verbType)
+        {
+            try
+            {
+                m_entities.dev_ImportVerb(id, name, verbType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportVerb", e);
+            }
+        }
+
+        private static void ImportMessage(int id, string name, string text)
+        {
+            try
+            {
+                m_entities.dev_ImportMessage(id, name, text);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportMessage", e);
+            }
+        }
+
+        private static void ImportMessageChoice(int id, string name, string text, int message)
+        {
+            try
+            {
+                m_entities.dev_ImportMessageChoice(id, name, text, message);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportMessageChoice", e);
+            }
+        }
+
+        private static void ImportMessageChoiceResult(int id, int result, int messageChoice)
+        {
+            try
+            {
+                m_entities.dev_ImportMessageChoiceResult(id, result, messageChoice);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportMessageChoiceResult", e);
+            }
+        }
+
+        private static void ImportArea(int id, string name)
+        {
+            try
+            {
+                m_entities.dev_ImportArea(id, name);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportArea", e);
+            }
+        }
+
+        private static void ImportRoom(int id, string name, int x, int y, int z, int area)
+        {
+            try
+            {
+                m_entities.dev_ImportRoom(id, name, x, y, z, area);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportRoom", e);
+            }
+        }
+
+        private static void ImportRoomState(int id, int state, DateTime? time, int location, int room)
+        {
+            try
+            {
+                m_entities.dev_ImportRoomState(id, state, time, location, room);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportRoomState", e);
+            }
+        }
+
+        private static void ImportParagraph(int id, int order, int room, int? roomState)
+        {
+            try
+            {
+                m_entities.dev_ImportParagraph(id, order, room, roomState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportParagraph", e);
+            }
+        }
+
+        private static void ImportParagraphState(int id, int state, string text, int paragraph)
+        {
+            try
+            {
+                m_entities.dev_ImportParagraphState(id, state, text, paragraph);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportParagraphState", e);
+            }
+        }
+
+        private static void ImportNoun(int id, string text, int paragraphState)
+        {
+            try
+            {
+                m_entities.dev_ImportNoun(id, text, paragraphState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportNoun", e);
+            }
+        }
+
+        private static void ImportAction(int id, int verbType, int noun)
+        {
+            try
+            {
+                m_entities.dev_ImportAction(id, verbType, noun);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportAction", e);
+            }
+        }
+
+        private static void ImportActionResult(int id, int result, int action)
+        {
+            try
+            {
+                m_entities.dev_ImportActionResult(id, result, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportActionResult", e);
+            }
+        }
+
+        private static void ImportItemActionRequirement(int id, int item, int action)
+        {
+            try
+            {
+                m_entities.dev_ImportItemActionRequirement(id, item, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportItemActionRequirement", e);
+            }
+        }
+
+        private static void ImportEventActionRequirement(int id, int evnt, int action)
+        {
+            try
+            {
+                m_entities.dev_ImportEventActionRequirement(id, evnt, action);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportEventActionRequirement", e);
+            }
+        }
+
+        private static void ImportCharacterActionRequirement(int id, int character, int action)
+        {
+            try
+            {
+                m_entities.dev_ImportCharacterActionRequirement(id, character, action);
+            }
+            catch(Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportCharacterActionRequirement", e);
+            }
+        }
+
+        #endregion
 
         #endregion
 

@@ -1525,5 +1525,420 @@ namespace TBGINTB_Builder.Lib.Repository
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllVerbTypes");
         }
+    
+        public virtual int dev_ImportAction(Nullable<int> id, Nullable<int> verbtype, Nullable<int> noun)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var verbtypeParameter = verbtype.HasValue ?
+                new ObjectParameter("verbtype", verbtype) :
+                new ObjectParameter("verbtype", typeof(int));
+    
+            var nounParameter = noun.HasValue ?
+                new ObjectParameter("noun", noun) :
+                new ObjectParameter("noun", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportAction", idParameter, verbtypeParameter, nounParameter);
+        }
+    
+        public virtual int dev_ImportActionResult(Nullable<int> id, Nullable<int> result, Nullable<int> action)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportActionResult", idParameter, resultParameter, actionParameter);
+        }
+    
+        public virtual int dev_ImportArea(Nullable<int> id, string name)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportArea", idParameter, nameParameter);
+        }
+    
+        public virtual int dev_ImportCharacter(Nullable<int> id, string name, string description)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportCharacter", idParameter, nameParameter, descriptionParameter);
+        }
+    
+        public virtual int dev_ImportCharacterActionRequirement(Nullable<int> id, Nullable<int> character, Nullable<int> action)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var characterParameter = character.HasValue ?
+                new ObjectParameter("character", character) :
+                new ObjectParameter("character", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportCharacterActionRequirement", idParameter, characterParameter, actionParameter);
+        }
+    
+        public virtual int dev_ImportEvent(Nullable<int> id, string name, string description)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportEvent", idParameter, nameParameter, descriptionParameter);
+        }
+    
+        public virtual int dev_ImportEventActionRequirement(Nullable<int> id, Nullable<int> @event, Nullable<int> action)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var eventParameter = @event.HasValue ?
+                new ObjectParameter("event", @event) :
+                new ObjectParameter("event", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportEventActionRequirement", idParameter, eventParameter, actionParameter);
+        }
+    
+        public virtual int dev_ImportItem(Nullable<int> id, string name, string description)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var descriptionParameter = description != null ?
+                new ObjectParameter("description", description) :
+                new ObjectParameter("description", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportItem", idParameter, nameParameter, descriptionParameter);
+        }
+    
+        public virtual int dev_ImportItemActionRequirement(Nullable<int> id, Nullable<int> item, Nullable<int> action)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var itemParameter = item.HasValue ?
+                new ObjectParameter("item", item) :
+                new ObjectParameter("item", typeof(int));
+    
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportItemActionRequirement", idParameter, itemParameter, actionParameter);
+        }
+    
+        public virtual int dev_ImportLocation(Nullable<int> id, string name, string locationfile)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var locationfileParameter = locationfile != null ?
+                new ObjectParameter("locationfile", locationfile) :
+                new ObjectParameter("locationfile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportLocation", idParameter, nameParameter, locationfileParameter);
+        }
+    
+        public virtual int dev_ImportMessage(Nullable<int> id, string name, string text)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportMessage", idParameter, nameParameter, textParameter);
+        }
+    
+        public virtual int dev_ImportMessageChoice(Nullable<int> id, string name, string text, Nullable<int> message)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportMessageChoice", idParameter, nameParameter, textParameter, messageParameter);
+        }
+    
+        public virtual int dev_ImportMessageChoiceResult(Nullable<int> id, Nullable<int> result, Nullable<int> messagechoice)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var resultParameter = result.HasValue ?
+                new ObjectParameter("result", result) :
+                new ObjectParameter("result", typeof(int));
+    
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportMessageChoiceResult", idParameter, resultParameter, messagechoiceParameter);
+        }
+    
+        public virtual int dev_ImportNoun(Nullable<int> id, string text, Nullable<int> paragraphstate)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            var paragraphstateParameter = paragraphstate.HasValue ?
+                new ObjectParameter("paragraphstate", paragraphstate) :
+                new ObjectParameter("paragraphstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportNoun", idParameter, textParameter, paragraphstateParameter);
+        }
+    
+        public virtual int dev_ImportParagraph(Nullable<int> id, Nullable<int> order, Nullable<int> room, Nullable<int> roomstate)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var orderParameter = order.HasValue ?
+                new ObjectParameter("order", order) :
+                new ObjectParameter("order", typeof(int));
+    
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            var roomstateParameter = roomstate.HasValue ?
+                new ObjectParameter("roomstate", roomstate) :
+                new ObjectParameter("roomstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportParagraph", idParameter, orderParameter, roomParameter, roomstateParameter);
+        }
+    
+        public virtual int dev_ImportParagraphState(Nullable<int> id, Nullable<int> state, string text, Nullable<int> paragraph)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var stateParameter = state.HasValue ?
+                new ObjectParameter("state", state) :
+                new ObjectParameter("state", typeof(int));
+    
+            var textParameter = text != null ?
+                new ObjectParameter("text", text) :
+                new ObjectParameter("text", typeof(string));
+    
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportParagraphState", idParameter, stateParameter, textParameter, paragraphParameter);
+        }
+    
+        public virtual int dev_ImportResult(Nullable<int> id, string name, string jsondata, Nullable<int> resulttype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var jsondataParameter = jsondata != null ?
+                new ObjectParameter("jsondata", jsondata) :
+                new ObjectParameter("jsondata", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResult", idParameter, nameParameter, jsondataParameter, resulttypeParameter);
+        }
+    
+        public virtual int dev_ImportResultType(Nullable<int> id, string name)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResultType", idParameter, nameParameter);
+        }
+    
+        public virtual int dev_ImportResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> resulttype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var jsonpropertyParameter = jsonproperty != null ?
+                new ObjectParameter("jsonproperty", jsonproperty) :
+                new ObjectParameter("jsonproperty", typeof(string));
+    
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResultTypeJSONProperty", idParameter, jsonpropertyParameter, resulttypeParameter);
+        }
+    
+        public virtual int dev_ImportRoom(Nullable<int> id, string name, Nullable<int> x, Nullable<int> y, Nullable<int> z, Nullable<int> area)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var xParameter = x.HasValue ?
+                new ObjectParameter("x", x) :
+                new ObjectParameter("x", typeof(int));
+    
+            var yParameter = y.HasValue ?
+                new ObjectParameter("y", y) :
+                new ObjectParameter("y", typeof(int));
+    
+            var zParameter = z.HasValue ?
+                new ObjectParameter("z", z) :
+                new ObjectParameter("z", typeof(int));
+    
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportRoom", idParameter, nameParameter, xParameter, yParameter, zParameter, areaParameter);
+        }
+    
+        public virtual int dev_ImportRoomState(Nullable<int> id, Nullable<int> state, Nullable<System.DateTime> time, Nullable<int> location, Nullable<int> room)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var stateParameter = state.HasValue ?
+                new ObjectParameter("state", state) :
+                new ObjectParameter("state", typeof(int));
+    
+            var timeParameter = time.HasValue ?
+                new ObjectParameter("time", time) :
+                new ObjectParameter("time", typeof(System.DateTime));
+    
+            var locationParameter = location.HasValue ?
+                new ObjectParameter("location", location) :
+                new ObjectParameter("location", typeof(int));
+    
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportRoomState", idParameter, stateParameter, timeParameter, locationParameter, roomParameter);
+        }
+    
+        public virtual int dev_ImportVerb(Nullable<int> id, string name, Nullable<int> verbtype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            var verbtypeParameter = verbtype.HasValue ?
+                new ObjectParameter("verbtype", verbtype) :
+                new ObjectParameter("verbtype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportVerb", idParameter, nameParameter, verbtypeParameter);
+        }
+    
+        public virtual int dev_ImportVerbType(Nullable<int> id, string name)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("name", name) :
+                new ObjectParameter("name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportVerbType", idParameter, nameParameter);
+        }
     }
 }
