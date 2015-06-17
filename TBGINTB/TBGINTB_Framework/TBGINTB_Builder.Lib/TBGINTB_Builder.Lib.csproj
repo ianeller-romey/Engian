@@ -56,7 +56,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\XmlException.cs" />
     <Compile Include="Exceptions\DatabaseException.cs" />
+    <Compile Include="GinTubBuilderManager_DbModelToXmlModel.cs" />
+    <Compile Include="GinTubBuilderManager_SprocsToDbModel.cs" />
+    <Compile Include="Model\XmlModel\Action.cs" />
+    <Compile Include="Model\XmlModel\ActionResult.cs" />
+    <Compile Include="Model\XmlModel\GinTub.cs" />
+    <Compile Include="Model\XmlModel\Area.cs" />
+    <Compile Include="Model\XmlModel\Character.cs" />
+    <Compile Include="Model\XmlModel\CharacterActionRequirement.cs" />
+    <Compile Include="Model\XmlModel\Event.cs" />
+    <Compile Include="Model\XmlModel\EventActionRequirement.cs" />
+    <Compile Include="Model\XmlModel\Item.cs" />
+    <Compile Include="Model\XmlModel\ItemActionRequirement.cs" />
+    <Compile Include="Model\XmlModel\Location.cs" />
+    <Compile Include="Model\XmlModel\Message.cs" />
+    <Compile Include="Model\XmlModel\MessageChoice.cs" />
+    <Compile Include="Model\XmlModel\MessageChoiceResult.cs" />
+    <Compile Include="Model\XmlModel\Noun.cs" />
+    <Compile Include="Model\XmlModel\Paragraph.cs" />
+    <Compile Include="Model\XmlModel\ParagraphState.cs" />
+    <Compile Include="Model\XmlModel\Result.cs" />
+    <Compile Include="Model\XmlModel\ResultType.cs" />
+    <Compile Include="Model\XmlModel\ResultTypeJSONProperty.cs" />
+    <Compile Include="Model\XmlModel\Room.cs" />
+    <Compile Include="Model\XmlModel\RoomState.cs" />
+    <Compile Include="Model\XmlModel\Verb.cs" />
+    <Compile Include="Model\XmlModel\VerbType.cs" />
     <Compile Include="Model\DbModel\MessageChoiceResult.cs" />
     <Compile Include="Model\DbModel\MessageChoice.cs" />
     <Compile Include="Model\DbModel\Message.cs" />
@@ -69,7 +96,7 @@
     <Compile Include="Model\DbModel\Character.cs" />
     <Compile Include="Model\DbModel\Event.cs" />
     <Compile Include="Model\DbModel\Item.cs" />
-    <Compile Include="Model\DbModel\ResultTypeJSONField.cs" />
+    <Compile Include="Model\DbModel\ResultTypeJSONProperty.cs" />
     <Compile Include="Model\DbModel\Result.cs" />
     <Compile Include="Model\DbModel\Verb.cs" />
     <Compile Include="Model\DbModel\ResultType.cs" />

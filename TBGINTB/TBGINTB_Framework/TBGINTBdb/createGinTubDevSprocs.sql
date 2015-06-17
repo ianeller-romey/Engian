@@ -6,6 +6,40 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ClearDatabase]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ClearDatabase] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Completely removes everything from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ClearDatabase]
+	@backupfile varchar(MAX)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	IF @backupfile IS NOT NULL AND @backupfile <> ''
+	BEGIN
+		BACKUP DATABASE [GinTub]
+		TO DISK = @backupfile
+	END
+
+	EXEC [dev].[dev_DeleteAllItems]
+	EXEC [dev].[dev_DeleteAllEvents]
+	EXEC [dev].[dev_DeleteAllCharacters]
+	EXEC [dev].[dev_DeleteAllResultTypes]
+	EXEC [dev].[dev_DeleteAllVerbTypes]
+	EXEC [dev].[dev_DeleteAllLocations]
+	EXEC [dev].[dev_DeleteAllMessages]
+	EXEC [dev].[dev_DeleteAllAreas]
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Area*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -129,8 +163,49 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 	
-	DELETE FROM [dbo].[Areas]
+	DELETE
+	FROM [dbo].[ItemActionRequirements]
+	
+	DELETE
+	FROM [dbo].[EventActionRequirements]
+	
+	DELETE
+	FROM [dbo].[CharacterActionRequirements]
+	
+	DELETE
+	FROM [dbo].[ActionResults]
+	
+	DELETE
+	FROM [dbo].[Actions]
 
+	DELETE
+	FROM [dbo].[Nouns]
+
+	DELETE
+	FROM [dbo].[ParagraphStates]
+
+	DELETE
+	FROM [dbo].[Paragraphs]
+
+	DELETE
+	FROM [dbo].[RoomStates]
+
+	DELETE
+	FROM [dbo].[Rooms]
+	
+	DELETE 
+	FROM [dbo].[Areas]
+
+	DBCC CHECKIDENT ('[dbo].[ItemActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[EventActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[CharacterActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Actions]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Nouns]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ParagraphStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Paragraphs]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[RoomStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Rooms]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Areas]', RESEED, 0)
 
 END
@@ -235,6 +310,65 @@ BEGIN
 		   [LocationFile]
 	FROM [dbo].[Locations]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllLocations] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes the Id and Location fields of all Location records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllLocations]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[ItemActionRequirements]
+	
+	DELETE
+	FROM [dbo].[EventActionRequirements]
+	
+	DELETE
+	FROM [dbo].[CharacterActionRequirements]
+	
+	DELETE
+	FROM [dbo].[ActionResults]
+	
+	DELETE
+	FROM [dbo].[Actions]
+
+	DELETE
+	FROM [dbo].[Nouns]
+
+	DELETE
+	FROM [dbo].[ParagraphStates]
+
+	DELETE
+	FROM [dbo].[Paragraphs]
+	WHERE [RoomState] IS NOT NULL
+
+	DELETE
+	FROM [dbo].[RoomStates]
+
+	DELETE
+	FROM [dbo].[Locations]
+	
+	DBCC CHECKIDENT ('[dbo].[ItemActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[EventActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[CharacterActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Actions]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Nouns]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ParagraphStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[RoomStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Locations]', RESEED, 0)
 
 END
 GO
@@ -417,6 +551,260 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllRoomsInArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllRoomsInArea] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Room records associated with the specified Area
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllRoomsInArea]
+	@area int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+
+	DELETE n
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+
+	DELETE ps
+	FROM [dbo].[ParagraphStates] ps
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+
+	DELETE p
+	FROM [dbo].[Paragraphs] p
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+
+	DELETE rs
+	FROM [dbo].[RoomStates] rs
+	INNER JOIN [dbo].[Rooms] r
+	ON rs.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+
+	DELETE
+	FROM [dbo].[Rooms]
+	WHERE [Area] = @area
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllRoomsInAreaOnFloor]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllRoomsInAreaOnFloor] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Room records associated with the specified Area, on a specific floor (Z)
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllRoomsInAreaOnFloor]
+	@area int,
+	@z int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+
+	DELETE n
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+
+	DELETE ps
+	FROM [dbo].[ParagraphStates] ps
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+
+	DELETE p
+	FROM [dbo].[Paragraphs] p
+	INNER JOIN [dbo].[Rooms] r
+	ON p.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+
+	DELETE rs
+	FROM [dbo].[RoomStates] rs
+	INNER JOIN [dbo].[Rooms] r
+	ON rs.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
+
+	DELETE
+	FROM [dbo].[Rooms]
+	WHERE [Area] = @area
+	AND [Z] = @z
+
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*RoomState********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -536,6 +924,121 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllRoomStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllRoomStatesForRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all RoomState records associated with the specified Room
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllRoomStatesForRoom]
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+
+	DELETE n
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+
+	DELETE ps
+	FROM [dbo].[ParagraphStates] ps
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+
+	DELETE p
+	FROM [dbo].[Paragraphs] p
+	INNER JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
+
+	DELETE
+	FROM [dbo].[RoomStates]
+	WHERE [Room] = @room
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Paragraph********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -645,6 +1148,110 @@ BEGIN
 		   [RoomState]
 	FROM [dbo].[Paragraphs]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllParagraphsForRoomAndRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Paragraph records associated with the specified Room and RoomState
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllParagraphsForRoomAndRoomState]
+	@room int,
+	@roomstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+
+	DELETE n
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+
+	DELETE ps
+	FROM [dbo].[ParagraphStates] ps
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	WHERE p.[Room] = @room
+	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+
+	DELETE
+	FROM [dbo].[Paragraphs]
+	WHERE [Room] = @room
+	AND ([RoomState] = @roomstate OR [RoomState] IS NULL)
 
 END
 GO
@@ -764,6 +1371,83 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllParagraphStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllParagraphStatesForParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all ParagraphState records associated with a specified Paragraph
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllParagraphStatesForParagraph]
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+
+	DELETE n
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	WHERE ps.[Paragraph] = @paragraph
+
+	DELETE
+	FROM [dbo].[ParagraphStates]
+	WHERE [Paragraph] = @paragraph
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Noun*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -879,6 +1563,67 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllNounsForParagraphState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Noun records associated with a specified ParagraphState
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllNounsForParagraphState]
+	@paragraphstate int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	WHERE n.[ParagraphState] = @paragraphstate
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	WHERE n.[ParagraphState] = @paragraphstate
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	WHERE n.[ParagraphState] = @paragraphstate
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	WHERE n.[ParagraphState] = @paragraphstate
+	
+	DELETE a
+	FROM [dbo].[Actions] a
+	INNER JOIN [dbo].[Nouns] n
+	ON a.[Noun] = n.[Id]
+	WHERE n.[ParagraphState] = @paragraphstate
+
+	DELETE
+	FROM [dbo].[Nouns]
+	WHERE [ParagraphState] = @paragraphstate
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*VerbType*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -973,6 +1718,69 @@ BEGIN
 		   [Name]
 	FROM [dbo].[VerbTypes]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllVerbTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes the Id and Name fields of all VerbType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllVerbTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[MessageChoiceResults]
+	
+	DELETE
+	FROM [dbo].[ActionResults]
+	
+	DELETE
+	FROM [dbo].[Results]
+	
+	DELETE
+	FROM [dev].[ResultTypeJSONProperties]
+	
+	DELETE
+	FROM [dbo].[ResultTypes]
+	
+	DELETE
+	FROM [dbo].[ItemActionRequirements]
+	
+	DELETE
+	FROM [dbo].[EventActionRequirements]
+	
+	DELETE
+	FROM [dbo].[CharacterActionRequirements]
+	
+	DELETE
+	FROM [dbo].[Actions]
+	
+	DELETE
+	FROM [dbo].[Verbs]
+
+	DELETE
+	FROM [dbo].[VerbTypes]
+	
+	DBCC CHECKIDENT ('[dbo].[MessageChoiceResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Results]', RESEED, 0)
+	DBCC CHECKIDENT ('[dev].[ResultTypeJSONProperties]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ResultTypes]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ItemActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[EventActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[CharacterActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Actions]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Verbs]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[VerbTypes]', RESEED, 0)
 
 END
 GO
@@ -1082,6 +1890,29 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllVerbsForVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllVerbsForVerbType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Verb records associated with a specified VerbType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllVerbsForVerbType]
+	@verbtype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[Verbs]
+	WHERE [VerbType] = @verbtype
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*ResultType*******************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -1176,6 +2007,48 @@ BEGIN
 		   [Name]
 	FROM [dbo].[ResultTypes]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllResultTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllResultTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes the Id and Name fields of all ResultType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllResultTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[ActionResults]
+	
+	DELETE
+	FROM [dbo].[MessageChoiceResults]
+	
+	DELETE
+	FROM [dev].[ResultNames]
+	
+	DELETE
+	FROM [dbo].[Results]
+	
+	DELETE
+	FROM [dev].[ResultTypeJSONProperties]
+
+	DELETE
+	FROM [dbo].[ResultTypes]
+	
+	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[MessageChoiceResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Results]', RESEED, 0)
+	DBCC CHECKIDENT ('[dev].[ResultTypeJSONProperties]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ResultTypes]', RESEED, 0)
 
 END
 GO
@@ -1281,6 +2154,29 @@ BEGIN
 		   [ResultType]
 	FROM [dev].[ResultTypeJSONProperties]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllResultTypeJSONPropertiesForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllResultTypeJSONPropertiesForResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes the all ResultTypeJSONProperties records associated with the specified ResultType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllResultTypeJSONPropertiesForResultType]
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dev].[ResultTypeJSONProperties]
+	WHERE [ResultType] = @resulttype
 
 END
 GO
@@ -1461,6 +2357,101 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllResultsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllResultsForResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Result records associated with a specified ResultType
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllResultsForResultType]
+	@resulttype int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE rn
+	FROM [dev].[ResultNames] rn
+	INNER JOIN [dbo].[Results] r
+	ON rn.[Result] = r.[Id]
+	WHERE r.[ResultType] = @resulttype
+
+	DELETE
+	FROM [dbo].[Results]
+	WHERE [ResultType] = @resulttype
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllResultsForActionResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllResultsForActionResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Result records associated with all ResultTypes associated with the specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllResultsForActionResultType]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE rn
+	FROM [dev].[ResultNames] rn
+	INNER JOIN [dbo].[Results] r
+	ON rn.[Result] = r.[Id]
+	INNER JOIN [dev].[ActionResultTypes] art
+	ON r.[ResultType] = art.[ResultType]
+	WHERE art.[Action] = @action
+
+	DELETE r
+	FROM [dbo].[Results] r
+	INNER JOIN [dev].[ActionResultTypes] art
+	ON r.[ResultType] = art.[ResultType]
+	WHERE art.[Action] = @action
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllResultsForMessageChoiceResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllResultsForMessageChoiceResultType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Result records associated with all ResultTypes associated with the specified MessageChoice
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllResultsForMessageChoiceResultType]
+	@messagechoice int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE rn
+	FROM [dev].[ResultNames] rn
+	INNER JOIN [dbo].[Results] r
+	ON rn.[Result] = r.[Id]
+	INNER JOIN [dev].[MessageChoiceResultTypes] mcrt
+	ON r.[ResultType] = mcrt.[ResultType]
+	WHERE mcrt.[MessageChoice] = @messagechoice
+
+	DELETE r
+	FROM [dbo].[Results] r
+	INNER JOIN [dev].[MessageChoiceResultTypes] mcrt
+	ON r.[ResultType] = mcrt.[ResultType]
+	WHERE mcrt.[MessageChoice] = @messagechoice
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Action***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -1576,6 +2567,53 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllActionsForNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllActionsForNoun] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Delete all Action records associated with the specified Noun
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllActionsForNoun]
+	@noun int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE ar
+	FROM [dbo].[ItemActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	WHERE a.[Noun] = @noun
+	
+	DELETE ar
+	FROM [dbo].[EventActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	WHERE a.[Noun] = @noun
+	
+	DELETE ar
+	FROM [dbo].[CharacterActionRequirements] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	WHERE a.[Noun] = @noun
+	
+	DELETE ar
+	FROM [dbo].[ActionResults] ar
+	INNER JOIN [dbo].[Actions] a
+	ON ar.[Action] = a.[Id]
+	WHERE a.[Noun] = @noun
+
+	DELETE
+	FROM [dbo].[Actions]
+	WHERE [Noun] = @noun
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*ActionResult*****************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -1677,6 +2715,29 @@ BEGIN
 		   [Action]
 	FROM [dbo].[ActionResults]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllActionResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllActionResultsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all ActionResult records associated with the specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllActionResultsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[ActionResults]
+	WHERE [Action] = @action
 
 END
 GO
@@ -1784,6 +2845,33 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllItems]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllItems] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes data about all Item records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllItems]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[ItemActionRequirements]
+
+	DELETE
+	FROM [dbo].[Items]
+	
+	DBCC CHECKIDENT ('[dbo].[ItemActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Items]', RESEED, 0)
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Event************************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -1887,6 +2975,33 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllEvents]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllEvents] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes data about all Event records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllEvents]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[EventActionRequirements]
+
+	DELETE
+	FROM [dbo].[Events]
+	
+	DBCC CHECKIDENT ('[dbo].[EventActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Events]', RESEED, 0)
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Character********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -1986,6 +3101,33 @@ BEGIN
 		   [Description]
 	FROM [dbo].[Characters]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllCharacters]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllCharacters] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes data about all Character records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllCharacters]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[CharacterActionRequirements]
+
+	DELETE
+	FROM [dbo].[Characters]
+	
+	DBCC CHECKIDENT ('[dbo].[CharacterActionRequirements]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Characters]', RESEED, 0)
 
 END
 GO
@@ -2107,6 +3249,29 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllItemActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllItemActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all ItemActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllItemActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[ItemActionRequirements]
+	WHERE [Action] = @action
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*EventActionRequirement*******************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -2220,6 +3385,29 @@ BEGIN
 	INNER JOIN [dev].[ActionNames] an
 	ON ar.[Action] = an.[Action]
 	WHERE ar.[Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllEventActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllEventActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all EventActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllEventActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[EventActionRequirements]
+	WHERE [Action] = @action
 
 END
 GO
@@ -2341,6 +3529,29 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllCharacterActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllCharacterActionRequirementsForAction] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all CharacterActionRequirements record for a specified Action
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllCharacterActionRequirementsForAction]
+	@action int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra Requirement sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[CharacterActionRequirements]
+	WHERE [Action] = @action
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*Message**********************************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -2454,6 +3665,43 @@ BEGIN
 	INNER JOIN [dev].[MessageNames] mn
 	ON mn.[Message] = m.[Id]
 	WHERE m.[Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllMessages]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllMessages] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all Message records from the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllMessages]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[MessageChoiceResults]
+	
+	DELETE
+	FROM [dev].[MessageChoiceNames]
+
+	DELETE
+	FROM [dbo].[MessageChoices]
+	
+	DELETE
+	FROM [dev].[MessageNames]
+
+	DELETE
+	FROM [dbo].[Messages]
+	
+	DBCC CHECKIDENT ('[dbo].[MessageChoiceResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[MessageChoices]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Messages]', RESEED, 0)
 
 END
 GO
@@ -2582,6 +3830,41 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllMessageChoicesForMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all MessageChoice records associated with the specified Message
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllMessageChoicesForMessage]
+	@message int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE mcr
+	FROM [dbo].[MessageChoiceResults] mcr
+	INNER JOIN [dbo].[MessageChoices] mc
+	ON mcr.[MessageChoice] = mc.[Id]
+	WHERE mc.[Message] = @message
+	
+	DELETE mcn
+	FROM [dev].[MessageChoiceNames] mcn
+	INNER JOIN [dbo].[MessageChoices] mc
+	ON mcn.[MessageChoice] = mc.[Id]
+	WHERE mc.[Message] = @message
+
+	DELETE
+	FROM [dbo].[MessageChoices]
+	WHERE [Message] = @message
+
+END
+GO
+
 /******************************************************************************************************************************************/
 /*MessageChoiceResult*********************************************************************************************************************/
 /******************************************************************************************************************************************/
@@ -2683,6 +3966,29 @@ BEGIN
 		   [MessageChoice]
 	FROM [dbo].[MessageChoiceResults]
 	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllMessageChoiceResultsForMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllMessageChoiceResultsForMessageChoice] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes all MessageChoiceResult records associated with the specified MessageChoice
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllMessageChoiceResultsForMessageChoice]
+	@messagechoice int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DELETE
+	FROM [dbo].[MessageChoiceResults]
+	WHERE [MessageChoice] = @messagechoice
 
 END
 GO

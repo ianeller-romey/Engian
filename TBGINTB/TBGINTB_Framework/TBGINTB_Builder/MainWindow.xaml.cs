@@ -25,6 +25,12 @@ namespace TBGINTB_Builder
     {
         #region MEMBER FIELDS
 
+        Menu m_menu_main;
+        MenuItem
+            m_menuItem_file,
+            m_menuItem_loadFromDatabase,
+            m_menuItem_exportToXml,
+            m_menuItem_importFromXml;
         Grid m_grid_main;
         TabControl m_tabControl_controls;
 
@@ -53,18 +59,24 @@ namespace TBGINTB_Builder
         {
             ////////
             // toolbar
-            MenuItem menuItem_loadFromDatabase = new MenuItem() { Header = "Load DB" };
-            menuItem_loadFromDatabase.Click += MenuItem_LoadFromDatabase_Click;
+            m_menuItem_loadFromDatabase = new MenuItem() { Header = "Load DB" };
+            m_menuItem_loadFromDatabase.Click += MenuItem_LoadFromDatabase_Click;
 
-            MenuItem menuItem_file = new MenuItem() { Header = "File" };
-            menuItem_file.Items.Add(menuItem_loadFromDatabase);
+            m_menuItem_exportToXml = new MenuItem() { Header = "Export to Xml" };
+            m_menuItem_exportToXml.Click += MenuItem_ExportToXml_Click;
 
-            Menu menu_main = new Menu();
-            menu_main.Items.Add(menuItem_file);
+            m_menuItem_importFromXml = new MenuItem() { Header = "Import From Xml" };
+            m_menuItem_importFromXml.Click += MenuItem_ImportFromXml_Click;
+
+            m_menuItem_file = new MenuItem() { Header = "File" };
+            m_menuItem_file.Items.Add(m_menuItem_loadFromDatabase);
+
+            m_menu_main = new Menu();
+            m_menu_main.Items.Add(m_menuItem_file);
 
             DockPanel dockPanel_main = new DockPanel();
-            dockPanel_main.Children.Add(menu_main);
-            DockPanel.SetDock(menu_main, Dock.Top);
+            dockPanel_main.Children.Add(m_menu_main);
+            DockPanel.SetDock(m_menu_main, Dock.Top);
 
             ////////
             // grid
@@ -110,7 +122,40 @@ namespace TBGINTB_Builder
                 m_tabControl_controls.SelectionChanged += TabControl_Controls_SelectionChanged;
                 m_tabControl_controls.SelectedItem = m_tabControl_controls.Items.OfType<TabItem>().First();
 
-                menuItem.Click -= MenuItem_LoadFromDatabase_Click;
+                m_menuItem_file.Items.Remove(m_menuItem_loadFromDatabase);
+                m_menuItem_file.Items.Add(m_menuItem_exportToXml);
+                m_menuItem_file.Items.Add(m_menuItem_importFromXml);
+            }
+        }
+
+        private void MenuItem_ExportToXml_Click(object sender, RoutedEventArgs e)
+        {
+            Window_SelectFile window = new Window_SelectFile("Export to ...", string.Empty);
+            window.ShowDialog();
+            if (window.Accepted)
+                GinTubBuilderManager.ExportToXml(window.FileName);
+        }
+
+        void MenuItem_ImportFromXml_Click(object sender, RoutedEventArgs e)
+        {
+            Window_Notification window_notification = new Window_Notification("Notice", "Importing from an .xml file will OVERWRITE all records currently in the database.\r\nThis action CANNOT be undone.\r\nContinue?");
+            window_notification.ShowDialog();
+            if(window_notification.Accepted)
+            {
+                string backupFile = null;
+                window_notification = new Window_Notification("Notice", "Would you like to backup your database before the import?");
+                window_notification.ShowDialog();
+                if(window_notification.Accepted)
+                {
+                    Window_SelectFile window_selectFile = new Window_SelectFile("Backup to ...", string.Empty);
+                    window_selectFile.ShowDialog();
+                    if (window_selectFile.Accepted)
+                        backupFile = window_selectFile.FileName;
+                }
+                Window_OpenFile window_openFile = new Window_OpenFile("Import from ...", string.Empty);
+                window_openFile.ShowDialog();
+                if (window_openFile.Accepted)
+                    GinTubBuilderManager.ImportFromXml(window_openFile.FileName, backupFile);
             }
         }
 

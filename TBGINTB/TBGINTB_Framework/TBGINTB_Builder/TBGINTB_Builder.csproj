@@ -169,8 +169,10 @@
     <Compile Include="BuilderControls\DataWindows\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
+    <Compile Include="HelperControls\Window_SelectFile.cs" />
     <Compile Include="HelperControls\Window_OpenFile.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />
+    <Compile Include="HelperControls\Window_Notification.cs" />
     <Compile Include="HelperControls\Window_TextEntry.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

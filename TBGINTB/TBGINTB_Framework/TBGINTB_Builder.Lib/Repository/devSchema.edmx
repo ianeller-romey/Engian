@@ -121,7 +121,76 @@
         <Function Name="dev_AddVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="dev_ClearDatabase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="backupfile" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllActionResultsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllActionsForNoun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="noun" Type="int" Mode="In" />
+        </Function>
         <Function Name="dev_DeleteAllAreas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllCharacterActionRequirementsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllCharacters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllEventActionRequirementsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllEvents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllItemActionRequirementsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllLocations" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllMessageChoiceResultsForMessageChoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="messagechoice" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllMessageChoicesForMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="message" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllNounsForParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="paragraphstate" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllParagraphsForRoomAndRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="room" Type="int" Mode="In" />
+          <Parameter Name="roomstate" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllParagraphStatesForParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="paragraph" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="resulttype" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResultsForActionResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="action" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResultsForMessageChoiceResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="messagechoice" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResultsForResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="resulttype" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResultTypeJSONPropertiesForResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="resulttype" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllResultTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
+        <Function Name="dev_DeleteAllRoomsInArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="area" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllRoomsInAreaOnFloor" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="area" Type="int" Mode="In" />
+          <Parameter Name="z" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllRoomStatesForRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="room" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllVerbsForVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="verbtype" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_DeleteAllVerbTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -783,8 +852,77 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetAllResultsForMessageChoiceResultType" ReturnType="Collection(GinTubModel.dev_GetAllResultsForMessageChoiceResultType_Result)">
+          <Parameter Name="messagechoice" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_ClearDatabase">
+            <Parameter Name="backupfile" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllActionResultsForAction">
+            <Parameter Name="action" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllActionsForNoun">
+            <Parameter Name="noun" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllCharacterActionRequirementsForAction">
+            <Parameter Name="action" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllCharacters" />
+          <FunctionImport Name="dev_DeleteAllEventActionRequirementsForAction">
+            <Parameter Name="action" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllEvents" />
+          <FunctionImport Name="dev_DeleteAllItemActionRequirementsForAction">
+            <Parameter Name="action" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllItems" />
+          <FunctionImport Name="dev_DeleteAllLocations" />
+          <FunctionImport Name="dev_DeleteAllMessageChoiceResultsForMessageChoice">
             <Parameter Name="messagechoice" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllMessageChoicesForMessage">
+            <Parameter Name="message" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllMessages" />
+          <FunctionImport Name="dev_DeleteAllNounsForParagraphState">
+            <Parameter Name="paragraphstate" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllParagraphsForRoomAndRoomState">
+            <Parameter Name="room" Mode="In" Type="Int32" />
+            <Parameter Name="roomstate" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllParagraphStatesForParagraph">
+            <Parameter Name="paragraph" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResults">
+            <Parameter Name="resulttype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResultsForActionResultType">
+            <Parameter Name="action" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResultsForMessageChoiceResultType">
+            <Parameter Name="messagechoice" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResultsForResultType">
+            <Parameter Name="resulttype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResultTypeJSONPropertiesForResultType">
+            <Parameter Name="resulttype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllResultTypes" />
+          <FunctionImport Name="dev_DeleteAllRoomsInArea">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllRoomsInAreaOnFloor">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+            <Parameter Name="z" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllRoomStatesForRoom">
+            <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllVerbsForVerbType">
+            <Parameter Name="verbtype" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_DeleteAllVerbTypes" />
         </EntityContainer>
         <ComplexType Name="dev_GetAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1608,6 +1746,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_ClearDatabase" FunctionName="GinTubModel.Store.dev_ClearDatabase" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllActionResultsForAction" FunctionName="GinTubModel.Store.dev_DeleteAllActionResultsForAction" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllActionsForNoun" FunctionName="GinTubModel.Store.dev_DeleteAllActionsForNoun" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllCharacterActionRequirementsForAction" FunctionName="GinTubModel.Store.dev_DeleteAllCharacterActionRequirementsForAction" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllCharacters" FunctionName="GinTubModel.Store.dev_DeleteAllCharacters" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllEventActionRequirementsForAction" FunctionName="GinTubModel.Store.dev_DeleteAllEventActionRequirementsForAction" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllEvents" FunctionName="GinTubModel.Store.dev_DeleteAllEvents" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllItemActionRequirementsForAction" FunctionName="GinTubModel.Store.dev_DeleteAllItemActionRequirementsForAction" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllItems" FunctionName="GinTubModel.Store.dev_DeleteAllItems" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllLocations" FunctionName="GinTubModel.Store.dev_DeleteAllLocations" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllMessageChoiceResultsForMessageChoice" FunctionName="GinTubModel.Store.dev_DeleteAllMessageChoiceResultsForMessageChoice" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllMessageChoicesForMessage" FunctionName="GinTubModel.Store.dev_DeleteAllMessageChoicesForMessage" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllMessages" FunctionName="GinTubModel.Store.dev_DeleteAllMessages" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllNounsForParagraphState" FunctionName="GinTubModel.Store.dev_DeleteAllNounsForParagraphState" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllParagraphsForRoomAndRoomState" FunctionName="GinTubModel.Store.dev_DeleteAllParagraphsForRoomAndRoomState" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllParagraphStatesForParagraph" FunctionName="GinTubModel.Store.dev_DeleteAllParagraphStatesForParagraph" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResults" FunctionName="GinTubModel.Store.dev_DeleteAllResults" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForActionResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForActionResultType" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForMessageChoiceResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForMessageChoiceResultType" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForResultType" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResultTypeJSONPropertiesForResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultTypeJSONPropertiesForResultType" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllResultTypes" FunctionName="GinTubModel.Store.dev_DeleteAllResultTypes" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllRoomsInArea" FunctionName="GinTubModel.Store.dev_DeleteAllRoomsInArea" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllRoomsInAreaOnFloor" FunctionName="GinTubModel.Store.dev_DeleteAllRoomsInAreaOnFloor" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllRoomStatesForRoom" FunctionName="GinTubModel.Store.dev_DeleteAllRoomStatesForRoom" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllVerbsForVerbType" FunctionName="GinTubModel.Store.dev_DeleteAllVerbsForVerbType" />
+          <FunctionImportMapping FunctionImportName="dev_DeleteAllVerbTypes" FunctionName="GinTubModel.Store.dev_DeleteAllVerbTypes" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

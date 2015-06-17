@@ -1302,5 +1302,228 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllResultsForMessageChoiceResultType_Result>("dev_GetAllResultsForMessageChoiceResultType", messagechoiceParameter);
         }
+    
+        public virtual int dev_ClearDatabase(string backupfile)
+        {
+            var backupfileParameter = backupfile != null ?
+                new ObjectParameter("backupfile", backupfile) :
+                new ObjectParameter("backupfile", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ClearDatabase", backupfileParameter);
+        }
+    
+        public virtual int dev_DeleteAllActionResultsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllActionResultsForAction", actionParameter);
+        }
+    
+        public virtual int dev_DeleteAllActionsForNoun(Nullable<int> noun)
+        {
+            var nounParameter = noun.HasValue ?
+                new ObjectParameter("noun", noun) :
+                new ObjectParameter("noun", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllActionsForNoun", nounParameter);
+        }
+    
+        public virtual int dev_DeleteAllCharacterActionRequirementsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllCharacterActionRequirementsForAction", actionParameter);
+        }
+    
+        public virtual int dev_DeleteAllCharacters()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllCharacters");
+        }
+    
+        public virtual int dev_DeleteAllEventActionRequirementsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllEventActionRequirementsForAction", actionParameter);
+        }
+    
+        public virtual int dev_DeleteAllEvents()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllEvents");
+        }
+    
+        public virtual int dev_DeleteAllItemActionRequirementsForAction(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllItemActionRequirementsForAction", actionParameter);
+        }
+    
+        public virtual int dev_DeleteAllItems()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllItems");
+        }
+    
+        public virtual int dev_DeleteAllLocations()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllLocations");
+        }
+    
+        public virtual int dev_DeleteAllMessageChoiceResultsForMessageChoice(Nullable<int> messagechoice)
+        {
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllMessageChoiceResultsForMessageChoice", messagechoiceParameter);
+        }
+    
+        public virtual int dev_DeleteAllMessageChoicesForMessage(Nullable<int> message)
+        {
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllMessageChoicesForMessage", messageParameter);
+        }
+    
+        public virtual int dev_DeleteAllMessages()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllMessages");
+        }
+    
+        public virtual int dev_DeleteAllNounsForParagraphState(Nullable<int> paragraphstate)
+        {
+            var paragraphstateParameter = paragraphstate.HasValue ?
+                new ObjectParameter("paragraphstate", paragraphstate) :
+                new ObjectParameter("paragraphstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllNounsForParagraphState", paragraphstateParameter);
+        }
+    
+        public virtual int dev_DeleteAllParagraphsForRoomAndRoomState(Nullable<int> room, Nullable<int> roomstate)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            var roomstateParameter = roomstate.HasValue ?
+                new ObjectParameter("roomstate", roomstate) :
+                new ObjectParameter("roomstate", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllParagraphsForRoomAndRoomState", roomParameter, roomstateParameter);
+        }
+    
+        public virtual int dev_DeleteAllParagraphStatesForParagraph(Nullable<int> paragraph)
+        {
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllParagraphStatesForParagraph", paragraphParameter);
+        }
+    
+        public virtual int dev_DeleteAllResults(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResults", resulttypeParameter);
+        }
+    
+        public virtual int dev_DeleteAllResultsForActionResultType(Nullable<int> action)
+        {
+            var actionParameter = action.HasValue ?
+                new ObjectParameter("action", action) :
+                new ObjectParameter("action", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResultsForActionResultType", actionParameter);
+        }
+    
+        public virtual int dev_DeleteAllResultsForMessageChoiceResultType(Nullable<int> messagechoice)
+        {
+            var messagechoiceParameter = messagechoice.HasValue ?
+                new ObjectParameter("messagechoice", messagechoice) :
+                new ObjectParameter("messagechoice", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResultsForMessageChoiceResultType", messagechoiceParameter);
+        }
+    
+        public virtual int dev_DeleteAllResultsForResultType(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResultsForResultType", resulttypeParameter);
+        }
+    
+        public virtual int dev_DeleteAllResultTypeJSONPropertiesForResultType(Nullable<int> resulttype)
+        {
+            var resulttypeParameter = resulttype.HasValue ?
+                new ObjectParameter("resulttype", resulttype) :
+                new ObjectParameter("resulttype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResultTypeJSONPropertiesForResultType", resulttypeParameter);
+        }
+    
+        public virtual int dev_DeleteAllResultTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllResultTypes");
+        }
+    
+        public virtual int dev_DeleteAllRoomsInArea(Nullable<int> area)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllRoomsInArea", areaParameter);
+        }
+    
+        public virtual int dev_DeleteAllRoomsInAreaOnFloor(Nullable<int> area, Nullable<int> z)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            var zParameter = z.HasValue ?
+                new ObjectParameter("z", z) :
+                new ObjectParameter("z", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllRoomsInAreaOnFloor", areaParameter, zParameter);
+        }
+    
+        public virtual int dev_DeleteAllRoomStatesForRoom(Nullable<int> room)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllRoomStatesForRoom", roomParameter);
+        }
+    
+        public virtual int dev_DeleteAllVerbsForVerbType(Nullable<int> verbtype)
+        {
+            var verbtypeParameter = verbtype.HasValue ?
+                new ObjectParameter("verbtype", verbtype) :
+                new ObjectParameter("verbtype", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllVerbsForVerbType", verbtypeParameter);
+        }
+    
+        public virtual int dev_DeleteAllVerbTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllVerbTypes");
+        }
     }
 }

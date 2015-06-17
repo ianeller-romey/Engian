@@ -24,9 +24,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region MEMBER PROPERTIES
 
-        public int? ActionResultId { get; private set; }
-        public int? ActionResultResult { get; private set; }
-        public int? ActionResultAction { get; private set; }
+        public int? ActionResultId { get; set; }
+        public int? ActionResultResult { get; set; }
+        public int? ActionResultAction { get; set; }
         private int NounId { get; set; }
         private int ParagraphStateId { get; set; }
 
