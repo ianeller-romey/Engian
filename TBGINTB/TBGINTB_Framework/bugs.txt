@@ -8,3 +8,7 @@
 	- This information is only needed for development purposes
 - RoomState and ParagraphState should start at 1, not 0
 	- Do I really need this?
+- Items should all be in one table, with an ItemType (e.g. Item, Event, Character)
+	- Don't call them items; call them Objects
+- Paragraphs should be called Spans
+	- Minor, but more accurate

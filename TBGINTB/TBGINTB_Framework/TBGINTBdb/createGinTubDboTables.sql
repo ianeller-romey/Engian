@@ -56,13 +56,22 @@ CREATE TABLE [dbo].[VerbTypes] (
 )
 
 INSERT INTO [dbo].[VerbTypes] ([Name])
-VALUES ('Move')
+VALUES ('Look')
+
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('Interact')
+
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('With')
+
+INSERT INTO [dbo].[VerbTypes] ([Name])
+VALUES ('Talk')
 
 INSERT INTO [dbo].[VerbTypes] ([Name])
 VALUES ('Take')
 
 INSERT INTO [dbo].[VerbTypes] ([Name])
-VALUES ('Use')
+VALUES ('Move')
 
 CREATE TABLE [dbo].[Verbs] (
 	[Id] int PRIMARY KEY IDENTITY,

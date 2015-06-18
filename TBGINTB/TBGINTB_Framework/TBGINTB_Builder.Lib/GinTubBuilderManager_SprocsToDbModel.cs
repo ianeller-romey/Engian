@@ -1535,13 +1535,6 @@ namespace TBGINTB_Builder.Lib
                 OnLocationAdded(location);
         }
 
-        public static void GetAllLocations()
-        {
-            List<Location> locations = SelectAllLocations();
-            foreach (var location in locations)
-                OnLocationGet(location);
-        }
-
         #endregion
 
 
@@ -1581,20 +1574,6 @@ namespace TBGINTB_Builder.Lib
                 OnRoomAdded(room);
         }
 
-        public static void GetAllRoomsInArea(int areaId)
-        {
-            List<Room> rooms = SelectAllRoomsInArea(areaId);
-            foreach (var room in rooms)
-                OnRoomGet(room);
-        }
-
-        public static void GetAllRoomsInAreaOnFloor(int areaId, int z)
-        {
-            List<Room> rooms = SelectAllRoomsInAreaOnFloor(areaId, z);
-            foreach (var room in rooms)
-                OnRoomGet(room);
-        }
-
         #endregion
 
 
@@ -1625,13 +1604,6 @@ namespace TBGINTB_Builder.Lib
             List<RoomState> roomStates = SelectAllRoomStatesForRoom(roomId);
             foreach (var roomState in roomStates)
                 OnRoomStateAdded(roomState);
-        }
-
-        public static void GetAllRoomStatesForRoom(int roomId)
-        {
-            List<RoomState> roomStates = SelectAllRoomStatesForRoom(roomId);
-            foreach (var roomState in roomStates)
-                OnRoomStateGet(roomState);
         }
 
         #endregion
@@ -1666,13 +1638,6 @@ namespace TBGINTB_Builder.Lib
                 OnParagraphAdded(paragraph);
         }
 
-        public static void GetAllParagraphsForRoomAndRoomState(int roomId, int? roomStateId)
-        {
-            List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(roomId, roomStateId);
-            foreach (var paragraph in paragraphs)
-                OnParagraphGet(paragraph);
-        }
-
         #endregion
 
 
@@ -1703,13 +1668,6 @@ namespace TBGINTB_Builder.Lib
             List<ParagraphState> paragraphStates = SelectAllParagraphStatesForParagraph(paragraphId);
             foreach (var paragraphState in paragraphStates)
                 OnParagraphStateAdded(paragraphState);
-        }
-
-        public static void GetAllParagraphStatesForParagraph(int paragraphId)
-        {
-            List<ParagraphState> paragraphStates = SelectAllParagraphStatesForParagraph(paragraphId);
-            foreach (var paragraphState in paragraphStates)
-                OnParagraphStateGet(paragraphState);
         }
 
         public static void LoadParagraphStateNounPossibilities(int paragraphStateId)
@@ -1750,13 +1708,6 @@ namespace TBGINTB_Builder.Lib
                 OnNounAdded(noun);
         }
 
-        public static void GetAllNounsForParagraph(int paragraphStateId)
-        {
-            List<Noun> nouns = SelectAllNounsForParagraphState(paragraphStateId);
-            foreach (var noun in nouns)
-                OnNounGet(noun);
-        }
-
         #endregion
 
 
@@ -1787,13 +1738,6 @@ namespace TBGINTB_Builder.Lib
             List<VerbType> verbTypes = SelectAllVerbTypes();
             foreach (var verbType in verbTypes)
                 OnVerbTypeAdded(verbType);
-        }
-
-        public static void GetAllVerbTypes()
-        {
-            List<VerbType> verbTypes = SelectAllVerbTypes();
-            foreach (var verbType in verbTypes)
-                OnVerbTypeGet(verbType);
         }
 
         #endregion
@@ -1828,13 +1772,6 @@ namespace TBGINTB_Builder.Lib
                 OnVerbAdded(verb);
         }
 
-        public static void GetAllVerbsForVerbType(int verbTypeId)
-        {
-            List<Verb> verbs = SelectAllVerbsForVerbType(verbTypeId);
-            foreach (var verb in verbs)
-                OnVerbGet(verb);
-        }
-
         #endregion
 
 
@@ -1865,13 +1802,6 @@ namespace TBGINTB_Builder.Lib
             List<Db.Action> actions = SelectAllActionsForNoun(nounId);
             foreach (var action in actions)
                 OnActionAdded(action);
-        }
-
-        public static void GetAllActionsForNoun(int nounId)
-        {
-            List<Db.Action> actions = SelectAllActionsForNoun(nounId);
-            foreach (var action in actions)
-                OnActionGet(action);
         }
 
         #endregion
@@ -1906,13 +1836,6 @@ namespace TBGINTB_Builder.Lib
                 OnResultTypeAdded(resultType);
         }
 
-        public static void GetAllResultTypes()
-        {
-            List<ResultType> resultTypes = SelectAllResultTypes();
-            foreach (var resultType in resultTypes)
-                OnResultTypeGet(resultType);
-        }
-
         #endregion
 
 
@@ -1943,13 +1866,6 @@ namespace TBGINTB_Builder.Lib
             List<ResultTypeJSONProperty> resultTypeJSONProperties = SelectAllResultTypeJSONPropertiesForResultType(resultTypeId);
             foreach (var resultTypeJSONProperty in resultTypeJSONProperties)
                 OnResultTypeJSONPropertyAdded(resultTypeJSONProperty);
-        }
-
-        public static void GetAllResultTypeJSONPropertiesForResultType(int resultTypeId)
-        {
-            List<ResultTypeJSONProperty> resultTypeJSONProperties = SelectAllResultTypeJSONPropertiesForResultType(resultTypeId);
-            foreach (var resultTypeJSONProperty in resultTypeJSONProperties)
-                OnResultTypeJSONPropertyGet(resultTypeJSONProperty);
         }
 
         #endregion
@@ -2028,13 +1944,6 @@ namespace TBGINTB_Builder.Lib
             List<ActionResult> actionResults = SelectAllActionResultsForAction(actionId);
             foreach (var actionResult in actionResults)
                 OnActionResultAdded(actionResult);
-        }
-
-        public static void GetAllActionResultsForAction(int actionId)
-        {
-            List<ActionResult> actionResults = SelectAllActionResultsForAction(actionId);
-            foreach (var actionResult in actionResults)
-                OnActionResultGet(actionResult);
         }
 
         #endregion
@@ -2323,13 +2232,6 @@ namespace TBGINTB_Builder.Lib
             List<MessageChoiceResult> messageChoiceResults = SelectAllMessageChoiceResultsForMessageChoice(messageChoiceId);
             foreach (var messageChoiceResult in messageChoiceResults)
                 OnMessageChoiceResultAdded(messageChoiceResult);
-        }
-
-        public static void GetAllMessageChoiceResultsForMessageChoice(int messageChoiceId)
-        {
-            List<MessageChoiceResult> messageChoiceResults = SelectAllMessageChoiceResultsForMessageChoice(messageChoiceId);
-            foreach (var messageChoiceResult in messageChoiceResults)
-                OnMessageChoiceResultGet(messageChoiceResult);
         }
 
         #endregion
