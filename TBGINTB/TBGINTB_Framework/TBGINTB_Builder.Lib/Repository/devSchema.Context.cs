@@ -1940,5 +1940,18 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportVerbType", idParameter, nameParameter);
         }
+    
+        public virtual ObjectResult<dev_GetParagraphStateForParagraphPreview_Result> dev_GetParagraphStateForParagraphPreview(Nullable<int> state, Nullable<int> paragraph)
+        {
+            var stateParameter = state.HasValue ?
+                new ObjectParameter("state", state) :
+                new ObjectParameter("state", typeof(int));
+    
+            var paragraphParameter = paragraph.HasValue ?
+                new ObjectParameter("paragraph", paragraph) :
+                new ObjectParameter("paragraph", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetParagraphStateForParagraphPreview_Result>("dev_GetParagraphStateForParagraphPreview", stateParameter, paragraphParameter);
+        }
     }
 }

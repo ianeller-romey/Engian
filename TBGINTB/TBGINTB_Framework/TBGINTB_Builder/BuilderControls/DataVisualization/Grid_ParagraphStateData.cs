@@ -7,12 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_ParagraphStateData : Grid
+    public class Grid_ParagraphStateData : Grid_Gettable
     {
         #region MEMBER FIELDS
 
@@ -66,11 +67,13 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.ParagraphStateModified += GinTubBuilderManager_ParagraphStateModified;
+            GinTubBuilderManager.ParagraphStateGet += GinTubBuilderManager_ParagraphStateGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.ParagraphStateModified -= GinTubBuilderManager_ParagraphStateModified;
+            GinTubBuilderManager.ParagraphStateGet -= GinTubBuilderManager_ParagraphStateGet;
         }
 
         #endregion
@@ -134,7 +137,7 @@ namespace TBGINTB_Builder.BuilderControls
             grid_state.SetGridRowColumn(label_state, 0, 0);
         }
 
-        void GinTubBuilderManager_ParagraphStateModified(object sender, GinTubBuilderManager.ParagraphStateModifiedEventArgs args)
+        private void GinTubBuilderManager_ParagraphStateModified(object sender, GinTubBuilderManager.ParagraphStateModifiedEventArgs args)
         {
             if (ParagraphStateId == args.Id)
             {
@@ -142,6 +145,11 @@ namespace TBGINTB_Builder.BuilderControls
                 SetParagraphStateState(args.State);
                 ParagraphId = args.Paragraph;
             }
+        }
+
+        private void GinTubBuilderManager_ParagraphStateGet(object sender, GinTubBuilderManager.ParagraphStateGetEventArgs args)
+        {
+            SetGettableBackground(ParagraphStateId == args.Id);
         }
 
         private void SetParagraphStateState(int? paragraphStateState)

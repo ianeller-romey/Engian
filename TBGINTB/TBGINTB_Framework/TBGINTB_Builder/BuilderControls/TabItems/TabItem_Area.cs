@@ -173,7 +173,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             GinTubBuilderManager.RoomStateGet += GinTubBuilderManager_RoomStateGet;
 
+            GinTubBuilderManager.ParagraphGet += GinTubBuilderManager_ParagraphGet;
+
             GinTubBuilderManager.ParagraphStateGet += GinTubBuilderManager_ParagraphStateGet;
+
+            GinTubBuilderManager.NounGet += GinTubBuilderManager_NounGet;
 
             GinTubBuilderManager.ActionGet += GinTubBuilderManager_ActionGet;
 
@@ -196,7 +200,11 @@ namespace TBGINTB_Builder.BuilderControls
 
             GinTubBuilderManager.RoomStateGet -= GinTubBuilderManager_RoomStateGet;
 
+            GinTubBuilderManager.ParagraphGet -= GinTubBuilderManager_ParagraphGet;
+
             GinTubBuilderManager.ParagraphStateGet -= GinTubBuilderManager_ParagraphStateGet;
+
+            GinTubBuilderManager.NounGet -= GinTubBuilderManager_NounGet;
 
             GinTubBuilderManager.ActionGet -= GinTubBuilderManager_ActionGet;
 
@@ -303,9 +311,21 @@ namespace TBGINTB_Builder.BuilderControls
             LoadRoomState(args.Room, args.Id);
         }
 
+        void GinTubBuilderManager_ParagraphGet(object sender, GinTubBuilderManager.ParagraphGetEventArgs args)
+        {
+            UnloadParagraphState();
+            GinTubBuilderManager.LoadAllParagraphStatesForParagraph(args.Id);
+        }
+
         void GinTubBuilderManager_ParagraphStateGet(object sender, GinTubBuilderManager.ParagraphStateGetEventArgs args)
         {
             LoadParagraphState(args.Id);
+        }
+
+        void GinTubBuilderManager_NounGet(object sender, GinTubBuilderManager.NounGetEventArgs args)
+        {
+            UnloadAction();
+            GinTubBuilderManager.LoadAllActionsForNoun(args.Id);
         }
 
         void GinTubBuilderManager_ActionGet(object sender, GinTubBuilderManager.ActionGetEventArgs args)

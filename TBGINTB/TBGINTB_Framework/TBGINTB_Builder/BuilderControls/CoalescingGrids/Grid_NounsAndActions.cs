@@ -118,7 +118,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
-            if (!m_stackPanel_nouns.Children.OfType<Grid_NounData>().Any(t => t.NounId == args.Id))
+            if (ParagraphStateId == args.ParagraphState && !m_stackPanel_nouns.Children.OfType<Grid_NounData>().Any(t => t.NounId == args.Id))
             {
                 Grid_NounData grid = new Grid_NounData(args.Id, args.Text, args.ParagraphState, false);
                 grid.MouseLeftButtonDown += Grid_NounData_MouseLeftButtonDown;
@@ -172,7 +172,7 @@ namespace TBGINTB_Builder.BuilderControls
                 m_stackPanel_actions.Children.Clear();
 
                 SelectedNounId = grid.NounId.Value;
-                GinTubBuilderManager.LoadAllActionsForNoun(SelectedNounId);
+                GinTubBuilderManager.GetNoun(SelectedNounId);
 
                 m_button_modifyNoun.IsEnabled = true;
                 m_button_addAction.IsEnabled = true;

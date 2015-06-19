@@ -1531,6 +1531,34 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphStateForParagraphPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphStateForParagraphPreview] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/19/2015
+-- Description:	Gets data about a ParagraphState record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetParagraphStateForParagraphPreview]
+	@state int,
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Text],
+		   [State],
+		   [Paragraph]
+	FROM [dbo].[ParagraphStates]
+	WHERE [State] = @state
+	AND [Paragraph] = @paragraph
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphState] AS SELECT 1')
 GO
@@ -2414,9 +2442,9 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @insertstring nvarchar(MAX)
-	SET @insertstring = N'SET IDENTITY_INSERT [dev].[ResultTypeJSONPropertys] ON ' + 
-						N'INSERT INTO [dev].[ResultTypeJSONPropertys] ([Id], [JSONProperty], [ResultType]) VALUES (@id_, @jsonproperty_, @resulttype_) ' +
-						N'SET IDENTITY_INSERT [dev].[ResultTypeJSONPropertys] OFF'
+	SET @insertstring = N'SET IDENTITY_INSERT [dev].[ResultTypeJSONProperties] ON ' + 
+						N'INSERT INTO [dev].[ResultTypeJSONProperties] ([Id], [JSONProperty], [ResultType]) VALUES (@id_, @jsonproperty_, @resulttype_) ' +
+						N'SET IDENTITY_INSERT [dev].[ResultTypeJSONProperties] OFF'
 						
 	EXEC sp_executesql @insertstring,
 					   N'@id_ int, @jsonproperty_ varchar(MAX), @resulttype_ int',
@@ -4223,7 +4251,7 @@ BEGIN
 
 	DECLARE @insertstring nvarchar(MAX)
 	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Messages] ON ' + 
-						N'INSERT INTO [dbo].[Messages] ([Id], [Text],) VALUES (@id_, @text_) ' +
+						N'INSERT INTO [dbo].[Messages] ([Id], [Text]) VALUES (@id_, @text_) ' +
 						N'INSERT INTO [dev].[MessageNames] ([Message], [Name]) VALUES (@id_, @name_) ' +
 						N'SET IDENTITY_INSERT [dbo].[Messages] OFF'
 						

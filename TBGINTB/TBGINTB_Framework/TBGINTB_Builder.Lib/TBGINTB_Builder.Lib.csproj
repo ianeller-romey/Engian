@@ -244,6 +244,9 @@
     <Compile Include="Repository\dev_GetNoun_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetParagraphStateForParagraphPreview_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetParagraphState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>

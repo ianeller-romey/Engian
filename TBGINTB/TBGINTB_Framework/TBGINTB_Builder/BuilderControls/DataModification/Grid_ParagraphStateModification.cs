@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
@@ -65,7 +66,9 @@ namespace TBGINTB_Builder.BuilderControls
             this.SetGridRowColumn(button_modifyParagraphState, 0, 0);
 
             m_grid_paragraphState = new Grid_ParagraphStateData(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId, false);
-            this.SetGridRowColumn(m_grid_paragraphState, 1, 0);
+            Border border_paragraphState = new Border() { Style = Style_DefaultBorder.Instance };
+            border_paragraphState.Child = m_grid_paragraphState;
+            this.SetGridRowColumn(border_paragraphState, 1, 0);
             m_grid_paragraphState.SetActiveAndRegisterForGinTubEvents();
         }
 

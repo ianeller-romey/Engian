@@ -161,9 +161,6 @@
         <Function Name="dev_DeleteAllParagraphStatesForParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="paragraph" Type="int" Mode="In" />
         </Function>
-        <Function Name="dev_DeleteAllResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="resulttype" Type="int" Mode="In" />
-        </Function>
         <Function Name="dev_DeleteAllResultsForActionResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="action" Type="int" Mode="In" />
         </Function>
@@ -302,6 +299,10 @@
         </Function>
         <Function Name="dev_GetParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetParagraphStateForParagraphPreview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="state" Type="int" Mode="In" />
+          <Parameter Name="paragraph" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -1165,6 +1166,10 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetParagraphStateForParagraphPreview" ReturnType="Collection(GinTubModel.dev_GetParagraphStateForParagraphPreview_Result)">
+            <Parameter Name="state" Mode="In" Type="Int32" />
+            <Parameter Name="paragraph" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1448,6 +1453,12 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
           <Property Type="String" Name="JSONData" Nullable="true" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetParagraphStateForParagraphPreview_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Paragraph" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -2004,7 +2015,6 @@
           <FunctionImportMapping FunctionImportName="dev_DeleteAllNounsForParagraphState" FunctionName="GinTubModel.Store.dev_DeleteAllNounsForParagraphState" />
           <FunctionImportMapping FunctionImportName="dev_DeleteAllParagraphsForRoomAndRoomState" FunctionName="GinTubModel.Store.dev_DeleteAllParagraphsForRoomAndRoomState" />
           <FunctionImportMapping FunctionImportName="dev_DeleteAllParagraphStatesForParagraph" FunctionName="GinTubModel.Store.dev_DeleteAllParagraphStatesForParagraph" />
-          <FunctionImportMapping FunctionImportName="dev_DeleteAllResults" FunctionName="GinTubModel.Store.dev_DeleteAllResults" />
           <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForActionResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForActionResultType" />
           <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForMessageChoiceResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForMessageChoiceResultType" />
           <FunctionImportMapping FunctionImportName="dev_DeleteAllResultsForResultType" FunctionName="GinTubModel.Store.dev_DeleteAllResultsForResultType" />
@@ -2038,6 +2048,16 @@
           <FunctionImportMapping FunctionImportName="dev_ImportRoomState" FunctionName="GinTubModel.Store.dev_ImportRoomState" />
           <FunctionImportMapping FunctionImportName="dev_ImportVerb" FunctionName="GinTubModel.Store.dev_ImportVerb" />
           <FunctionImportMapping FunctionImportName="dev_ImportVerbType" FunctionName="GinTubModel.Store.dev_ImportVerbType" />
+          <FunctionImportMapping FunctionImportName="dev_GetParagraphStateForParagraphPreview" FunctionName="GinTubModel.Store.dev_GetParagraphStateForParagraphPreview">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetParagraphStateForParagraphPreview_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Paragraph" ColumnName="Paragraph" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

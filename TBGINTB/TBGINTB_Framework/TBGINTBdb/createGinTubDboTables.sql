@@ -84,29 +84,141 @@ CREATE TABLE [dbo].[ResultTypes] (
 	[Name] varchar(500) NOT NULL
 )
 
+DECLARE @roomXyzMovementResultTypeName varchar(500)
+SET @roomXyzMovementResultTypeName = 'Room XYZ Movement'
+DECLARE @roomXyzMovementResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Movement')
+VALUES (@roomXyzMovementResultTypeName)
+SELECT @roomXyzMovementResultTypeId = SCOPE_IDENTITY()
 
+DECLARE @roomXyzTeleportResultTypeName varchar(500)
+SET @roomXyzTeleportResultTypeName = 'Room XYZ Teleport'
+DECLARE @roomXyzTeleportResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Item Acquisition')
+VALUES (@roomXyzTeleportResultTypeName)
+SELECT @roomXyzTeleportResultTypeId = SCOPE_IDENTITY()
 
+DECLARE @roomIdTeleportResultTypeName varchar(500)
+SET @roomIdTeleportResultTypeName = 'Room Id Teleport'
+DECLARE @roomIdTeleportResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Event Acquisition')
+VALUES (@roomIdTeleportResultTypeName)
+SELECT @roomIdTeleportResultTypeId = SCOPE_IDENTITY()
 
+DECLARE @areaIdRoomXyzTeleportResultTypeName varchar(500)
+SET @areaIdRoomXyzTeleportResultTypeName = 'Area Id Room XYZ Teleport'
+DECLARE @areaIdRoomXyzTeleportResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Character Acquisition')
+VALUES (@areaIdRoomXyzTeleportResultTypeName)
+SELECT @areaIdRoomXyzTeleportResultTypeId = SCOPE_IDENTITY()
 
+DECLARE @areaIdRoomIdTeleportResultTypeName varchar(500)
+SET @areaIdRoomIdTeleportResultTypeName = 'Area Id Room Id Teleport'
+DECLARE @areaIdRoomIdTeleportResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Paragraph State Change')
+VALUES (@areaIdRoomIdTeleportResultTypeName)
+SELECT @areaIdRoomIdTeleportResultTypeId = SCOPE_IDENTITY()
 
+DECLARE @itemAcquisitionResultTypeName varchar(500)
+SET @itemAcquisitionResultTypeName = 'Item Acquisition'
+DECLARE @itemAcquisitionResultTypeId int
 INSERT INTO [dbo].[ResultTypes] ([Name])
-VALUES ('Room State Change')
+VALUES (@itemAcquisitionResultTypeName)
+SELECT @itemAcquisitionResultTypeId = SCOPE_IDENTITY()
+
+DECLARE @eventAcquisitionResultTypeName varchar(500)
+SET @eventAcquisitionResultTypeName = 'Event Acquisition'
+DECLARE @eventAcquisitionResultTypeId int
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES (@eventAcquisitionResultTypeName)
+SELECT @eventAcquisitionResultTypeId = SCOPE_IDENTITY()
+
+DECLARE @characterAcquisitionResultTypeName varchar(500)
+SET @characterAcquisitionResultTypeName = 'Character Acquisition'
+DECLARE @characterAcquisitionResultTypeId int
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES (@characterAcquisitionResultTypeName)
+SELECT @characterAcquisitionResultTypeId = SCOPE_IDENTITY()
+
+DECLARE @paragraphStateChangeResultTypeName varchar(500)
+SET @paragraphStateChangeResultTypeName = 'Paragraph State Change'
+DECLARE @paragraphStateChangeResultTypeId int
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES (@paragraphStateChangeResultTypeName)
+SELECT @paragraphStateChangeResultTypeId = SCOPE_IDENTITY()
+
+DECLARE @roomStateChangeResultTypeName varchar(500)
+SET @roomStateChangeResultTypeName = 'Room State Change'
+DECLARE @roomStateChangeResultTypeId int
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES (@roomStateChangeResultTypeName)
+SELECT @roomStateChangeResultTypeId = SCOPE_IDENTITY()
+
+DECLARE @messageActivationResultTypeName varchar(500)
+SET @messageActivationResultTypeName = 'Message Activation'
+DECLARE @messageActivationResultTypeId int
+INSERT INTO [dbo].[ResultTypes] ([Name])
+VALUES (@messageActivationResultTypeName)
+SELECT @messageActivationResultTypeId = SCOPE_IDENTITY()
 
 CREATE TABLE [dev].[ResultTypeJSONProperties] (
 	[Id] int PRIMARY KEY IDENTITY,
 	[JSONProperty] varchar(MAX) NOT NULL,
 	[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 )
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('xDir', @roomXyzMovementResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('yDir', @roomXyzMovementResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('zDir', @roomXyzMovementResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('xPos', @roomXyzTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('yPos', @roomXyzTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('zPos', @roomXyzTeleportResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('roomId', @roomIdTeleportResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('areaId', @areaIdRoomXyzTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('xPos', @areaIdRoomXyzTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('yPos', @areaIdRoomXyzTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('zPos', @areaIdRoomXyzTeleportResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('areaId', @areaIdRoomIdTeleportResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('roomId', @areaIdRoomIdTeleportResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('itemId', @itemAcquisitionResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('eventId', @eventAcquisitionResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('characterId', @characterAcquisitionResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('paragraphStateId', @paragraphStateChangeResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('paragraphState', @paragraphStateChangeResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('roomStateId', @roomStateChangeResultTypeId)
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('roomState', @roomStateChangeResultTypeId)
+
+INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
+VALUES ('messageId', @messageActivationResultTypeId)
 
 CREATE TABLE [dbo].[Results] (
 	[Id] int PRIMARY KEY IDENTITY,
@@ -118,6 +230,72 @@ CREATE TABLE [dev].[ResultNames] (
 	[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 	[Name] varchar(500) NOT NULL
 )
+
+DECLARE @move_Y_North1ResultName varchar(500)
+DECLARE @move_Y_North1ResultJSONData varchar(MAX)
+DECLARE @move_Y_North1ResultId int
+SET @move_Y_North1ResultName = 'Move_Y_North1'
+SET @move_Y_North1ResultJSONData = '{ "xDir":"0", "yDir":"-1", "zDir":"0" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_Y_North1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_Y_North1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_Y_North1ResultId, @move_Y_North1ResultName)
+
+DECLARE @move_Y_South1ResultName varchar(500)
+DECLARE @move_Y_South1ResultJSONData varchar(MAX)
+DECLARE @move_Y_South1ResultId int
+SET @move_Y_South1ResultName = 'Move_Y_South1'
+SET @move_Y_South1ResultJSONData = '{ "xDir":"0", "yDir":"1", "zDir":"0" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_Y_South1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_Y_South1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_Y_South1ResultId, @move_Y_South1ResultName)
+
+DECLARE @move_X_West1ResultName varchar(500)
+DECLARE @move_X_West1ResultJSONData varchar(MAX)
+DECLARE @move_X_West1ResultId int
+SET @move_X_West1ResultName = 'Move_X_West1'
+SET @move_X_West1ResultJSONData = '{ "xDir":"-1", "yDir":"0", "zDir":"0" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_X_West1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_X_West1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_X_West1ResultId, @move_X_West1ResultName)
+
+DECLARE @move_X_East1ResultName varchar(500)
+DECLARE @move_X_East1ResultJSONData varchar(MAX)
+DECLARE @move_X_East1ResultId int
+SET @move_X_East1ResultName = 'Move_X_East1'
+SET @move_X_East1ResultJSONData = '{ "xDir":"1", "yDir":"0", "zDir":"0" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_X_East1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_X_East1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_X_East1ResultId, @move_X_East1ResultName)
+
+DECLARE @move_Z_Up1ResultName varchar(500)
+DECLARE @move_Z_Up1ResultJSONData varchar(MAX)
+DECLARE @move_Z_Up1ResultId int
+SET @move_Z_Up1ResultName = 'Move_Z_Up1'
+SET @move_Z_Up1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"1" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_Z_Up1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_Z_Up1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_Z_Up1ResultId, @move_Z_Up1ResultName)
+
+DECLARE @move_Z_Down1ResultName varchar(500)
+DECLARE @move_Z_Down1ResultJSONData varchar(MAX)
+DECLARE @move_Z_Down1ResultId int
+SET @move_Z_Down1ResultName = 'Move_Z_Down1'
+SET @move_Z_Down1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"-1" }'
+INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
+VALUES (@move_Z_Down1ResultJSONData, @roomXyzMovementResultTypeId)
+SELECT @move_Z_Down1ResultId = SCOPE_IDENTITY()
+INSERT INTO [dev].[ResultNames] ([Result], [Name])
+VALUES (@move_Z_Down1ResultId, @move_Z_Down1ResultName)
 
 CREATE TABLE [dbo].[Actions] (
 	[Id] int PRIMARY KEY IDENTITY,

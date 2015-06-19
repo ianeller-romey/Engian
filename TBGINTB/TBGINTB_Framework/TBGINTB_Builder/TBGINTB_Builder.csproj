@@ -169,6 +169,10 @@
     <Compile Include="BuilderControls\DataWindows\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
+    <Compile Include="HelperControls\Grid_Margined.cs" />
+    <Compile Include="HelperControls\Grid_Gettable.cs" />
+    <Compile Include="HelperControls\Style_DefaultBorder.cs" />
+    <Compile Include="HelperControls\Style_DefaultMargin.cs" />
     <Compile Include="HelperControls\Window_SelectFile.cs" />
     <Compile Include="HelperControls\Window_OpenFile.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />

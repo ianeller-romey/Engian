@@ -7,12 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_NounData : Grid
+    public class Grid_NounData : Grid_Gettable
     {
         #region MEMBER FIELDS
 
@@ -60,6 +61,7 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.NounModified += GinTubBuilderManager_NounModified;
+            GinTubBuilderManager.NounGet += GinTubBuilderManager_NounGet;
 
             GinTubBuilderManager.ParagraphStateAdded += GinTubBuilderManager_ParagraphStateAdded;
         }
@@ -67,6 +69,7 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.NounModified -= GinTubBuilderManager_NounModified;
+            GinTubBuilderManager.NounGet -= GinTubBuilderManager_NounGet;
 
             GinTubBuilderManager.ParagraphStateAdded += GinTubBuilderManager_ParagraphStateAdded;
         }
@@ -124,6 +127,11 @@ namespace TBGINTB_Builder.BuilderControls
                 SetNounText(args.Text);
                 ParagraphStateId = args.ParagraphState;
             }
+        }
+
+        void GinTubBuilderManager_NounGet(object sender, GinTubBuilderManager.NounGetEventArgs args)
+        {
+            SetGettableBackground(NounId == args.Id);
         }
 
         void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)

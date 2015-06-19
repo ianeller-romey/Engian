@@ -1,3 +1,9 @@
+- Highlight selected item
+	- HIGH PRIORITY
+- UI issue when adding Nouns after changing Paragraphs
+	- Doesn't seem to negatively affect data in database, but IS annoying
+- Room preview
+	- I definitely, definitely need this
 - Work item tracking software
 	- I need this
 - Delete items from UI

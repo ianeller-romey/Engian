@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_RoomStateData : Grid
+    public class Grid_RoomStateData : Grid_Gettable
     {
         #region MEMBER FIELDS
 
@@ -72,6 +74,7 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.RoomStateModified += GinTubBuilderManager_RoomStateModified;
+            GinTubBuilderManager.RoomStateGet += GinTubBuilderManager_RoomStateGet;
 
             GinTubBuilderManager.LocationAdded += GinTubBuilderManager_LocationAdded;
         }
@@ -79,6 +82,7 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.RoomStateModified -= GinTubBuilderManager_RoomStateModified;
+            GinTubBuilderManager.RoomStateGet -= GinTubBuilderManager_RoomStateGet;
 
             GinTubBuilderManager.LocationAdded -= GinTubBuilderManager_LocationAdded;
         }
@@ -170,6 +174,11 @@ namespace TBGINTB_Builder.BuilderControls
 
                 GinTubBuilderManager.LoadAllLocations();
             }
+        }
+
+        private void GinTubBuilderManager_RoomStateGet(object sender, GinTubBuilderManager.RoomStateGetEventArgs args)
+        {
+            SetGettableBackground(RoomStateId == args.Id);
         }
 
         private void GinTubBuilderManager_LocationAdded(object sender, GinTubBuilderManager.LocationAddedEventArgs args)

@@ -8,12 +8,13 @@ using System.Windows.Controls;
 
 using TBGINTB_Builder.BuilderControls;
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_ParagraphData : Grid, IRegisterGinTubEventsOnlyWhenActive
+    public class Grid_ParagraphData : Grid_Gettable, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -63,11 +64,13 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.ParagraphModified += GinTubBuilderManager_ParagraphModified;
+            GinTubBuilderManager.ParagraphGet += GinTubBuilderManager_ParagraphGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.ParagraphModified -= GinTubBuilderManager_ParagraphModified;
+            GinTubBuilderManager.ParagraphGet -= GinTubBuilderManager_ParagraphGet;
         }
 
         #endregion
@@ -127,13 +130,18 @@ namespace TBGINTB_Builder.BuilderControls
             }
         }
 
+        private void GinTubBuilderManager_ParagraphGet(object sender, GinTubBuilderManager.ParagraphGetEventArgs args)
+        {
+            SetGettableBackground(ParagraphId == args.Id);
+        }
+
         private void SetParagraphOrder(int order)
         {
             ParagraphOrder = order;
             m_textBox_order.Text = ParagraphOrder.ToString();
         }
 
-        void TextBox_Order_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_Order_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox tb = sender as TextBox;
             int newOrder = 0;

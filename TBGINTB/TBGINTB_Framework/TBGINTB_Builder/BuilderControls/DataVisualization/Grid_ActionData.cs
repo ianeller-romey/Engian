@@ -7,12 +7,13 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Grid_ActionData : Grid
+    public class Grid_ActionData : Grid_Gettable
     {
         #region MEMBER FIELDS
 
@@ -69,11 +70,13 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.ActionModified += GinTubBuilderManager_ActionModified;
+            GinTubBuilderManager.ActionGet += GinTubBuilderManager_ActionGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.ActionModified -= GinTubBuilderManager_ActionModified;
+            GinTubBuilderManager.ActionGet -= GinTubBuilderManager_ActionGet;
         }
 
         #endregion
@@ -146,6 +149,11 @@ namespace TBGINTB_Builder.BuilderControls
                 SetActionVerbType(args.VerbType);
                 SetActionNoun(args.Noun);
             }
+        }
+
+        private void GinTubBuilderManager_ActionGet(object sender, GinTubBuilderManager.ActionGetEventArgs args)
+        {
+            SetGettableBackground(ActionId == args.Id);
         }
 
         private void GinTubBuilderManager_VerbTypeAdded(object sender, GinTubBuilderManager.VerbTypeAddedEventArgs args)

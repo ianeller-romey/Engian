@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 using TBGINTB_Builder.Extensions;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Lib;
 
 
@@ -66,7 +67,9 @@ namespace TBGINTB_Builder.BuilderControls
             this.SetGridRowColumn(button_modifyRoomState, 0, 0);
 
             m_grid_roomState = new Grid_RoomStateData(roomStateId, roomStateState, roomStateTime, locationId, roomId, false);
-            this.SetGridRowColumn(m_grid_roomState, 1, 0);
+            Border border_roomState = new Border() { Style = Style_DefaultBorder.Instance };
+            border_roomState.Child = m_grid_roomState;
+            this.SetGridRowColumn(border_roomState, 1, 0);
             m_grid_roomState.SetActiveAndRegisterForGinTubEvents();
         }
 

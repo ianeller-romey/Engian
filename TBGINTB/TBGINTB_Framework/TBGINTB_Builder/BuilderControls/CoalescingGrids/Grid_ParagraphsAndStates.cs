@@ -53,6 +53,8 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.ParagraphAdded += GinTubBuilderManager_ParagraphAdded;
             GinTubBuilderManager.ParagraphStateAdded += GinTubBuilderManager_ParagraphStateAdded;
 
+            GinTubBuilderManager.ParagraphStateModified += GinTubBuilderManager_ParagraphStateModified;
+
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<Grid_ParagraphData>())
                 block.SetActiveAndRegisterForGinTubEvents();
             foreach (var grid in m_stackPanel_paragraphStates.Children.OfType<Grid_ParagraphStateModification>())
@@ -63,6 +65,8 @@ namespace TBGINTB_Builder.BuilderControls
         {
             GinTubBuilderManager.ParagraphAdded -= GinTubBuilderManager_ParagraphAdded;
             GinTubBuilderManager.ParagraphStateAdded -= GinTubBuilderManager_ParagraphStateAdded;
+
+            GinTubBuilderManager.ParagraphStateModified -= GinTubBuilderManager_ParagraphStateModified;
 
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<Grid_ParagraphData>())
                 block.SetInactiveAndUnregisterFromGinTubEvents();
@@ -79,9 +83,9 @@ namespace TBGINTB_Builder.BuilderControls
         {
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50.0, GridUnitType.Star) });
             RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
+            RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50.0, GridUnitType.Star) });
 
             ////////
             // Add paragraph
@@ -96,7 +100,13 @@ namespace TBGINTB_Builder.BuilderControls
             this.SetGridRowColumn(m_button_modifyParagraph, 1, 0);
 
             m_stackPanel_paragraphs = new StackPanel() { Orientation = Orientation.Vertical };
-            this.SetGridRowColumn(m_stackPanel_paragraphs, 2, 0);
+            ScrollViewer scrollViewer_paragraphs =
+                new ScrollViewer()
+                {
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Visible
+                };
+            scrollViewer_paragraphs.Content = m_stackPanel_paragraphs;
+            this.SetGridRowColumn(scrollViewer_paragraphs, 2, 0);
 
             ////////
             // Add ParagraphState
@@ -107,11 +117,9 @@ namespace TBGINTB_Builder.BuilderControls
             ////////
             // Paragraph States
             m_stackPanel_paragraphStates = new StackPanel() { Orientation = Orientation.Vertical };
-
             ScrollViewer scrollViewer_paragraphStates =
                 new ScrollViewer()
                 {
-                    HorizontalScrollBarVisibility = ScrollBarVisibility.Hidden,
                     VerticalScrollBarVisibility = ScrollBarVisibility.Visible
                 };
             scrollViewer_paragraphStates.Content = m_stackPanel_paragraphStates;
@@ -126,16 +134,34 @@ namespace TBGINTB_Builder.BuilderControls
                 grid.MouseLeftButtonDown += Grid_ParagraphData_MouseLeftButtonDown;
                 grid.SetActiveAndRegisterForGinTubEvents();
                 m_stackPanel_paragraphs.Children.Add(grid);
+
+                GinTubBuilderManager.LoadParagraphStateForParagraphPreview(0, args.Id);
             }
         }
 
         private void GinTubBuilderManager_ParagraphStateAdded(object sender, GinTubBuilderManager.ParagraphStateAddedEventArgs args)
         {
-            if (!m_stackPanel_paragraphStates.Children.OfType<Grid_ParagraphStateModification>().Any(t => t.ParagraphStateId == args.Id))
+            if (SelectedParagraphId == args.Paragraph && !m_stackPanel_paragraphStates.Children.OfType<Grid_ParagraphStateModification>().Any(t => t.ParagraphStateId == args.Id))
             {
                 Grid_ParagraphStateModification grid = new Grid_ParagraphStateModification(args.Id, args.Text, args.State, args.Paragraph);
                 m_stackPanel_paragraphStates.Children.Add(grid);
             }
+
+            if (args.State == 0)
+                SetParagraphPreview(args.Text, args.Paragraph);
+        }
+
+        private void GinTubBuilderManager_ParagraphStateModified(object sender, GinTubBuilderManager.ParagraphStateModifiedEventArgs args)
+        {
+            if (args.State == 0)
+                SetParagraphPreview(args.Text, args.Paragraph);
+        }
+
+        private void SetParagraphPreview(string paragraphStateText, int paragraphId)
+        {
+            Grid_ParagraphData grid = m_stackPanel_paragraphs.Children.OfType<Grid_ParagraphData>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
+            if (grid != null)
+                grid.ToolTip = string.Format("{0} ...", paragraphStateText.Substring(0, 25));
         }
 
         private void Button_AddParagraph_Click(object sender, RoutedEventArgs e)
@@ -171,7 +197,7 @@ namespace TBGINTB_Builder.BuilderControls
                 m_stackPanel_paragraphStates.Children.Clear();
 
                 SelectedParagraphId = grid.ParagraphId.Value;
-                GinTubBuilderManager.LoadAllParagraphStatesForParagraph(SelectedParagraphId);
+                GinTubBuilderManager.GetParagraph(SelectedParagraphId);
 
                 m_button_modifyParagraph.IsEnabled = true;
                 m_button_addParagraphState.IsEnabled = true;

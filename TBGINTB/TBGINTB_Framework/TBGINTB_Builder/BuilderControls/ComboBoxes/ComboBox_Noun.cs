@@ -104,7 +104,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
-            if (ParagraphStateId == args.Id)
+            if (ParagraphStateId == args.ParagraphState)
             {
                 if (!Items.OfType<ComboBoxItem_Noun>().Any(i => i.NounId == args.Id))
                     Items.Add(new ComboBoxItem_Noun(args.Id, args.Text, args.ParagraphState));
@@ -113,7 +113,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_NounModified(object sender, GinTubBuilderManager.NounModifiedEventArgs args)
         {
-            if (ParagraphStateId == args.Id)
+            if (ParagraphStateId == args.ParagraphState)
             {
                 ComboBoxItem_Noun item = Items.OfType<ComboBoxItem_Noun>().SingleOrDefault(i => i.NounId == args.Id);
                 if (item != null)

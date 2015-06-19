@@ -1676,6 +1676,13 @@ namespace TBGINTB_Builder.Lib
             OnParagraphStateAdded(paragraphState);
         }
 
+        public static void LoadParagraphStateForParagraphPreview(int paragraphStateState, int paragraphId)
+        {
+            ParagraphState paragraphState = SelectParagraphStateForParagraphPreview(paragraphStateState, paragraphId);
+            if(paragraphState != null)
+                OnParagraphStateAdded(paragraphState);
+        }
+
         #endregion
 
 
@@ -2261,6 +2268,7 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetParagraphState_Result, ParagraphState>();
             Mapper.CreateMap<dev_GetAllParagraphStatesForParagraph_Result, ParagraphState>();
+            Mapper.CreateMap<dev_GetParagraphStateForParagraphPreview_Result, ParagraphState>();
 
             Mapper.CreateMap<dev_GetNoun_Result, Noun>();
             Mapper.CreateMap<dev_GetAllNounsForParagraphState_Result, Noun>();
@@ -2755,6 +2763,24 @@ namespace TBGINTB_Builder.Lib
 
             List<ParagraphState> paragraphStates = databaseResult.Select(r => Mapper.Map<ParagraphState>(r)).ToList();
             return paragraphStates;
+        }
+
+        private static ParagraphState SelectParagraphStateForParagraphPreview(int state, int paragraph)
+        {
+            ObjectResult<dev_GetParagraphStateForParagraphPreview_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetParagraphStateForParagraphPreview(state, paragraph);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetParagraphStateForParagraphPreview", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetParagraphStateForParagraphPreview", new Exception(string.Format("No [ParagraphStates] record found with [State] = {0} for Paragraph with [Id] = {1}.", state, paragraph)));
+
+            ParagraphState paragraphState = Mapper.Map<ParagraphState>(databaseResult.SingleOrDefault());
+            return paragraphState;
         }
 
         #endregion
