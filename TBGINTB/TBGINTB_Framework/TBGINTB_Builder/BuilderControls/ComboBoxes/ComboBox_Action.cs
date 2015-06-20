@@ -113,7 +113,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_ActionAdded(object sender, GinTubBuilderManager.ActionAddedEventArgs args)
         {
-            if (NounId == args.Id)
+            if (NounId == args.Noun)
             {
                 if (!Items.OfType<ComboBoxItem_Action>().Any(i => i.ActionId == args.Id))
                     Items.Add(new ComboBoxItem_Action(args.Id, args.Noun, args.VerbType, args.Name));
@@ -122,7 +122,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_ActionModified(object sender, GinTubBuilderManager.ActionModifiedEventArgs args)
         {
-            if (NounId == args.Id)
+            if (NounId == args.Noun)
             {
                 ComboBoxItem_Action item = Items.OfType<ComboBoxItem_Action>().SingleOrDefault(i => i.ActionId == args.Id);
                 if (item != null)

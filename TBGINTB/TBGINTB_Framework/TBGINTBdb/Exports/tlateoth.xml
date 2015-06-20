@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-19T16:40:02.7989637-07:00">
+<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-20T11:36:52.0378936-07:00">
   <Items />
   <Events />
   <Characters />
@@ -260,7 +260,11 @@
                           <Actions>
                             <Action Id="8">
                               <VerbType>1</VerbType>
-                              <ActionResults />
+                              <ActionResults>
+                                <ActionResult Id="0">
+                                  <Result>7</Result>
+                                </ActionResult>
+                              </ActionResults>
                               <ItemActionRequirements />
                               <EventActionRequirements />
                               <CharacterActionRequirements />
@@ -336,6 +340,36 @@
                           </Actions>
                         </Noun>
                       </Nouns>
+                    </ParagraphState>
+                    <ParagraphState Id="8">
+                      <Text>Clutter fills the passenger’s seat: A pair of kitchen scissors and a small flashlight.</Text>
+                      <State>1</State>
+                      <Nouns />
+                    </ParagraphState>
+                    <ParagraphState Id="9">
+                      <Text>Clutter fills the passenger’s seat: A crumpled up plastic bag and a small flashlight.</Text>
+                      <State>2</State>
+                      <Nouns />
+                    </ParagraphState>
+                    <ParagraphState Id="10">
+                      <Text>Clutter fills the passenger’s seat: A crumpled up plastic bag and a pair of kitchen scissors.</Text>
+                      <State>3</State>
+                      <Nouns />
+                    </ParagraphState>
+                    <ParagraphState Id="11">
+                      <Text>A crumpled up plastic bag sits in the passenger's seat beside you.</Text>
+                      <State>4</State>
+                      <Nouns />
+                    </ParagraphState>
+                    <ParagraphState Id="12">
+                      <Text>A pair of kitchen scissors sit in the passenger's seat beside you.</Text>
+                      <State>5</State>
+                      <Nouns />
+                    </ParagraphState>
+                    <ParagraphState Id="13">
+                      <Text>A small flashlight sits in the passenger's seat beside you.</Text>
+                      <State>6</State>
+                      <Nouns />
                     </ParagraphState>
                   </ParagraphStates>
                 </Paragraph>

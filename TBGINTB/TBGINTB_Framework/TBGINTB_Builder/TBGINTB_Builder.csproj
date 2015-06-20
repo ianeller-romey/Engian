@@ -77,6 +77,7 @@
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Event.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Item.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Result.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Border_ParagraphData.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_MessageChoiceResultModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_MessageChoiceModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_MessageModification.cs" />
@@ -169,10 +170,8 @@
     <Compile Include="BuilderControls\DataWindows\Window_RoomStateData.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_RoomData.cs" />
     <Compile Include="Extensions\Grid_Extensions.cs" />
-    <Compile Include="HelperControls\Grid_Margined.cs" />
     <Compile Include="HelperControls\Grid_Gettable.cs" />
-    <Compile Include="HelperControls\Style_DefaultBorder.cs" />
-    <Compile Include="HelperControls\Style_DefaultMargin.cs" />
+    <Compile Include="HelperControls\Styles\Style_DefaultBorder.cs" />
     <Compile Include="HelperControls\Window_SelectFile.cs" />
     <Compile Include="HelperControls\Window_OpenFile.cs" />
     <Compile Include="HelperControls\Window_AcceptCancel.cs" />

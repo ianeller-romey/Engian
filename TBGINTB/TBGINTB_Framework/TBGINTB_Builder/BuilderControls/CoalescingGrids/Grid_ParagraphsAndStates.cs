@@ -128,12 +128,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_ParagraphAdded(object sender, GinTubBuilderManager.ParagraphAddedEventArgs args)
         {
-            if (!m_stackPanel_paragraphs.Children.OfType<Grid_ParagraphData>().Any(t => t.ParagraphId == args.Id))
+            if (!m_stackPanel_paragraphs.Children.OfType<Border_ParagraphData>().Any(t => t.ParagraphId == args.Id))
             {
-                Grid_ParagraphData grid = new Grid_ParagraphData(args.Id, args.Order, args.Room, args.RoomState, false);
-                grid.MouseLeftButtonDown += Grid_ParagraphData_MouseLeftButtonDown;
-                grid.SetActiveAndRegisterForGinTubEvents();
-                m_stackPanel_paragraphs.Children.Add(grid);
+                Border_ParagraphData border = new Border_ParagraphData(args.Id, args.Order, args.Room, args.RoomState, false);
+                border.MouseLeftButtonDown += Border_ParagraphData_MouseLeftButtonDown;
+                border.SetActiveAndRegisterForGinTubEvents();
+                m_stackPanel_paragraphs.Children.Add(border);
 
                 GinTubBuilderManager.LoadParagraphStateForParagraphPreview(0, args.Id);
             }
@@ -159,9 +159,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void SetParagraphPreview(string paragraphStateText, int paragraphId)
         {
-            Grid_ParagraphData grid = m_stackPanel_paragraphs.Children.OfType<Grid_ParagraphData>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
-            if (grid != null)
-                grid.ToolTip = string.Format("{0} ...", paragraphStateText.Substring(0, 25));
+            Border_ParagraphData border = m_stackPanel_paragraphs.Children.OfType<Border_ParagraphData>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
+            if (border != null)
+                border.ToolTip = string.Format("{0} ...", paragraphStateText.Substring(0, Math.Max(Math.Min(75, paragraphStateText.Length - 5), 0)));
         }
 
         private void Button_AddParagraph_Click(object sender, RoutedEventArgs e)
@@ -189,14 +189,14 @@ namespace TBGINTB_Builder.BuilderControls
                 GinTubBuilderManager.AddParagraphState(window.ParagraphStateText, window.ParagraphId);
         }
 
-        private void Grid_ParagraphData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_ParagraphData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Grid_ParagraphData grid = sender as Grid_ParagraphData;
-            if (grid != null)
+            Border_ParagraphData border = sender as Border_ParagraphData;
+            if (border != null)
             {
                 m_stackPanel_paragraphStates.Children.Clear();
 
-                SelectedParagraphId = grid.ParagraphId.Value;
+                SelectedParagraphId = border.ParagraphId.Value;
                 GinTubBuilderManager.GetParagraph(SelectedParagraphId);
 
                 m_button_modifyParagraph.IsEnabled = true;
