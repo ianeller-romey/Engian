@@ -118,12 +118,12 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_NounAdded(object sender, GinTubBuilderManager.NounAddedEventArgs args)
         {
-            if (ParagraphStateId == args.ParagraphState && !m_stackPanel_nouns.Children.OfType<Grid_NounData>().Any(t => t.NounId == args.Id))
+            if (ParagraphStateId == args.ParagraphState && !m_stackPanel_nouns.Children.OfType<Border_NounData>().Any(t => t.NounId == args.Id))
             {
-                Grid_NounData grid = new Grid_NounData(args.Id, args.Text, args.ParagraphState, false);
-                grid.MouseLeftButtonDown += Grid_NounData_MouseLeftButtonDown;
-                grid.SetActiveAndRegisterForGinTubEvents();
-                m_stackPanel_nouns.Children.Add(grid);
+                Border_NounData border = new Border_NounData(args.Id, args.Text, args.ParagraphState, false);
+                border.MouseLeftButtonDown += Border_NounData_MouseLeftButtonDown;
+                border.SetActiveAndRegisterForGinTubEvents();
+                m_stackPanel_nouns.Children.Add(border);
                 GinTubBuilderManager.LoadParagraphStateNounPossibilities(args.ParagraphState);
             }
         }
@@ -164,14 +164,14 @@ namespace TBGINTB_Builder.BuilderControls
                 GinTubBuilderManager.AddAction(window.ActionVerbType.Value, window.ActionNoun.Value);
         }
 
-        private void Grid_NounData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Border_NounData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            Grid_NounData grid = sender as Grid_NounData;
-            if (grid != null)
+            Border_NounData border = sender as Border_NounData;
+            if (border != null)
             {
                 m_stackPanel_actions.Children.Clear();
 
-                SelectedNounId = grid.NounId.Value;
+                SelectedNounId = border.NounId.Value;
                 GinTubBuilderManager.GetNoun(SelectedNounId);
 
                 m_button_modifyNoun.IsEnabled = true;

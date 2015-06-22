@@ -90,6 +90,7 @@
     <Compile Include="BuilderControls\DataModification\Grid_ResultTypeJSONPropertyModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ResultModification.cs" />
     <Compile Include="BuilderControls\DataModification\Grid_ItemModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Border_NounData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_MessageChoiceResultData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_MessageChoiceData.cs" />
     <Compile Include="BuilderControls\DataVisualization\Grid_MessageData.cs" />
