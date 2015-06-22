@@ -24,9 +24,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{D19747F8-9C2F-4307-8D97-474EB9CC06E9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{A4E31ABB-D146-48D2-B12C-EC2CB9EDC7D9}"
-	ProjectSection(SolutionItems) = preProject
-		bugs.txt = bugs.txt
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

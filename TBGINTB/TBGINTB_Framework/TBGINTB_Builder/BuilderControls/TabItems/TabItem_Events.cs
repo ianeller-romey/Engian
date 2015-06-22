@@ -21,7 +21,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         Grid m_grid_main;
         ComboBox_Event m_comboBox_event;
-        Grid_EventModification m_grid_event;
+        UserControl_EventModification m_grid_event;
 
         #endregion
 
@@ -77,7 +77,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 if (m_grid_event != null)
                     m_grid_main.Children.Remove(m_grid_event);
-                m_grid_event = new Grid_EventModification(comboBoxItem.EventId, comboBoxItem.EventName, comboBoxItem.EventDescription);
+                m_grid_event = new UserControl_EventModification(comboBoxItem.EventId, comboBoxItem.EventName, comboBoxItem.EventDescription);
                 m_grid_event.SetActiveAndRegisterForGinTubEvents();
                 m_grid_main.SetGridRowColumn(m_grid_event, 1, 0);
             }

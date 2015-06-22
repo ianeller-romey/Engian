@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxCharacter_newCharacter = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxCharacter_newCharacter = new ComboBoxItem() { Content = "New Character ..." };
 
         #endregion
 
@@ -115,7 +115,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewCharacterDialog()
         {
-            Window_CharacterData window = new Window_CharacterData(null, null, null);
+            Window_Character window = new Window_Character(null, null, null);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddCharacter(window.CharacterName, window.CharacterDescription);

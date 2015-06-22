@@ -19,7 +19,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_VerbTypeData m_grid_verbType;
+        UserControl_VerbType m_grid_verbType;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls()
         {
-            m_grid_verbType = new Grid_VerbTypeData(true);
+            m_grid_verbType = new UserControl_VerbType(true);
 
             return m_grid_verbType;
         }

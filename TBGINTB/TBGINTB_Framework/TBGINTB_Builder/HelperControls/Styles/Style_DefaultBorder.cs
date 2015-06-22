@@ -28,9 +28,13 @@ namespace TBGINTB_Builder.HelperControls
 
         #region MEMBER PROPERTIES
 
-        public static Style_DefaultBorder Instance
+        public Style_DefaultBorder()
         {
-            get { return s_style_defaultBorder; }
+            Setters.Add(new Setter(Border.BorderThicknessProperty, s_thickness_borderThickness));
+            Setters.Add(new Setter(Border.BorderBrushProperty, s_border_borderBrush));
+            Setters.Add(new Setter(Border.CornerRadiusProperty, s_cornerRadius_cornerRadius));
+            Setters.Add(new Setter(Control.MarginProperty, s_thickness_margin));
+            Setters.Add(new Setter(Control.PaddingProperty, s_thickness_padding));
         }
 
         #endregion
@@ -43,15 +47,6 @@ namespace TBGINTB_Builder.HelperControls
 
 
         #region Private Functionality
-
-        private Style_DefaultBorder()
-        {
-            Setters.Add(new Setter(Border.BorderThicknessProperty, s_thickness_borderThickness));
-            Setters.Add(new Setter(Border.BorderBrushProperty, s_border_borderBrush));
-            Setters.Add(new Setter(Border.CornerRadiusProperty, s_cornerRadius_cornerRadius));
-            Setters.Add(new Setter(Control.MarginProperty, s_thickness_margin));
-            Setters.Add(new Setter(Control.PaddingProperty, s_thickness_padding));
-        }
 
         #endregion
 

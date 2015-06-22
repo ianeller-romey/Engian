@@ -1,7 +1,4 @@
-- Highlight selected item
-	- HIGH PRIORITY
-- UI issue when adding Nouns after changing Paragraphs
-	- Doesn't seem to negatively affect data in database, but IS annoying
+
 - Room preview
 	- I definitely, definitely need this
 - Work item tracking software
@@ -12,8 +9,6 @@
 	- It just causes too much heartache
 - Location [Name] should be in a separate [dev] table
 	- This information is only needed for development purposes
-- RoomState and ParagraphState should start at 1, not 0
-	- Do I really need this?
 - Items should all be in one table, with an ItemType (e.g. Item, Event, Character)
 	- Don't call them items; call them Objects
 - Paragraphs should be called Spans

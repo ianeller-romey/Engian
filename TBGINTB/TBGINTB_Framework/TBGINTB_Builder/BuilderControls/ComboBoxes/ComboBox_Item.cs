@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newItem = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newItem = new ComboBoxItem() { Content = "New Item ..." };
 
         #endregion
 
@@ -115,7 +115,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewItemDialog()
         {
-            Window_ItemData window = new Window_ItemData(null, null, null);
+            Window_Item window = new Window_Item(null, null, null);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddItem(window.ItemName, window.ItemDescription);

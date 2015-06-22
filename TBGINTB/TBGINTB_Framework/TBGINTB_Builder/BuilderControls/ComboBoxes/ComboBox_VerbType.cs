@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newVerbType = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newVerbType = new ComboBoxItem() { Content = "New Verb Type ..." };
 
         #endregion
 

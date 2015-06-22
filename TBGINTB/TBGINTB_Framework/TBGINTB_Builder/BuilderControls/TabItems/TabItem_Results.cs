@@ -19,8 +19,8 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_ResultTypeData m_grid_resultType;
-        ItemsControl_Result m_itemsControl_results;
+        UserControl_ResultType m_grid_resultType;
+        UserControl_Results m_itemsControl_results;
 
         #endregion
 
@@ -58,7 +58,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls()
         {
-            m_grid_resultType = new Grid_ResultTypeData(true);
+            m_grid_resultType = new UserControl_ResultType(true);
 
             return m_grid_resultType;
         }

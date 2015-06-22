@@ -19,7 +19,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        Grid_LocationData m_grid_location;
+        UserControl_Location m_grid_location;
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls()
         {
-            m_grid_location = new Grid_LocationData(true);
+            m_grid_location = new UserControl_Location(true);
 
             return m_grid_location;
         }

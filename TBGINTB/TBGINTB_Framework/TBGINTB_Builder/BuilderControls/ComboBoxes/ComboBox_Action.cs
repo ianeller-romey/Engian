@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newAction = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newAction = new ComboBoxItem() { Content = "New Action ..." };
 
         #endregion
 
@@ -136,7 +136,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewActionDialog()
         {
-            Window_ActionData window = new Window_ActionData(null, null, NounId, ParagraphStateId);
+            Window_Action window = new Window_Action(null, null, NounId, ParagraphStateId);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddAction(window.ActionVerbType.Value, window.ActionNoun.Value);

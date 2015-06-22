@@ -21,11 +21,11 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER FIELDS
 
         private Grid_RoomsOnFloor m_grid_roomsOnFloor;
-        private Grid_RoomAndStates m_grid_roomAndState;
-        private Grid_ParagraphsAndStates m_grid_paragraphsAndStates;
-        private Grid_NounsAndActions m_grid_nounsAndActions;
-        private Grid_ActionResults m_grid_actionResults;
-        private Grid_ActionRequirements m_grid_actionRequirements;
+        private UserControl_RoomAndStates m_grid_roomAndState;
+        private UserControl_ParagraphsAndStates m_grid_paragraphsAndStates;
+        private UserControl_NounsAndActions m_grid_nounsAndActions;
+        private UserControl_ActionResults m_grid_actionResults;
+        private UserControl_ActionRequirements m_grid_actionRequirements;
         private Grid 
             m_grid_main,
             m_grid_sub;
@@ -33,9 +33,9 @@ namespace TBGINTB_Builder.BuilderControls
             m_comboBox_areas,
             m_comboBox_z;
         private readonly ComboBoxItem
-            c_comboBoxItem_newArea = new ComboBoxItem() { Content = "++" },
-            c_comboBoxItem_newFloorAbove = new ComboBoxItem() { Content = "++" },
-            c_comboBoxItem_newFloorBelow = new ComboBoxItem() { Content = "--" };
+            c_comboBoxItem_newArea = new ComboBoxItem() { Content = "New Area ..." },
+            c_comboBoxItem_newFloorAbove = new ComboBoxItem() { Content = "^", FontFamily = new FontFamily("Lucida Sans Typewriter"), FontWeight = FontWeights.Bold },
+            c_comboBoxItem_newFloorBelow = new ComboBoxItem() { Content = "v", FontFamily = new FontFamily("Lucida Sans Typewriter"), FontWeight = FontWeights.Bold };
 
         #endregion
 
@@ -395,7 +395,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadRoom();
 
-            m_grid_roomAndState = new Grid_RoomAndStates(roomId, roomName, roomX, roomY, roomZ, AreaId);
+            m_grid_roomAndState = new UserControl_RoomAndStates(roomId, roomName, roomX, roomY, roomZ, AreaId);
             m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
             m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllRoomStatesForRoom(roomId);
@@ -405,7 +405,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadRoomState();
 
-            m_grid_paragraphsAndStates = new Grid_ParagraphsAndStates(roomId, roomStateId);
+            m_grid_paragraphsAndStates = new UserControl_ParagraphsAndStates(roomId, roomStateId);
             m_grid_sub.SetGridRowColumn(m_grid_paragraphsAndStates, 0, 4);
             m_grid_paragraphsAndStates.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllParagraphsForRoomAndRoomState(roomId, roomStateId);
@@ -415,7 +415,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadParagraphState();
 
-            m_grid_nounsAndActions = new Grid_NounsAndActions(paragraphStateId);
+            m_grid_nounsAndActions = new UserControl_NounsAndActions(paragraphStateId);
             m_grid_sub.SetGridRowColumn(m_grid_nounsAndActions, 0, 6);
             m_grid_nounsAndActions.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllNounsForParagraphState(paragraphStateId);
@@ -426,7 +426,7 @@ namespace TBGINTB_Builder.BuilderControls
             UnloadAction();
 
             m_grid_actionResults = 
-                new Grid_ActionResults
+                new UserControl_ActionResults
                 (
                     actionId,
                     m_grid_nounsAndActions.SelectedNounId,
@@ -437,7 +437,7 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.LoadAllActionResultsForAction(actionId);
 
             m_grid_actionRequirements =
-                new Grid_ActionRequirements
+                new UserControl_ActionRequirements
                 (
                     actionId,
                     m_grid_nounsAndActions.SelectedNounId,

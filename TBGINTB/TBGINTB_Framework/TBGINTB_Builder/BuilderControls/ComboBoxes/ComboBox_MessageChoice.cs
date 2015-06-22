@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newMessageChoice = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newMessageChoice = new ComboBoxItem() { Content = "New Message Choice ..." };
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewMessageChoiceDialog()
         {
-            Window_MessageChoiceData window = new Window_MessageChoiceData(null, null, null, MessageId);
+            Window_MessageChoice window = new Window_MessageChoice(null, null, null, MessageId);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddMessageChoice

@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newNoun = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newNoun = new ComboBoxItem() { Content = "New Noun ..." };
 
         #endregion
 
@@ -126,7 +126,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewNounDialog()
         {
-            Window_NounData window = new Window_NounData(null, null, ParagraphStateId);
+            Window_Noun window = new Window_Noun(null, null, ParagraphStateId);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddNoun(window.NounText, window.ParagraphStateId);

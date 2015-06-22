@@ -22,9 +22,9 @@ namespace TBGINTB_Builder.BuilderControls
         Grid m_grid_main,
              m_grid_selectedMessage;
         ComboBox_Message m_comboBox_message;
-        Grid_MessageModification m_grid_messageModification;
-        Grid_MessageChoices m_grid_messageChoices;
-        Grid_MessageChoiceResults m_grid_messageChoiceResults;
+        UserControl_MessageModification m_grid_messageModification;
+        UserControl_MessageChoices m_grid_messageChoices;
+        UserControl_MessageChoiceResults m_grid_messageChoiceResults;
 
         #endregion
 
@@ -106,7 +106,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadMessage();
 
-            m_grid_messageChoices = new Grid_MessageChoices(messageId);
+            m_grid_messageChoices = new UserControl_MessageChoices(messageId);
             m_grid_messageChoices.SetActiveAndRegisterForGinTubEvents();
             m_grid_main.SetGridRowColumn(m_grid_messageChoices, 0, 1);
             GinTubBuilderManager.LoadAllMessageChoicesForMessage(messageId);
@@ -116,7 +116,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             UnloadMessageChoice();
 
-            m_grid_messageChoiceResults = new Grid_MessageChoiceResults(messageChoiceId, messageId);
+            m_grid_messageChoiceResults = new UserControl_MessageChoiceResults(messageChoiceId, messageId);
             m_grid_messageChoiceResults.SetActiveAndRegisterForGinTubEvents();
             m_grid_main.SetGridRowColumn(m_grid_messageChoiceResults, 0, 2);
             GinTubBuilderManager.LoadAllMessageChoiceResultsForMessageChoice(messageChoiceId);
@@ -144,7 +144,7 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 if (m_grid_messageModification != null)
                     m_grid_selectedMessage.Children.Remove(m_grid_messageModification);
-                m_grid_messageModification = new Grid_MessageModification(comboBoxItem.MessageId, comboBoxItem.MessageName, comboBoxItem.MessageText);
+                m_grid_messageModification = new UserControl_MessageModification(comboBoxItem.MessageId, comboBoxItem.MessageName, comboBoxItem.MessageText);
                 m_grid_messageModification.SetActiveAndRegisterForGinTubEvents();
                 m_grid_selectedMessage.SetGridRowColumn(m_grid_messageModification, 1, 0);
             }

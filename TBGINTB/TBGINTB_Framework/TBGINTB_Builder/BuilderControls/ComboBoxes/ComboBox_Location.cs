@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newLocation = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newLocation = new ComboBoxItem() { Content = "New Location ..." };
 
         private static readonly List<string> c_validFileTypes = new List<string> { ".png", ".bmp", ".jpg" };
 

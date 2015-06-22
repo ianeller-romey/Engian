@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxItem_newResult = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxItem_newResult = new ComboBoxItem() { Content = "New Result ..." };
 
         #endregion
 
@@ -115,11 +115,11 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewResultDialog()
         {
-            Window_ResultTypeData window_resultType = new Window_ResultTypeData(null, null);
+            Window_ResultType window_resultType = new Window_ResultType(null, null);
             window_resultType.ShowDialog();
             if (window_resultType.Accepted)
             {
-                Window_ResultData window_result = new Window_ResultData(null, null, null, window_resultType.ResultTypeId.Value);
+                Window_Result window_result = new Window_Result(null, null, null, window_resultType.ResultTypeId.Value);
                 window_result.ShowDialog();
                 if (window_result.Accepted)
                     GinTubBuilderManager.AddResult(window_result.Name, window_result.ResultJSONData, window_resultType.ResultTypeId.Value);

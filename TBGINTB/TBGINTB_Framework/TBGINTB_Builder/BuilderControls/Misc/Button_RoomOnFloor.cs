@@ -66,12 +66,14 @@ namespace TBGINTB_Builder.BuilderControls
         {
             GinTubBuilderManager.RoomAdded += GinTubBuilderManager_RoomAdded;
             GinTubBuilderManager.RoomModified += GinTubBuilderManager_RoomModified;
+            GinTubBuilderManager.RoomGet += GinTubBuilderManager_RoomGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.RoomAdded -= GinTubBuilderManager_RoomAdded;
             GinTubBuilderManager.RoomModified -= GinTubBuilderManager_RoomModified;
+            GinTubBuilderManager.RoomGet -= GinTubBuilderManager_RoomGet;
         }
 
         public void SetFloor(int z)
@@ -112,7 +114,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_CreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            Window_RoomData window = new Window_RoomData(null, string.Empty, RoomX, RoomY, RoomZ, AreaId);
+            Window_Room window = new Window_Room(null, string.Empty, RoomX, RoomY, RoomZ, AreaId);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddRoom(window.RoomName, RoomX, RoomY, RoomZ, AreaId);
@@ -140,6 +142,14 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if (args.Area == AreaId && args.X == RoomX && args.Y == RoomY && args.Z == RoomZ)
                 HasRoom(args.Id, args.Name);
+        }
+
+        private void GinTubBuilderManager_RoomGet(object sender, GinTubBuilderManager.RoomGetEventArgs args)
+        {
+            Background = 
+                (args.Area == AreaId && args.X == RoomX && args.Y == RoomY && args.Z == RoomZ)
+                ? Brushes.LightGreen
+                : null;
         }
 
         #endregion

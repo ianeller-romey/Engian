@@ -17,7 +17,7 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
-        private readonly ComboBoxItem c_comboBoxEvent_newEvent = new ComboBoxItem() { Content = "++" };
+        private readonly ComboBoxItem c_comboBoxEvent_newEvent = new ComboBoxItem() { Content = "New Event ..." };
 
         #endregion
 
@@ -115,7 +115,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewEventDialog()
         {
-            Window_EventData window = new Window_EventData(null, null, null);
+            Window_Event window = new Window_Event(null, null, null);
             window.ShowDialog();
             if (window.Accepted)
                 GinTubBuilderManager.AddEvent(window.EventName, window.EventDescription);

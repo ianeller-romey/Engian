@@ -21,7 +21,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         Grid m_grid_main;
         ComboBox_Character m_comboBox_character;
-        Grid_CharacterModification m_grid_character;
+        UserControl_CharacterModification m_userControl_character;
 
         #endregion
 
@@ -40,14 +40,14 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            if (m_grid_character != null)
-                m_grid_character.SetActiveAndRegisterForGinTubEvents();
+            if (m_userControl_character != null)
+                m_userControl_character.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            if (m_grid_character != null)
-                m_grid_character.SetInactiveAndUnregisterFromGinTubEvents();
+            if (m_userControl_character != null)
+                m_userControl_character.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -75,11 +75,11 @@ namespace TBGINTB_Builder.BuilderControls
             ComboBox_Character.ComboBoxItem_Character comboBoxItem;
             if (comboBox.SelectedItem != null && (comboBoxItem = comboBox.SelectedItem as ComboBox_Character.ComboBoxItem_Character) != null)
             {
-                if (m_grid_character != null)
-                    m_grid_main.Children.Remove(m_grid_character);
-                m_grid_character = new Grid_CharacterModification(comboBoxItem.CharacterId, comboBoxItem.CharacterName, comboBoxItem.CharacterDescription);
-                m_grid_character.SetActiveAndRegisterForGinTubEvents();
-                m_grid_main.SetGridRowColumn(m_grid_character, 1, 0);
+                if (m_userControl_character != null)
+                    m_grid_main.Children.Remove(m_userControl_character);
+                m_userControl_character = new UserControl_CharacterModification(comboBoxItem.CharacterId, comboBoxItem.CharacterName, comboBoxItem.CharacterDescription);
+                m_userControl_character.SetActiveAndRegisterForGinTubEvents();
+                m_grid_main.SetGridRowColumn(m_userControl_character, 1, 0);
             }
         }
 

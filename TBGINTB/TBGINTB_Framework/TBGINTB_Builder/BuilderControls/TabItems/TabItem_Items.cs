@@ -21,7 +21,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         Grid m_grid_main;
         ComboBox_Item m_comboBox_item;
-        Grid_ItemModification m_grid_item;
+        UserControl_ItemModification m_userControl_item;
 
         #endregion
 
@@ -40,14 +40,14 @@ namespace TBGINTB_Builder.BuilderControls
 
         public void SetActiveAndRegisterForGinTubEvents()
         {
-            if(m_grid_item != null)
-                m_grid_item.SetActiveAndRegisterForGinTubEvents();
+            if(m_userControl_item != null)
+                m_userControl_item.SetActiveAndRegisterForGinTubEvents();
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
-            if (m_grid_item != null)
-                m_grid_item.SetInactiveAndUnregisterFromGinTubEvents();
+            if (m_userControl_item != null)
+                m_userControl_item.SetInactiveAndUnregisterFromGinTubEvents();
         }
 
         #endregion
@@ -75,11 +75,11 @@ namespace TBGINTB_Builder.BuilderControls
             ComboBox_Item.ComboBoxItem_Item comboBoxItem;
             if(comboBox.SelectedItem != null && (comboBoxItem = comboBox.SelectedItem as ComboBox_Item.ComboBoxItem_Item) != null)
             {
-                if (m_grid_item != null)
-                    m_grid_main.Children.Remove(m_grid_item);
-                m_grid_item = new Grid_ItemModification(comboBoxItem.ItemId, comboBoxItem.ItemName, comboBoxItem.ItemDescription);
-                m_grid_item.SetActiveAndRegisterForGinTubEvents();
-                m_grid_main.SetGridRowColumn(m_grid_item, 1, 0);
+                if (m_userControl_item != null)
+                    m_grid_main.Children.Remove(m_userControl_item);
+                m_userControl_item = new UserControl_ItemModification(comboBoxItem.ItemId, comboBoxItem.ItemName, comboBoxItem.ItemDescription);
+                m_userControl_item.SetActiveAndRegisterForGinTubEvents();
+                m_grid_main.SetGridRowColumn(m_userControl_item, 1, 0);
             }
         }
 
