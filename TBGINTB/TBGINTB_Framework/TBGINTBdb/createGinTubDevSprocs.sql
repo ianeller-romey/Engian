@@ -4939,15 +4939,15 @@ GO
 /*RoomPreview******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreview] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreviewParagraphStates]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreviewParagraphStates] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 6/22/2015
--- Description:	Gets data about a RoomPreview in the database
+-- Create date: 6/23/2015
+-- Description:	Gets data about a RoomPreviewParagraphStates in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoomPreview]
+ALTER PROCEDURE [dev].[dev_GetRoomPreviewParagraphStates]
 	@room int
 AS
 BEGIN
@@ -4958,15 +4958,74 @@ BEGIN
 	SELECT ps.[Id],
 		   ps.[Text],
 		   ps.[State],
-		   ps.[Paragraph]
+		   ps.[Paragraph],
+		   @room AS [Room]
 	FROM [dbo].[ParagraphStates] ps
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
-	LEFT JOIN [dbo].[RoomState] rs
+	LEFT JOIN [dbo].[RoomStates] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE ps.[State] = 0
+	AND p.[Room] = @room
+	AND (rs.[State] = 0 OR p.[RoomState] IS NULL)
+	ORDER BY p.[Order]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreviewNouns]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreviewNouns] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/23/2015
+-- Description:	Gets data about a RoomPreviewNouns in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetRoomPreviewNouns]
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	SELECT n.[Id],
+		   n.[Text],
+		   n.[ParagraphState],
+		   @room AS [Room]
+	FROM [dbo].[Nouns] n
+	INNER JOIN [dbo].[ParagraphStates] ps
+	ON n.[ParagraphState] = ps.[Id]
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	LEFT JOIN [dbo].[RoomStates] rs
 	ON p.[RoomState] = rs.[Id]
 	WHERE p.[Room] = @room
 	AND (rs.[State] = 0 OR p.[RoomState] IS NULL)
 	ORDER BY p.[Order]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreview] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/22/2015
+-- Description:	Gets data about a RoomPreview in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetRoomPreview]
+	@roompreview int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	EXEC [dev].[dev_GetRoomPreviewParagraphStates] @room = @roompreview
+
+	EXEC [dev].[dev_GetRoomPreviewNouns] @room = @roompreview
 
 END
 GO

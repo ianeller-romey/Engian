@@ -23,6 +23,10 @@ namespace TBGINTB_Builder.BuilderControls
 
 
         #region MEMBER PROPERTIES
+
+        public int SelectedRoomId { get; private set; }
+        public string SelectedRoomName { get; private set; }
+
         #endregion
 
 
@@ -32,6 +36,8 @@ namespace TBGINTB_Builder.BuilderControls
 
         public UserControl_RoomAndStates(int roomId, string roomName, int roomX, int roomY, int roomZ, int areaId)
         {
+            SelectedRoomId = roomId;
+            SelectedRoomName = roomName;
             CreateControls(roomId, roomName, roomX, roomY, roomZ, areaId);
         }
 
@@ -64,23 +70,28 @@ namespace TBGINTB_Builder.BuilderControls
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
 
             ////////
             // Room
+            Button button_roomPreview = new Button() { Content = "View Room Preview" };
+            button_roomPreview.Click += Button_RoomPreview_Click;
+            grid_main.SetGridRowColumn(button_roomPreview, 0, 0);
+
             Button button_modifyRoom = new Button() { Content = "Modify Room" };
             button_modifyRoom.Click += Button_ModifyRoom_Click;
-            grid_main.SetGridRowColumn(button_modifyRoom, 0, 0);
+            grid_main.SetGridRowColumn(button_modifyRoom, 1, 0);
 
             m_grid_rooms = new UserControl_Bordered_Room(roomId, roomName, roomX, roomY, roomZ, areaId, false);
-            grid_main.SetGridRowColumn(m_grid_rooms, 1, 0);
+            grid_main.SetGridRowColumn(m_grid_rooms, 2, 0);
             m_grid_rooms.SetActiveAndRegisterForGinTubEvents();
 
             ////////
             // RoomStates
             Button button_addRoomState = new Button() { Content = "New Room State ..." };
             button_addRoomState.Click += Button_AddRoomState_Click;
-            grid_main.SetGridRowColumn(button_addRoomState, 2, 0);
+            grid_main.SetGridRowColumn(button_addRoomState, 3, 0);
 
             m_stackPanel_roomStates = new StackPanel() { Orientation = Orientation.Vertical };
 
@@ -91,7 +102,7 @@ namespace TBGINTB_Builder.BuilderControls
                     VerticalScrollBarVisibility = ScrollBarVisibility.Visible
                 };
             scrollViewer_roomStates.Content = m_stackPanel_roomStates;
-            grid_main.SetGridRowColumn(scrollViewer_roomStates, 3, 0);
+            grid_main.SetGridRowColumn(scrollViewer_roomStates, 4, 0);
 
             Content = grid_main;
         }
@@ -106,6 +117,14 @@ namespace TBGINTB_Builder.BuilderControls
         private void GinTubBuilderManager_RoomStateAdded(object sender, GinTubBuilderManager.RoomStateAddedEventArgs args)
         {
             AddRoomState(args.Id, args.State, args.Time, args.Location, args.Room);
+        }
+
+        void Button_RoomPreview_Click(object sender, RoutedEventArgs e)
+        {
+            Window_RoomPreview window = new Window_RoomPreview(SelectedRoomId, SelectedRoomName);
+            window.SetActiveAndRegisterForGinTubEvents();
+            window.Show();
+            GinTubBuilderManager.GetRoomPreview(SelectedRoomId);
         }
 
         private void Button_ModifyRoom_Click(object sender, RoutedEventArgs e)

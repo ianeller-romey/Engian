@@ -1477,21 +1477,23 @@ namespace TBGINTB_Builder.Lib
             public int State { get; set; }
             public int Paragraph { get; set; }
             public int Room { get; set; }
-            public RoomPreviewParagraphStateEventArgs(int id, string text, int state, int paragraphState, int room)
+            public RoomPreviewNounEventArgs[] Nouns { get; set; }
+            public RoomPreviewParagraphStateEventArgs(int id, string text, int state, int paragraphState, int room, RoomPreviewNounEventArgs[] nouns)
             {
                 Id = id;
                 Text = text;
                 State = state;
                 Paragraph = paragraphState;
                 Room = room;
+                Nouns = nouns;
             }
         }
 
 
         public class RoomPreviewParagraphStateGetEventArgs : RoomPreviewParagraphStateEventArgs
         {
-            public RoomPreviewParagraphStateGetEventArgs(int id, string text, int state, int paragraphState, int room) :
-                base(id, text, state, paragraphState, room) { }
+            public RoomPreviewParagraphStateGetEventArgs(int id, string text, int state, int paragraphState, int room, RoomPreviewNounEventArgs[] nouns) :
+                base(id, text, state, paragraphState, room, nouns) { }
         }
         public delegate void RoomPreviewParagraphStateGetEventHandler(object sender, RoomPreviewParagraphStateGetEventArgs args);
         public static event RoomPreviewParagraphStateGetEventHandler RoomPreviewParagraphStateGet;
@@ -1505,7 +1507,49 @@ namespace TBGINTB_Builder.Lib
                         roomPreviewParagraphState.Text, 
                         roomPreviewParagraphState.State, 
                         roomPreviewParagraphState.Paragraph,
-                        roomPreviewParagraphState.Room
+                        roomPreviewParagraphState.Room,
+                        roomPreviewParagraphState.Nouns.Select(n => new RoomPreviewNounEventArgs(n.Id, n.Text, n.ParagraphState, n.Room)).ToArray()
+                    ));
+        }
+
+        #endregion
+
+
+        #region RoomPreviewNouns
+
+        public class RoomPreviewNounEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public int ParagraphState { get; set; }
+            public int Room { get; set; }
+            public RoomPreviewNounEventArgs(int id, string text, int paragraphState, int room)
+            {
+                Id = id;
+                Text = text;
+                ParagraphState = paragraphState;
+                Room = room;
+            }
+        }
+
+
+        public class RoomPreviewNounGetEventArgs : RoomPreviewNounEventArgs
+        {
+            public RoomPreviewNounGetEventArgs(int id, string text, int paragraphState, int room) :
+                base(id, text, paragraphState, room) { }
+        }
+        public delegate void RoomPreviewNounGetEventHandler(object sender, RoomPreviewNounGetEventArgs args);
+        public static event RoomPreviewNounGetEventHandler RoomPreviewNounGet;
+        private static void OnRoomPreviewNounGet(RoomPreviewNoun roomPreviewNoun)
+        {
+            if (RoomPreviewNounGet != null)
+                RoomPreviewNounGet(typeof(GinTubBuilderManager),
+                    new RoomPreviewNounGetEventArgs
+                    (
+                        roomPreviewNoun.Id,
+                        roomPreviewNoun.Text,
+                        roomPreviewNoun.ParagraphState,
+                        roomPreviewNoun.Room
                     ));
         }
 
@@ -2287,6 +2331,18 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region RoomPreviews
+
+        public static void GetRoomPreview(int room)
+        {
+            var roomPreview = SelectRoomPreview(room);
+            foreach (var paragraphState in roomPreview.Item1)
+                OnRoomPreviewParagraphStateGet(paragraphState);
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -2367,7 +2423,10 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetMessageChoiceResult_Result, MessageChoiceResult>();
             Mapper.CreateMap<dev_GetAllMessageChoiceResultsForMessageChoice_Result, MessageChoiceResult>();
 
-            Mapper.CreateMap<dev_GetRoomPreview
+            Mapper.CreateMap<dev_GetRoomPreviewNouns_Result, RoomPreviewNoun>();
+            Mapper.CreateMap<dev_GetRoomPreviewParagraphStates_Result, RoomPreviewParagraphState>();
+            Mapper.CreateMap<RoomPreviewNoun[], RoomPreviewParagraphState>()
+                .ForMember(dest => dest.Nouns, opt => opt.MapFrom(src => src));
         }
 
         #region Areas
@@ -4070,6 +4129,33 @@ namespace TBGINTB_Builder.Lib
 
             List<MessageChoiceResult> messageChoiceResults = databaseResult.Select(r => Mapper.Map<MessageChoiceResult>(r)).ToList();
             return messageChoiceResults;
+        }
+
+        #endregion
+
+
+        #region RoomPreviews
+
+        private static Tuple<List<RoomPreviewParagraphState>> SelectRoomPreview(int room)
+        {
+            List<RoomPreviewParagraphState> roomPreviewParagraphStates = new List<RoomPreviewParagraphState>();
+            List<RoomPreviewNoun> roomPreviewNouns = new List<RoomPreviewNoun>();
+            try
+            {
+                var paragraphStates = m_entities.dev_GetRoomPreview(room);
+                roomPreviewParagraphStates.AddRange(paragraphStates.Select(r => Mapper.Map<RoomPreviewParagraphState>(r)));
+
+                var noun = paragraphStates.GetNextResult<dev_GetRoomPreviewNouns_Result>();
+                roomPreviewNouns.AddRange(noun.Select(r => Mapper.Map<RoomPreviewNoun>(r)));
+                foreach (var roomPreviewParagraphState in roomPreviewParagraphStates)
+                    Mapper.Map(roomPreviewNouns.Where(n => n.ParagraphState == roomPreviewParagraphState.Id).ToArray(), roomPreviewParagraphState);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetRoomPreview", e);
+            }
+
+            return new Tuple<List<RoomPreviewParagraphState>>(roomPreviewParagraphStates);
         }
 
         #endregion

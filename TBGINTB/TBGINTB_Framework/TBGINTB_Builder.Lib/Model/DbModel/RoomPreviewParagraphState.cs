@@ -17,6 +17,7 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         int m_state;
         int m_paragraph;
         int m_room;
+        RoomPreviewNoun[] m_nouns;
 
         [DataMember]
         public int Id
@@ -70,6 +71,17 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
             {
                 if (m_room != value)
                     m_room = value;
+            }
+        }
+
+        [DataMember]
+        public RoomPreviewNoun[] Nouns
+        {
+            get { return m_nouns; }
+            private set
+            {
+                if (m_nouns != value)
+                    m_nouns = value;
             }
         }
     }

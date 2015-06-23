@@ -30,7 +30,9 @@ namespace TBGINTB_Builder
             m_menuItem_file,
             m_menuItem_loadFromDatabase,
             m_menuItem_exportToXml,
-            m_menuItem_importFromXml;
+            m_menuItem_importFromXml,
+            m_menuItem_windows,
+            m_menuItem_roomPreview;
         Grid m_grid_main;
         TabControl m_tabControl_controls;
 
@@ -57,8 +59,10 @@ namespace TBGINTB_Builder
 
         private UIElement CreateControls()
         {
+            m_menu_main = new Menu();
+
             ////////
-            // toolbar
+            // File
             m_menuItem_loadFromDatabase = new MenuItem() { Header = "Load DB" };
             m_menuItem_loadFromDatabase.Click += MenuItem_LoadFromDatabase_Click;
 
@@ -71,9 +75,10 @@ namespace TBGINTB_Builder
             m_menuItem_file = new MenuItem() { Header = "File" };
             m_menuItem_file.Items.Add(m_menuItem_loadFromDatabase);
 
-            m_menu_main = new Menu();
             m_menu_main.Items.Add(m_menuItem_file);
 
+            ////////
+            // Toolbar
             DockPanel dockPanel_main = new DockPanel();
             dockPanel_main.Children.Add(m_menu_main);
             DockPanel.SetDock(m_menu_main, Dock.Top);
@@ -136,7 +141,7 @@ namespace TBGINTB_Builder
                 GinTubBuilderManager.ExportToXml(window.FileName);
         }
 
-        void MenuItem_ImportFromXml_Click(object sender, RoutedEventArgs e)
+        private void MenuItem_ImportFromXml_Click(object sender, RoutedEventArgs e)
         {
             Window_Notification window_notification = new Window_Notification("Notice", "Importing from an .xml file will OVERWRITE all records currently in the database.\r\nThis action CANNOT be undone.\r\nContinue?");
             window_notification.ShowDialog();
@@ -159,7 +164,7 @@ namespace TBGINTB_Builder
             }
         }
 
-        void TabControl_Controls_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabControl_Controls_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.OriginalSource != m_tabControl_controls)
                 return;
