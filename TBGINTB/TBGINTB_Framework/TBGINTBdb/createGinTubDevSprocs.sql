@@ -4827,7 +4827,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddPlayerParty]
 	@player uniqueidentifier,
-	@Character int,
+	@character int,
 	@active bit
 AS
 BEGIN
@@ -4836,7 +4836,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [Active])
-	VALUES (@player, @Character, @active)
+	VALUES (@player, @character, @active)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -4853,7 +4853,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdatePlayerParty]
 	@player uniqueidentifier,
-	@Character int,
+	@character int,
 	@active bit
 AS
 BEGIN
@@ -4863,7 +4863,7 @@ BEGIN
 
 	UPDATE [dbo].[PlayerParty]
 	SET [Active] = ISNULL(@active, [Active])
-	WHERE [Player] = @player AND [Character] = @Character
+	WHERE [Player] = @player AND [Character] = @character
 
 END
 GO
@@ -4931,6 +4931,42 @@ BEGIN
 	VALUES (@usernameid, @domainnameid, @domainid, @password, @playerid)
 	
 	SELECT @playerid
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*RoomPreview******************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreview] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/22/2015
+-- Description:	Gets data about a RoomPreview in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetRoomPreview]
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT ps.[Id],
+		   ps.[Text],
+		   ps.[State],
+		   ps.[Paragraph]
+	FROM [dbo].[ParagraphStates] ps
+	INNER JOIN [dbo].[Paragraphs] p
+	ON ps.[Paragraph] = p.[Id]
+	LEFT JOIN [dbo].[RoomState] rs
+	ON p.[RoomState] = rs.[Id]
+	WHERE p.[Room] = @room
+	AND (rs.[State] = 0 OR p.[RoomState] IS NULL)
+	ORDER BY p.[Order]
 
 END
 GO

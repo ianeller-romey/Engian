@@ -1467,6 +1467,50 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region RoomPreviewParagraphStates
+
+        public class RoomPreviewParagraphStateEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string Text { get; set; }
+            public int State { get; set; }
+            public int Paragraph { get; set; }
+            public int Room { get; set; }
+            public RoomPreviewParagraphStateEventArgs(int id, string text, int state, int paragraphState, int room)
+            {
+                Id = id;
+                Text = text;
+                State = state;
+                Paragraph = paragraphState;
+                Room = room;
+            }
+        }
+
+
+        public class RoomPreviewParagraphStateGetEventArgs : RoomPreviewParagraphStateEventArgs
+        {
+            public RoomPreviewParagraphStateGetEventArgs(int id, string text, int state, int paragraphState, int room) :
+                base(id, text, state, paragraphState, room) { }
+        }
+        public delegate void RoomPreviewParagraphStateGetEventHandler(object sender, RoomPreviewParagraphStateGetEventArgs args);
+        public static event RoomPreviewParagraphStateGetEventHandler RoomPreviewParagraphStateGet;
+        private static void OnRoomPreviewParagraphStateGet(RoomPreviewParagraphState roomPreviewParagraphState)
+        {
+            if (RoomPreviewParagraphStateGet != null)
+                RoomPreviewParagraphStateGet(typeof(GinTubBuilderManager),
+                    new RoomPreviewParagraphStateGetEventArgs
+                    (
+                        roomPreviewParagraphState.Id, 
+                        roomPreviewParagraphState.Text, 
+                        roomPreviewParagraphState.State, 
+                        roomPreviewParagraphState.Paragraph,
+                        roomPreviewParagraphState.Room
+                    ));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -2322,6 +2366,8 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetMessageChoiceResult_Result, MessageChoiceResult>();
             Mapper.CreateMap<dev_GetAllMessageChoiceResultsForMessageChoice_Result, MessageChoiceResult>();
+
+            Mapper.CreateMap<dev_GetRoomPreview
         }
 
         #region Areas
