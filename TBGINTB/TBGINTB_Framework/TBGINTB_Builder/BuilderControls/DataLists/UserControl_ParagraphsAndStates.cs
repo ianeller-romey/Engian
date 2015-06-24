@@ -164,7 +164,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void SetParagraphPreview(string paragraphStateText, int paragraphId)
         {
-            UserControl_Paragraph border = m_stackPanel_paragraphs.Children.OfType<UserControl_Paragraph>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
+            UserControl_Bordered_Paragraph border = m_stackPanel_paragraphs.Children.OfType<UserControl_Bordered_Paragraph>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
             if (border != null)
                 border.ToolTip = string.Format("{0} ...", paragraphStateText.Substring(0, Math.Max(Math.Min(75, paragraphStateText.Length - 5), 0)));
         }
