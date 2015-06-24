@@ -1771,6 +1771,13 @@ namespace TBGINTB_Builder.Lib
                 OnParagraphStateAdded(paragraphState);
         }
 
+        public static void GetParagraphStateForParagraphPreview(int paragraphStateState, int paragraphId)
+        {
+            ParagraphState paragraphState = SelectParagraphStateForParagraphPreview(paragraphStateState, paragraphId);
+            if (paragraphState != null)
+                OnParagraphStateGet(paragraphState);
+        }
+
         #endregion
 
 

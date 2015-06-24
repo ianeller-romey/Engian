@@ -81,7 +81,7 @@ namespace TBGINTB_Builder.BuilderControls
 
             m_grid_selectedMessage = new Grid();
             m_grid_selectedMessage.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-            m_grid_selectedMessage.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(100.0, GridUnitType.Star) });
+            m_grid_selectedMessage.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             m_grid_main.SetGridRowColumn(m_grid_selectedMessage, 0, 0);
 
             m_comboBox_message = new ComboBox_Message();

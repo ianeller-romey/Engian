@@ -203,6 +203,7 @@ namespace TBGINTB_Builder.BuilderControls
 
                 SelectedParagraphId = border.ParagraphId.Value;
                 GinTubBuilderManager.GetParagraph(SelectedParagraphId);
+                GinTubBuilderManager.GetParagraphStateForParagraphPreview(0, SelectedParagraphId);
 
                 m_button_modifyParagraph.IsEnabled = true;
                 m_button_addParagraphState.IsEnabled = true;

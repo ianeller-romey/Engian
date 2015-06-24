@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class UserControl_Message : UserControl, IRegisterGinTubEventsOnlyWhenActive
+    public class UserControl_Message : UserControl_Gettable, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -66,11 +67,13 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.MessageModified += GinTubBuilderManager_MessageModified;
+            GinTubBuilderManager.MessageGet += GinTubBuilderManager_MessageGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.MessageModified -= GinTubBuilderManager_MessageModified;
+            GinTubBuilderManager.MessageGet -= GinTubBuilderManager_MessageGet;
         }
 
         #endregion
@@ -146,6 +149,11 @@ namespace TBGINTB_Builder.BuilderControls
                 SetMessageName(args.Name);
                 SetMessageText(args.Text);
             }
+        }
+
+        private void GinTubBuilderManager_MessageGet(object sender, GinTubBuilderManager.MessageGetEventArgs args)
+        {
+            SetGettableBackground(MessageId == args.Id);
         }
 
         private void SetMessageName(string messageName)

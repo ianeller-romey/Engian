@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class UserControl_MessageChoice : UserControl, IRegisterGinTubEventsOnlyWhenActive
+    public class UserControl_MessageChoice : UserControl_Gettable, IRegisterGinTubEventsOnlyWhenActive
     {
         #region MEMBER FIELDS
 
@@ -38,7 +39,8 @@ namespace TBGINTB_Builder.BuilderControls
                 return new List<UIElement>
                 {
                     m_textBox_name,
-                    m_textBox_text
+                    m_textBox_text,
+                    m_comboBox_message
                 };
             }
         }
@@ -73,11 +75,13 @@ namespace TBGINTB_Builder.BuilderControls
         public void SetActiveAndRegisterForGinTubEvents()
         {
             GinTubBuilderManager.MessageChoiceModified += GinTubBuilderManager_MessageChoiceModified;
+            GinTubBuilderManager.MessageChoiceGet += GinTubBuilderManager_MessageChoiceGet;
         }
 
         public void SetInactiveAndUnregisterFromGinTubEvents()
         {
             GinTubBuilderManager.MessageChoiceModified -= GinTubBuilderManager_MessageChoiceModified;
+            GinTubBuilderManager.MessageChoiceGet -= GinTubBuilderManager_MessageChoiceGet;
         }
 
         #endregion
@@ -165,7 +169,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_MessageAdded(object sender, GinTubBuilderManager.MessageAddedEventArgs args)
         {
-            SetMessageChoiceMessage(args.Id);
+            ResetMessageChoiceMessage(args.Id);
         }
 
         private void GinTubBuilderManager_MessageChoiceModified(object sender, GinTubBuilderManager.MessageChoiceModifiedEventArgs args)
@@ -174,7 +178,13 @@ namespace TBGINTB_Builder.BuilderControls
             {
                 SetMessageChoiceName(args.Name);
                 SetMessageChoiceText(args.Text);
+                SetMessageChoiceMessage(args.Message);
             }
+        }
+
+        private void GinTubBuilderManager_MessageChoiceGet(object sender, GinTubBuilderManager.MessageChoiceGetEventArgs args)
+        {
+            SetGettableBackground(MessageChoiceId == args.Id);
         }
 
         private void SetMessageChoiceName(string messageChoiceName)
@@ -195,6 +205,14 @@ namespace TBGINTB_Builder.BuilderControls
         {
             ComboBox_Message.ComboBoxItem_Message item = m_comboBox_message.Items.OfType<ComboBox_Message.ComboBoxItem_Message>().
                 SingleOrDefault(i => i.MessageId == messageChoiceMessage);
+            if (item != null)
+                m_comboBox_message.SelectedItem = item;
+        }
+
+        private void ResetMessageChoiceMessage(int messageChoiceMessage)
+        {
+            ComboBox_Message.ComboBoxItem_Message item = m_comboBox_message.Items.OfType<ComboBox_Message.ComboBoxItem_Message>().
+                SingleOrDefault(i => MessageId == messageChoiceMessage && i.MessageId == messageChoiceMessage);
             if (item != null)
                 m_comboBox_message.SelectedItem = item;
         }
