@@ -137,10 +137,11 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void AddParagraphState(string paragraphStateText, IEnumerable<string> nounsText)
         {
+            List<string> nounsTextOrdered = nounsText.OrderBy(n => paragraphStateText.IndexOf(n)).ToList();
             List<Run> runs = new List<Run>();
-            for(int i = 0, j = nounsText.Count(); i < j; ++i)
+            for (int i = 0, j = nounsTextOrdered.Count; i < j; ++i)
             {
-                string nounText = nounsText.ElementAt(i);
+                string nounText = nounsTextOrdered[i];
                 string subText = paragraphStateText.Substring(0, paragraphStateText.IndexOf(nounText));
                 runs.Add(new Run(subText));
                 runs.Add(new Run_Noun(nounText));

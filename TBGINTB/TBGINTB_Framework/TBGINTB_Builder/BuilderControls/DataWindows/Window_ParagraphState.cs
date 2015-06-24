@@ -41,7 +41,7 @@ namespace TBGINTB_Builder.BuilderControls
             Title = "Paragraph State Data";
             Width = 300;
             Height = 300;
-            Content = CreateControls(paragraphId, paragraphStateText, paragraphStateState, paragraphId);
+            Content = CreateControls(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId);
         }
 
         #endregion
@@ -51,7 +51,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls(int? paragraphStateId, string paragraphStateText, int? paragraphStateState, int paragraphId)
         {
-            m_userControl_paragraphState = new UserControl_ParagraphState(paragraphId, paragraphStateText, paragraphStateState, paragraphId, true, false);
+            m_userControl_paragraphState = new UserControl_ParagraphState(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId, true, false);
             return m_userControl_paragraphState;
         }
 

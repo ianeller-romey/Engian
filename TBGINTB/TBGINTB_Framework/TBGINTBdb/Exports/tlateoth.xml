@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-20T11:36:52.0378936-07:00">
+<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-23T22:54:46.7879781-07:00">
   <Items />
   <Events />
   <Characters />
@@ -394,6 +394,143 @@
                           <Text>door</Text>
                           <Actions>
                             <Action Id="7">
+                              <VerbType>6</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                      </Nouns>
+                    </ParagraphState>
+                  </ParagraphStates>
+                </Paragraph>
+              </Paragraphs>
+            </RoomState>
+          </RoomStates>
+          <Paragraphs />
+        </Room>
+      </Rooms>
+    </Area>
+    <Area Id="2">
+      <Name>BROKEN CITYSCAPE</Name>
+      <Rooms>
+        <Room Id="2">
+          <Name>Parking Garage</Name>
+          <X>2</X>
+          <Y>4</Y>
+          <Z>0</Z>
+          <RoomStates>
+            <RoomState Id="2">
+              <State>0</State>
+              <Location>1</Location>
+              <Time>1988-08-13T00:00:00</Time>
+              <Paragraphs>
+                <Paragraph Id="8">
+                  <Order>0</Order>
+                  <ParagraphStates>
+                    <ParagraphState Id="14">
+                      <Text>You stand beside the rusted, decaying remains of your vehicle, itself parked just outside a crumbling parking garage.</Text>
+                      <State>0</State>
+                      <Nouns>
+                        <Noun Id="6">
+                          <Text>garage</Text>
+                          <Actions>
+                            <Action Id="9">
+                              <VerbType>1</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                      </Nouns>
+                    </ParagraphState>
+                  </ParagraphStates>
+                </Paragraph>
+                <Paragraph Id="9">
+                  <Order>1</Order>
+                  <ParagraphStates>
+                    <ParagraphState Id="15">
+                      <Text>The road, cracked and uneven, curves near the entrance to the garage.</Text>
+                      <State>0</State>
+                      <Nouns>
+                        <Noun Id="7">
+                          <Text>garage</Text>
+                          <Actions>
+                            <Action Id="10">
+                              <VerbType>1</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                      </Nouns>
+                    </ParagraphState>
+                  </ParagraphStates>
+                </Paragraph>
+                <Paragraph Id="10">
+                  <Order>2</Order>
+                  <ParagraphStates>
+                    <ParagraphState Id="16">
+                      <Text>It winds to the north, twisting up a gradual slope and out of sight beyond the hollow husk of a brick building.</Text>
+                      <State>0</State>
+                      <Nouns>
+                        <Noun Id="8">
+                          <Text>building</Text>
+                          <Actions>
+                            <Action Id="11">
+                              <VerbType>1</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                        <Noun Id="10">
+                          <Text>north</Text>
+                          <Actions>
+                            <Action Id="13">
+                              <VerbType>6</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                      </Nouns>
+                    </ParagraphState>
+                  </ParagraphStates>
+                </Paragraph>
+                <Paragraph Id="11">
+                  <Order>3</Order>
+                  <ParagraphStates>
+                    <ParagraphState Id="17">
+                      <Text>To the east, the road tracks a straight line beneath the canopy of trees that lines its perimeter.</Text>
+                      <State>0</State>
+                      <Nouns>
+                        <Noun Id="9">
+                          <Text>trees</Text>
+                          <Actions>
+                            <Action Id="12">
+                              <VerbType>1</VerbType>
+                              <ActionResults />
+                              <ItemActionRequirements />
+                              <EventActionRequirements />
+                              <CharacterActionRequirements />
+                            </Action>
+                          </Actions>
+                        </Noun>
+                        <Noun Id="11">
+                          <Text>east</Text>
+                          <Actions>
+                            <Action Id="14">
                               <VerbType>6</VerbType>
                               <ActionResults />
                               <ItemActionRequirements />
