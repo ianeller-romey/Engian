@@ -434,11 +434,11 @@ GO
 
 CREATE VIEW [dev].[Results] AS
 	SELECT r.[Id],
-		   rn.[Name],
+		   ISNULL(rn.[Name], '') AS [Name],
 		   r.[JSONData],
 		   r.[ResultType]
 	FROM [dbo].[Results] r
-	INNER JOIN [dev].[ResultNames] rn
+	LEFT JOIN [dev].[ResultNames] rn
 	ON rn.[Result] = r.[Id]
 	
 GO

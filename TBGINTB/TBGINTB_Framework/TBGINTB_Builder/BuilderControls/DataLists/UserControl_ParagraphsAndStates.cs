@@ -53,8 +53,6 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.ParagraphAdded += GinTubBuilderManager_ParagraphAdded;
             GinTubBuilderManager.ParagraphStateAdded += GinTubBuilderManager_ParagraphStateAdded;
 
-            GinTubBuilderManager.ParagraphStateModified += GinTubBuilderManager_ParagraphStateModified;
-
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<UserControl_Paragraph>())
                 block.SetActiveAndRegisterForGinTubEvents();
             foreach (var grid in m_stackPanel_paragraphStates.Children.OfType<UserControl_ParagraphStateModification>())
@@ -65,8 +63,6 @@ namespace TBGINTB_Builder.BuilderControls
         {
             GinTubBuilderManager.ParagraphAdded -= GinTubBuilderManager_ParagraphAdded;
             GinTubBuilderManager.ParagraphStateAdded -= GinTubBuilderManager_ParagraphStateAdded;
-
-            GinTubBuilderManager.ParagraphStateModified -= GinTubBuilderManager_ParagraphStateModified;
 
             foreach (var block in m_stackPanel_paragraphs.Children.OfType<UserControl_Paragraph>())
                 block.SetInactiveAndUnregisterFromGinTubEvents();
@@ -133,10 +129,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void GinTubBuilderManager_ParagraphAdded(object sender, GinTubBuilderManager.ParagraphAddedEventArgs args)
         {
-            if (!m_stackPanel_paragraphs.Children.OfType<UserControl_Bordered_Paragraph>().Any(t => t.ParagraphId == args.Id))
+            if (!m_stackPanel_paragraphs.Children.OfType<UserControl_Bordered_ParagraphWithPreview>().Any(t => t.ParagraphId == args.Id))
             {
-                UserControl_Bordered_Paragraph border = new UserControl_Bordered_Paragraph(args.Id, args.Order, args.Room, args.RoomState, false);
-                border.MouseLeftButtonDown += UserControl_Paragraph_MouseLeftButtonDown;
+                UserControl_Bordered_ParagraphWithPreview border = new UserControl_Bordered_ParagraphWithPreview(args.Id, args.Order, args.Room, args.RoomState, false);
+                border.MouseLeftButtonDown += UserControl_ParagraphWithPreview_MouseLeftButtonDown;
                 border.SetActiveAndRegisterForGinTubEvents();
                 m_stackPanel_paragraphs.Children.Add(border);
 
@@ -151,22 +147,6 @@ namespace TBGINTB_Builder.BuilderControls
                 UserControl_ParagraphStateModification grid = new UserControl_ParagraphStateModification(args.Id, args.Text, args.State, args.Paragraph);
                 m_stackPanel_paragraphStates.Children.Add(grid);
             }
-
-            if (args.State == 0)
-                SetParagraphPreview(args.Text, args.Paragraph);
-        }
-
-        private void GinTubBuilderManager_ParagraphStateModified(object sender, GinTubBuilderManager.ParagraphStateModifiedEventArgs args)
-        {
-            if (args.State == 0)
-                SetParagraphPreview(args.Text, args.Paragraph);
-        }
-
-        private void SetParagraphPreview(string paragraphStateText, int paragraphId)
-        {
-            UserControl_Bordered_Paragraph border = m_stackPanel_paragraphs.Children.OfType<UserControl_Bordered_Paragraph>().SingleOrDefault(gp => gp.ParagraphId == paragraphId);
-            if (border != null)
-                border.ToolTip = string.Format("{0} ...", paragraphStateText.Substring(0, Math.Max(Math.Min(75, paragraphStateText.Length - 5), 0)));
         }
 
         private void Button_AddParagraph_Click(object sender, RoutedEventArgs e)
@@ -227,9 +207,9 @@ namespace TBGINTB_Builder.BuilderControls
             window.Show();
         }
 
-        private void UserControl_Paragraph_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UserControl_ParagraphWithPreview_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            UserControl_Bordered_Paragraph border = sender as UserControl_Bordered_Paragraph;
+            UserControl_Bordered_ParagraphWithPreview border = sender as UserControl_Bordered_ParagraphWithPreview;
             if (border != null)
             {
                 m_stackPanel_paragraphStates.Children.Clear();

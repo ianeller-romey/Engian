@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-24T10:58:44.4130571-07:00">
+<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-25T15:36:25.1317825-07:00">
   <Items>
     <Item Id="0">
       <Name>Laptop</Name>
@@ -117,7 +117,24 @@
     </ResultType>
     <ResultType Id="6">
       <Name>Item Acquisition</Name>
-      <Results />
+      <Results>
+        <Result Id="10">
+          <Name>Item Acquisition - Laptop</Name>
+          <JSONData>{"itemId":"0"}</JSONData>
+        </Result>
+        <Result Id="11">
+          <Name>Item Acquisition - Plastic Bag</Name>
+          <JSONData>{"itemId":"1"}</JSONData>
+        </Result>
+        <Result Id="12">
+          <Name>Item Acquisition - Scissors</Name>
+          <JSONData>{"itemId":"2"}</JSONData>
+        </Result>
+        <Result Id="13">
+          <Name>Item Acquisition - Flashlight</Name>
+          <JSONData>{"itemId":"3"}</JSONData>
+        </Result>
+      </Results>
       <ResultTypeJSONProperty>
         <ResultTypeJSONProperty Id="14">
           <JSONProperty>itemId</JSONProperty>
@@ -144,7 +161,12 @@
     </ResultType>
     <ResultType Id="9">
       <Name>Paragraph State Change</Name>
-      <Results />
+      <Results>
+        <Result Id="14">
+          <Name>Paragraph State Change - Take Bag from full paragraph</Name>
+          <JSONData>{"paragraphId":"5", "state":"1"}</JSONData>
+        </Result>
+      </Results>
       <ResultTypeJSONProperty>
         <ResultTypeJSONProperty Id="17">
           <JSONProperty>paragraphId</JSONProperty>
@@ -349,7 +371,14 @@
                             </Action>
                             <Action Id="2">
                               <VerbType>5</VerbType>
-                              <ActionResults />
+                              <ActionResults>
+                                <ActionResult Id="1">
+                                  <Result>11</Result>
+                                </ActionResult>
+                                <ActionResult Id="2">
+                                  <Result>14</Result>
+                                </ActionResult>
+                              </ActionResults>
                               <ItemActionRequirements />
                               <EventActionRequirements />
                               <CharacterActionRequirements />
