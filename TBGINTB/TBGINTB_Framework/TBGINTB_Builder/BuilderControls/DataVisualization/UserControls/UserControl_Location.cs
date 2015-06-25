@@ -18,6 +18,8 @@ namespace TBGINTB_Builder.BuilderControls
     {
         #region MEMBER FIELDS
 
+        private static readonly Uri s_uri_imageNotFound = new Uri("pack://application:,,,/Images/image_not_found.jpg", UriKind.Absolute);
+
         ComboBox_Location m_comboBox_location;
         Image m_image_locationFile;
 
@@ -82,7 +84,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void SetLocationFile(string locationFile)
         {
-            m_image_locationFile.Source = (locationFile != null) ? new BitmapImage(new Uri(locationFile)) : null;
+            m_image_locationFile.Source = 
+                (locationFile != null && File.Exists(locationFile))
+                ? new BitmapImage(new Uri(locationFile))
+                : new BitmapImage(s_uri_imageNotFound);
         }
 
         private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)
