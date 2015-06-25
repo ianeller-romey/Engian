@@ -115,15 +115,35 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewResultDialog()
         {
-            Window_ResultType window_resultType = new Window_ResultType(null, null);
-            window_resultType.ShowDialog();
-            if (window_resultType.Accepted)
-            {
-                Window_Result window_result = new Window_Result(null, null, null, window_resultType.ResultTypeId.Value);
-                window_result.ShowDialog();
-                if (window_result.Accepted)
-                    GinTubBuilderManager.AddResult(window_result.Name, window_result.ResultJSONData, window_resultType.ResultTypeId.Value);
-            }
+            Window_ResultType window_resultType = 
+                new Window_ResultType
+                (
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_ResultType wWin = win as Window_ResultType;
+                        if (wWin != null)
+                        {
+                            Window_Result window_result = 
+                                new Window_Result
+                                (
+                                    null, 
+                                    null, 
+                                    null,
+                                    wWin.ResultTypeId.Value,
+                                    (wwWin) =>
+                                    {
+                                        Window_Result wwwWin = wwWin as Window_Result;
+                                        if (wwwWin != null)
+                                            GinTubBuilderManager.AddResult(wwwWin.Name, wwwWin.ResultJSONData, wwwWin.ResultTypeId);
+                                    }
+                                );
+                            window_result.Show();
+                        }
+                    }
+                );
+            window_resultType.Show();
         }
 
         private void ComboBox_Result_SelectionChanged(object sender, SelectionChangedEventArgs e)

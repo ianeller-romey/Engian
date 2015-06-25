@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-using TBGINTB_Builder.BuilderControls;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
@@ -171,27 +171,60 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_AddParagraph_Click(object sender, RoutedEventArgs e)
         {
-            Window_Paragraph window = new Window_Paragraph(null, null, RoomId, RoomStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddParagraph(window.ParagraphOrder.Value, window.RoomId, window.RoomStateId);
+            Window_Paragraph window = 
+                new Window_Paragraph
+                (
+                    null, 
+                    null, 
+                    RoomId,
+                    RoomStateId,
+                    (win) =>
+                    {
+                        Window_Paragraph wWin = win as Window_Paragraph;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddParagraph(wWin.ParagraphOrder.Value, wWin.RoomId, wWin.RoomStateId);
+                    }
+                );
+            window.Show();
         }
 
         private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
         {
             UserControl_Paragraph grid = m_stackPanel_paragraphs.Children.OfType<UserControl_Paragraph>().Single(g => g.ParagraphId == SelectedParagraphId);
-            Window_Paragraph window = new Window_Paragraph(grid.ParagraphId, grid.ParagraphOrder, grid.RoomId, grid.RoomStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyParagraph(window.ParagraphId.Value, window.ParagraphOrder.Value, window.RoomId, window.RoomStateId);
+            Window_Paragraph window = 
+                new Window_Paragraph
+                (
+                    grid.ParagraphId, 
+                    grid.ParagraphOrder, 
+                    grid.RoomId,
+                    grid.RoomStateId,
+                    (win) =>
+                    {
+                        Window_Paragraph wWin = win as Window_Paragraph;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyParagraph(wWin.ParagraphId.Value, wWin.ParagraphOrder.Value, wWin.RoomId, wWin.RoomStateId);
+                    }
+                );
+            window.Show();
         }
 
         private void Button_AddParagraphState_Click(object sender, RoutedEventArgs e)
         {
-            Window_ParagraphState window = new Window_ParagraphState(null, null, null, SelectedParagraphId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddParagraphState(window.ParagraphStateText, window.ParagraphId);
+            Window_ParagraphState window = 
+                new Window_ParagraphState
+                (
+                    null, 
+                    null, 
+                    null,
+                    SelectedParagraphId,
+                    (win) =>
+                    {
+                        Window_ParagraphState wWin = win as Window_ParagraphState;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddParagraphState(wWin.ParagraphStateText, wWin.ParagraphId);
+                    }
+                );
+            window.Show();
         }
 
         private void UserControl_Paragraph_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

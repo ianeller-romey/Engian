@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_Result : Window_AcceptCancel
+    public class Window_Result : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -36,9 +36,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_Result(int? resultId, string resultName, string resultJSONData, int resultTypeId)
+        public Window_Result(int? resultId, string resultName, string resultJSONData, int resultTypeId, TaskOnAccept task) :
+            base("Result Data", task)
         {
-            Title = "Result Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(resultId, resultName, resultJSONData, resultTypeId);

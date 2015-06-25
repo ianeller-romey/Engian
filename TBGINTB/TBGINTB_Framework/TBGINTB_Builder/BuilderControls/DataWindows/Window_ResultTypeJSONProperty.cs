@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_ResultTypeJSONProperty : Window_AcceptCancel
+    public class Window_ResultTypeJSONProperty : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ResultTypeJSONProperty(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId)
+        public Window_ResultTypeJSONProperty(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId, TaskOnAccept task) :
+            base("Result Type JSON Property Data", task)
         {
-            Title = "ResultTypeJSONProperty Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId);

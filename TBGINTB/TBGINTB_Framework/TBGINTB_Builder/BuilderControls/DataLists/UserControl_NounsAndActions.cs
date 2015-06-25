@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-using TBGINTB_Builder.BuilderControls;
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
@@ -146,27 +146,58 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_AddNoun_Click(object sender, RoutedEventArgs e)
         {
-            Window_Noun window = new Window_Noun(null, null, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddNoun(window.NounText, window.ParagraphStateId);
+            Window_Noun window = 
+                new Window_Noun
+                (
+                    null, 
+                    null,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Noun wWin = win as Window_Noun;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddNoun(wWin.NounText, wWin.ParagraphStateId);
+                    }
+                );
+            window.Show();
         }
 
         private void Button_ModifyNoun_Click(object sender, RoutedEventArgs e)
         {
             UserControl_Noun grid = m_stackPanel_nouns.Children.OfType<UserControl_Noun>().Single(g => g.NounId.Value == SelectedNounId);
-            Window_Noun window = new Window_Noun(grid.NounId, grid.NounText, grid.ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyNoun(window.NounId.Value, window.NounText, window.ParagraphStateId);
+            Window_Noun window = 
+                new Window_Noun
+                (
+                    grid.NounId, 
+                    grid.NounText,
+                    grid.ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Noun wWin = win as Window_Noun;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyNoun(wWin.NounId.Value, wWin.NounText, wWin.ParagraphStateId);
+                    }
+                );
+            window.Show();
         }
 
         private void Button_AddAction_Click(object sender, RoutedEventArgs e)
         {
-            Window_Action window = new Window_Action(null, null, SelectedNounId, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddAction(window.ActionVerbType.Value, window.ActionNoun.Value);
+            Window_Action window = 
+                new Window_Action
+                (
+                    null, 
+                    null, 
+                    SelectedNounId,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Action wWin = win as Window_Action;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddAction(wWin.ActionVerbType.Value, wWin.ActionNoun.Value);
+                    }
+                );
+            window.Show();
         }
 
         private void UserControl_NounData_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

@@ -182,38 +182,74 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewItemActionRequirementDialog()
         {
-            Window_ItemActionRequirement window = new Window_ItemActionRequirement(null, null, null, NounId, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddItemActionRequirement
+            Window_ItemActionRequirement window = 
+                new Window_ItemActionRequirement
                 (
-                    window.ItemActionRequirementItem.Value,
-                    window.ItemActionRequirementAction.Value
+                    null, 
+                    null, 
+                    null, 
+                    NounId,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_ItemActionRequirement wWin = win as Window_ItemActionRequirement;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddItemActionRequirement
+                            (
+                                wWin.ItemActionRequirementItem.Value,
+                                wWin.ItemActionRequirementAction.Value
+                            );
+                    }
                 );
+            window.Show();
         }
 
         private void NewEventActionRequirementDialog()
         {
-            Window_EventActionRequirement window = new Window_EventActionRequirement(null, null, null, NounId, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddEventActionRequirement
+            Window_EventActionRequirement window = 
+                new Window_EventActionRequirement
                 (
-                    window.EventActionRequirementEvent.Value,
-                    window.EventActionRequirementAction.Value
+                    null, 
+                    null, 
+                    null, 
+                    NounId,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_EventActionRequirement wWin = win as Window_EventActionRequirement;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddEventActionRequirement
+                            (
+                                wWin.EventActionRequirementEvent.Value,
+                                wWin.EventActionRequirementAction.Value
+                            );
+                    }
                 );
+            window.Show();
         }
 
         private void NewCharacterActionRequirementDialog()
         {
-            Window_CharacterActionRequirement window = new Window_CharacterActionRequirement(null, null, null, NounId, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddCharacterActionRequirement
+            Window_CharacterActionRequirement window = 
+                new Window_CharacterActionRequirement
                 (
-                    window.CharacterActionRequirementCharacter.Value,
-                    window.CharacterActionRequirementAction.Value
+                    null, 
+                    null, 
+                    null, 
+                    NounId,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_CharacterActionRequirement wWin = win as Window_CharacterActionRequirement;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddCharacterActionRequirement
+                            (
+                                wWin.CharacterActionRequirementCharacter.Value,
+                                wWin.CharacterActionRequirementAction.Value
+                            );
+                    }
                 );
+            window.Show();
         }
 
         private void Button_NewItemActionRequirement_Click(object sender, RoutedEventArgs e)

@@ -90,19 +90,40 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewMessageChoiceResultDialog()
         {
-            Window_ResultType window_resultType = new Window_ResultType(null, null);
-            window_resultType.ShowDialog();
-            if (window_resultType.Accepted)
-            {
-                Window_MessageChoiceResult window_messageChoiceResult = new Window_MessageChoiceResult(null, null, MessageChoiceId, MessageId, window_resultType.ResultTypeId.Value);
-                window_messageChoiceResult.ShowDialog();
-                if (window_messageChoiceResult.Accepted)
-                    GinTubBuilderManager.AddMessageChoiceResult
-                    (
-                        window_messageChoiceResult.MessageChoiceResultResult.Value,
-                        window_messageChoiceResult.MessageChoiceResultMessageChoice.Value
-                    );
-            }
+            Window_ResultType window_resultType =
+                new Window_ResultType
+                (
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_ResultType wWin = win as Window_ResultType;
+                        if (wWin != null)
+                        {
+                            Window_MessageChoiceResult window_messageChoiceResult =
+                                new Window_MessageChoiceResult
+                                (
+                                    null,
+                                    null,
+                                    MessageChoiceId,
+                                    MessageId,
+                                    wWin.ResultTypeId.Value,
+                                    (wwWin) =>
+                                    {
+                                        Window_MessageChoiceResult wwwWin = wwWin as Window_MessageChoiceResult;
+                                        if (wwwWin != null)
+                                            GinTubBuilderManager.AddMessageChoiceResult
+                                            (
+                                                wwwWin.MessageChoiceResultResult.Value,
+                                                wwwWin.MessageChoiceResultMessageChoice.Value
+                                            );
+                                    }
+                                );
+                            window_messageChoiceResult.Show();
+                        }
+                    }
+                );
+            window_resultType.Show();
         }
         
         private void Button_NewMessageChoiceResult_Click(object sender, RoutedEventArgs e)

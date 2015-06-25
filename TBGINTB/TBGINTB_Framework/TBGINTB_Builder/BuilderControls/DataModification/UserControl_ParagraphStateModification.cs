@@ -84,17 +84,21 @@ namespace TBGINTB_Builder.BuilderControls
                     m_userControl_paragraphState.ParagraphStateId,
                     m_userControl_paragraphState.ParagraphStateText,
                     m_userControl_paragraphState.ParagraphStateState,
-                    m_userControl_paragraphState.ParagraphId
+                    m_userControl_paragraphState.ParagraphId,
+                    (win) =>
+                    {
+                        Window_ParagraphState wWin = win as Window_ParagraphState;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyParagraphState
+                            (
+                                wWin.ParagraphStateId.Value,
+                                wWin.ParagraphStateText,
+                                wWin.ParagraphStateState.Value,
+                                wWin.ParagraphId
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyParagraphState
-                (
-                    window.ParagraphStateId.Value,
-                    window.ParagraphStateText,
-                    window.ParagraphStateState.Value,
-                    window.ParagraphId
-                );
+            window.Show();
         }
 
         #endregion

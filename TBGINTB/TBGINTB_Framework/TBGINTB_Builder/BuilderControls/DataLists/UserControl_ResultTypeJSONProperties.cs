@@ -89,10 +89,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewResultTypeJSONPropertyDialog()
         {
-            Window_ResultTypeJSONProperty window = new Window_ResultTypeJSONProperty(null, null, ResultTypeId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddResultTypeJSONProperty(window.ResultTypeJSONPropertyJSONProperty, window.ResultTypeId);
+            Window_ResultTypeJSONProperty window = 
+                new Window_ResultTypeJSONProperty
+                (
+                    null, 
+                    null,
+                    ResultTypeId,
+                    (win) =>
+                    {
+                        Window_ResultTypeJSONProperty wWin = win as Window_ResultTypeJSONProperty;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddResultTypeJSONProperty(wWin.ResultTypeJSONPropertyJSONProperty, wWin.ResultTypeId);
+                    }
+                );
+            window.Show();
         }
 
 

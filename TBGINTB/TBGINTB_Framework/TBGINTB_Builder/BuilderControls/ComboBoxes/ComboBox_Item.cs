@@ -115,10 +115,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewItemDialog()
         {
-            Window_Item window = new Window_Item(null, null, null);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddItem(window.ItemName, window.ItemDescription);
+            Window_Item window = 
+                new Window_Item
+                (
+                    null, 
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_Item wWin = win as Window_Item;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddItem(wWin.ItemName, wWin.ItemDescription);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Item_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_MessageChoiceResult : Window_AcceptCancel
+    public class Window_MessageChoiceResult : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_MessageChoiceResult(int? messageChoiceResultId, int? messageChoiceResultResult, int? messageChoiceResultMessageChoice, int messageId, int resultTypeId)
+        public Window_MessageChoiceResult(int? messageChoiceResultId, int? messageChoiceResultResult, int? messageChoiceResultMessageChoice, int messageId, int resultTypeId, TaskOnAccept task) :
+            base("Message Choice Result Data", task)
         {
-            Title = "MessageChoiceResult Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(messageChoiceResultId, messageChoiceResultResult, messageChoiceResultMessageChoice, messageId);
@@ -46,9 +46,9 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.LoadAllMessageChoicesForMessage(messageId);
         }
 
-        public Window_MessageChoiceResult(int? messageChoiceResultId, int? messageChoiceResultResult, int? messageChoiceResultMessageChoice, int messageId)
+        public Window_MessageChoiceResult(int? messageChoiceResultId, int? messageChoiceResultResult, int? messageChoiceResultMessageChoice, int messageId, TaskOnAccept task) :
+            base("Message Choice Result Data", task)
         {
-            Title = "MessageChoiceResult Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(messageChoiceResultId, messageChoiceResultResult, messageChoiceResultMessageChoice, messageId);

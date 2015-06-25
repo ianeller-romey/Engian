@@ -114,10 +114,23 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_CreateRoom_Click(object sender, RoutedEventArgs e)
         {
-            Window_Room window = new Window_Room(null, string.Empty, RoomX, RoomY, RoomZ, AreaId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddRoom(window.RoomName, RoomX, RoomY, RoomZ, AreaId);
+            Window_Room window = 
+                new Window_Room
+                (
+                    null, 
+                    string.Empty, 
+                    RoomX, 
+                    RoomY, 
+                    RoomZ,
+                    AreaId,
+                    (win) =>
+                    {
+                        Window_Room wWin = win as Window_Room;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddRoom(wWin.RoomName, wWin.RoomX, wWin.RoomY, wWin.RoomZ, wWin.AreaId);
+                    }
+                );
+            window.Show();
         }
 
         private void Button_UpdateRoom_Click(object sender, RoutedEventArgs e)

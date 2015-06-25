@@ -11,7 +11,7 @@ using TBGINTB_Builder.HelperControls;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_Room : Window_AcceptCancel
+    public class Window_Room : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -36,9 +36,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_Room(int? roomId, string roomName, int roomX, int roomY, int roomZ, int areaId)
+        public Window_Room(int? roomId, string roomName, int roomX, int roomY, int roomZ, int areaId, TaskOnAccept task) :
+            base("Room Data", task)
         {
-            Title = "Room Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(roomId, roomName, roomX, roomY, roomZ, areaId);

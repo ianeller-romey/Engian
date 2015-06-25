@@ -76,10 +76,19 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyItem_Click(object sender, RoutedEventArgs e)
         {
             Window_Item window =
-                new Window_Item(m_userControl_item.ItemId, m_userControl_item.ItemName, m_userControl_item.ItemDescription);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyItem(window.ItemId.Value, window.ItemName, window.ItemDescription);
+                new Window_Item
+                (
+                    m_userControl_item.ItemId, 
+                    m_userControl_item.ItemName, 
+                    m_userControl_item.ItemDescription, 
+                    (win) =>
+                    {
+                        Window_Item wWin = win as Window_Item;
+                        if(wWin != null)
+                            GinTubBuilderManager.ModifyItem(wWin.ItemId.Value, wWin.ItemName, wWin.ItemDescription);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_MessageChoice : Window_AcceptCancel
+    public class Window_MessageChoice : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -36,9 +36,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_MessageChoice(int? messageChoiceId, string messageChoiceName, string messageChoiceText, int messageId)
+        public Window_MessageChoice(int? messageChoiceId, string messageChoiceName, string messageChoiceText, int messageId, TaskOnAccept task) :
+            base("Message Choice Data", task)
         {
-            Title = "MessageChoice Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(messageChoiceId, messageChoiceName, messageChoiceText, messageId);

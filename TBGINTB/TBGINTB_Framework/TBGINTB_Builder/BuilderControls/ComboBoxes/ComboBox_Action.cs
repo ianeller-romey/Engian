@@ -136,10 +136,21 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewActionDialog()
         {
-            Window_Action window = new Window_Action(null, null, NounId, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddAction(window.ActionVerbType.Value, window.ActionNoun.Value);
+            Window_Action window = 
+                new Window_Action
+                (
+                    null, 
+                    null, 
+                    NounId, 
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Action wWin = win as Window_Action;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddAction(wWin.ActionVerbType.Value, wWin.ActionNoun.Value);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Action_SelectionChanged(object sender, SelectionChangedEventArgs e)

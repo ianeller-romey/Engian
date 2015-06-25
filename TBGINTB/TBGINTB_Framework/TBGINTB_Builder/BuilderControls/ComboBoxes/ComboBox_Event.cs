@@ -115,10 +115,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewEventDialog()
         {
-            Window_Event window = new Window_Event(null, null, null);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddEvent(window.EventName, window.EventDescription);
+            Window_Event window = 
+                new Window_Event
+                (
+                    null, 
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_Event wWin = win as Window_Event;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddEvent(wWin.EventName, wWin.EventDescription);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Event_SelectionChanged(object sender, SelectionChangedEventArgs e)

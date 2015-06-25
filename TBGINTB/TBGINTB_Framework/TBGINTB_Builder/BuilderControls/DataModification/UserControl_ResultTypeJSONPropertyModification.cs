@@ -79,17 +79,21 @@ namespace TBGINTB_Builder.BuilderControls
                 new Window_ResultTypeJSONProperty
                 (
                     m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyId, 
-                    m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty, 
-                    m_userControl_resultTypeJSONProperty.ResultTypeId
+                    m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty,
+                    m_userControl_resultTypeJSONProperty.ResultTypeId,
+                    (win) =>
+                    {
+                        Window_ResultTypeJSONProperty wWin = win as Window_ResultTypeJSONProperty;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyResultTypeJSONProperty
+                            (
+                                wWin.ResultTypeJSONPropertyId.Value,
+                                wWin.ResultTypeJSONPropertyJSONProperty,
+                                wWin.ResultTypeId
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyResultTypeJSONProperty
-                (
-                    window.ResultTypeJSONPropertyId.Value, 
-                    window.ResultTypeJSONPropertyJSONProperty, 
-                    window.ResultTypeId
-                );
+            window.Show();
         }
 
         #endregion

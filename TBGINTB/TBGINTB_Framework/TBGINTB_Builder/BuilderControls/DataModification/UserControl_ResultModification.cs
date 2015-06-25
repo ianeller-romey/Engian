@@ -77,10 +77,20 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyResult_Click(object sender, RoutedEventArgs e)
         {
             Window_Result window =
-                new Window_Result(m_userControl_result.ResultId, m_userControl_result.ResultName, m_userControl_result.ResultJSONData, m_userControl_result.ResultTypeId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyResult(window.ResultId.Value, window.ResultName, window.ResultJSONData, window.ResultTypeId);
+                new Window_Result
+                (
+                    m_userControl_result.ResultId, 
+                    m_userControl_result.ResultName, 
+                    m_userControl_result.ResultJSONData,
+                    m_userControl_result.ResultTypeId,
+                    (win) =>
+                    {
+                        Window_Result wWin = win as Window_Result;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyResult(wWin.ResultId.Value, wWin.ResultName, wWin.ResultJSONData, wWin.ResultTypeId);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

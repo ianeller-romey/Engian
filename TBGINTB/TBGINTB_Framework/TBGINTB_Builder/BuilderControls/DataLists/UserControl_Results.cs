@@ -90,10 +90,21 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewResultDialog()
         {
-            Window_Result window = new Window_Result(null, null, null, ResultTypeId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddResult(window.ResultName, window.ResultJSONData, window.ResultTypeId);
+            Window_Result window = 
+                new Window_Result
+                (
+                    null, 
+                    null, 
+                    null,
+                    ResultTypeId,
+                    (win) =>
+                    {
+                        Window_Result wWin = win as Window_Result;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddResult(wWin.ResultName, wWin.ResultJSONData, wWin.ResultTypeId);
+                    }
+                );
+            window.Show();
         }
         
 

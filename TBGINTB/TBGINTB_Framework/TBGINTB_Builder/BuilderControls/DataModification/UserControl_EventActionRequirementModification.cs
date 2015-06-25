@@ -86,16 +86,20 @@ namespace TBGINTB_Builder.BuilderControls
                     m_userControl_actionEventActionRequirement.EventActionRequirementEvent,
                     m_userControl_actionEventActionRequirement.EventActionRequirementAction,
                     NounId,
-                    ParagraphStateId
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_EventActionRequirement wWin = win as Window_EventActionRequirement;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyEventActionRequirement
+                            (
+                                wWin.EventActionRequirementId.Value,
+                                wWin.EventActionRequirementEvent.Value,
+                                wWin.EventActionRequirementAction.Value
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyEventActionRequirement
-                (
-                    window.EventActionRequirementId.Value, 
-                    window.EventActionRequirementEvent.Value, 
-                    window.EventActionRequirementAction.Value
-                );
+            window.Show();
         }
 
         #endregion

@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_Character : Window_AcceptCancel
+    public class Window_Character : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_Character(int? characterId, string characterName, string characterDescription)
+        public Window_Character(int? characterId, string characterName, string characterDescription, TaskOnAccept task) :
+            base("Character Data", task)
         {
-            Title = "Character Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(characterId, characterName, characterDescription);

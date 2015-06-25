@@ -76,10 +76,19 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyMessage_Click(object sender, RoutedEventArgs e)
         {
             Window_Message window =
-                new Window_Message(m_userControl_message.MessageId, m_userControl_message.MessageName, m_userControl_message.MessageText);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyMessage(window.MessageId.Value, window.MessageName, window.MessageText);
+                new Window_Message
+                (
+                    m_userControl_message.MessageId, 
+                    m_userControl_message.MessageName,
+                    m_userControl_message.MessageText,
+                    (win) =>
+                    {
+                        Window_Message wWin = win as Window_Message;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyMessage(wWin.MessageId.Value, wWin.MessageName, wWin.MessageText);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

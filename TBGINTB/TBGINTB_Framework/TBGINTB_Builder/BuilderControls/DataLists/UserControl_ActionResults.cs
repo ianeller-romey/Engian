@@ -92,19 +92,41 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewActionResultDialog()
         {
-            Window_ResultType window_resultType = new Window_ResultType(null, null);
-            window_resultType.ShowDialog();
-            if (window_resultType.Accepted)
-            {
-                Window_ActionResult window_actionResult = new Window_ActionResult(null, null, ActionId, NounId, ParagraphStateId, window_resultType.ResultTypeId.Value);
-                window_actionResult.ShowDialog();
-                if (window_actionResult.Accepted)
-                    GinTubBuilderManager.AddActionResult
-                    (
-                        window_actionResult.ActionResultResult.Value,
-                        window_actionResult.ActionResultAction.Value
-                    );
-            }
+            Window_ResultType window_resultType = 
+                new Window_ResultType
+                (
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_ResultType wWin = win as Window_ResultType;
+                        if (wWin != null)
+                        {
+                            Window_ActionResult window_actionResult = 
+                                new Window_ActionResult
+                                (
+                                    null, 
+                                    null, 
+                                    ActionId, 
+                                    NounId, 
+                                    ParagraphStateId,
+                                    wWin.ResultTypeId.Value,
+                                    (wwWin) =>
+                                    {
+                                        Window_ActionResult wwwWin = wwWin as Window_ActionResult;
+                                        if (wwwWin != null)
+                                            GinTubBuilderManager.AddActionResult
+                                            (
+                                                wwwWin.ActionResultResult.Value,
+                                                wwwWin.ActionResultAction.Value
+                                            );
+                                    }
+                                );
+                            window_actionResult.Show();
+                        }
+                    }
+                );
+            window_resultType.Show();
         }
         
         private void Button_NewActionResult_Click(object sender, RoutedEventArgs e)

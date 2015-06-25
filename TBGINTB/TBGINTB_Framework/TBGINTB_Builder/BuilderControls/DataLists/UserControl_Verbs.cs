@@ -89,10 +89,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewVerbDialog()
         {
-            Window_Verb window = new Window_Verb(null, null, VerbTypeId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddVerb(window.VerbName, window.VerbTypeId);
+            Window_Verb window = 
+                new Window_Verb
+                (
+                    null, 
+                    null,
+                    VerbTypeId,
+                    (win) =>
+                    {
+                        Window_Verb wWin = win as Window_Verb;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddVerb(wWin.VerbName, wWin.VerbTypeId);
+                    }
+                );
+            window.Show();
         }
 
 

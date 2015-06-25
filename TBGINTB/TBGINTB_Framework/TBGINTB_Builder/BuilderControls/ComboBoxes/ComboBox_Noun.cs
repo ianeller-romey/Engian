@@ -126,10 +126,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewNounDialog()
         {
-            Window_Noun window = new Window_Noun(null, null, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddNoun(window.NounText, window.ParagraphStateId);
+            Window_Noun window = 
+                new Window_Noun
+                (
+                    null, 
+                    null,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Noun wWin = win as Window_Noun;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddNoun(wWin.NounText, wWin.ParagraphStateId);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Noun_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -76,10 +76,19 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyVerb_Click(object sender, RoutedEventArgs e)
         {
             Window_Verb window =
-                new Window_Verb(m_userControl_verb.VerbId, m_userControl_verb.VerbName, m_userControl_verb.VerbTypeId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyVerb(window.VerbId.Value, window.VerbName, window.VerbTypeId);
+                new Window_Verb
+                (
+                    m_userControl_verb.VerbId,
+                    m_userControl_verb.VerbName,
+                    m_userControl_verb.VerbTypeId,
+                    (win) =>
+                    {
+                        Window_Verb wWin = win as Window_Verb;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyVerb(wWin.VerbId.Value, wWin.VerbName, wWin.VerbTypeId);
+                    }
+                );
+            window.Show();                
         }
 
         #endregion

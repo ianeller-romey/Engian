@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_RoomState : Window_AcceptCancel
+    public class Window_RoomState : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -37,9 +37,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_RoomState(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId)
+        public Window_RoomState(int? roomStateId, int? roomStateState, DateTime? roomStateTime, int? locationId, int roomId, TaskOnAccept task) :
+            base("Room State Data", task)
         {
-            Title = "Room State Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(roomStateId, roomStateState, roomStateTime, locationId, roomId);

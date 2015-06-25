@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_ParagraphState : Window_AcceptCancel
+    public class Window_ParagraphState : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -36,9 +36,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ParagraphState(int? paragraphStateId, string paragraphStateText, int? paragraphStateState, int paragraphId)
+        public Window_ParagraphState(int? paragraphStateId, string paragraphStateText, int? paragraphStateState, int paragraphId, TaskOnAccept task) :
+            base("Paragraph State Data", task)
         {
-            Title = "Paragraph State Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId);

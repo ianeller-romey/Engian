@@ -115,10 +115,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewCharacterDialog()
         {
-            Window_Character window = new Window_Character(null, null, null);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddCharacter(window.CharacterName, window.CharacterDescription);
+            Window_Character window = 
+                new Window_Character
+                (
+                    null, 
+                    null, 
+                    null,
+                    (win) =>
+                    {
+                        Window_Character wWin = win as Window_Character;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddCharacter(wWin.CharacterName, wWin.CharacterDescription);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Character_SelectionChanged(object sender, SelectionChangedEventArgs e)

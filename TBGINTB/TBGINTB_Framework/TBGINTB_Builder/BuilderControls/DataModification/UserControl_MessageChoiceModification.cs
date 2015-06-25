@@ -82,17 +82,21 @@ namespace TBGINTB_Builder.BuilderControls
                     m_userControl_messageChoice.MessageChoiceId,
                     m_userControl_messageChoice.MessageChoiceName, 
                     m_userControl_messageChoice.MessageChoiceText,
-                    m_userControl_messageChoice.MessageId
+                    m_userControl_messageChoice.MessageId,
+                    (win) =>
+                    {
+                        Window_MessageChoice wWin = win as Window_MessageChoice;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyMessageChoice
+                            (
+                                wWin.MessageChoiceId.Value,
+                                wWin.MessageChoiceName,
+                                wWin.MessageChoiceText,
+                                wWin.MessageId
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyMessageChoice
-                (
-                    window.MessageChoiceId.Value, 
-                    window.MessageChoiceName, 
-                    window.MessageChoiceText,
-                    window.MessageId
-                );
+            window.Show();
         }
 
         #endregion

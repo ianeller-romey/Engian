@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
+using TBGINTB_Builder.HelperControls;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
@@ -137,28 +138,43 @@ namespace TBGINTB_Builder.BuilderControls
                     m_grid_rooms.RoomX,
                     m_grid_rooms.RoomY,
                     m_grid_rooms.RoomZ,
-                    m_grid_rooms.AreaId
+                    m_grid_rooms.AreaId,
+                    (win) =>
+                    {
+                        Window_Room wWin = win as Window_Room;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyRoom
+                            (
+                                wWin.RoomId.Value,
+                                wWin.RoomName,
+                                wWin.RoomX,
+                                wWin.RoomY,
+                                wWin.RoomZ,
+                                m_grid_rooms.AreaId
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyRoom
-                (
-                    window.RoomId.Value, 
-                    window.RoomName, 
-                    window.RoomX, 
-                    window.RoomY, 
-                    window.RoomZ, 
-                    m_grid_rooms.AreaId
-                );
+            window.Show();
         }
 
         private void Button_AddRoomState_Click(object sender, RoutedEventArgs e)
         {
-            Window_RoomState window = 
-                new Window_RoomState(null, null, null, null, m_grid_rooms.RoomId.Value);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddRoomState(window.RoomStateTime, window.LocationId.Value, m_grid_rooms.RoomId.Value);
+            Window_RoomState window =
+                new Window_RoomState
+                (
+                    null, 
+                    null, 
+                    null, 
+                    null,
+                    m_grid_rooms.RoomId.Value,
+                    (win) =>
+                    {
+                        Window_RoomState wWin = win as Window_RoomState;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddRoomState(wWin.RoomStateTime, wWin.LocationId.Value, m_grid_rooms.RoomId.Value);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

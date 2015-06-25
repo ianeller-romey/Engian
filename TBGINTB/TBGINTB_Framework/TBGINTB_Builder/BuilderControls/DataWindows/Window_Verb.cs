@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_Verb : Window_AcceptCancel
+    public class Window_Verb : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_Verb(int? verbId, string verbName, int verbTypeId)
+        public Window_Verb(int? verbId, string verbName, int verbTypeId, TaskOnAccept task) :
+            base("Verb Data", task)
         {
-            Title = "Verb Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(verbId, verbName, verbTypeId);

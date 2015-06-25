@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_ResultType : Window_AcceptCancel
+    public class Window_ResultType : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -34,9 +34,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ResultType(int? resultTypeId, string resultTypeName)
+        public Window_ResultType(int? resultTypeId, string resultTypeName, TaskOnAccept task) :
+            base("Result Type Data", task)
         {
-            Title = "ResultType Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(resultTypeId, resultTypeName);

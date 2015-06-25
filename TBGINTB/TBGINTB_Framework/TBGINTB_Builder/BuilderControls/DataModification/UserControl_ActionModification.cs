@@ -80,10 +80,20 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyAction_Click(object sender, RoutedEventArgs e)
         {
             Window_Action window =
-                new Window_Action(m_userControl_action.ActionId, m_userControl_action.ActionVerbType, m_userControl_action.ActionNoun, ParagraphStateId);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyAction(window.ActionId.Value, window.ActionVerbType.Value, window.ActionNoun.Value);
+                new Window_Action
+                (
+                    m_userControl_action.ActionId, 
+                    m_userControl_action.ActionVerbType, 
+                    m_userControl_action.ActionNoun,
+                    ParagraphStateId,
+                    (win) =>
+                    {
+                        Window_Action wWin = win as Window_Action;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyAction(wWin.ActionId.Value, wWin.ActionVerbType.Value, wWin.ActionNoun.Value);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

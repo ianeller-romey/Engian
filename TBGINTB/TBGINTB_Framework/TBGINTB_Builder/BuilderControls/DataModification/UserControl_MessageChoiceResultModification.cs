@@ -83,16 +83,20 @@ namespace TBGINTB_Builder.BuilderControls
                     m_userControl_messageChoiceMessageChoiceResult.MessageChoiceResultId,
                     m_userControl_messageChoiceMessageChoiceResult.MessageChoiceResultResult,
                     m_userControl_messageChoiceMessageChoiceResult.MessageChoiceResultMessageChoice,
-                    MessageId
+                    MessageId,
+                    (win) =>
+                    {
+                        Window_MessageChoiceResult wWin = win as Window_MessageChoiceResult;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyMessageChoiceResult
+                            (
+                                wWin.MessageChoiceResultId.Value,
+                                wWin.MessageChoiceResultResult.Value,
+                                wWin.MessageChoiceResultMessageChoice.Value
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyMessageChoiceResult
-                (
-                    window.MessageChoiceResultId.Value, 
-                    window.MessageChoiceResultResult.Value, 
-                    window.MessageChoiceResultMessageChoice.Value
-                );
+            window.Show();
         }
 
         #endregion

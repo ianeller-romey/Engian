@@ -76,10 +76,19 @@ namespace TBGINTB_Builder.BuilderControls
         private void Button_ModifyCharacter_Click(object sender, RoutedEventArgs e)
         {
             Window_Character window =
-                new Window_Character(m_grid_character.CharacterId, m_grid_character.CharacterName, m_grid_character.CharacterDescription);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyCharacter(window.CharacterId.Value, window.CharacterName, window.CharacterDescription);
+                new Window_Character
+                (
+                    m_grid_character.CharacterId, 
+                    m_grid_character.CharacterName,
+                    m_grid_character.CharacterDescription,
+                    (win) =>
+                    {
+                        Window_Character wWin = win as Window_Character;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyCharacter(wWin.CharacterId.Value, wWin.CharacterName, wWin.CharacterDescription);
+                    }
+                );
+            window.Show();
         }
 
         #endregion

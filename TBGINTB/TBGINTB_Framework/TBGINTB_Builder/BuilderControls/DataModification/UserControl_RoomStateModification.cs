@@ -85,19 +85,23 @@ namespace TBGINTB_Builder.BuilderControls
                     m_userControl_roomState.RoomStateId,
                     m_userControl_roomState.RoomStateState,
                     m_userControl_roomState.RoomStateTime,  
-                    m_userControl_roomState.LocationId,                  
-                    m_userControl_roomState.RoomId
+                    m_userControl_roomState.LocationId,
+                    m_userControl_roomState.RoomId,
+                    (win) =>
+                    {
+                        Window_RoomState wWin = win as Window_RoomState;
+                        if (wWin != null)
+                            GinTubBuilderManager.ModifyRoomState
+                            (
+                                wWin.RoomStateId.Value,
+                                wWin.RoomStateState.Value,
+                                wWin.RoomStateTime,
+                                wWin.LocationId.Value,
+                                wWin.RoomId
+                            );
+                    }
                 );
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.ModifyRoomState
-                (
-                    window.RoomStateId.Value,
-                    window.RoomStateState.Value, 
-                    window.RoomStateTime, 
-                    window.LocationId.Value,
-                    window.RoomId
-                );
+            window.Show();
         }
 
         #endregion

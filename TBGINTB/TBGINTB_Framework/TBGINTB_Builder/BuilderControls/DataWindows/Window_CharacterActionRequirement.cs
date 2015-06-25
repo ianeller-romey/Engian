@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_CharacterActionRequirement : Window_AcceptCancel
+    public class Window_CharacterActionRequirement : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_CharacterActionRequirement(int? characterActionRequirementId, int? characterActionRequirementCharacter, int? characterActionRequirementAction, int nounId, int paragraphStateId)
+        public Window_CharacterActionRequirement(int? characterActionRequirementId, int? characterActionRequirementCharacter, int? characterActionRequirementAction, int nounId, int paragraphStateId, TaskOnAccept task) :
+            base("Character Action Requirement Data", task)
         {
-            Title = "CharacterActionRequirement Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(characterActionRequirementId, characterActionRequirementCharacter, characterActionRequirementAction, nounId, paragraphStateId);

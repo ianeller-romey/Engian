@@ -115,10 +115,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void NewMessageDialog()
         {
-            Window_Message window = new Window_Message(null, null, null);
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddMessage(window.MessageName, window.MessageText);
+            Window_Message window = 
+                new Window_Message
+                (
+                    null, 
+                    null,
+                    null,
+                    (win) =>
+                    {
+                        Window_Message wWin = win as Window_Message;
+                        if (wWin != null)
+                            GinTubBuilderManager.AddMessage(wWin.MessageName, wWin.MessageText);
+                    }
+                );
+            window.Show();
         }
 
         private void ComboBox_Message_SelectionChanged(object sender, SelectionChangedEventArgs e)

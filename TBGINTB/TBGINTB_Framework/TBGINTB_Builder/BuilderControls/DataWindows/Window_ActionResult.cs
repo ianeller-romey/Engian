@@ -13,7 +13,7 @@ using TBGINTB_Builder.Lib;
 
 namespace TBGINTB_Builder.BuilderControls
 {
-    public class Window_ActionResult : Window_AcceptCancel
+    public class Window_ActionResult : Window_TaskOnAccept
     {
         #region MEMBER FIELDS
 
@@ -35,9 +35,9 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ActionResult(int? actionResultId, int? actionResultResult, int? actionResultAction, int nounId, int paragraphStateId, int resultTypeId)
+        public Window_ActionResult(int? actionResultId, int? actionResultResult, int? actionResultAction, int nounId, int paragraphStateId, int resultTypeId, TaskOnAccept task) :
+            base("Action Result Data", task)
         {
-            Title = "ActionResult Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(actionResultId, actionResultResult, actionResultAction, nounId, paragraphStateId);
@@ -46,9 +46,9 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.LoadAllActionsForNoun(nounId);
         }
 
-        public Window_ActionResult(int? actionResultId, int? actionResultResult, int? actionResultAction, int nounId, int paragraphStateId)
+        public Window_ActionResult(int? actionResultId, int? actionResultResult, int? actionResultAction, int nounId, int paragraphStateId, TaskOnAccept task) :
+            base("Action Result Data", task)
         {
-            Title = "ActionResult Data";
             Width = 300;
             Height = 300;
             Content = CreateControls(actionResultId, actionResultResult, actionResultAction, nounId, paragraphStateId);
