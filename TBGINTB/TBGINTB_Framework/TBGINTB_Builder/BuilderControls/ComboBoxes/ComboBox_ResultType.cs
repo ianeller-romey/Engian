@@ -106,9 +106,8 @@ namespace TBGINTB_Builder.BuilderControls
         private void NewResultTypeDialog()
         {
             Window_TextEntry window = new Window_TextEntry("Result Type", "");
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddResultType(window.Text);
+            window.Closed += (x, y) => { if (window.Accepted) GinTubBuilderManager.AddResultType(window.Text); };
+            window.Show();
         }
 
         private void ComboBox_ResultType_SelectionChanged(object sender, SelectionChangedEventArgs e)

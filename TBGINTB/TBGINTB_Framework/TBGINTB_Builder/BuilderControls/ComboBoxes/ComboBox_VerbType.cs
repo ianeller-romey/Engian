@@ -106,9 +106,8 @@ namespace TBGINTB_Builder.BuilderControls
         private void NewVerbTypeDialog()
         {
             Window_TextEntry window = new Window_TextEntry("Verb Type", "");
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddVerbType(window.Text);
+            window.Closed += (x, y) => { if (window.Accepted) GinTubBuilderManager.AddVerbType(window.Text); };
+            window.Show();
         }
 
         private void ComboBox_VerbType_SelectionChanged(object sender, SelectionChangedEventArgs e)

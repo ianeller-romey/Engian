@@ -121,14 +121,20 @@ namespace TBGINTB_Builder.BuilderControls
         private void NewLocationDialog()
         {
             Window_OpenFile window_openFile = new Window_OpenFile("Location File", string.Empty);
-            window_openFile.ShowDialog();
-            if (window_openFile.Accepted)
-            {
-                Window_TextEntry window_textEntry = new Window_TextEntry("Location Name", Path.GetFileNameWithoutExtension(window_openFile.FileName));
-                window_textEntry.ShowDialog();
-                if (window_textEntry.Accepted)
-                    GinTubBuilderManager.AddLocation(window_textEntry.Text, window_openFile.FileName);
-            }
+            window_openFile.Closed += (x, y) =>
+                {
+                    if (window_openFile.Accepted)
+                    {
+                        Window_TextEntry window_textEntry = new Window_TextEntry("Location Name", Path.GetFileNameWithoutExtension(window_openFile.FileName));
+                        window_textEntry.Closed += (a, b) =>
+                            {
+                                if (window_textEntry.Accepted)
+                                    GinTubBuilderManager.AddLocation(window_textEntry.Text, window_openFile.FileName);
+                            };
+                        window_textEntry.Show();
+                    }
+                };
+            window_openFile.Show();
         }
 
         private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)

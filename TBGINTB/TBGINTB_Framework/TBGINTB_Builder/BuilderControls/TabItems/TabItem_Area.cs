@@ -336,9 +336,8 @@ namespace TBGINTB_Builder.BuilderControls
         private void AddingArea()
         {
             Window_TextEntry window = new Window_TextEntry("Area Name", "");
-            window.ShowDialog();
-            if (window.Accepted)
-                GinTubBuilderManager.AddArea(window.Text);
+            window.Closed += (x, y) => { if (window.Accepted) GinTubBuilderManager.AddArea(window.Text); };
+            window.Show();
         }
 
         private void AddedArea(int id, string name)
