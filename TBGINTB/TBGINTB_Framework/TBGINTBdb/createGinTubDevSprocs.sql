@@ -4926,8 +4926,8 @@ BEGIN
 	-- Insert player	
 	SELECT @playerid = NEWID()
 	
-	INSERT INTO [dbo].[Player] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id])
-	VALUES (@usernameid, @domainnameid, @domainid, @password, @playerid)
+	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint])
+	VALUES (@usernameid, @domainnameid, @domainid, @password, @playerid, GETDATE())
 	
 	SELECT @playerid
 

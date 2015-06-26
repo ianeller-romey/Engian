@@ -33,7 +33,7 @@ CREATE TABLE [dbo].[Paragraphs] (
 	[Order] int NOT NULL,
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
 	[RoomState] int NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
-	CONSTRAINT UQ__ParagraphsOrder UNIQUE NONCLUSTERED ([Order], [Room], [RoomState])
+	CONSTRAINT UQ__Paragraphs UNIQUE NONCLUSTERED ([Order], [Room], [RoomState])
 )
 
 CREATE TABLE [dbo].[ParagraphStates] (
@@ -41,7 +41,7 @@ CREATE TABLE [dbo].[ParagraphStates] (
 	[Text] varchar(MAX) NOT NULL,
 	[State] int NOT NULL,
 	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id])
-	CONSTRAINT UQ__ParagraphStatesState UNIQUE NONCLUSTERED ([State], [Paragraph])
+	CONSTRAINT UQ__ParagraphStates UNIQUE NONCLUSTERED ([State], [Paragraph])
 )
 
 CREATE TABLE [dbo].[Nouns] (
@@ -396,18 +396,20 @@ CREATE TABLE [dbo].[Players] (
 	[LastCheckpoint] datetime NOT NULL
 )
 
-CREATE TABLE [dbo].[PlayerRoomStates] (
+CREATE TABLE [dbo].[PlayerStatesOfRooms] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-	[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
-	[CheckpointDate] datetime NOT NULL
+	[State] int NOT NULL,
+	[CheckpointDate] datetime NOT NULL,
+	CONSTRAINT UQ__PlayerStatesOfRooms UNIQUE NONCLUSTERED ([Player], [Room])
 )
 
-CREATE TABLE [dbo].[PlayerParagraphStates] (
+CREATE TABLE [dbo].[PlayerStatesOfParagraphs] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 	[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
-	[ParagraphStates] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id]),
-	[CheckpointDate] datetime NOT NULL
+	[State] int NOT NULL,
+	[CheckpointDate] datetime NOT NULL,
+	CONSTRAINT UQ__PlayerStatesOfParagraphs UNIQUE NONCLUSTERED ([Player], [Paragraph])
 )
 
 CREATE TABLE [dbo].[PlayerInventory] (
@@ -500,3 +502,19 @@ CREATE VIEW [dev].[MessageChoiceResultTypes] AS
 	on a.[Id] = ar.[MessageChoice]
 	
 GO
+
+CREATE VIEW [dev].[Players] AS
+	SELECT eun.[UserName] + '@' + edn.[DomainName] + '.' + ed.[Domain] AS [Login],
+		   p.[Password],
+		   p.[Id],
+		   p.[LastCheckpoint]
+	FROM [dbo].[Players] p
+	INNER JOIN [dbo].[EmailUserNames] eun
+	ON p.[EmailUserName] = eun.[Id]
+	INNER JOIN [dbo].[EmailDomainNames] edn
+	ON p.[EmailDomainName] = edn.[Id]
+	INNER JOIN [dbo].[EmailDomains] ed
+	ON p.[EmailDomain] = ed.[Id]
+	
+GO
+	
