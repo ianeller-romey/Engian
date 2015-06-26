@@ -30,6 +30,7 @@ namespace TBGINTB_Builder.HelperControls
             Accepted = false;
 
             WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+            Topmost = true;
 
             Loaded += Window_AcceptCancel_Loaded;
         }

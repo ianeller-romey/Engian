@@ -42,6 +42,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(roomId, roomName, roomX, roomY, roomZ, areaId);
+            m_userControl_room.SetActiveAndRegisterForGinTubEvents();
         }
 
         #endregion

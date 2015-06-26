@@ -41,6 +41,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(evntId, evntName, evntDescription);
+            m_userControl_evnt.SetActiveAndRegisterForGinTubEvents();
         }
 
         #endregion

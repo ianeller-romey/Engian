@@ -42,6 +42,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(messageChoiceId, messageChoiceName, messageChoiceText, messageId);
+            m_userControl_messageChoice.SetActiveAndRegisterForGinTubEvents();
         }
 
         #endregion

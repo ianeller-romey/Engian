@@ -2674,6 +2674,7 @@ BEGIN
 		   [ResultType]
 	FROM [dev].[Results] r
 	WHERE [ResultType] = @resulttype
+	ORDER BY [Name]
 
 END
 GO
@@ -2702,6 +2703,7 @@ BEGIN
 	INNER JOIN [dev].[ActionResultTypes] art
 	ON r.[ResultType] = art.[ResultType]
 	WHERE art.[Action] = @action
+	ORDER BY [Name]
 
 END
 GO
@@ -2730,6 +2732,7 @@ BEGIN
 	INNER JOIN [dev].[MessageChoiceResultTypes] mcrt
 	ON r.[ResultType] = mcrt.[ResultType]
 	WHERE mcrt.[MessageChoice] = @messagechoice
+	ORDER BY [Name]
 
 END
 GO
@@ -3309,6 +3312,7 @@ BEGIN
 		   [Name],
 		   [Description]
 	FROM [dbo].[Items]
+	ORDER BY [Name]
 
 END
 GO
@@ -3469,6 +3473,7 @@ BEGIN
 		   [Name],
 		   [Description]
 	FROM [dbo].[Events]
+	ORDER BY [Name]
 
 END
 GO
@@ -3629,6 +3634,7 @@ BEGIN
 		   [Name],
 		   [Description]
 	FROM [dbo].[Characters]
+	ORDER BY [Name]
 
 END
 GO
@@ -4306,12 +4312,11 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT m.[Id],
-		   mn.[Name],
-		   m.[Text]
-	FROM [dbo].[Messages] m
-	INNER JOIN [dev].[MessageNames] mn
-	ON mn.[Message] = m.[Id]
+	SELECT [Id],
+		   [Name],
+		   [Text]
+	FROM [dev].[Messages]
+	ORDER BY [Name]
 
 END
 GO
@@ -4332,13 +4337,11 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT m.[Id],
-		   mn.[Name],
-		   m.[Text]
-	FROM [dbo].[Messages] m
-	INNER JOIN [dev].[MessageNames] mn
-	ON mn.[Message] = m.[Id]
-	WHERE m.[Id] = @id
+	SELECT [Id],
+		   [Name],
+		   [Text]
+	FROM [dev].[Messages]
+	WHERE [Id] = @id
 
 END
 GO
@@ -4496,14 +4499,12 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT m.[Id],
-		   mn.[Name],
-		   m.[Text],
-		   m.[Message]
-	FROM [dbo].[MessageChoices] m
-	INNER JOIN [dev].[MessageChoiceNames] mn
-	ON mn.[MessageChoice] = m.[Id]
-	WHERE m.[Message] = @message
+	SELECT [Id],
+		   [Name],
+		   [Text],
+		   [Message]
+	FROM [dev].[MessageChoices]
+	WHERE [Message] = @message
 
 END
 GO
@@ -4524,14 +4525,12 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT m.[Id],
-		   mn.[Name],
-		   m.[Text],
-		   m.[Message]
-	FROM [dbo].[MessageChoices] m
-	INNER JOIN [dev].[MessageChoiceNames] mn
-	ON mn.[MessageChoice] = m.[Id]
-	WHERE m.[Id] = @id
+	SELECT [Id],
+		   [Name],
+		   [Text],
+		   [Message]
+	FROM [dev].[MessageChoices]
+	WHERE [Id] = @id
 
 END
 GO

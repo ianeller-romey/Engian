@@ -443,6 +443,27 @@ CREATE VIEW [dev].[Results] AS
 	
 GO
 
+CREATE VIEW [dev].[Messages] AS
+	SELECT m.[Id],
+		   ISNULL(mn.[Name], '') AS [Name],
+		   m.[Text]
+	FROM [dbo].[Messages] m
+	LEFT JOIN [dev].[MessageNames] mn
+	ON mn.[Message] = m.[Id]
+	
+GO
+
+CREATE VIEW [dev].[MessageChoices] AS
+	SELECT m.[Id],
+		   ISNULL(mn.[Name], '') AS [Name],
+		   m.[Text],
+		   m.[Message]
+	FROM [dbo].[MessageChoices] m
+	LEFT JOIN [dev].[MessageChoiceNames] mn
+	ON mn.[MessageChoice] = m.[Id]
+	
+GO
+
 CREATE VIEW [dev].[ActionNames] AS
 	SELECT a.[Id] AS [Action],
 		   vt.[Name] + ' on ' + n.[Text] AS [Name]

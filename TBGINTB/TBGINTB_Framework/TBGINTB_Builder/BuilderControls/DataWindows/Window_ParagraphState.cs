@@ -42,6 +42,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(paragraphStateId, paragraphStateText, paragraphStateState, paragraphId);
+            m_userControl_paragraphState.SetActiveAndRegisterForGinTubEvents();
         }
 
         #endregion

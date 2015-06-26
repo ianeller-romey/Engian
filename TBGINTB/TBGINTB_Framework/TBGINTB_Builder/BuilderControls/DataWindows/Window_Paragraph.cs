@@ -42,6 +42,7 @@ namespace TBGINTB_Builder.BuilderControls
             Width = 300;
             Height = 300;
             Content = CreateControls(paragraphId, paragraphOrder, roomId, roomStateId);
+            m_userControl_paragraph.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllLocations();
         }
 

@@ -117,7 +117,13 @@ namespace TBGINTB_Builder.BuilderControls
 
             ////////
             // Text
-            m_textBox_text = new TextBox() { VerticalAlignment = VerticalAlignment.Center, Text = ParagraphStateText };
+            m_textBox_text = 
+                new TextBox() 
+                { 
+                    VerticalAlignment = VerticalAlignment.Center, 
+                    TextWrapping = System.Windows.TextWrapping.Wrap, 
+                    Text = ParagraphStateText 
+                };
             m_textBox_text.TextChanged += TextBox_Text_TextChanged;
             Label label_text = new Label() { Content = "Text:", FontWeight = FontWeights.Bold, VerticalAlignment = VerticalAlignment.Center };
             grid_text.SetGridRowColumn(m_textBox_text, 1, 0);
