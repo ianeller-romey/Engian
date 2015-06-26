@@ -428,8 +428,8 @@ namespace TBGINTB_Builder.BuilderControls
                 new UserControl_ActionResults
                 (
                     actionId,
-                    m_grid_nounsAndActions.SelectedNounId,
-                    m_grid_paragraphsAndStates.SelectedParagraphId
+                    m_grid_nounsAndActions.SelectedNounId.Value,
+                    m_grid_paragraphsAndStates.SelectedParagraphId.Value
                 );
             m_grid_sub.SetGridRowColumn(m_grid_actionResults, 0, 8);
             m_grid_actionResults.SetActiveAndRegisterForGinTubEvents();
@@ -439,15 +439,15 @@ namespace TBGINTB_Builder.BuilderControls
                 new UserControl_ActionRequirements
                 (
                     actionId,
-                    m_grid_nounsAndActions.SelectedNounId,
-                    m_grid_paragraphsAndStates.SelectedParagraphId
+                    m_grid_nounsAndActions.SelectedNounId.Value,
+                    m_grid_paragraphsAndStates.SelectedParagraphId.Value
                 );
             m_grid_sub.SetGridRowColumn(m_grid_actionRequirements, 0, 10);
             m_grid_actionRequirements.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllItemActionRequirementsForAction(actionId);
             GinTubBuilderManager.LoadAllEventActionRequirementsForAction(actionId);
             GinTubBuilderManager.LoadAllCharacterActionRequirementsForAction(actionId);
-            GinTubBuilderManager.LoadAllActionsForNoun(m_grid_nounsAndActions.SelectedNounId);
+            GinTubBuilderManager.LoadAllActionsForNoun(m_grid_nounsAndActions.SelectedNounId.Value);
         }
 
         private void UnloadRoom()
