@@ -4,72 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using GinTub;
+using FastMapper;
+
+using GinTub.Repository.Entities.Database;
+using GinTub.Repository.Entities.LoadRoom;
 
 
 namespace GinTub.Repository
 {
     public class GinTubRepository : Interface.IGinTubRepository
     {
-        public RoomDataInitialLoad.RoomData GetRoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime)
+        public IEnumerable<RoomState> LoadNewGame(Guid playerId)
         {
-            var paragraphList = new List<RoomDataInitialLoad.ParagraphData>();
+            IEnumerable<RoomState> roomStates;
+            IEnumerable<ParagraphState> paragraphStates;
+            IEnumerable<Noun> nouns;
+            using (GinTubEntities entities = new GinTubEntities())
+            {
+                var roomStateResults = entities.LoadNewGame(playerId);
+                roomStates = roomStateResults.Select(x => TypeAdapter.Adapt<RoomState>(x)).ToList();
 
-            paragraphList.Add(new RoomDataInitialLoad.ParagraphData() {
-                Id = 1,
-                State = 1,
-                Text = "You sit alone in your car.",
-                Nouns = new List<RoomDataInitialLoad.NounData> {
-                    new RoomDataInitialLoad.NounData() {
-                        Id = 1,
-                        Text = "car"
-                    }
-                },
-            });
-            paragraphList.Add(new RoomDataInitialLoad.ParagraphData() {
-                Id = 2,
-                State = 1,
-                Text = "The toneless drone of rain against the roof suffocates your ears.",
-            });
-            paragraphList.Add(new RoomDataInitialLoad.ParagraphData() {
-                Id = 3,
-                State = 1,
-                Text = "The laptop perched on your knees illuminates the interior.",
-                Nouns = new List<RoomDataInitialLoad.NounData> {
-                    new RoomDataInitialLoad.NounData() {
-                        Id = 2,
-                        Text = "laptop"
-                    }
-                },
-            });
-            paragraphList.Add(new RoomDataInitialLoad.ParagraphData() {
-                Id = 4,
-                State = 1,
-                Text = "In the seat beside you rests a crumpled bag, decorated with the garish logo of a fast food provider, and a gray boxcutter.",
-                Nouns = new List<RoomDataInitialLoad.NounData> {
-                    new RoomDataInitialLoad.NounData() {
-                        Id = 3,
-                        Text = "bag"
-                    },
-                    new RoomDataInitialLoad.NounData(){
-                        Id = 4,
-                        Text = "box cutter"
+                var paragraphStateResults = roomStateResults.GetNextResult<LoadParagraphStatesForRoom_Result>();
+                paragraphStates = paragraphStateResults.Select(x => TypeAdapter.Adapt<ParagraphState>(x)).ToList();
+
+                var nounResults = paragraphStateResults.GetNextResult<LoadNounsForRoom_Result>();
+                nouns = nounResults.Select(x => TypeAdapter.Adapt<Noun>(x)).ToList();
+
+                foreach (var roomState in roomStates)
+                {
+                    TypeAdapter.Adapt<List<ParagraphState>, ParagraphState[]>
+                    (
+                        paragraphStates.Where(x => x.RoomState == roomState.Id).ToList(),
+                        roomState.ParagraphStates
+                    );
+                    foreach (var paragraphState in paragraphStates)
+                    {
+                        TypeAdapter.Adapt<List<Noun>, Noun[]>
+                        (
+                            nouns.Where(x => x.ParagraphState == paragraphState.Id).ToList(),
+                            paragraphState.Nouns
+                        );
                     }
                 }
-            });
+            }
+            return null;
+        }
 
-            return new RoomDataInitialLoad.RoomData() {
-                Id = 1,
-                Area = 1,
-                State = 1,
-                Location = "http://capitalcitiesusa.org/wp-content/uploads/2012/07/01-Rainy-car-window.jpg",
-                X = 0,
-                Y = 0,
-                Z = 0,
-                CurrentTime = DateTime.Now,
-                RefreshTime = null,
-                Paragraphs = paragraphList
-            };
+        public IEnumerable<RoomState> LoadRoom(Guid playerId)
+        {
+            return null;
         }
     }
 }

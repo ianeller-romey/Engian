@@ -427,9 +427,14 @@ CREATE TABLE [dbo].[PlayerHistory] (
 
 CREATE TABLE [dbo].[PlayerParty] (
 	[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
-	[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[characters]([Id]),
+	[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Characters]([Id]),
 	[Active] bit NOT NULL,
 	[CheckpointDate] datetime NOT NULL
+)
+
+CREATE TABLE [dbo].[AreaRoomOnInitialLoad] (
+	[Area] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Areas]([Id]),
+	[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id])
 )
 
 GO
