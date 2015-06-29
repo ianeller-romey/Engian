@@ -62,10 +62,12 @@
     <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="GinTubBuilderManager_XmlImportAndExport.cs" />
     <Compile Include="GinTubBuilderManager_DbRetrieveAndUpdate.cs" />
+    <Compile Include="Model\DbModel\AreaRoomOnInitialLoad.cs" />
     <Compile Include="Model\DbModel\RoomPreviewNoun.cs" />
     <Compile Include="Model\DbModel\RoomPreviewParagraphState.cs" />
     <Compile Include="Model\XmlModel\Action.cs" />
     <Compile Include="Model\XmlModel\ActionResult.cs" />
+    <Compile Include="Model\XmlModel\AreaRoomOnInitialLoad.cs" />
     <Compile Include="Model\XmlModel\GinTub.cs" />
     <Compile Include="Model\XmlModel\Area.cs" />
     <Compile Include="Model\XmlModel\Character.cs" />
@@ -210,6 +212,9 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetAllVerbTypes_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetAreaRoomOnInitialLoad_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetArea_Result.cs">

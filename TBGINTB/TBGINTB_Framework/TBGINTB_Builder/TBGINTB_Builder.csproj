@@ -68,6 +68,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Room.cs" />
+    <Compile Include="BuilderControls\ComboBoxes\ComboBox_Area.cs" />
     <Compile Include="BuilderControls\DataLists\UserControl_MessageChoiceResults.cs" />
     <Compile Include="BuilderControls\DataLists\UserControl_MessageChoices.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_MessageChoice.cs" />
@@ -77,6 +79,8 @@
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Event.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Item.cs" />
     <Compile Include="BuilderControls\ComboBoxes\ComboBox_Result.cs" />
+    <Compile Include="BuilderControls\DataModification\UserControl_AreaRoomOnInitialLoadModification.cs" />
+    <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_AreaRoomOnInitialLoad.cs" />
     <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_ParagraphWithPreview.cs" />
     <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_Paragraph.cs" />
     <Compile Include="BuilderControls\DataModification\UserControl_MessageChoiceResultModification.cs" />
@@ -110,6 +114,7 @@
     <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_Room.cs" />
     <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_RoomState.cs" />
     <Compile Include="BuilderControls\DataVisualization\Bordered\UserControl_Bordered_Verb.cs" />
+    <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_AreaRoomOnInitialLoad.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_MessageChoiceResult.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_MessageChoice.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Message.cs" />
@@ -120,6 +125,7 @@
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Character.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Event.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Item.cs" />
+    <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Area.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_ResultType.cs" />
     <Compile Include="BuilderControls\DataVisualization\UserControls\UserControl_Result.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_MessageChoiceResult.cs" />
@@ -132,6 +138,8 @@
     <Compile Include="BuilderControls\DataWindows\Window_Character.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_Event.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_Item.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_Area.cs" />
+    <Compile Include="BuilderControls\DataWindows\Window_AreaRoomOnInitialLoad.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultType.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_ResultTypeJSONProperty.cs" />
     <Compile Include="BuilderControls\DataWindows\Window_Result.cs" />

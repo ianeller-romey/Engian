@@ -14,6 +14,7 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
     public class GinTub
     {
         DateTime m_exportDate;
+        AreaRoomOnInitialLoad m_areaOnInitialLoad;
         Item[] m_items;
         Event[] m_events;
         Character[] m_characters;
@@ -31,6 +32,17 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
             {
                 if (m_exportDate != value)
                     m_exportDate = value;
+            }
+        }
+
+        [XmlElement("AreaOnInitialLoad")]
+        public AreaRoomOnInitialLoad AreaRoomOnInitialLoad
+        {
+            get { return m_areaOnInitialLoad; }
+            set
+            {
+                if (m_areaOnInitialLoad != value)
+                    m_areaOnInitialLoad = value;
             }
         }
         

@@ -1971,5 +1971,36 @@ namespace TBGINTB_Builder.Lib.Repository
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomPreviewParagraphStates_Result>("dev_GetRoomPreviewParagraphStates", roomParameter);
         }
+    
+        public virtual ObjectResult<dev_GetAreaRoomOnInitialLoad_Result> dev_GetAreaRoomOnInitialLoad()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAreaRoomOnInitialLoad_Result>("dev_GetAreaRoomOnInitialLoad");
+        }
+    
+        public virtual int dev_ImportAreaRoomOnInitialLoad(Nullable<int> area, Nullable<int> room)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportAreaRoomOnInitialLoad", areaParameter, roomParameter);
+        }
+    
+        public virtual int dev_UpsertAreaRoomOnInitialLoad(Nullable<int> area, Nullable<int> room)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpsertAreaRoomOnInitialLoad", areaParameter, roomParameter);
+        }
     }
 }

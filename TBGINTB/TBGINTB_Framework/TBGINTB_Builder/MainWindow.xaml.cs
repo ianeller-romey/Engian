@@ -31,8 +31,8 @@ namespace TBGINTB_Builder
             m_menuItem_loadFromDatabase,
             m_menuItem_exportToXml,
             m_menuItem_importFromXml,
-            m_menuItem_windows,
-            m_menuItem_roomPreview;
+            m_menuItem_setup,
+            m_menuItem_areaRoomOnInitialLoad;
         Grid m_grid_main;
         TabControl m_tabControl_controls;
 
@@ -50,6 +50,8 @@ namespace TBGINTB_Builder
             CreateGinTubManager();
             Width = 1000;
             Height = 500;
+
+            GinTubBuilderManager.AreaRoomOnInitialLoadAdded += GinTubBuilderManager_AreaRoomOnInitialLoadAdded;
         }
 
         #endregion
@@ -76,6 +78,22 @@ namespace TBGINTB_Builder
             m_menuItem_file.Items.Add(m_menuItem_loadFromDatabase);
 
             m_menu_main.Items.Add(m_menuItem_file);
+
+            ////////
+            // Setup
+            m_menuItem_areaRoomOnInitialLoad = new MenuItem() { Header = "Area/Room On Initial Load" };
+            RoutedEventHandler menuItem_areaRoomOnInitialLoad_clickHandler = 
+                new RoutedEventHandler((x, y) =>
+                {
+                    if (m_menuItem_areaRoomOnInitialLoad.IsSubmenuOpen)
+                        m_menuItem_setup.IsSubmenuOpen = false;
+                });
+            m_menuItem_areaRoomOnInitialLoad.AddHandler(Button.ClickEvent, menuItem_areaRoomOnInitialLoad_clickHandler);
+            m_menuItem_areaRoomOnInitialLoad.AddHandler(MenuItem.ClickEvent, menuItem_areaRoomOnInitialLoad_clickHandler);
+                
+
+            m_menuItem_setup = new MenuItem() { Header = "Setup" };
+            m_menuItem_setup.Items.Add(m_menuItem_areaRoomOnInitialLoad);
 
             ////////
             // Toolbar
@@ -117,6 +135,18 @@ namespace TBGINTB_Builder
             GinTubBuilderManager.Initialize();
         }
 
+        private void GinTubBuilderManager_AreaRoomOnInitialLoadAdded(object sender, GinTubBuilderManager.AreaRoomOnInitialLoadAddedEventArgs args)
+        {
+            if (m_menuItem_areaRoomOnInitialLoad.Items.Count == 0)
+            {
+                UserControl_AreaRoomOnInitialLoadModification control = new UserControl_AreaRoomOnInitialLoadModification(args.Area, args.Room);
+                control.SetActiveAndRegisterForGinTubEvents();
+                m_menuItem_areaRoomOnInitialLoad.Items.Add(control);
+                GinTubBuilderManager.LoadAllAreas();
+            }
+            GinTubBuilderManager.AreaRoomOnInitialLoadAdded -= GinTubBuilderManager_AreaRoomOnInitialLoadAdded;
+        }
+
         private void MenuItem_LoadFromDatabase_Click(object sender, RoutedEventArgs e)
         {
             MenuItem menuItem = sender as MenuItem;
@@ -130,6 +160,9 @@ namespace TBGINTB_Builder
                 m_menuItem_file.Items.Remove(m_menuItem_loadFromDatabase);
                 m_menuItem_file.Items.Add(m_menuItem_exportToXml);
                 m_menuItem_file.Items.Add(m_menuItem_importFromXml);
+
+                m_menu_main.Items.Add(m_menuItem_setup);
+                GinTubBuilderManager.LoadAreaRoomOnInitialLoad();
             }
         }
 

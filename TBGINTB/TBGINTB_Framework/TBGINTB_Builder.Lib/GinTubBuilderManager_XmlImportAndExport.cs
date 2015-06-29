@@ -126,12 +126,16 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<Db.MessageChoice, Xml.MessageChoice>();
 
             Mapper.CreateMap<Db.MessageChoiceResult, Xml.MessageChoiceResult>();
+
+            Mapper.CreateMap<Db.AreaRoomOnInitialLoad, Xml.AreaRoomOnInitialLoad>();
         }
 
         #region Export
 
         private static Xml.GinTub ExportGinTubToXml()
         {
+            Xml.AreaRoomOnInitialLoad areaRoomOnInitialLoad = Mapper.Map<Xml.AreaRoomOnInitialLoad>(SelectAreaRoomOnInitialLoad());
+
             Xml.Item[] items = SelectAllItems().Select(i => Mapper.Map<Xml.Item>(i)).ToArray();
 
             Xml.Event[] events = SelectAllEvents().Select(e => Mapper.Map<Xml.Event>(e)).ToArray();
@@ -157,6 +161,7 @@ namespace TBGINTB_Builder.Lib
                 ExportAreaToXml(ref areas[i]);
 
             Xml.GinTub ginTub = new Xml.GinTub();
+            ginTub.AreaRoomOnInitialLoad = areaRoomOnInitialLoad;
             ginTub.Items = items;
             ginTub.Events = events;
             ginTub.Characters = characters;
@@ -266,6 +271,7 @@ namespace TBGINTB_Builder.Lib
 
         private static void ImportGinTubFromXml(Xml.GinTub ginTub)
         {
+            ImportAreaRoomOnInitialLoad(ginTub.AreaRoomOnInitialLoad.Area, ginTub.AreaRoomOnInitialLoad.Room);
             foreach (var item in ginTub.Items)
                 ImportItem(item.Id, item.Name, item.Description);
             foreach (var evnt in ginTub.Events)
@@ -646,6 +652,18 @@ namespace TBGINTB_Builder.Lib
             catch(Exception e)
             {
                 throw new GinTubDatabaseException("dev_ImportCharacterActionRequirement", e);
+            }
+        }
+
+        private static void ImportAreaRoomOnInitialLoad(int area, int room)
+        {
+            try
+            {
+                m_entities.dev_ImportAreaRoomOnInitialLoad(area, room);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportAreaRoomOnInitialLoad", e);
             }
         }
 

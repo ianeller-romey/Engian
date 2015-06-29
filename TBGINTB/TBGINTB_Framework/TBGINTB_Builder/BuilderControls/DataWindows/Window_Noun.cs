@@ -40,7 +40,7 @@ namespace TBGINTB_Builder.BuilderControls
         {
             Width = 300;
             Height = 300;
-            Content = CreateControls(paragraphStateId, nounText, paragraphStateId);
+            Content = CreateControls(nounId, nounText, paragraphStateId);
             m_userControl_noun.SetActiveAndRegisterForGinTubEvents(); // needed for possible nouns
             GinTubBuilderManager.LoadParagraphStateNounPossibilities(paragraphStateId);
         }
@@ -52,7 +52,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         private UIElement CreateControls(int? nounId, string nounText, int paragraphStateId)
         {
-            m_userControl_noun = new UserControl_Noun(paragraphStateId, nounText, paragraphStateId, true);
+            m_userControl_noun = new UserControl_Noun(nounId, nounText, paragraphStateId, true);
             return m_userControl_noun;
         }
 

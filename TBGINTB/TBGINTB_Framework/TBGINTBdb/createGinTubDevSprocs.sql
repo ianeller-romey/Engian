@@ -5028,3 +5028,84 @@ BEGIN
 
 END
 GO
+
+/******************************************************************************************************************************************/
+/*AreaRoomOnInitialLoad********************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpsertAreaRoomOnInitialLoad]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_UpsertAreaRoomOnInitialLoad] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/29/2015
+-- Description:	Adds an AreaRoomOnInitialLoad record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpsertAreaRoomOnInitialLoad]
+	@area int,
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	IF EXISTS (SELECT 1 FROM [dbo].[AreaRoomOnInitialLoad])
+		UPDATE [dbo].[AreaRoomOnInitialLoad]
+		SET [Area] = @area, 
+			[Room] = @room
+	ELSE
+		INSERT INTO [dbo].[AreaRoomOnInitialLoad] ([Area], [Room]) 
+		VALUES(@area, @room)
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportAreaRoomOnInitialLoad]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportAreaRoomOnInitialLoad] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/29/2015
+-- Description:	Imports an AreaRoomOnInitialLoad record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportAreaRoomOnInitialLoad]
+	@area int,
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	EXEC [dev].[dev_UpsertAreaRoomOnInitialLoad]
+	@area = @area,
+	@room = @room
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAreaRoomOnInitialLoad]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAreaRoomOnInitialLoad] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/29/2015
+-- Description:	Gets data about an AreaRoomOnInitialLoad record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAreaRoomOnInitialLoad]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	IF EXISTS (SELECT 1 FROM [dbo].[AreaRoomOnInitialLoad])
+		SELECT [Area],
+			   [Room]
+		FROM [dbo].[AreaRoomOnInitialLoad]
+	ELSE
+		SELECT NULL AS [Area], NULL AS [Room]
+
+END
+GO

@@ -1555,6 +1555,61 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region AreaRoomOnInitialLoads
+
+        public class AreaRoomOnInitialLoadEventArgs : EventArgs
+        {
+            public int? Area { get; set; }
+            public int? Room { get; set; }
+            public AreaRoomOnInitialLoadEventArgs(int? area, int? room)
+            {
+                Area = area;
+                Room = room;
+            }
+        }
+
+
+        public class AreaRoomOnInitialLoadAddedEventArgs : AreaRoomOnInitialLoadEventArgs
+        {
+            public AreaRoomOnInitialLoadAddedEventArgs(int? area, int? room) : base(area, room) { }
+        }
+        public delegate void AreaRoomOnInitialLoadAddedEventHandler(object sender, AreaRoomOnInitialLoadAddedEventArgs args);
+        public static event AreaRoomOnInitialLoadAddedEventHandler AreaRoomOnInitialLoadAdded;
+        private static void OnAreaRoomOnInitialLoadAdded(AreaRoomOnInitialLoad areaRoomOnInitialLoad)
+        {
+            if (AreaRoomOnInitialLoadAdded != null)
+                AreaRoomOnInitialLoadAdded(typeof(GinTubBuilderManager), new AreaRoomOnInitialLoadAddedEventArgs(areaRoomOnInitialLoad.Area, areaRoomOnInitialLoad.Room));
+        }
+
+
+        public class AreaRoomOnInitialLoadModifiedEventArgs : AreaRoomOnInitialLoadEventArgs
+        {
+            public AreaRoomOnInitialLoadModifiedEventArgs(int? area, int? room) : base(area, room) { }
+        }
+        public delegate void AreaRoomOnInitialLoadModifiedEventHandler(object sender, AreaRoomOnInitialLoadModifiedEventArgs args);
+        public static event AreaRoomOnInitialLoadModifiedEventHandler AreaRoomOnInitialLoadModified;
+        private static void OnAreaRoomOnInitialLoadModified(AreaRoomOnInitialLoad areaRoomOnInitialLoad)
+        {
+            if (AreaRoomOnInitialLoadModified != null)
+                AreaRoomOnInitialLoadModified(typeof(GinTubBuilderManager), new AreaRoomOnInitialLoadModifiedEventArgs(areaRoomOnInitialLoad.Area, areaRoomOnInitialLoad.Room));
+        }
+
+
+        public class AreaRoomOnInitialLoadGetEventArgs : AreaRoomOnInitialLoadEventArgs
+        {
+            public AreaRoomOnInitialLoadGetEventArgs(int? area, int? room) : base(area, room) { }
+        }
+        public delegate void AreaRoomOnInitialLoadGetEventHandler(object sender, AreaRoomOnInitialLoadGetEventArgs args);
+        public static event AreaRoomOnInitialLoadGetEventHandler AreaRoomOnInitialLoadGet;
+        private static void OnAreaRoomOnInitialLoadGet(AreaRoomOnInitialLoad areaRoomOnInitialLoad)
+        {
+            if (AreaRoomOnInitialLoadGet != null)
+                AreaRoomOnInitialLoadGet(typeof(GinTubBuilderManager), new AreaRoomOnInitialLoadGetEventArgs(areaRoomOnInitialLoad.Area, areaRoomOnInitialLoad.Room));
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -2350,6 +2405,31 @@ namespace TBGINTB_Builder.Lib
 
         #endregion
 
+
+        #region AreaRoomOnInitialLoads
+
+        public static void AddAreaRoomOnInitialLoad(int areaId, int roomId)
+        {
+            UpsertAreaRoomOnInitialLoad(areaId, roomId);
+            AreaRoomOnInitialLoad areaRoomOnInitialLoad = SelectAreaRoomOnInitialLoad();
+            OnAreaRoomOnInitialLoadAdded(areaRoomOnInitialLoad);
+        }
+
+        public static void ModifyAreaRoomOnInitialLoad(int areaId, int roomId)
+        {
+            UpsertAreaRoomOnInitialLoad(areaId, roomId);
+            AreaRoomOnInitialLoad areaRoomOnInitialLoad = SelectAreaRoomOnInitialLoad();
+            OnAreaRoomOnInitialLoadModified(areaRoomOnInitialLoad);
+        }
+
+        public static void LoadAreaRoomOnInitialLoad()
+        {
+            AreaRoomOnInitialLoad areaRoomOnInitialLoad = SelectAreaRoomOnInitialLoad();
+            OnAreaRoomOnInitialLoadAdded(areaRoomOnInitialLoad);
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -2434,6 +2514,8 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetRoomPreviewParagraphStates_Result, RoomPreviewParagraphState>();
             Mapper.CreateMap<RoomPreviewNoun[], RoomPreviewParagraphState>()
                 .ForMember(dest => dest.Nouns, opt => opt.MapFrom(src => src));
+
+            Mapper.CreateMap<dev_GetAreaRoomOnInitialLoad_Result, AreaRoomOnInitialLoad>();
         }
 
         #region Areas
@@ -4163,6 +4245,41 @@ namespace TBGINTB_Builder.Lib
             }
 
             return new Tuple<List<RoomPreviewParagraphState>>(roomPreviewParagraphStates);
+        }
+
+        #endregion
+
+
+        #region AreaRoomOnInitialLoads
+
+        private static void UpsertAreaRoomOnInitialLoad(int area, int room)
+        {
+            try
+            {
+                m_entities.dev_UpsertAreaRoomOnInitialLoad(area, room);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpsertAreaRoomOnInitialLoad", e);
+            }
+        }
+
+        private static AreaRoomOnInitialLoad SelectAreaRoomOnInitialLoad()
+        {
+            ObjectResult<dev_GetAreaRoomOnInitialLoad_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAreaRoomOnInitialLoad();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAreaRoomOnInitialLoad", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAreaRoomOnInitialLoad", new Exception("No [AreaRoomOnInitialLoads] record found."));
+
+            AreaRoomOnInitialLoad areaRoomOnInitialLoad = Mapper.Map<AreaRoomOnInitialLoad>(databaseResult.Single());
+            return areaRoomOnInitialLoad;
         }
 
         #endregion

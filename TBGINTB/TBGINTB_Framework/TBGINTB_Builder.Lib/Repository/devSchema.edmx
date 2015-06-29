@@ -261,6 +261,7 @@
         <Function Name="dev_GetArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
+        <Function Name="dev_GetAreaRoomOnInitialLoad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetCharacter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
         </Function>
@@ -347,6 +348,10 @@
         <Function Name="dev_ImportArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dev_ImportAreaRoomOnInitialLoad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="area" Type="int" Mode="In" />
+          <Parameter Name="room" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportCharacter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -591,6 +596,10 @@
         <Function Name="dev_UpdateVerbType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dev_UpsertAreaRoomOnInitialLoad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="area" Type="int" Mode="In" />
+          <Parameter Name="room" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="GinTubModelStoreContainer" />
       </Schema></edmx:StorageModels>
@@ -1187,6 +1196,15 @@
           <FunctionImport Name="dev_GetRoomPreviewParagraphStates" ReturnType="Collection(GinTubModel.dev_GetRoomPreviewParagraphStates_Result)">
           <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetAreaRoomOnInitialLoad" ReturnType="Collection(GinTubModel.dev_GetAreaRoomOnInitialLoad_Result)" />
+          <FunctionImport Name="dev_ImportAreaRoomOnInitialLoad">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+            <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_UpsertAreaRoomOnInitialLoad">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+            <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="dev_GetAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1488,6 +1506,10 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Text" Nullable="false" />
           <Property Type="Int32" Name="ParagraphState" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="dev_GetAreaRoomOnInitialLoad_Result">
+          <Property Type="Int32" Name="Area" Nullable="true" />
           <Property Type="Int32" Name="Room" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -2128,6 +2150,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_GetAreaRoomOnInitialLoad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAreaRoomOnInitialLoad_Result">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_ImportAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_ImportAreaRoomOnInitialLoad" />
+          <FunctionImportMapping FunctionImportName="dev_UpsertAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_UpsertAreaRoomOnInitialLoad" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
