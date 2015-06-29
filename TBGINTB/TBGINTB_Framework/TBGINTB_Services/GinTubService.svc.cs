@@ -21,17 +21,15 @@ namespace GinTub.Services
         public GinTubService()
         {
             _repository = new Repository.GinTubRepository();
-
-            //Mapper.CreateMap<Repository.RoomDataInitialLoad.NounData, NounData>();
-            //Mapper.CreateMap<Repository.RoomDataInitialLoad.ParagraphData, ParagraphData>();
-            //Mapper.CreateMap<Repository.RoomDataInitialLoad.RoomData, RoomData>();
         }
 
-        public RoomData RoomDataInitialLoad(Guid playerId, int area, int x, int y, int z, DateTime currentTime)
+        public AllData LoadNewGame(Guid playerId)
         {
-            //return Mapper.Engine.Map<RoomData>(
-            //    _repository.GetRoomDataInitialLoad(playerId, area, x, y, z, currentTime));
-            return null;
+            AllData data = new AllData();
+            var result = _repository.LoadNewGame(playerId);
+            data.Area = TypeAdapter.Adapt<AreaData>(result.Item1);
+            data.RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList();
+            return data;
         }
     }
 }

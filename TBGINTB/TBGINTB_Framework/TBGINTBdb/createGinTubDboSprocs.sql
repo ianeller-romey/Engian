@@ -182,6 +182,27 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadArea] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/29/2015
+-- Description:	Loads Area data for a player
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadArea]
+	@area int
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[Areas]
+	WHERE [Id] = @area
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNewGame]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[LoadNewGame] AS SELECT 1')
 GO
@@ -206,6 +227,9 @@ BEGIN
 	FROM [dbo].[AreaRoomOnInitialLoad] aril
 	INNER JOIN [dbo].[Rooms] r
 	ON aril.[Room] = r.[Id]
+	
+	EXEC [dbo].[LoadArea]
+	@area = @area
 	
 	EXEC [dbo].[LoadRoom]
 	@player = @player,

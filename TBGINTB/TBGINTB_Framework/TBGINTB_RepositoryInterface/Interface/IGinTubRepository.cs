@@ -11,7 +11,8 @@ namespace GinTub.Repository.Interface
 {
     public interface IGinTubRepository
     {
-        IEnumerable<GinTubRepoEntities.LoadRoom.RoomState> LoadNewGame(Guid playerId);
-        IEnumerable<GinTubRepoEntities.LoadRoom.RoomState> LoadRoom(Guid playerId);
+        Tuple<GinTubRepoEntities.Area, IEnumerable<GinTubRepoEntities.RoomState>> 
+            LoadNewGame(Guid playerId);
+        IEnumerable<GinTubRepoEntities.RoomState> LoadRoom(Guid playerId);
     }
 }

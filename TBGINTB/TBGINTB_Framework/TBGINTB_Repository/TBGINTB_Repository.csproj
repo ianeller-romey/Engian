@@ -68,7 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dboSchema.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Entities\Database\LoadNewGame_Result.cs">
+    <Compile Include="Entities\Database\LoadArea_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Database\LoadNounsForRoom_Result.cs">
@@ -78,9 +78,6 @@
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Database\LoadRoomStatesForRoom_Result.cs">
-      <DependentUpon>dboSchema.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Entities\Database\LoadRoom_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="GinTubRepository.cs" />

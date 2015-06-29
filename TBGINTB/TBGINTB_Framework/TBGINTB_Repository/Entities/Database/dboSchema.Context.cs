@@ -38,13 +38,13 @@ namespace GinTub.Repository.Entities.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CreateDefaultPlayerStates", playerParameter);
         }
     
-        public virtual ObjectResult<LoadNewGame_Result> LoadNewGame(Nullable<System.Guid> player)
+        public virtual ObjectResult<LoadArea_Result> LoadNewGame(Nullable<System.Guid> player)
         {
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
                 new ObjectParameter("player", typeof(System.Guid));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadNewGame_Result>("LoadNewGame", playerParameter);
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadArea_Result>("LoadNewGame", playerParameter);
         }
     
         public virtual ObjectResult<LoadNounsForRoom_Result> LoadNounsForRoom(Nullable<System.Guid> player, Nullable<int> room)
@@ -73,7 +73,7 @@ namespace GinTub.Repository.Entities.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadParagraphStatesForRoom_Result>("LoadParagraphStatesForRoom", playerParameter, roomParameter);
         }
     
-        public virtual ObjectResult<LoadRoom_Result> LoadRoom(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> x, Nullable<int> y, Nullable<int> z)
+        public virtual ObjectResult<LoadRoomStatesForRoom_Result> LoadRoom(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> x, Nullable<int> y, Nullable<int> z)
         {
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
@@ -95,7 +95,7 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("z", z) :
                 new ObjectParameter("z", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoom_Result>("LoadRoom", playerParameter, areaParameter, xParameter, yParameter, zParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoom", playerParameter, areaParameter, xParameter, yParameter, zParameter);
         }
     
         public virtual ObjectResult<LoadRoomStatesForRoom_Result> LoadRoomStatesForRoom(Nullable<System.Guid> player, Nullable<int> room)
@@ -109,6 +109,15 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("room", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoomStatesForRoom", playerParameter, roomParameter);
+        }
+    
+        public virtual ObjectResult<LoadArea_Result> LoadArea(Nullable<int> area)
+        {
+            var areaParameter = area.HasValue ?
+                new ObjectParameter("area", area) :
+                new ObjectParameter("area", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadArea_Result>("LoadArea", areaParameter);
         }
     }
 }

@@ -4,10 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GinTubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="GinTubModelStoreContainer" />
+    <Schema Namespace="GinTubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="CreateDefaultPlayerStates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="LoadArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="area" Type="int" Mode="In" />
         </Function>
         <Function Name="LoadNewGame" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
@@ -31,20 +33,21 @@
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="room" Type="int" Mode="In" />
         </Function>
-      </Schema>
-    </edmx:StorageModels>
+        <EntityContainer Name="GinTubModelStoreContainer" />
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GinTubModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GinTubEntities" p1:LazyLoadingEnabled="true" >
           <FunctionImport Name="CreateDefaultPlayerStates">
-            <Parameter Name="player" Mode="In" Type="Guid" />
+          <Parameter Name="player" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="LoadNewGame">
-            <Parameter Name="player" Mode="In" Type="Guid" />
+            <ReturnType Type="Collection(GinTubModel.LoadArea_Result)"/>
             <ReturnType Type="Collection(GinTubModel.LoadRoomStatesForRoom_Result)"/>
             <ReturnType Type="Collection(GinTubModel.LoadParagraphStatesForRoom_Result)"/>
             <ReturnType Type="Collection(GinTubModel.LoadNounsForRoom_Result)"/>
+            <Parameter Name="player" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="LoadNounsForRoom" ReturnType="Collection(GinTubModel.LoadNounsForRoom_Result)">
             <Parameter Name="player" Mode="In" Type="Guid" />
@@ -55,18 +58,21 @@
             <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LoadRoom">
+            <ReturnType Type="Collection(GinTubModel.LoadRoomStatesForRoom_Result)"/>
+            <ReturnType Type="Collection(GinTubModel.LoadParagraphStatesForRoom_Result)"/>
+            <ReturnType Type="Collection(GinTubModel.LoadNounsForRoom_Result)"/>
             <Parameter Name="player" Mode="In" Type="Guid" />
             <Parameter Name="area" Mode="In" Type="Int32" />
             <Parameter Name="x" Mode="In" Type="Int32" />
             <Parameter Name="y" Mode="In" Type="Int32" />
             <Parameter Name="z" Mode="In" Type="Int32" />
-            <ReturnType Type="Collection(GinTubModel.LoadRoomStatesForRoom_Result)"/>
-            <ReturnType Type="Collection(GinTubModel.LoadParagraphStatesForRoom_Result)"/>
-            <ReturnType Type="Collection(GinTubModel.LoadNounsForRoom_Result)"/>
           </FunctionImport>
           <FunctionImport Name="LoadRoomStatesForRoom" ReturnType="Collection(GinTubModel.LoadRoomStatesForRoom_Result)">
             <Parameter Name="player" Mode="In" Type="Guid" />
             <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LoadArea" ReturnType="Collection(GinTubModel.LoadArea_Result)">
+            <Parameter Name="area" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="LoadNounsForRoom_Result">
@@ -87,6 +93,10 @@
           <Property Type="String" Name="Location" Nullable="false" />
           <Property Type="Int32" Name="Room" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="LoadArea_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -95,6 +105,12 @@
         <EntityContainerMapping StorageEntityContainer="GinTubModelStoreContainer" CdmEntityContainer="GinTubEntities" >
           <FunctionImportMapping FunctionImportName="CreateDefaultPlayerStates" FunctionName="GinTubModel.Store.CreateDefaultPlayerStates" />
           <FunctionImportMapping FunctionImportName="LoadNewGame" FunctionName="GinTubModel.Store.LoadNewGame">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.LoadArea_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
             <ResultMapping>
               <ComplexTypeMapping TypeName="GinTubModel.LoadRoomStatesForRoom_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -176,6 +192,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LoadArea" FunctionName="GinTubModel.Store.LoadArea">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.LoadArea_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -193,6 +217,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -6,22 +6,27 @@ using System.Threading.Tasks;
 
 using FastMapper;
 
+using GinTub.Repository.Entities;
 using GinTub.Repository.Entities.Database;
-using GinTub.Repository.Entities.LoadRoom;
 
 
 namespace GinTub.Repository
 {
     public class GinTubRepository : Interface.IGinTubRepository
     {
-        public IEnumerable<RoomState> LoadNewGame(Guid playerId)
+        public Tuple<Area, IEnumerable<RoomState>> 
+            LoadNewGame(Guid playerId)
         {
+            Area area;
             IEnumerable<RoomState> roomStates;
             IEnumerable<ParagraphState> paragraphStates;
             IEnumerable<Noun> nouns;
             using (GinTubEntities entities = new GinTubEntities())
             {
-                var roomStateResults = entities.LoadNewGame(playerId);
+                var areaResults = entities.LoadNewGame(playerId);
+                area = TypeAdapter.Adapt<Area>(areaResults.Single());
+
+                var roomStateResults = areaResults.GetNextResult<LoadRoomStatesForRoom_Result>();
                 roomStates = roomStateResults.Select(x => TypeAdapter.Adapt<RoomState>(x)).ToList();
 
                 var paragraphStateResults = roomStateResults.GetNextResult<LoadParagraphStatesForRoom_Result>();
@@ -32,22 +37,12 @@ namespace GinTub.Repository
 
                 foreach (var roomState in roomStates)
                 {
-                    TypeAdapter.Adapt<List<ParagraphState>, ParagraphState[]>
-                    (
-                        paragraphStates.Where(x => x.RoomState == roomState.Id).ToList(),
-                        roomState.ParagraphStates
-                    );
+                    roomState.ParagraphStates = paragraphStates.Where(x => x.RoomState == roomState.Id).ToArray();
                     foreach (var paragraphState in paragraphStates)
-                    {
-                        TypeAdapter.Adapt<List<Noun>, Noun[]>
-                        (
-                            nouns.Where(x => x.ParagraphState == paragraphState.Id).ToList(),
-                            paragraphState.Nouns
-                        );
-                    }
+                        paragraphState.Nouns = nouns.Where(x => x.ParagraphState == paragraphState.Id).ToArray();
                 }
             }
-            return null;
+            return new Tuple<Area, IEnumerable<RoomState>>(area, roomStates);
         }
 
         public IEnumerable<RoomState> LoadRoom(Guid playerId)
