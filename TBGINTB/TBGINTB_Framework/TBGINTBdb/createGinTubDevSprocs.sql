@@ -4926,8 +4926,15 @@ BEGIN
 	-- Insert player	
 	SELECT @playerid = NEWID()
 	
-	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint])
-	VALUES (@usernameid, @domainnameid, @domainid, @password, @playerid, GETDATE())
+	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint], [LastRoom])
+	SELECT @usernameid, 
+		   @domainnameid, 
+		   @domainid, 
+		   @password, 
+		   @playerid, 
+		   GETDATE(),
+		   [Room]
+	FROM [dbo].[AreaRoomOnInitialLoad] WITH (NOLOCK)
 	
 	SELECT @playerid
 

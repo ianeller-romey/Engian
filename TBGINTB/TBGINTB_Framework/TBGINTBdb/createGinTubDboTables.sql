@@ -2,34 +2,40 @@ USE [GinTub]
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Areas')
+BEGIN
 	CREATE TABLE [dbo].[Areas] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL
 	)
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Locations')
 	CREATE TABLE [dbo].[Locations] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[LocationFile] varchar(MAX) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Rooms')
+BEGIN
 	CREATE TABLE [dbo].[Rooms] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[X] int NOT NULL,
 		[Y] int NOT NULL,
 		[Z] int NOT NULL,
 		[Area] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Areas]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX_Rooms_Nonclustered ON [dbo].[Rooms]([X], [Y], [Z])
+	INCLUDE([Id], [Name], [Area])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'RoomStates')
 	CREATE TABLE [dbo].[RoomStates] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[State] int NOT NULL,
 		[Time] datetime NULL,
 		[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id]),
@@ -39,7 +45,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Paragraphs')
 	CREATE TABLE [dbo].[Paragraphs] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Order] int NOT NULL,
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
 		[RoomState] int NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
@@ -49,7 +55,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ParagraphStates')
 	CREATE TABLE [dbo].[ParagraphStates] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Text] varchar(MAX) NOT NULL,
 		[State] int NOT NULL,
 		[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id])
@@ -59,7 +65,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Nouns')
 	CREATE TABLE [dbo].[Nouns] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Text] varchar(MAX) NOT NULL,
 		[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id])
 	)
@@ -67,7 +73,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'VerbTypes')
 	CREATE TABLE [dbo].[VerbTypes] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL
 	)
 
@@ -98,7 +104,7 @@ IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Move')
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Verbs')
 	CREATE TABLE [dbo].[Verbs] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id])
 	)
@@ -106,14 +112,14 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ResultTypes')
 	CREATE TABLE [dbo].[ResultTypes] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'ResultTypeJSONProperties')
 	CREATE TABLE [dev].[ResultTypeJSONProperties] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[JSONProperty] varchar(MAX) NOT NULL,
 		[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 	)
@@ -121,7 +127,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Results')
 	CREATE TABLE [dbo].[Results] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[JSONData] varchar(MAX) NULL,
 		[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 	)
@@ -364,24 +370,30 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Actions')
+BEGIN
 	CREATE TABLE [dbo].[Actions] (
 		[Id] int PRIMARY KEY IDENTITY,
 		[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id]),
-		[Noun] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Nouns]([Id])
+		[Noun] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Nouns]([Id]),
+		CONSTRAINT IX_Actions_Clustered UNIQUE CLUSTERED ([Id], [VerbType], [Noun])
 	)
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ActionResults')
+BEGIN
 	CREATE TABLE [dbo].[ActionResults] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id]),
-		[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id])
+		[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 	)
+	CREATE CLUSTERED INDEX IX_ActionResults_Clustered ON [dbo].[ActionResults]([Action])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Items')
 	CREATE TABLE [dbo].[Items] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[Description] varchar(MAX) NOT NULL
 	)
@@ -389,7 +401,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Events')
 	CREATE TABLE [dbo].[Events] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[Description] varchar(MAX) NOT NULL
 	)
@@ -397,39 +409,48 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Characters')
 	CREATE TABLE [dbo].[Characters] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(500) NOT NULL,
 		[Description] varchar(MAX) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ItemActionRequirements')
+BEGIN
 	CREATE TABLE [dbo].[ItemActionRequirements] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
+	CREATE CLUSTERED INDEX IX_ItemActionRequirements_Clustered ON [dbo].[ItemActionRequirements]([Action])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EventActionRequirements')
+BEGIN
 	CREATE TABLE [dbo].[EventActionRequirements] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
+	CREATE CLUSTERED INDEX IX_EventActionRequirements_Clustered ON [dbo].[EventActionRequirements]([Action])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'CharacterActionRequirements')
+BEGIN
 	CREATE TABLE [dbo].[CharacterActionRequirements] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Characters]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
+	CREATE CLUSTERED INDEX IX_CharacterActionRequirements_Clustered ON [dbo].[CharacterActionRequirements]([Action])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Messages')
 	CREATE TABLE [dbo].[Messages] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Text] varchar(MAX) NOT NULL
 	)
 
@@ -442,11 +463,14 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'MessageChoices')
+BEGIN
 	CREATE TABLE [dbo].[MessageChoices] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Text] varchar(MAX) NOT NULL,
 		[Message] int FOREIGN KEY REFERENCES [dbo].[Messages]([Id])
 	)
+	CREATE CLUSTERED INDEX IX_MessageChoices_Clustered ON [dbo].[MessageChoices]([Message])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'MessageChoiceNames')
@@ -457,31 +481,36 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'MessageChoiceResults')
+BEGIN
 	CREATE TABLE [dbo].[MessageChoiceResults] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
 		[Result] int NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 		[MessageChoice] int FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id])
 	)
+	CREATE CLUSTERED INDEX IX_MessageChoiceResults_Clustered ON [dbo].[MessageChoiceResults]([MessageChoice])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EmailUserNames')
+BEGIN
 	CREATE TABLE [dbo].[EmailUserNames] (
-		[Id] int PRIMARY KEY IDENTITY,
-		[UserName] varchar(MAX) NOT NULL
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
+		[UserName] varchar(450) NOT NULL CONSTRAINT IX_EmailUserNames_Clustered UNIQUE CLUSTERED
 	)
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EmailDomainNames')
 	CREATE TABLE [dbo].[EmailDomainNames] (
-		[Id] int PRIMARY KEY IDENTITY,
-		[DomainName] varchar(MAX) NOT NULL
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
+		[DomainName] varchar(450) NOT NULL CONSTRAINT IX_EmailDomainNames_Clustered UNIQUE CLUSTERED
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EmailDomains')
 	CREATE TABLE [dbo].[EmailDomains] (
-		[Id] int PRIMARY KEY IDENTITY,
-		[Domain] varchar(MAX) NOT NULL
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
+		[Domain] varchar(450) NOT NULL CONSTRAINT IX_DomainNames_Clustered UNIQUE CLUSTERED
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -490,62 +519,86 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 		[EmailUserName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailUserNames]([Id]),
 		[EmailDomainName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomainNames]([Id]),
 		[EmailDomain] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomains]([Id]),
-		[Password] varchar(MAX) NOT NULL,
+		[Password] varchar(450) NOT NULL,
 		[Id] uniqueidentifier NOT NULL PRIMARY KEY,
-		[LastCheckpoint] datetime NOT NULL
+		[LastCheckpoint] datetime NOT NULL,
+		[LastRoom] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
+		CONSTRAINT IX_Players_Nonclustered UNIQUE NONCLUSTERED ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id])
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerStatesOfRooms')
+BEGIN
 	CREATE TABLE [dbo].[PlayerStatesOfRooms] (
 		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
 		[State] int NOT NULL,
-		[CheckpointDate] datetime NOT NULL,
-		CONSTRAINT UQ__PlayerStatesOfRooms UNIQUE NONCLUSTERED ([Player], [Room])
+		[CheckpointDate] datetime NOT NULL
 	)
+	CREATE UNIQUE NONCLUSTERED INDEX IX_PlayerStatesOfRooms_Nonclustered ON [dbo].[PlayerStatesOfRooms] ([Player], [Room])
+	INCLUDE([State], [CheckpointDate])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerStatesOfParagraphs')
+BEGIN
 	CREATE TABLE [dbo].[PlayerStatesOfParagraphs] (
 		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 		[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
 		[State] int NOT NULL,
-		[CheckpointDate] datetime NOT NULL,
-		CONSTRAINT UQ__PlayerStatesOfParagraphs UNIQUE NONCLUSTERED ([Player], [Paragraph])
+		[CheckpointDate] datetime NOT NULL
 	)
+	CREATE UNIQUE NONCLUSTERED INDEX IX_PlayerStatesOfParagraphs_Nonclustered ON [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph])
+	INCLUDE([State], [CheckpointDate])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerInventory')
+BEGIN
 	CREATE TABLE [dbo].[PlayerInventory] (
 		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 		[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
-		[Active] bit NOT NULL,
+		[InInventory] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
+	CREATE CLUSTERED INDEX IX_PlayerInventory_Clustered ON [dbo].[PlayerInventory]([Player])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerHistory')
+BEGIN
 	CREATE TABLE [dbo].[PlayerHistory] (
 		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 		[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
+		[InHistory] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
+	CREATE CLUSTERED INDEX IX_PlayerHistory_Clustered ON [dbo].[PlayerHistory]([Player])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerParty')
+BEGIN
 	CREATE TABLE [dbo].[PlayerParty] (
 		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id]),
 		[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Characters]([Id]),
-		[Active] bit NOT NULL,
+		[InParty] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
+	CREATE CLUSTERED INDEX IX_PlayerParty_Clustered ON [dbo].[PlayerParty]([Player])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'AreaRoomOnInitialLoad')
 	CREATE TABLE [dbo].[AreaRoomOnInitialLoad] (
 		[Area] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Areas]([Id]),
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id])
+	)
+
+IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
+			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'DevPlayers')
+	CREATE TABLE [dev].[DevPlayers] (
+		[Player] uniqueidentifier NOT NULL FOREIGN KEY REFERENCES [dbo].[Players]([Id])
 	)
 
 GO

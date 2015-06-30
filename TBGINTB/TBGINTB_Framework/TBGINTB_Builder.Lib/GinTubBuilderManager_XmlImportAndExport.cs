@@ -271,7 +271,8 @@ namespace TBGINTB_Builder.Lib
 
         private static void ImportGinTubFromXml(Xml.GinTub ginTub)
         {
-            ImportAreaRoomOnInitialLoad(ginTub.AreaRoomOnInitialLoad.Area, ginTub.AreaRoomOnInitialLoad.Room);
+            if(ginTub.AreaRoomOnInitialLoad != null)
+                ImportAreaRoomOnInitialLoad(ginTub.AreaRoomOnInitialLoad.Area, ginTub.AreaRoomOnInitialLoad.Room);
             foreach (var item in ginTub.Items)
                 ImportItem(item.Id, item.Name, item.Description);
             foreach (var evnt in ginTub.Events)

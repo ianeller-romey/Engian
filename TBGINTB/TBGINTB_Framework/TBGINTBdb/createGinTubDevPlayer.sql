@@ -9,27 +9,48 @@ SET @devDomainName = 'ironandrose'
 SET @devDomain = 'com'
 SET @devPassword = 'gintub'
 
-INSERT INTO [dbo].[EmailUserNames] ([UserName])
-VALUES (@devUserName)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[EmailUserNames] WHERE [UserName] = @devUserName)
+	INSERT INTO [dbo].[EmailUserNames] ([UserName])
+	VALUES (@devUserName)
 DECLARE @devUserNameId int
-SELECT @devUserNameId = SCOPE_IDENTITY()
+SELECT @devUserNameId = [Id] FROM [dbo].[EmailUserNames] WHERE [UserName] = @devUserName
 
-INSERT INTO [dbo].[EmailDomainNames] ([DomainName])
-VALUES (@devDomainName)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[EmailDomainNames] WHERE [DomainName] = @devDomainName)
+	INSERT INTO [dbo].[EmailDomainNames] ([DomainName])
+	VALUES (@devDomainName)
 DECLARE @devDomainNameId int
-SELECT @devDomainNameId = SCOPE_IDENTITY()
+SELECT @devDomainNameId = [Id] FROM [dbo].[EmailDomainNames] WHERE [DomainName] = @devDomainName
 
-INSERT INTO [dbo].[EmailDomains] ([Domain])
-VALUES (@devDomain)
+IF NOT EXISTS (SELECT 1 FROM [dbo].[EmailDomains] WHERE [Domain] = @devDomain)
+	INSERT INTO [dbo].[EmailDomains] ([Domain])
+	VALUES (@devDomain)
 DECLARE @devDomainId int
-SELECT @devDomainId = SCOPE_IDENTITY()	
+SELECT @devDomainId = [Id] FROM [dbo].[EmailDomains] WHERE [Domain] = @devDomain
 
 DECLARE @devPlayerId uniqueidentifier
-SELECT @devPlayerId = 'E1751135-88F7-46D4-9D78-FA3769A571AB'
+SET @devPlayerId = 'E1751135-88F7-46D4-9D78-FA3769A571AB'
 
-INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint])
-VALUES (@devUserNameId, @devDomainNameId, @devDomainId, @devPassword, @devPlayerId, GETDATE())
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Players] WHERE [Id] = @devPlayerId)
+	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint], [LastRoom])
+	SELECT
+		@devUserNameId, 
+		@devDomainNameId, 
+		@devDomainId, 
+		@devPassword, 
+		@devPlayerId, 
+		GETDATE(),
+		[Room]
+	FROM [dbo].[AreaRoomOnInitialLoad]
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[DevPlayers] WHERE [Player] = @devPlayerId)
+	INSERT INTO [dev].[DevPlayers] ([Player])
+	VALUES (@devPlayerId)
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[PlayerStatesOfRooms] WHERE [Player] = @devPlayerId)
 AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerStatesOfParagraphs] WHERE [Player] = @devPlayerId)
-	EXEC [dbo].[dbo_LoadDefaultPlayerStates] @playerId = @devPlayerId
+	EXEC [dbo].[CreateDefaultPlayerStates] @player = @devPlayerId
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[PlayerInventory] WHERE [Player] = @devPlayerId)
+AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerHistory] WHERE [Player] = @devPlayerId)
+AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerParty] WHERE [Player] = @devPlayerId)
+	EXEC [dbo].[CreateDefaultPlayerInventories] @player = @devPlayerId

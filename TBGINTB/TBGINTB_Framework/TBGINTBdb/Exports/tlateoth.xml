@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-26T14:40:31.0228037-07:00">
+<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-06-30T16:51:10.0025345-07:00">
+  <AreaOnInitialLoad Area="1">
+    <Room>1</Room>
+  </AreaOnInitialLoad>
   <Items>
     <Item Id="3">
       <Name>Flashlight</Name>
