@@ -271,8 +271,6 @@ namespace TBGINTB_Builder.Lib
 
         private static void ImportGinTubFromXml(Xml.GinTub ginTub)
         {
-            if(ginTub.AreaRoomOnInitialLoad != null)
-                ImportAreaRoomOnInitialLoad(ginTub.AreaRoomOnInitialLoad.Area, ginTub.AreaRoomOnInitialLoad.Room);
             foreach (var item in ginTub.Items)
                 ImportItem(item.Id, item.Name, item.Description);
             foreach (var evnt in ginTub.Events)
@@ -289,6 +287,8 @@ namespace TBGINTB_Builder.Lib
                 ImportMessageFromXml(message);
             foreach (var area in ginTub.Areas)
                 ImportAreaFromXml(area);
+            if(ginTub.AreaRoomOnInitialLoad != null)
+                ImportAreaRoomOnInitialLoad(ginTub.AreaRoomOnInitialLoad.Area, ginTub.AreaRoomOnInitialLoad.Room);
         }
 
         private static void ImportResultTypeFromXml(Xml.ResultType resultType)

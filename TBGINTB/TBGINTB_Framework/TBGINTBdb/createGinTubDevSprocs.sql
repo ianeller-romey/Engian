@@ -4732,32 +4732,6 @@ GO
 /*PlayerInventory**************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerInventory] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds an PlayerInventory record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddPlayerInventory]
-	@player uniqueidentifier,
-	@item int,
-	@active bit
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[PlayerInventory] ([Player], [Item], [Active])
-	VALUES (@player, @item, @active)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
-
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerInventory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdatePlayerInventory] AS SELECT 1')
 GO
@@ -4769,7 +4743,7 @@ GO
 ALTER PROCEDURE [dev].[dev_UpdatePlayerInventory]
 	@player uniqueidentifier,
 	@item int,
-	@active bit
+	@ininventory bit
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4777,7 +4751,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[PlayerInventory]
-	SET [Active] = ISNULL(@active, [Active])
+	SET [InInventory] = ISNULL(@ininventory, [InInventory])
 	WHERE [Player] = @player AND [Item] = @item
 
 END
@@ -4787,27 +4761,27 @@ GO
 /*PlayerHistory****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerHistory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerHistory] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerHistory]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdatePlayerHistory] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an PlayerHistory record and returns the newly generated ID
+-- Description:	Updates an PlayerHistory record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddPlayerHistory]
+ALTER PROCEDURE [dev].[dev_UpdatePlayerHistory]
 	@player uniqueidentifier,
-	@event int
+	@evnt int,
+	@inhistory bit
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dbo].[PlayerHistory] ([Player], [Event])
-	VALUES (@player, @event)
-	
-	SELECT SCOPE_IDENTITY()
+	UPDATE [dbo].[PlayerHistory]
+	SET [InHistory] = ISNULL(@inhistory, [InHistory])
+	WHERE [Player] = @player AND [Event] = @evnt
 
 END
 GO
@@ -4815,32 +4789,6 @@ GO
 /******************************************************************************************************************************************/
 /*PlayerParty******************************************************************************************************************************/
 /******************************************************************************************************************************************/
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddPlayerParty] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 5/12/2015
--- Description:	Adds an PlayerParty record and returns the newly generated ID
--- =============================================
-ALTER PROCEDURE [dev].[dev_AddPlayerParty]
-	@player uniqueidentifier,
-	@character int,
-	@active bit
-AS
-BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
-	-- interfering with SELECT statements.
-	SET NOCOUNT ON;
-
-	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [Active])
-	VALUES (@player, @character, @active)
-	
-	SELECT SCOPE_IDENTITY()
-
-END
-GO
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdatePlayerParty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_UpdatePlayerParty] AS SELECT 1')
@@ -4853,7 +4801,7 @@ GO
 ALTER PROCEDURE [dev].[dev_UpdatePlayerParty]
 	@player uniqueidentifier,
 	@character int,
-	@active bit
+	@inparty bit
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4861,7 +4809,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	UPDATE [dbo].[PlayerParty]
-	SET [Active] = ISNULL(@active, [Active])
+	SET [InParty] = ISNULL(@inparty, [InParty])
 	WHERE [Player] = @player AND [Character] = @character
 
 END

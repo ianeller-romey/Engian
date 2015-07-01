@@ -72,7 +72,7 @@ BEGIN
 		   0,
 		   p.[LastCheckpoint]
 	FROM [dbo].[Rooms] r WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 	
 	INSERT INTO [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph], [State], [CheckpointDate])
@@ -81,7 +81,7 @@ BEGIN
 		   0,
 		   p.[LastCheckpoint]
 	FROM [dbo].[Paragraphs] para WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
 END
@@ -106,7 +106,7 @@ BEGIN
 		   0,
 		   p.[LastCheckpoint]
 	FROM [dbo].[Items] x WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
 	INSERT INTO [dbo].[PlayerHistory] ([Player], [Event], [InHistory], [CheckpointDate])
@@ -115,7 +115,7 @@ BEGIN
 		   0,
 		   p.[LastCheckpoint]
 	FROM [dbo].[Events] x WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
 	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [InParty], [CheckpointDate])
@@ -123,8 +123,8 @@ BEGIN
 		   x.[Id],
 		   0,
 		   p.[LastCheckpoint]
-	FROM [dbo].[Character] x WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p
+	FROM [dbo].[Characters] x WITH (NOLOCK)
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
 END
@@ -221,10 +221,10 @@ BEGIN
 		   l.[LocationFile] AS [Location],
 		   rs.[Room]
 	FROM [dbo].[RoomStates] rs WITH (NOLOCK)
-	INNER JOIN [dbo].[Locations] l WITH (NOLOCK)
-	ON rs.[Location] = l.[Id]
 	INNER JOIN [dbo].[PlayerStatesOfRooms] psr WITH (NOLOCK)
 	ON rs.[Room] = psr.[Room] AND rs.[State] = psr.[State]
+	INNER JOIN [dbo].[Locations] l WITH (NOLOCK)
+	ON rs.[Location] = l.[Id]
 	WHERE rs.[Room] = @room
 	AND psr.[Player] = @player
 
@@ -345,6 +345,7 @@ BEGIN
 	FROM [dbo].[Players] p WITH (NOLOCK)
 	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
 	ON p.[LastRoom] = r.[Id]
+	WHERE p.[Id] = @player
 	
 	EXEC [dbo].[LoadArea]
 	@area = @area
@@ -413,15 +414,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[MovePlayerXYZ]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[MovePlayerXYZ] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[PlayerMoveXYZ]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[PlayerMoveXYZ] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/30/2015
 -- Description:	Loads Area data for a player
 -- =============================================
-ALTER PROCEDURE [dbo].[MovePlayerXYZ]
+ALTER PROCEDURE [dbo].[PlayerMoveXYZ]
 	@player uniqueidentifier,
 	@area int,
 	@xDir int,
@@ -432,12 +433,13 @@ BEGIN
 
 	DECLARE @room int
 	SELECT @room = r.[Id]
-	FROM [dbo].[Rooms] r WITH (NOLOCK)
-	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
-	ON p.[Id] = @player
+	FROM [dbo].[Players] p WITH (NOLOCK)
 	INNER JOIN [dbo].[Rooms] r2 WITH (NOLOCK)
 	ON p.[LastRoom] = r2.[Id]
-	WHERE r.[Area] = @area
+	INNER JOIN [dbo].[Rooms] r
+	ON r.[Area] = r2.[Area]
+	WHERE p.[Id]= @player
+	AND r.[Area] = @area
 	AND r.[X] = r2.[X] + @xDir
 	AND r.[Y] = r2.[Y] + @yDir
 	AND r.[Z] = r2.[Z] + @zDir
@@ -445,6 +447,7 @@ BEGIN
 	UPDATE [dbo].[Players]
 	SET [LastCheckpoint] = GETDATE(),
 		[LastRoom] = @room
+	WHERE [Id] = @player
 		
 	EXEC [dbo].[LoadRoomId] 
 	@player = @player, 

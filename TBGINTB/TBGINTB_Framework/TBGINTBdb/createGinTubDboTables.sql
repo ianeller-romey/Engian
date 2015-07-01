@@ -5,7 +5,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 BEGIN
 	CREATE TABLE [dbo].[Areas] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
 END
 
@@ -13,8 +13,8 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Locations')
 	CREATE TABLE [dbo].[Locations] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
-		[LocationFile] varchar(MAX) NOT NULL
+		[Name] varchar(256) NOT NULL,
+		[LocationFile] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -22,18 +22,19 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 BEGIN
 	CREATE TABLE [dbo].[Rooms] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
+		[Name] varchar(256) NOT NULL,
 		[X] int NOT NULL,
 		[Y] int NOT NULL,
 		[Z] int NOT NULL,
 		[Area] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Areas]([Id])
 	)
-	CREATE NONCLUSTERED INDEX IX_Rooms_Nonclustered ON [dbo].[Rooms]([X], [Y], [Z])
-	INCLUDE([Id], [Name], [Area])
+	CREATE UNIQUE NONCLUSTERED INDEX IX__Rooms__AreaXYZ ON [dbo].[Rooms]([Area], [X], [Y], [Z])
+	INCLUDE([Name])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'RoomStates')
+BEGIN
 	CREATE TABLE [dbo].[RoomStates] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[State] int NOT NULL,
@@ -41,9 +42,13 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 		[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id]),
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id])
 	)
+	CREATE UNIQUE NONCLUSTERED INDEX IX__RoomStates__RoomState ON [dbo].[RoomStates]([Room], [State])
+	INCLUDE([Time], [Location])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Paragraphs')
+BEGIN
 	CREATE TABLE [dbo].[Paragraphs] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Order] int NOT NULL,
@@ -51,30 +56,41 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 		[RoomState] int NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
 		CONSTRAINT UQ__Paragraphs UNIQUE NONCLUSTERED ([Order], [Room], [RoomState])
 	)
+	CREATE NONCLUSTERED INDEX IX__Paragraphs__RoomRoomState ON [dbo].[Paragraphs]([Room], [RoomState])
+	INCLUDE([Order])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ParagraphStates')
+BEGIN
 	CREATE TABLE [dbo].[ParagraphStates] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Text] varchar(MAX) NOT NULL,
+		[Text] varchar(256) NOT NULL,
 		[State] int NOT NULL,
-		[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id])
+		[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id]),
 		CONSTRAINT UQ__ParagraphStates UNIQUE NONCLUSTERED ([State], [Paragraph])
 	)
+	CREATE NONCLUSTERED INDEX IX__ParagraphStates__ParagraphState ON [dbo].[ParagraphStates]([Paragraph], [State])
+	INCLUDE([Text])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Nouns')
+BEGIN
 	CREATE TABLE [dbo].[Nouns] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Text] varchar(MAX) NOT NULL,
+		[Text] varchar(256) NOT NULL,
 		[ParagraphState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ParagraphStates]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX__Nouns__ParagraphState ON [dbo].[Nouns]([ParagraphState])
+	INCLUDE([Text])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'VerbTypes')
 	CREATE TABLE [dbo].[VerbTypes] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Look')
@@ -103,45 +119,60 @@ IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Move')
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Verbs')
+BEGIN
 	CREATE TABLE [dbo].[Verbs] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
+		[Name] varchar(256) NOT NULL,
 		[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX__Verbs__VerbType ON [dbo].[Verbs]([VerbType])
+	INCLUDE([Name])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ResultTypes')
 	CREATE TABLE [dbo].[ResultTypes] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'ResultTypeJSONProperties')
+BEGIN
 	CREATE TABLE [dev].[ResultTypeJSONProperties] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[JSONProperty] varchar(MAX) NOT NULL,
+		[JSONProperty] varchar(256) NOT NULL,
 		[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX__ResultTypeJSONProperties__ResultType ON [dev].[ResultTypeJSONProperties]([ResultType])
+	INCLUDE([JSONProperty])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Results')
+BEGIN
 	CREATE TABLE [dbo].[Results] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[JSONData] varchar(MAX) NULL,
+		[JSONData] varchar(500) NULL,
 		[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX__Results__ResultType ON [dbo].[Results]([ResultType])
+	INCLUDE([JSONData])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'ResultNames')
+BEGIN
 	CREATE TABLE [dev].[ResultNames] (
 		[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
+	CREATE UNIQUE CLUSTERED INDEX IX__ResultNames__Result ON [dev].[ResultNames]([Result])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room XYZ Movement')
 BEGIN
-	DECLARE @roomXyzMovementResultTypeName varchar(500)
+	DECLARE @roomXyzMovementResultTypeName varchar(256)
 	SET @roomXyzMovementResultTypeName = 'Room XYZ Movement'
 	DECLARE @roomXyzMovementResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -155,8 +186,8 @@ BEGIN
 	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
 	VALUES ('zDir', @roomXyzMovementResultTypeId)
 
-	DECLARE @move_Y_North1ResultName varchar(500)
-	DECLARE @move_Y_North1ResultJSONData varchar(MAX)
+	DECLARE @move_Y_North1ResultName varchar(256)
+	DECLARE @move_Y_North1ResultJSONData varchar(256)
 	DECLARE @move_Y_North1ResultId int
 	SET @move_Y_North1ResultName = 'Move_Y_North1'
 	SET @move_Y_North1ResultJSONData = '{ "xDir":"0", "yDir":"-1", "zDir":"0" }'
@@ -166,8 +197,8 @@ BEGIN
 	INSERT INTO [dev].[ResultNames] ([Result], [Name])
 	VALUES (@move_Y_North1ResultId, @move_Y_North1ResultName)
 
-	DECLARE @move_Y_South1ResultName varchar(500)
-	DECLARE @move_Y_South1ResultJSONData varchar(MAX)
+	DECLARE @move_Y_South1ResultName varchar(256)
+	DECLARE @move_Y_South1ResultJSONData varchar(256)
 	DECLARE @move_Y_South1ResultId int
 	SET @move_Y_South1ResultName = 'Move_Y_South1'
 	SET @move_Y_South1ResultJSONData = '{ "xDir":"0", "yDir":"1", "zDir":"0" }'
@@ -177,8 +208,8 @@ BEGIN
 	INSERT INTO [dev].[ResultNames] ([Result], [Name])
 	VALUES (@move_Y_South1ResultId, @move_Y_South1ResultName)
 
-	DECLARE @move_X_West1ResultName varchar(500)
-	DECLARE @move_X_West1ResultJSONData varchar(MAX)
+	DECLARE @move_X_West1ResultName varchar(256)
+	DECLARE @move_X_West1ResultJSONData varchar(256)
 	DECLARE @move_X_West1ResultId int
 	SET @move_X_West1ResultName = 'Move_X_West1'
 	SET @move_X_West1ResultJSONData = '{ "xDir":"-1", "yDir":"0", "zDir":"0" }'
@@ -188,8 +219,8 @@ BEGIN
 	INSERT INTO [dev].[ResultNames] ([Result], [Name])
 	VALUES (@move_X_West1ResultId, @move_X_West1ResultName)
 
-	DECLARE @move_X_East1ResultName varchar(500)
-	DECLARE @move_X_East1ResultJSONData varchar(MAX)
+	DECLARE @move_X_East1ResultName varchar(256)
+	DECLARE @move_X_East1ResultJSONData varchar(256)
 	DECLARE @move_X_East1ResultId int
 	SET @move_X_East1ResultName = 'Move_X_East1'
 	SET @move_X_East1ResultJSONData = '{ "xDir":"1", "yDir":"0", "zDir":"0" }'
@@ -199,8 +230,8 @@ BEGIN
 	INSERT INTO [dev].[ResultNames] ([Result], [Name])
 	VALUES (@move_X_East1ResultId, @move_X_East1ResultName)
 
-	DECLARE @move_Z_Up1ResultName varchar(500)
-	DECLARE @move_Z_Up1ResultJSONData varchar(MAX)
+	DECLARE @move_Z_Up1ResultName varchar(256)
+	DECLARE @move_Z_Up1ResultJSONData varchar(256)
 	DECLARE @move_Z_Up1ResultId int
 	SET @move_Z_Up1ResultName = 'Move_Z_Up1'
 	SET @move_Z_Up1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"1" }'
@@ -210,8 +241,8 @@ BEGIN
 	INSERT INTO [dev].[ResultNames] ([Result], [Name])
 	VALUES (@move_Z_Up1ResultId, @move_Z_Up1ResultName)
 
-	DECLARE @move_Z_Down1ResultName varchar(500)
-	DECLARE @move_Z_Down1ResultJSONData varchar(MAX)
+	DECLARE @move_Z_Down1ResultName varchar(256)
+	DECLARE @move_Z_Down1ResultJSONData varchar(256)
 	DECLARE @move_Z_Down1ResultId int
 	SET @move_Z_Down1ResultName = 'Move_Z_Down1'
 	SET @move_Z_Down1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"-1" }'
@@ -224,7 +255,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room XYZ Teleport')
 BEGIN
-	DECLARE @roomXyzTeleportResultTypeName varchar(500)
+	DECLARE @roomXyzTeleportResultTypeName varchar(256)
 	SET @roomXyzTeleportResultTypeName = 'Room XYZ Teleport'
 	DECLARE @roomXyzTeleportResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -241,7 +272,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room Id Teleport')
 BEGIN
-	DECLARE @roomIdTeleportResultTypeName varchar(500)
+	DECLARE @roomIdTeleportResultTypeName varchar(256)
 	SET @roomIdTeleportResultTypeName = 'Room Id Teleport'
 	DECLARE @roomIdTeleportResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -254,7 +285,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Area Id Room XYZ Teleport')
 BEGIN
-	DECLARE @areaIdRoomXyzTeleportResultTypeName varchar(500)
+	DECLARE @areaIdRoomXyzTeleportResultTypeName varchar(256)
 	SET @areaIdRoomXyzTeleportResultTypeName = 'Area Id Room XYZ Teleport'
 	DECLARE @areaIdRoomXyzTeleportResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -273,7 +304,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Area Id Room Id Teleport')
 BEGIN
-	DECLARE @areaIdRoomIdTeleportResultTypeName varchar(500)
+	DECLARE @areaIdRoomIdTeleportResultTypeName varchar(256)
 	SET @areaIdRoomIdTeleportResultTypeName = 'Area Id Room Id Teleport'
 	DECLARE @areaIdRoomIdTeleportResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -288,7 +319,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Item Acquisition')
 BEGIN
-	DECLARE @itemAcquisitionResultTypeName varchar(500)
+	DECLARE @itemAcquisitionResultTypeName varchar(256)
 	SET @itemAcquisitionResultTypeName = 'Item Acquisition'
 	DECLARE @itemAcquisitionResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -301,7 +332,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Event Acquisition')
 BEGIN
-	DECLARE @eventAcquisitionResultTypeName varchar(500)
+	DECLARE @eventAcquisitionResultTypeName varchar(256)
 	SET @eventAcquisitionResultTypeName = 'Event Acquisition'
 	DECLARE @eventAcquisitionResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -314,7 +345,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Character Acquisition')
 BEGIN
-	DECLARE @characterAcquisitionResultTypeName varchar(500)
+	DECLARE @characterAcquisitionResultTypeName varchar(256)
 	SET @characterAcquisitionResultTypeName = 'Character Acquisition'
 	DECLARE @characterAcquisitionResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -327,7 +358,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Paragraph State Change')
 BEGIN
-	DECLARE @paragraphStateChangeResultTypeName varchar(500)
+	DECLARE @paragraphStateChangeResultTypeName varchar(256)
 	SET @paragraphStateChangeResultTypeName = 'Paragraph State Change'
 	DECLARE @paragraphStateChangeResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -342,7 +373,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room State Change')
 BEGIN
-	DECLARE @roomStateChangeResultTypeName varchar(500)
+	DECLARE @roomStateChangeResultTypeName varchar(256)
 	SET @roomStateChangeResultTypeName = 'Room State Change'
 	DECLARE @roomStateChangeResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -357,7 +388,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Message Activation')
 BEGIN
-	DECLARE @messageActivationResultTypeName varchar(500)
+	DECLARE @messageActivationResultTypeName varchar(256)
 	SET @messageActivationResultTypeName = 'Message Activation'
 	DECLARE @messageActivationResultTypeId int
 	INSERT INTO [dbo].[ResultTypes] ([Name])
@@ -372,11 +403,11 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Actions')
 BEGIN
 	CREATE TABLE [dbo].[Actions] (
-		[Id] int PRIMARY KEY IDENTITY,
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[VerbType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[VerbTypes]([Id]),
-		[Noun] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Nouns]([Id]),
-		CONSTRAINT IX_Actions_Clustered UNIQUE CLUSTERED ([Id], [VerbType], [Noun])
+		[Noun] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Nouns]([Id])
 	)
+	CREATE NONCLUSTERED INDEX IX__Actions__NounVerbType ON [dbo].[Actions]([Noun], [VerbType])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -387,31 +418,31 @@ BEGIN
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id]),
 		[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 	)
-	CREATE CLUSTERED INDEX IX_ActionResults_Clustered ON [dbo].[ActionResults]([Action])
+	CREATE CLUSTERED INDEX IX__ActionResults__Clustered ON [dbo].[ActionResults]([Action])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Items')
 	CREATE TABLE [dbo].[Items] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
-		[Description] varchar(MAX) NOT NULL
+		[Name] varchar(256) NOT NULL,
+		[Description] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Events')
 	CREATE TABLE [dbo].[Events] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
-		[Description] varchar(MAX) NOT NULL
+		[Name] varchar(256) NOT NULL,
+		[Description] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Characters')
 	CREATE TABLE [dbo].[Characters] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Name] varchar(500) NOT NULL,
-		[Description] varchar(MAX) NOT NULL
+		[Name] varchar(256) NOT NULL,
+		[Description] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -422,7 +453,7 @@ BEGIN
 		[Item] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Items]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
-	CREATE CLUSTERED INDEX IX_ItemActionRequirements_Clustered ON [dbo].[ItemActionRequirements]([Action])
+	CREATE CLUSTERED INDEX IX__ItemActionRequirements__Clustered ON [dbo].[ItemActionRequirements]([Action])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -433,7 +464,7 @@ BEGIN
 		[Event] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Events]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
-	CREATE CLUSTERED INDEX IX_EventActionRequirements_Clustered ON [dbo].[EventActionRequirements]([Action])
+	CREATE CLUSTERED INDEX IX__EventActionRequirements__Clustered ON [dbo].[EventActionRequirements]([Action])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -444,40 +475,46 @@ BEGIN
 		[Character] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Characters]([Id]),
 		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
-	CREATE CLUSTERED INDEX IX_CharacterActionRequirements_Clustered ON [dbo].[CharacterActionRequirements]([Action])
+	CREATE CLUSTERED INDEX IX__CharacterActionRequirements__Clustered ON [dbo].[CharacterActionRequirements]([Action])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Messages')
 	CREATE TABLE [dbo].[Messages] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
-		[Text] varchar(MAX) NOT NULL
+		[Text] varchar(256) NOT NULL
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'MessageNames')
+BEGIN
 	CREATE TABLE [dev].[MessageNames] (
 		[Message] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Messages]([Id]),
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
+	CREATE UNIQUE CLUSTERED INDEX IX__MessageNames__Message ON [dev].[MessageNames]([Message])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'MessageChoices')
 BEGIN
 	CREATE TABLE [dbo].[MessageChoices] (
 		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
-		[Text] varchar(MAX) NOT NULL,
+		[Text] varchar(256) NOT NULL,
 		[Message] int FOREIGN KEY REFERENCES [dbo].[Messages]([Id])
 	)
-	CREATE CLUSTERED INDEX IX_MessageChoices_Clustered ON [dbo].[MessageChoices]([Message])
+	CREATE CLUSTERED INDEX IX__MessageChoices__Clustered ON [dbo].[MessageChoices]([Message])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'MessageChoiceNames')
+BEGIN
 	CREATE TABLE [dev].[MessageChoiceNames] (
 		[MessageChoice] int NOT NULL FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id]),
-		[Name] varchar(500) NOT NULL
+		[Name] varchar(256) NOT NULL
 	)
+	CREATE UNIQUE CLUSTERED INDEX IX__MessageChoiceNames__MessageChoice ON [dev].[MessageChoiceNames]([MessageChoice])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'MessageChoiceResults')
@@ -487,7 +524,7 @@ BEGIN
 		[Result] int NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
 		[MessageChoice] int FOREIGN KEY REFERENCES [dbo].[MessageChoices]([Id])
 	)
-	CREATE CLUSTERED INDEX IX_MessageChoiceResults_Clustered ON [dbo].[MessageChoiceResults]([MessageChoice])
+	CREATE CLUSTERED INDEX IX__MessageChoiceResults__Clustered ON [dbo].[MessageChoiceResults]([MessageChoice])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -495,7 +532,7 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 BEGIN
 	CREATE TABLE [dbo].[EmailUserNames] (
 		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
-		[UserName] varchar(450) NOT NULL CONSTRAINT IX_EmailUserNames_Clustered UNIQUE CLUSTERED
+		[UserName] varchar(256) NOT NULL CONSTRAINT IX__EmailUserNames__Clustered UNIQUE CLUSTERED
 	)
 END
 
@@ -503,28 +540,30 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EmailDomainNames')
 	CREATE TABLE [dbo].[EmailDomainNames] (
 		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
-		[DomainName] varchar(450) NOT NULL CONSTRAINT IX_EmailDomainNames_Clustered UNIQUE CLUSTERED
+		[DomainName] varchar(256) NOT NULL CONSTRAINT IX__EmailDomainNames__Clustered UNIQUE CLUSTERED
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'EmailDomains')
 	CREATE TABLE [dbo].[EmailDomains] (
 		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
-		[Domain] varchar(450) NOT NULL CONSTRAINT IX_DomainNames_Clustered UNIQUE CLUSTERED
+		[Domain] varchar(256) NOT NULL CONSTRAINT IX__DomainNames__Clustered UNIQUE CLUSTERED
 	)
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Players')
+BEGIN
 	CREATE TABLE [dbo].[Players] (
 		[EmailUserName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailUserNames]([Id]),
 		[EmailDomainName] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomainNames]([Id]),
 		[EmailDomain] int NOT NULL FOREIGN KEY REFERENCES [dbo].[EmailDomains]([Id]),
-		[Password] varchar(450) NOT NULL,
-		[Id] uniqueidentifier NOT NULL PRIMARY KEY,
+		[Password] varchar(256) NOT NULL,
+		[Id] uniqueidentifier NOT NULL PRIMARY KEY CLUSTERED,
 		[LastCheckpoint] datetime NOT NULL,
-		[LastRoom] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-		CONSTRAINT IX_Players_Nonclustered UNIQUE NONCLUSTERED ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id])
+		[LastRoom] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id])
 	)
+	CREATE UNIQUE NONCLUSTERED INDEX IX__Players__Nonclustered ON [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password])
+END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'PlayerStatesOfRooms')
@@ -535,7 +574,7 @@ BEGIN
 		[State] int NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
-	CREATE UNIQUE NONCLUSTERED INDEX IX_PlayerStatesOfRooms_Nonclustered ON [dbo].[PlayerStatesOfRooms] ([Player], [Room])
+	CREATE UNIQUE NONCLUSTERED INDEX IX__PlayerStatesOfRooms__Nonclustered ON [dbo].[PlayerStatesOfRooms] ([Player], [Room])
 	INCLUDE([State], [CheckpointDate])
 END
 
@@ -548,7 +587,7 @@ BEGIN
 		[State] int NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
-	CREATE UNIQUE NONCLUSTERED INDEX IX_PlayerStatesOfParagraphs_Nonclustered ON [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph])
+	CREATE UNIQUE NONCLUSTERED INDEX IX__PlayerStatesOfParagraphs__Nonclustered ON [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph])
 	INCLUDE([State], [CheckpointDate])
 END
 
@@ -561,7 +600,7 @@ BEGIN
 		[InInventory] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
-	CREATE CLUSTERED INDEX IX_PlayerInventory_Clustered ON [dbo].[PlayerInventory]([Player])
+	CREATE CLUSTERED INDEX IX__PlayerInventory__Clustered ON [dbo].[PlayerInventory]([Player], [Item])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -573,7 +612,7 @@ BEGIN
 		[InHistory] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
-	CREATE CLUSTERED INDEX IX_PlayerHistory_Clustered ON [dbo].[PlayerHistory]([Player])
+	CREATE CLUSTERED INDEX IX__PlayerHistory__Clustered ON [dbo].[PlayerHistory]([Player], [Event])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -585,7 +624,7 @@ BEGIN
 		[InParty] bit NOT NULL,
 		[CheckpointDate] datetime NOT NULL
 	)
-	CREATE CLUSTERED INDEX IX_PlayerParty_Clustered ON [dbo].[PlayerParty]([Player])
+	CREATE CLUSTERED INDEX IX__PlayerParty__Clustered ON [dbo].[PlayerParty]([Player], [Character])
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
