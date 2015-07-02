@@ -125,9 +125,9 @@ IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Take')
 	INSERT INTO [dbo].[VerbTypes] ([Name])
 	VALUES ('Take')
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Move')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[VerbTypes] WHERE [Name] = 'Walk')
 	INSERT INTO [dbo].[VerbTypes] ([Name])
-	VALUES ('Move')
+	VALUES ('Walk')
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Verbs')
