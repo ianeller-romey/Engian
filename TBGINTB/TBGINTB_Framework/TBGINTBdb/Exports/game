@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-07-02T15:42:55.3299986-07:00">
+<GinTub xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ExportDate="2015-07-02T16:39:36.7411286-07:00">
   <AreaOnInitialLoad Area="0">
     <Room>0</Room>
   </AreaOnInitialLoad>
-  <Items />
+  <Items>
+    <Item Id="0">
+      <Name>Junk</Name>
+      <Description>Clutter like this will probably be of little use.</Description>
+    </Item>
+  </Items>
   <Events />
   <Characters />
   <ResultTypes>
@@ -103,7 +108,12 @@
     </ResultType>
     <ResultType Id="6">
       <Name>Item Acquisition</Name>
-      <Results />
+      <Results>
+        <Result Id="6">
+          <Name>Acquire Junk</Name>
+          <JSONData>{"itemId":"0"}</JSONData>
+        </Result>
+      </Results>
       <ResultTypeJSONProperty>
         <ResultTypeJSONProperty Id="13">
           <JSONProperty>itemId</JSONProperty>
@@ -259,6 +269,36 @@
                 <ParagraphState Id="4">
                   <Text>Clutter fills the passenger’s seat: A crumpled up plastic bag, a pair of kitchen scissors, and a small flashlight.</Text>
                   <State>0</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="7">
+                  <Text>Clutter fills the passenger’s seat: A crumpled up plastic bag and a pair of kitchen scissors.</Text>
+                  <State>1</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="8">
+                  <Text>Clutter fills the passenger’s seat: A crumpled up plastic bag and a small flashlight.</Text>
+                  <State>2</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="9">
+                  <Text>Clutter fills the passenger’s seat: A pair of kitchen scissors and a small flashlight.</Text>
+                  <State>3</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="10">
+                  <Text>A crumpled up plastic bag rests in the passenger's seat beside you.</Text>
+                  <State>4</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="11">
+                  <Text>A pair of kitchen scissors rests in the passenger's seat beside you.</Text>
+                  <State>5</State>
+                  <Nouns />
+                </ParagraphState>
+                <ParagraphState Id="12">
+                  <Text>A small flashlight rests in the passenger's seat beside you.</Text>
+                  <State>6</State>
                   <Nouns />
                 </ParagraphState>
               </ParagraphStates>
