@@ -34,7 +34,7 @@ namespace TBGINTB_Builder.BuilderControls
         #region MEMBER PROPERTIES
 
         public int RoomId { get; private set; }
-        public int RoomStateId { get; private set; }
+        public int? RoomStateId { get; private set; }
 
         public int? SelectedParagraphId { get; private set; }
 
@@ -45,7 +45,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public UserControl_ParagraphsAndStates(int roomId, int roomStateId)
+        public UserControl_ParagraphsAndStates(int roomId, int? roomStateId)
         {
             RoomId = roomId;
             RoomStateId = roomStateId;
@@ -204,14 +204,15 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void Button_ModifyParagraph_Click(object sender, RoutedEventArgs e)
         {
-            UserControl_Paragraph grid = m_stackPanel_paragraphs.Children.OfType<UserControl_Paragraph>().Single(g => g.ParagraphId == SelectedParagraphId);
+            UserControl_Bordered_ParagraphWithPreview userControl = 
+                m_stackPanel_paragraphs.Children.OfType<UserControl_Bordered_ParagraphWithPreview>().Single(g => g.ParagraphId == SelectedParagraphId);
             Window_Paragraph window = 
                 new Window_Paragraph
                 (
-                    grid.ParagraphId, 
-                    grid.ParagraphOrder, 
-                    grid.RoomId,
-                    grid.RoomStateId,
+                    userControl.ParagraphId, 
+                    userControl.ParagraphOrder, 
+                    userControl.RoomId,
+                    userControl.RoomStateId,
                     (win) =>
                     {
                         Window_Paragraph wWin = win as Window_Paragraph;

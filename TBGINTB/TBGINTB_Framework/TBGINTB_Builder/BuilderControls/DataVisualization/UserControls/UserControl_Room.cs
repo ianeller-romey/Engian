@@ -65,6 +65,8 @@ namespace TBGINTB_Builder.BuilderControls
 
             foreach (var e in EditingControls)
                 e.IsEnabled = enableEditing;
+            if (!enableEditing)
+                MouseLeftButtonDown += UserControl_Room_MouseLeftButtonDown;
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -203,6 +205,12 @@ namespace TBGINTB_Builder.BuilderControls
             TextBox tb = sender as TextBox;
             if (tb != null && tb == m_textBox_name)
                 RoomName = m_textBox_name.Text;
+        }
+
+        private void UserControl_Room_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (RoomId.HasValue)
+                GinTubBuilderManager.GetRoom(RoomId.Value);
         }
 
         #endregion

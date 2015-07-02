@@ -361,12 +361,10 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void LoadArea(int id, string name, int maxX, int minX, int maxY, int minY, int minZ, int maxZ)
         {
+            UnloadArea();
+
             AreaId = id;
 
-            m_grid_sub.Children.Remove(m_grid_roomsOnFloor);
-            m_grid_roomsOnFloor = null;
-
-            m_comboBox_z.Items.Clear();
             m_comboBox_z.Items.Add(c_comboBoxItem_newFloorAbove);
             m_comboBox_z.Items.Add(c_comboBoxItem_newFloorBelow);
             if(minZ < 0)
@@ -383,8 +381,6 @@ namespace TBGINTB_Builder.BuilderControls
             }
             m_comboBox_z.SelectedItem = m_comboBox_z.Items[m_comboBox_z.Items.Count - 2];
 
-            if (m_grid_roomAndState != null)
-                m_grid_sub.Children.Remove(m_grid_roomAndState);
             m_grid_roomsOnFloor = new Grid_RoomsOnFloor(maxX, maxY, minZ, AreaId);
             m_grid_sub.SetGridRowColumn(m_grid_roomsOnFloor, 0, 0);
             m_grid_roomsOnFloor.SetActiveAndRegisterForGinTubEvents();
@@ -398,6 +394,11 @@ namespace TBGINTB_Builder.BuilderControls
             m_grid_sub.SetGridRowColumn(m_grid_roomAndState, 0, 2);
             m_grid_roomAndState.SetActiveAndRegisterForGinTubEvents();
             GinTubBuilderManager.LoadAllRoomStatesForRoom(roomId);
+
+            m_grid_paragraphsAndStates = new UserControl_ParagraphsAndStates(roomId, null);
+            m_grid_sub.SetGridRowColumn(m_grid_paragraphsAndStates, 0, 4);
+            m_grid_paragraphsAndStates.SetActiveAndRegisterForGinTubEvents();
+            GinTubBuilderManager.LoadAllParagraphsForRoomAndRoomState(roomId, null);
         }
 
         private void LoadRoomState(int roomId, int roomStateId)
@@ -448,6 +449,17 @@ namespace TBGINTB_Builder.BuilderControls
             GinTubBuilderManager.LoadAllEventActionRequirementsForAction(actionId);
             GinTubBuilderManager.LoadAllCharacterActionRequirementsForAction(actionId);
             GinTubBuilderManager.LoadAllActionsForNoun(m_grid_nounsAndActions.SelectedNounId.Value);
+        }
+
+        private void UnloadArea()
+        {
+            if(m_grid_roomsOnFloor != null)
+                m_grid_sub.Children.Remove(m_grid_roomsOnFloor);
+            m_grid_roomsOnFloor = null;
+
+            m_comboBox_z.Items.Clear();
+
+            UnloadRoom();
         }
 
         private void UnloadRoom()

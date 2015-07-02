@@ -15,7 +15,7 @@ GO
 -- Description:	Completely removes everything from the database
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ClearDatabase]
-	@backupfile varchar(MAX)
+	@backupfile varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -53,7 +53,7 @@ GO
 -- Description:	Adds an Area record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddArea]
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -78,7 +78,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportArea]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -91,7 +91,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Areas] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500)',
+					   N'@id_ int, @name_ varchar(256)',
 					   @id, @name
 
 END
@@ -107,7 +107,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateArea]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -253,8 +253,8 @@ GO
 -- Description:	Adds a Location record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddLocation]
-	@name varchar(500),
-	@locationfile varchar(MAX)
+	@name varchar(256),
+	@locationfile varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -279,8 +279,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportLocation]
 	@id int,
-	@name varchar(500),
-	@locationfile varchar(MAX)
+	@name varchar(256),
+	@locationfile varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -293,7 +293,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Locations] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @locationfile_ varchar(MAX)',
+					   N'@id_ int, @name_ varchar(256), @locationfile_ varchar(256)',
 					   @id, @name, @locationfile
 
 END
@@ -309,8 +309,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateLocation]
 	@id int,
-	@name varchar(500),
-	@locationfile varchar(MAX)
+	@name varchar(256),
+	@locationfile varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -445,7 +445,7 @@ GO
 -- Description:	Adds a Room record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddRoom]
-	@name varchar(500),
+	@name varchar(256),
 	@x int,
 	@y int,
 	@z int,
@@ -474,7 +474,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportRoom]
 	@id int,
-	@name varchar(500),
+	@name varchar(256),
 	@x int,
 	@y int,
 	@z int,
@@ -491,7 +491,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Rooms] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @x_ int, @y_ int, @z_ int, @area_ int',
+					   N'@id_ int, @name_ varchar(256), @x_ int, @y_ int, @z_ int, @area_ int',
 					   @id, @name, @x, @y, @z, @area
 
 END
@@ -507,7 +507,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateRoom]
 	@id int,
-	@name varchar(500),
+	@name varchar(256),
 	@x int,
 	@y int,
 	@z int,
@@ -1252,6 +1252,33 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphsForRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/2/2015
+-- Description:	Gets all Paragraph records associated with the specified Room
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllParagraphsForRoom]
+	@room int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [Order],
+		   [Room],
+		   [RoomState]
+	FROM [dbo].[Paragraphs]
+	WHERE [Room] = @room
+	ORDER BY [Order]
+
+END
+GO
+
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
 	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphsForRoomAndRoomState] AS SELECT 1')
 GO
@@ -1275,7 +1302,7 @@ BEGIN
 		   [RoomState]
 	FROM [dbo].[Paragraphs]
 	WHERE [Room] = @room
-	AND ([RoomState] = @roomstate OR [RoomState] IS NULL)
+	AND ((@roomstate IS NULL AND [RoomState] IS NULL) OR [RoomState] = @roomstate)
 	ORDER BY [Order]
 
 END
@@ -1424,7 +1451,7 @@ GO
 -- Description:	Adds a ParagraphState record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddParagraphState]
-	@text varchar(MAX),
+	@text varchar(256),
 	@paragraph int
 AS
 BEGIN
@@ -1456,7 +1483,7 @@ GO
 ALTER PROCEDURE [dev].[dev_ImportParagraphState]
 	@id int,
 	@state int,
-	@text varchar(MAX),
+	@text varchar(256),
 	@paragraph int
 AS
 BEGIN
@@ -1470,7 +1497,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[ParagraphStates] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @state_ int, @text_ varchar(MAX), @paragraph_ int',
+					   N'@id_ int, @state_ int, @text_ varchar(256), @paragraph_ int',
 					   @id, @state, @text, @paragraph
 
 END
@@ -1486,7 +1513,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateParagraphState]
 	@id int,
-	@text varchar(MAX),
+	@text varchar(256),
 	@state int,
 	@paragraph int
 AS
@@ -1676,7 +1703,7 @@ GO
 -- and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddNoun]
-	@text varchar(MAX),
+	@text varchar(256),
 	@paragraphstate int
 AS
 BEGIN
@@ -1711,7 +1738,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportNoun]
 	@id int,
-	@text varchar(MAX),
+	@text varchar(256),
 	@paragraphstate int
 AS
 BEGIN
@@ -1734,7 +1761,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Nouns] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @text_ varchar(MAX), @paragraphstate_ int',
+					   N'@id_ int, @text_ varchar(256), @paragraphstate_ int',
 					   @id, @text, @paragraphstate
 
 END
@@ -1750,7 +1777,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateNoun]
 	@id int,
-	@text varchar(MAX),
+	@text varchar(256),
 	@paragraphstate int
 AS
 BEGIN
@@ -1890,7 +1917,7 @@ GO
 -- Description:	Adds a VerbType record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddVerbType]
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1915,7 +1942,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportVerbType]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1928,7 +1955,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[VerbTypes] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500)',
+					   N'@id_ int, @name_ varchar(256)',
 					   @id, @name
 
 END
@@ -1944,7 +1971,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateVerbType]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1976,6 +2003,7 @@ BEGIN
 	SELECT [Id],
 		   [Name]
 	FROM [dbo].[VerbTypes]
+	ORDER BY [Id]
 
 END
 GO
@@ -2080,7 +2108,7 @@ GO
 -- Description:	Adds a Verb record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddVerb]
-	@name varchar(500),
+	@name varchar(256),
 	@verbtype int
 AS
 BEGIN
@@ -2106,7 +2134,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportVerb]
 	@id int,
-	@name varchar(500),
+	@name varchar(256),
 	@verbtype int
 AS
 BEGIN
@@ -2120,7 +2148,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Verbs] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @verbtype_ int',
+					   N'@id_ int, @name_ varchar(256), @verbtype_ int',
 					   @id, @name, @verbtype
 
 END
@@ -2136,7 +2164,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateVerb]
 	@id int,
-	@name varchar(500),
+	@name varchar(256),
 	@verbtype int
 AS
 BEGIN
@@ -2238,7 +2266,7 @@ GO
 -- Description:	Adds a ResultType record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddResultType]
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2263,7 +2291,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportResultType]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2276,7 +2304,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[ResultTypes] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500)',
+					   N'@id_ int, @name_ varchar(256)',
 					   @id, @name
 
 END
@@ -2292,7 +2320,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateResultType]
 	@id int,
-	@name varchar(500)
+	@name varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2407,7 +2435,7 @@ GO
 -- Description:	Adds a ResultTypeJSONProperty record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddResultTypeJSONProperty]
-	@jsonproperty varchar(MAX),
+	@jsonproperty varchar(256),
 	@resulttype int
 AS
 BEGIN
@@ -2433,7 +2461,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportResultTypeJSONProperty]
 	@id int,
-	@jsonproperty varchar(MAX),
+	@jsonproperty varchar(256),
 	@resulttype int
 AS
 BEGIN
@@ -2447,7 +2475,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dev].[ResultTypeJSONProperties] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @jsonproperty_ varchar(MAX), @resulttype_ int',
+					   N'@id_ int, @jsonproperty_ varchar(256), @resulttype_ int',
 					   @id, @jsonproperty, @resulttype
 
 END
@@ -2463,7 +2491,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateResultTypeJSONProperty]
 	@id int,
-	@jsonproperty varchar(MAX),
+	@jsonproperty varchar(256),
 	@resulttype int
 AS
 BEGIN
@@ -2565,8 +2593,8 @@ GO
 -- Description:	Adds a Result record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddResult]
-	@name varchar(500),
-	@jsondata varchar(MAX),
+	@name varchar(256),
+	@jsondata varchar(500),
 	@resulttype int
 AS
 BEGIN
@@ -2599,8 +2627,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportResult]
 	@id int,
-	@name varchar(500),
-	@jsondata varchar(MAX),
+	@name varchar(256),
+	@jsondata varchar(500),
 	@resulttype int
 AS
 BEGIN
@@ -2615,7 +2643,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Results] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @jsondata_ varchar(MAX), @resulttype_ int',
+					   N'@id_ int, @name_ varchar(256), @jsondata_ varchar(256), @resulttype_ int',
 					   @id, @name, @jsondata, @resulttype
 
 END
@@ -2631,8 +2659,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateResult]
 	@id int,
-	@name varchar(500),
-	@jsondata varchar(MAX),
+	@name varchar(256),
+	@jsondata varchar(500),
 	@resulttype int
 AS
 BEGIN
@@ -3221,8 +3249,8 @@ GO
 -- Description:	Adds an Item record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddItem]
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3247,8 +3275,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportItem]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3261,7 +3289,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Items] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   N'@id_ int, @name_ varchar(256), @description_ varchar(256)',
 					   @id, @name, @description
 
 END
@@ -3277,8 +3305,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateItem]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3382,8 +3410,8 @@ GO
 -- Description:	Adds an Event record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddEvent]
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3408,8 +3436,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportEvent]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3422,7 +3450,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Events] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   N'@id_ int, @name_ varchar(256), @description_ varchar(256)',
 					   @id, @name, @description
 
 END
@@ -3438,8 +3466,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateEvent]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3543,8 +3571,8 @@ GO
 -- Description:	Adds an Character record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddCharacter]
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3569,8 +3597,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportCharacter]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3583,7 +3611,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Characters] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @description_ varchar(MAX)',
+					   N'@id_ int, @name_ varchar(256), @description_ varchar(256)',
 					   @id, @name, @description
 
 END
@@ -3599,8 +3627,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateCharacter]
 	@id int,
-	@name varchar(500),
-	@description varchar(MAX)
+	@name varchar(256),
+	@description varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4214,8 +4242,8 @@ GO
 -- Description:	Adds an Message record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessage]
-	@name varchar(500),
-	@text varchar(MAX)
+	@name varchar(256),
+	@text varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4247,8 +4275,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportMessage]
 	@id int,
-	@name varchar(500),
-	@text varchar(MAX)
+	@name varchar(256),
+	@text varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4262,7 +4290,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[Messages] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @text_ varchar(MAX)',
+					   N'@id_ int, @name_ varchar(256), @text_ varchar(256)',
 					   @id, @name, @text
 
 END
@@ -4278,8 +4306,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateMessage]
 	@id int,
-	@name varchar(500),
-	@text varchar(MAX)
+	@name varchar(256),
+	@text varchar(256)
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4396,8 +4424,8 @@ GO
 -- Description:	Adds an MessageChoice record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddMessageChoice]
-	@name varchar(500),
-	@text varchar(MAX),
+	@name varchar(256),
+	@text varchar(256),
 	@message int
 AS
 BEGIN
@@ -4430,8 +4458,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_ImportMessageChoice]
 	@id int,
-	@name varchar(500),
-	@text varchar(MAX),
+	@name varchar(256),
+	@text varchar(256),
 	@message int
 AS
 BEGIN
@@ -4446,7 +4474,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[MessageChoices] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @name_ varchar(500), @text_ varchar(MAX), @message_ int',
+					   N'@id_ int, @name_ varchar(256), @text_ varchar(256), @message_ int',
 					   @id, @name, @text, @message
 
 END
@@ -4462,8 +4490,8 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_UpdateMessageChoice]
 	@id int,
-	@name varchar(500),
-	@text varchar(MAX),
+	@name varchar(256),
+	@text varchar(256),
 	@message int
 AS
 BEGIN
@@ -4828,10 +4856,11 @@ GO
 -- Description:	Adds an Player record and returns the newly generated ID
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddPlayer]
-	@username varchar(max),
-	@domainname varchar(max),
-	@domain varchar(max),
-	@password varchar(max)
+	@username varchar(256),
+	@domainname varchar(256),
+	@domain varchar(256),
+	@password varchar(256),
+	@playerid uniqueidentifier
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4841,7 +4870,6 @@ BEGIN
 	DECLARE @usernameid int
 	DECLARE @domainnameid int
 	DECLARE @domainid int
-	DECLARE @playerid uniqueidentifier
 
 	-- Insert the UserName, get the new Id
 	INSERT INTO [dbo].[EmailUserNames] ([UserName])
@@ -4872,17 +4900,18 @@ BEGIN
 	END
 	
 	-- Insert player	
-	SELECT @playerid = NEWID()
+	SELECT @playerid = ISNULL(@playerid, NEWID())
 	
-	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id], [LastCheckpoint], [LastRoom])
-	SELECT @usernameid, 
-		   @domainnameid, 
-		   @domainid, 
-		   @password, 
-		   @playerid, 
-		   GETDATE(),
-		   [Room]
-	FROM [dbo].[AreaRoomOnInitialLoad] WITH (NOLOCK)
+	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id])
+	VALUES (@usernameid, @domainnameid, @domainid, @password, @playerid)
+	
+	INSERT INTO [dbo].[PlayerLoginActivities] ([Player], [LastLogin])
+	VALUES (@playerId, GETDATE())
+	
+	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
+	SELECT TOP 1 @playerId,
+				 [Room]
+	FROM [dbo].[AreaRoomOnInitialLoad]
 	
 	SELECT @playerid
 
@@ -5056,8 +5085,8 @@ BEGIN
 	SET NOCOUNT ON;
 
 	IF EXISTS (SELECT 1 FROM [dbo].[AreaRoomOnInitialLoad])
-		SELECT [Area],
-			   [Room]
+		SELECT TOP 1 [Area],
+					 [Room]
 		FROM [dbo].[AreaRoomOnInitialLoad]
 	ELSE
 		SELECT NULL AS [Area], NULL AS [Room]

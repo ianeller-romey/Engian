@@ -66,20 +66,18 @@ ALTER PROCEDURE [dbo].[CreateDefaultPlayerStates]
 AS
 BEGIN
 
-	INSERT INTO [dbo].[PlayerStatesOfRooms] ([Player], [Room], [State], [CheckpointDate])
+	INSERT INTO [dbo].[PlayerStatesOfRooms] ([Player], [Room], [State])
 	SELECT @player,
 		   r.[Id],
-		   0,
-		   p.[LastCheckpoint]
+		   0
 	FROM [dbo].[Rooms] r WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 	
-	INSERT INTO [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph], [State], [CheckpointDate])
+	INSERT INTO [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph], [State])
 	SELECT @player,
 		   para.[Id],
-		   0,
-		   p.[LastCheckpoint]
+		   0
 	FROM [dbo].[Paragraphs] para WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
@@ -100,29 +98,26 @@ ALTER PROCEDURE [dbo].[CreateDefaultPlayerInventories]
 AS
 BEGIN
 
-	INSERT INTO [dbo].[PlayerInventory] ([Player], [Item], [InInventory], [CheckpointDate])
+	INSERT INTO [dbo].[PlayerInventory] ([Player], [Item], [InInventory])
 	SELECT @player,
 		   x.[Id],
-		   0,
-		   p.[LastCheckpoint]
+		   0
 	FROM [dbo].[Items] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
-	INSERT INTO [dbo].[PlayerHistory] ([Player], [Event], [InHistory], [CheckpointDate])
+	INSERT INTO [dbo].[PlayerHistory] ([Player], [Event], [InHistory])
 	SELECT @player,
 		   x.[Id],
-		   0,
-		   p.[LastCheckpoint]
+		   0
 	FROM [dbo].[Events] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 
-	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [InParty], [CheckpointDate])
+	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [InParty])
 	SELECT @player,
 		   x.[Id],
-		   0,
-		   p.[LastCheckpoint]
+		   0
 	FROM [dbo].[Characters] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
@@ -342,10 +337,10 @@ BEGIN
 		   @x = r.[X],
 		   @y = r.[Y],
 		   @z = r.[Z]
-	FROM [dbo].[Players] p WITH (NOLOCK)
+	FROM [dbo].[PlayerGameStates] p WITH (NOLOCK)
 	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
 	ON p.[LastRoom] = r.[Id]
-	WHERE p.[Id] = @player
+	WHERE p.[Player] = @player
 	
 	EXEC [dbo].[LoadArea]
 	@area = @area
@@ -433,21 +428,20 @@ BEGIN
 
 	DECLARE @room int
 	SELECT @room = r.[Id]
-	FROM [dbo].[Players] p WITH (NOLOCK)
+	FROM [dbo].[PlayerGameStates] p WITH (NOLOCK)
 	INNER JOIN [dbo].[Rooms] r2 WITH (NOLOCK)
 	ON p.[LastRoom] = r2.[Id]
-	INNER JOIN [dbo].[Rooms] r
+	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
 	ON r.[Area] = r2.[Area]
-	WHERE p.[Id]= @player
+	WHERE p.[Player]= @player
 	AND r.[Area] = @area
 	AND r.[X] = r2.[X] + @xDir
 	AND r.[Y] = r2.[Y] + @yDir
 	AND r.[Z] = r2.[Z] + @zDir
 	
-	UPDATE [dbo].[Players]
-	SET [LastCheckpoint] = GETDATE(),
-		[LastRoom] = @room
-	WHERE [Id] = @player
+	UPDATE [dbo].[PlayerGameStates]
+	SET [LastRoom] = @room
+	WHERE [Player] = @player
 		
 	EXEC [dbo].[LoadRoomId] 
 	@player = @player, 

@@ -181,6 +181,9 @@
     <Compile Include="Repository\dev_GetAllParagraphsForRoomAndRoomState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllParagraphsForRoom_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllParagraphStatesForParagraph_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>

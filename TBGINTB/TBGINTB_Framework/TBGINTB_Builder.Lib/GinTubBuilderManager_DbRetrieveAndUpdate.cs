@@ -1774,6 +1774,13 @@ namespace TBGINTB_Builder.Lib
             OnParagraphGet(paragraph);
         }
 
+        public static void LoadAllParagraphForRoom(int roomId)
+        {
+            List<Paragraph> paragraphs = SelectAllParagraphsForRoom(roomId);
+            foreach (var paragraph in paragraphs)
+                OnParagraphAdded(paragraph);
+        }
+
         public static void LoadAllParagraphsForRoomAndRoomState(int roomId, int? roomStateId)
         {
             List<Paragraph> paragraphs = SelectAllParagraphsForRoomAndRoomState(roomId, roomStateId);
@@ -2451,6 +2458,7 @@ namespace TBGINTB_Builder.Lib
             Mapper.CreateMap<dev_GetAllRoomStatesForRoom_Result, RoomState>();
 
             Mapper.CreateMap<dev_GetParagraph_Result, Paragraph>();
+            Mapper.CreateMap<dev_GetAllParagraphsForRoom_Result, Paragraph>();
             Mapper.CreateMap<dev_GetAllParagraphsForRoomAndRoomState_Result, Paragraph>();
 
             Mapper.CreateMap<dev_GetParagraphState_Result, ParagraphState>();
@@ -2868,6 +2876,24 @@ namespace TBGINTB_Builder.Lib
 
             Paragraph paragraph = Mapper.Map<Paragraph>(databaseResult.Single());
             return paragraph;
+        }
+
+        private static List<Paragraph> SelectAllParagraphsForRoom(int room)
+        {
+            ObjectResult<dev_GetAllParagraphsForRoom_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllParagraphsForRoom(room);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllParagraphsForRoom", new Exception("No [Paragraphs] records found."));
+
+            List<Paragraph> paragraphs = databaseResult.Select(r => Mapper.Map<Paragraph>(r)).ToList();
+            return paragraphs;
         }
 
         private static List<Paragraph> SelectAllParagraphsForRoomAndRoomState(int room, int? roomState)

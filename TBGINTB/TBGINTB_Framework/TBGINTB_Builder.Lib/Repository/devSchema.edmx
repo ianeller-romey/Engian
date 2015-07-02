@@ -18,7 +18,7 @@
         </Function>
         <Function Name="dev_AddCharacter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddCharacterActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="item" Type="int" Mode="In" />
@@ -26,7 +26,7 @@
         </Function>
         <Function Name="dev_AddEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddEventActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="item" Type="int" Mode="In" />
@@ -34,7 +34,7 @@
         </Function>
         <Function Name="dev_AddItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddItemActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="item" Type="int" Mode="In" />
@@ -42,15 +42,15 @@
         </Function>
         <Function Name="dev_AddLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="locationfile" Type="varchar(max)" Mode="In" />
+          <Parameter Name="locationfile" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddMessageChoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="message" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddMessageChoiceResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -58,7 +58,7 @@
           <Parameter Name="messagechoice" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddNoun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="paragraphstate" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -67,39 +67,26 @@
           <Parameter Name="roomstate" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="paragraph" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddPlayer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="username" Type="varchar(max)" Mode="In" />
-          <Parameter Name="domainname" Type="varchar(max)" Mode="In" />
-          <Parameter Name="domain" Type="varchar(max)" Mode="In" />
-          <Parameter Name="password" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="dev_AddPlayerHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="event" Type="int" Mode="In" />
-        </Function>
-        <Function Name="dev_AddPlayerInventory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="item" Type="int" Mode="In" />
-          <Parameter Name="active" Type="bit" Mode="In" />
-        </Function>
-        <Function Name="dev_AddPlayerParty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
-          <Parameter Name="character" Type="int" Mode="In" />
-          <Parameter Name="active" Type="bit" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="domainname" Type="varchar" Mode="In" />
+          <Parameter Name="domain" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="playerid" Type="uniqueidentifier" Mode="In" />
         </Function>
         <Function Name="dev_AddResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="jsondata" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsondata" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_AddResultTypeJSONProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="jsonproperty" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsonproperty" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_AddRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -122,7 +109,7 @@
           <Parameter Name="name" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ClearDatabase" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
-          <Parameter Name="backupfile" Type="varchar(max)" Mode="In" />
+          <Parameter Name="backupfile" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_DeleteAllActionResultsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="action" Type="int" Mode="In" />
@@ -223,6 +210,9 @@
         <Function Name="dev_GetAllMessages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev" />
         <Function Name="dev_GetAllNounsForParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="paragraphstate" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_GetAllParagraphsForRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="room" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_GetAllParagraphsForRoomAndRoomState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="room" Type="int" Mode="In" />
@@ -356,7 +346,7 @@
         <Function Name="dev_ImportCharacter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ImportCharacterActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -366,7 +356,7 @@
         <Function Name="dev_ImportEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ImportEventActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -376,7 +366,7 @@
         <Function Name="dev_ImportItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ImportItemActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -386,17 +376,17 @@
         <Function Name="dev_ImportLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="locationfile" Type="varchar(max)" Mode="In" />
+          <Parameter Name="locationfile" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ImportMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_ImportMessageChoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="message" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportMessageChoiceResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -406,7 +396,7 @@
         </Function>
         <Function Name="dev_ImportNoun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="paragraphstate" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -418,13 +408,13 @@
         <Function Name="dev_ImportParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="state" Type="int" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="paragraph" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="jsondata" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsondata" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -433,7 +423,7 @@
         </Function>
         <Function Name="dev_ImportResultTypeJSONProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="jsonproperty" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsonproperty" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_ImportRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -483,7 +473,7 @@
         <Function Name="dev_UpdateCharacter" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_UpdateCharacterActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -493,7 +483,7 @@
         <Function Name="dev_UpdateEvent" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_UpdateEventActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -503,7 +493,7 @@
         <Function Name="dev_UpdateItem" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_UpdateItemActionRequirement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
@@ -513,17 +503,17 @@
         <Function Name="dev_UpdateLocation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="locationfile" Type="varchar(max)" Mode="In" />
+          <Parameter Name="locationfile" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_UpdateMessage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
         </Function>
         <Function Name="dev_UpdateMessageChoice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="message" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_UpdateMessageChoiceResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -533,7 +523,7 @@
         </Function>
         <Function Name="dev_UpdateNoun" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="paragraphstate" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_UpdateParagraph" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -544,24 +534,29 @@
         </Function>
         <Function Name="dev_UpdateParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="text" Type="varchar(max)" Mode="In" />
+          <Parameter Name="text" Type="varchar" Mode="In" />
           <Parameter Name="state" Type="int" Mode="In" />
           <Parameter Name="paragraph" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dev_UpdatePlayerHistory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
+          <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
+          <Parameter Name="evnt" Type="int" Mode="In" />
+          <Parameter Name="inhistory" Type="bit" Mode="In" />
         </Function>
         <Function Name="dev_UpdatePlayerInventory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="item" Type="int" Mode="In" />
-          <Parameter Name="active" Type="bit" Mode="In" />
+          <Parameter Name="ininventory" Type="bit" Mode="In" />
         </Function>
         <Function Name="dev_UpdatePlayerParty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="character" Type="int" Mode="In" />
-          <Parameter Name="active" Type="bit" Mode="In" />
+          <Parameter Name="inparty" Type="bit" Mode="In" />
         </Function>
         <Function Name="dev_UpdateResult" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
           <Parameter Name="name" Type="varchar" Mode="In" />
-          <Parameter Name="jsondata" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsondata" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_UpdateResultType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -570,7 +565,7 @@
         </Function>
         <Function Name="dev_UpdateResultTypeJSONProperty" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
           <Parameter Name="id" Type="int" Mode="In" />
-          <Parameter Name="jsonproperty" Type="varchar(max)" Mode="In" />
+          <Parameter Name="jsonproperty" Type="varchar" Mode="In" />
           <Parameter Name="resulttype" Type="int" Mode="In" />
         </Function>
         <Function Name="dev_UpdateRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dev">
@@ -672,25 +667,12 @@
             <Parameter Name="text" Mode="In" Type="String" />
             <Parameter Name="paragraph" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="dev_AddPlayer">
+          <FunctionImport Name="dev_AddPlayer" ReturnType="Collection(Guid)">
             <Parameter Name="username" Mode="In" Type="String" />
             <Parameter Name="domainname" Mode="In" Type="String" />
             <Parameter Name="domain" Mode="In" Type="String" />
             <Parameter Name="password" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="dev_AddPlayerHistory" ReturnType="Collection(Decimal)">
-            <Parameter Name="player" Mode="In" Type="Guid" />
-            <Parameter Name="event" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="dev_AddPlayerInventory" ReturnType="Collection(Decimal)">
-            <Parameter Name="player" Mode="In" Type="Guid" />
-            <Parameter Name="item" Mode="In" Type="Int32" />
-            <Parameter Name="active" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="dev_AddPlayerParty" ReturnType="Collection(Decimal)">
-            <Parameter Name="player" Mode="In" Type="Guid" />
-            <Parameter Name="character" Mode="In" Type="Int32" />
-            <Parameter Name="active" Mode="In" Type="Boolean" />
+            <Parameter Name="playerid" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="dev_AddResult" ReturnType="Collection(Decimal)">
             <Parameter Name="name" Mode="In" Type="String" />
@@ -863,6 +845,7 @@
           <FunctionImport Name="dev_GetArea" ReturnType="Collection(GinTubModel.dev_GetArea_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_GetAreaRoomOnInitialLoad" ReturnType="Collection(GinTubModel.dev_GetAreaRoomOnInitialLoad_Result)" />
           <FunctionImport Name="dev_GetCharacter" ReturnType="Collection(GinTubModel.dev_GetCharacter_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -919,9 +902,15 @@
           <Parameter Name="id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetRoomPreview">
-          <ReturnType Type="Collection(GinTubModel.dev_GetRoomPreviewParagraphStates_Result)" />
-          <ReturnType Type="Collection(GinTubModel.dev_GetRoomPreviewNouns_Result)" />
+            <ReturnType Type="Collection(GinTubModel.dev_GetRoomPreviewParagraphStates_Result)"/>
+            <ReturnType Type="Collection(GinTubModel.dev_GetRoomPreviewNouns_Result)"/>
             <Parameter Name="roompreview" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetRoomPreviewNouns" ReturnType="Collection(GinTubModel.dev_GetRoomPreviewNouns_Result)">
+          <Parameter Name="room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dev_GetRoomPreviewParagraphStates" ReturnType="Collection(GinTubModel.dev_GetRoomPreviewParagraphStates_Result)">
+          <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_GetRoomState" ReturnType="Collection(GinTubModel.dev_GetRoomState_Result)">
           <Parameter Name="id" Mode="In" Type="Int32" />
@@ -945,6 +934,10 @@
           <FunctionImport Name="dev_ImportArea">
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="name" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dev_ImportAreaRoomOnInitialLoad">
+            <Parameter Name="area" Mode="In" Type="Int32" />
+            <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="dev_ImportCharacter">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -1141,15 +1134,20 @@
             <Parameter Name="state" Mode="In" Type="Int32" />
             <Parameter Name="paragraph" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="dev_UpdatePlayerHistory">
+            <Parameter Name="player" Mode="In" Type="Guid" />
+            <Parameter Name="evnt" Mode="In" Type="Int32" />
+            <Parameter Name="inhistory" Mode="In" Type="Boolean" />
+          </FunctionImport>
           <FunctionImport Name="dev_UpdatePlayerInventory">
             <Parameter Name="player" Mode="In" Type="Guid" />
             <Parameter Name="item" Mode="In" Type="Int32" />
-            <Parameter Name="active" Mode="In" Type="Boolean" />
+            <Parameter Name="ininventory" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdatePlayerParty">
             <Parameter Name="player" Mode="In" Type="Guid" />
             <Parameter Name="character" Mode="In" Type="Int32" />
-            <Parameter Name="active" Mode="In" Type="Boolean" />
+            <Parameter Name="inparty" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="dev_UpdateResult">
             <Parameter Name="id" Mode="In" Type="Int32" />
@@ -1190,19 +1188,11 @@
             <Parameter Name="id" Mode="In" Type="Int32" />
             <Parameter Name="name" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="dev_GetRoomPreviewNouns" ReturnType="Collection(GinTubModel.dev_GetRoomPreviewNouns_Result)">
-          <Parameter Name="room" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="dev_GetRoomPreviewParagraphStates" ReturnType="Collection(GinTubModel.dev_GetRoomPreviewParagraphStates_Result)">
-          <Parameter Name="room" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="dev_GetAreaRoomOnInitialLoad" ReturnType="Collection(GinTubModel.dev_GetAreaRoomOnInitialLoad_Result)" />
-          <FunctionImport Name="dev_ImportAreaRoomOnInitialLoad">
+          <FunctionImport Name="dev_UpsertAreaRoomOnInitialLoad">
             <Parameter Name="area" Mode="In" Type="Int32" />
             <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="dev_UpsertAreaRoomOnInitialLoad">
-            <Parameter Name="area" Mode="In" Type="Int32" />
+          <FunctionImport Name="dev_GetAllParagraphsForRoom" ReturnType="Collection(GinTubModel.dev_GetAllParagraphsForRoom_Result)">
             <Parameter Name="room" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -1210,7 +1200,7 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="VerbType" Nullable="false" />
           <Property Type="Int32" Name="Noun" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetActionResult_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1226,52 +1216,52 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="VerbType" Nullable="false" />
           <Property Type="Int32" Name="Noun" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetAllAreas_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllCharacterActionRequirementsForAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Character" Nullable="false" />
-          <Property Type="String" Name="CharacterName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CharacterName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetAllCharacters_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllEventActionRequirementsForAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Event" Nullable="false" />
-          <Property Type="String" Name="EventName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="EventName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetAllEvents_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllItemActionRequirementsForAction_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Item" Nullable="false" />
-          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetAllItems_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllLocations_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="LocationFile" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="LocationFile" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllMessageChoiceResultsForMessageChoice_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1280,18 +1270,18 @@
         </ComplexType>
         <ComplexType Name="dev_GetAllMessageChoicesForMessage_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Message" Nullable="true" />
         </ComplexType>
         <ComplexType Name="dev_GetAllMessages_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllNounsForParagraphState_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="ParagraphState" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllParagraphsForRoomAndRoomState_Result">
@@ -1302,40 +1292,40 @@
         </ComplexType>
         <ComplexType Name="dev_GetAllParagraphStatesForParagraph_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Paragraph" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllResultsForActionResultType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="JSONData" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="JSONData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllResultsForMessageChoiceResultType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="JSONData" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="JSONData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllResultsForResultType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="JSONData" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="JSONData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllResultTypeJSONPropertiesForResultType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="JSONProperty" Nullable="false" />
+          <Property Type="String" Name="JSONProperty" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllResultTypes_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetAllRoomsInArea_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="X" Nullable="false" />
           <Property Type="Int32" Name="Y" Nullable="false" />
           <Property Type="Int32" Name="Z" Nullable="false" />
@@ -1343,7 +1333,7 @@
         </ComplexType>
         <ComplexType Name="dev_GetAllRoomsInAreaOnFloor_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="X" Nullable="false" />
           <Property Type="Int32" Name="Y" Nullable="false" />
           <Property Type="Int32" Name="Z" Nullable="false" />
@@ -1358,16 +1348,16 @@
         </ComplexType>
         <ComplexType Name="dev_GetAllVerbsForVerbType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="VerbType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetAllVerbTypes_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetArea_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="MaxX" Nullable="false" />
           <Property Type="Int32" Name="MinX" Nullable="false" />
           <Property Type="Int32" Name="MaxY" Nullable="false" />
@@ -1376,56 +1366,60 @@
           <Property Type="Int32" Name="MinZ" Nullable="false" />
           <Property Type="Int32" Name="NumRooms" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="dev_GetAreaRoomOnInitialLoad_Result">
+          <Property Type="Int32" Name="Area" Nullable="true" />
+          <Property Type="Int32" Name="Room" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="dev_GetCharacter_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetCharacterActionRequirement_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Character" Nullable="false" />
-          <Property Type="String" Name="CharacterName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="CharacterName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetEvent_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetEventActionRequirement_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Event" Nullable="false" />
-          <Property Type="String" Name="EventName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="EventName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetItem_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetItemActionRequirement_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="Int32" Name="Item" Nullable="false" />
-          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Action" Nullable="false" />
-          <Property Type="String" Name="ActionName" Nullable="false" />
+          <Property Type="String" Name="ActionName" Nullable="false" MaxLength="516" />
         </ComplexType>
         <ComplexType Name="dev_GetLocation_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="LocationFile" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="LocationFile" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetMessage_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetMessageChoice_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Message" Nullable="true" />
         </ComplexType>
         <ComplexType Name="dev_GetMessageChoiceResult_Result">
@@ -1435,7 +1429,7 @@
         </ComplexType>
         <ComplexType Name="dev_GetNoun_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="ParagraphState" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetParagraph_Result">
@@ -1446,38 +1440,51 @@
         </ComplexType>
         <ComplexType Name="dev_GetParagraphState_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Paragraph" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetParagraphStateForParagraphPreview_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="State" Nullable="false" />
           <Property Type="Int32" Name="Paragraph" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetResult_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
-          <Property Type="String" Name="JSONData" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+          <Property Type="String" Name="JSONData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetResultType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
         </ComplexType>
         <ComplexType Name="dev_GetResultTypeJSONProperty_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="JSONProperty" Nullable="false" />
+          <Property Type="String" Name="JSONProperty" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetRoom_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="X" Nullable="false" />
           <Property Type="Int32" Name="Y" Nullable="false" />
           <Property Type="Int32" Name="Z" Nullable="false" />
           <Property Type="Int32" Name="Area" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="dev_GetRoomPreviewNouns_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="ParagraphState" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="dev_GetRoomPreviewParagraphStates_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="Paragraph" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="true" />
         </ComplexType>
         <ComplexType Name="dev_GetRoomState_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -1488,29 +1495,18 @@
         </ComplexType>
         <ComplexType Name="dev_GetVerb_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="VerbType" Nullable="false" />
         </ComplexType>
         <ComplexType Name="dev_GetVerbType_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="500" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
         </ComplexType>
-        <ComplexType Name="dev_GetRoomPreviewParagraphStates_Result">
+        <ComplexType Name="dev_GetAllParagraphsForRoom_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
-          <Property Type="Int32" Name="State" Nullable="false" />
-          <Property Type="Int32" Name="Paragraph" Nullable="false" />
-          <Property Type="Int32" Name="Room" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="dev_GetRoomPreviewNouns_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Text" Nullable="false" />
-          <Property Type="Int32" Name="ParagraphState" Nullable="false" />
-          <Property Type="Int32" Name="Room" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="dev_GetAreaRoomOnInitialLoad_Result">
-          <Property Type="Int32" Name="Area" Nullable="true" />
-          <Property Type="Int32" Name="Room" Nullable="true" />
+          <Property Type="Int32" Name="Order" Nullable="false" />
+          <Property Type="Int32" Name="Room" Nullable="false" />
+          <Property Type="Int32" Name="RoomState" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1535,9 +1531,6 @@
           <FunctionImportMapping FunctionImportName="dev_AddParagraph" FunctionName="GinTubModel.Store.dev_AddParagraph" />
           <FunctionImportMapping FunctionImportName="dev_AddParagraphState" FunctionName="GinTubModel.Store.dev_AddParagraphState" />
           <FunctionImportMapping FunctionImportName="dev_AddPlayer" FunctionName="GinTubModel.Store.dev_AddPlayer" />
-          <FunctionImportMapping FunctionImportName="dev_AddPlayerHistory" FunctionName="GinTubModel.Store.dev_AddPlayerHistory" />
-          <FunctionImportMapping FunctionImportName="dev_AddPlayerInventory" FunctionName="GinTubModel.Store.dev_AddPlayerInventory" />
-          <FunctionImportMapping FunctionImportName="dev_AddPlayerParty" FunctionName="GinTubModel.Store.dev_AddPlayerParty" />
           <FunctionImportMapping FunctionImportName="dev_AddResult" FunctionName="GinTubModel.Store.dev_AddResult" />
           <FunctionImportMapping FunctionImportName="dev_AddResultType" FunctionName="GinTubModel.Store.dev_AddResultType" />
           <FunctionImportMapping FunctionImportName="dev_AddResultTypeJSONProperty" FunctionName="GinTubModel.Store.dev_AddResultTypeJSONProperty" />
@@ -1858,6 +1851,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_GetAreaRoomOnInitialLoad">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAreaRoomOnInitialLoad_Result">
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="dev_GetCharacter" FunctionName="GinTubModel.Store.dev_GetCharacter">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GinTubModel.dev_GetCharacter_Result">
@@ -2052,6 +2053,27 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetRoomPreviewNouns" FunctionName="GinTubModel.Store.dev_GetRoomPreviewNouns">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomPreviewNouns_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ParagraphState" ColumnName="ParagraphState" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dev_GetRoomPreviewParagraphStates" FunctionName="GinTubModel.Store.dev_GetRoomPreviewParagraphStates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomPreviewParagraphStates_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Paragraph" ColumnName="Paragraph" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="dev_GetRoomState" FunctionName="GinTubModel.Store.dev_GetRoomState">
             <ResultMapping>
               <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomState_Result">
@@ -2083,6 +2105,7 @@
           <FunctionImportMapping FunctionImportName="dev_ImportAction" FunctionName="GinTubModel.Store.dev_ImportAction" />
           <FunctionImportMapping FunctionImportName="dev_ImportActionResult" FunctionName="GinTubModel.Store.dev_ImportActionResult" />
           <FunctionImportMapping FunctionImportName="dev_ImportArea" FunctionName="GinTubModel.Store.dev_ImportArea" />
+          <FunctionImportMapping FunctionImportName="dev_ImportAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_ImportAreaRoomOnInitialLoad" />
           <FunctionImportMapping FunctionImportName="dev_ImportCharacter" FunctionName="GinTubModel.Store.dev_ImportCharacter" />
           <FunctionImportMapping FunctionImportName="dev_ImportCharacterActionRequirement" FunctionName="GinTubModel.Store.dev_ImportCharacterActionRequirement" />
           <FunctionImportMapping FunctionImportName="dev_ImportEvent" FunctionName="GinTubModel.Store.dev_ImportEvent" />
@@ -2120,6 +2143,7 @@
           <FunctionImportMapping FunctionImportName="dev_UpdateNoun" FunctionName="GinTubModel.Store.dev_UpdateNoun" />
           <FunctionImportMapping FunctionImportName="dev_UpdateParagraph" FunctionName="GinTubModel.Store.dev_UpdateParagraph" />
           <FunctionImportMapping FunctionImportName="dev_UpdateParagraphState" FunctionName="GinTubModel.Store.dev_UpdateParagraphState" />
+          <FunctionImportMapping FunctionImportName="dev_UpdatePlayerHistory" FunctionName="GinTubModel.Store.dev_UpdatePlayerHistory" />
           <FunctionImportMapping FunctionImportName="dev_UpdatePlayerInventory" FunctionName="GinTubModel.Store.dev_UpdatePlayerInventory" />
           <FunctionImportMapping FunctionImportName="dev_UpdatePlayerParty" FunctionName="GinTubModel.Store.dev_UpdatePlayerParty" />
           <FunctionImportMapping FunctionImportName="dev_UpdateResult" FunctionName="GinTubModel.Store.dev_UpdateResult" />
@@ -2129,37 +2153,17 @@
           <FunctionImportMapping FunctionImportName="dev_UpdateRoomState" FunctionName="GinTubModel.Store.dev_UpdateRoomState" />
           <FunctionImportMapping FunctionImportName="dev_UpdateVerb" FunctionName="GinTubModel.Store.dev_UpdateVerb" />
           <FunctionImportMapping FunctionImportName="dev_UpdateVerbType" FunctionName="GinTubModel.Store.dev_UpdateVerbType" />
-          <FunctionImportMapping FunctionImportName="dev_GetRoomPreviewNouns" FunctionName="GinTubModel.Store.dev_GetRoomPreviewNouns" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomPreviewNouns_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="ParagraphState" ColumnName="ParagraphState" />
-                <ScalarProperty Name="Room" ColumnName="Room" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dev_GetRoomPreviewParagraphStates" FunctionName="GinTubModel.Store.dev_GetRoomPreviewParagraphStates" >
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GinTubModel.dev_GetRoomPreviewParagraphStates_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Text" ColumnName="Text" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Paragraph" ColumnName="Paragraph" />
-                <ScalarProperty Name="Room" ColumnName="Room" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dev_GetAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_GetAreaRoomOnInitialLoad">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAreaRoomOnInitialLoad_Result">
-                <ScalarProperty Name="Area" ColumnName="Area" />
-                <ScalarProperty Name="Room" ColumnName="Room" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="dev_ImportAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_ImportAreaRoomOnInitialLoad" />
           <FunctionImportMapping FunctionImportName="dev_UpsertAreaRoomOnInitialLoad" FunctionName="GinTubModel.Store.dev_UpsertAreaRoomOnInitialLoad" />
+          <FunctionImportMapping FunctionImportName="dev_GetAllParagraphsForRoom" FunctionName="GinTubModel.Store.dev_GetAllParagraphsForRoom">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.dev_GetAllParagraphsForRoom_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Room" ColumnName="Room" />
+                <ScalarProperty Name="RoomState" ColumnName="RoomState" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
