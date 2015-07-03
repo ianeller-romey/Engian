@@ -7,7 +7,7 @@ ServicesEngine.prototype.loadRoom = function (playerIdGuid, areaInt, xInt, yInt,
     var that = this;
 
     $.ajax({
-        url: "/gintubservices/GinTubService.svc/RoomDataInitialLoad",
+        url: "http://ironandrose/gintub/lion/gintubservices/GinTubService.svc/LoadRoom",
         type: 'post',
         dataType: 'text',
         contentType: 'application/json',
@@ -16,8 +16,7 @@ ServicesEngine.prototype.loadRoom = function (playerIdGuid, areaInt, xInt, yInt,
             area: areaInt,
             x: xInt,
             y: yInt,
-            z: zInt,
-            currentTime: currentTimeDateTime
+            z: zInt
         }),
         success: function (data, status) {
             that.messenger.post("ServicesEngine.loadRoom", roomData);

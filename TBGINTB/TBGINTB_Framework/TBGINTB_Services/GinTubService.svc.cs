@@ -31,5 +31,12 @@ namespace GinTub.Services
             data.RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList();
             return data;
         }
+
+        public AllData LoadRoom(Guid playerId, int area, int x, int y, int z)
+        {
+            AllData data = new AllData();
+            var result = _repository.LoadRoom(playerId);
+            return null;
+        }
     }
 }

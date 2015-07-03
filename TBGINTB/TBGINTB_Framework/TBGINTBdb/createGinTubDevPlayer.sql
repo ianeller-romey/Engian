@@ -24,11 +24,6 @@ IF NOT EXISTS (SELECT 1 FROM [dev].[DevPlayers] WHERE [Player] = @devPlayerId)
 	INSERT INTO [dev].[DevPlayers] ([Player])
 	VALUES (@devPlayerId)
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[PlayerStatesOfRooms] WHERE [Player] = @devPlayerId)
-AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerStatesOfParagraphs] WHERE [Player] = @devPlayerId)
-	EXEC [dbo].[CreateDefaultPlayerStates] @player = @devPlayerId
+EXEC [dbo].[CreateDefaultPlayerStates] @player = @devPlayerId
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[PlayerInventory] WHERE [Player] = @devPlayerId)
-AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerHistory] WHERE [Player] = @devPlayerId)
-AND NOT EXISTS (SELECT 1 FROM [dbo].[PlayerParty] WHERE [Player] = @devPlayerId)
-	EXEC [dbo].[CreateDefaultPlayerInventories] @player = @devPlayerId
+EXEC [dbo].[CreateDefaultPlayerInventories] @player = @devPlayerId

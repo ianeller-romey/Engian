@@ -111,9 +111,9 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>xcopy $(ProjectDir)index.html C:\inetpub\gintub\index.html /R /Y
-xcopy $(ProjectDir)lib C:\inetpub\gintub\lib /R /Y
-xcopy $(ProjectDir)css C:\inetpub\gintub\css /R /Y</PostBuildEvent>
+    <PostBuildEvent>echo F|xcopy "$(ProjectDir)index.html" C:\inetpub\ironandrose\gintub\lion\index.html /R /Y
+echo D|xcopy "$(ProjectDir)lib" C:\inetpub\ironandrose\gintub\lion\lib /R /Y
+echo D|xcopy "$(ProjectDir)css" C:\inetpub\ironandrose\gintub\lion\css /R /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -73,6 +73,7 @@ BEGIN
 	FROM [dbo].[Rooms] r WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
+	AND r.[Id] NOT IN (SELECT [Room] FROM [dbo].[PlayerStatesOfRooms] WHERE [Player] = @player)
 	
 	INSERT INTO [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph], [State])
 	SELECT @player,
@@ -81,6 +82,7 @@ BEGIN
 	FROM [dbo].[Paragraphs] para WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
+	AND para.[Id] NOT IN (SELECT [Paragraph] FROM [dbo].[PlayerStatesOfParagraphs] WHERE [Player] = @player)
 
 END
 GO
@@ -105,6 +107,7 @@ BEGIN
 	FROM [dbo].[Items] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
+	AND x.[Id] NOT IN (SELECT [Item] FROM [dbo].[PlayerInventory] WHERE [Player] = @player)
 
 	INSERT INTO [dbo].[PlayerHistory] ([Player], [Event], [InHistory])
 	SELECT @player,
@@ -113,6 +116,7 @@ BEGIN
 	FROM [dbo].[Events] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
+	AND x.[Id] NOT IN (SELECT [Event] FROM [dbo].[PlayerHistory] WHERE [Player] = @player)
 
 	INSERT INTO [dbo].[PlayerParty] ([Player], [Character], [InParty])
 	SELECT @player,
@@ -121,6 +125,7 @@ BEGIN
 	FROM [dbo].[Characters] x WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
+	AND x.[Id] NOT IN (SELECT [Character] FROM [dbo].[PlayerParty] WHERE [Player] = @player)
 
 END
 GO
