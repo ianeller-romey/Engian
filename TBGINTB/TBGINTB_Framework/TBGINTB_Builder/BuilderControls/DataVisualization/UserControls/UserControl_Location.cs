@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -84,12 +85,50 @@ namespace TBGINTB_Builder.BuilderControls
 
         private void SetLocationFile(string locationFile)
         {
-            m_image_locationFile.Source =
-                (locationFile != null && File.Exists(locationFile))
-                    ? (!Path.IsPathRooted(locationFile))
-                        ? new BitmapImage(new Uri(locationFile, UriKind.Relative))
-                        : new BitmapImage(new Uri(locationFile, UriKind.Absolute))
-                    : new BitmapImage(s_uri_imageNotFound);
+            Uri uri = null;
+            if (Uri.TryCreate(locationFile, UriKind.Absolute, out uri) && uri.Scheme == Uri.UriSchemeHttp)
+            {
+                m_image_locationFile.Source = LoadImageFromHttp(locationFile);
+            }
+            else
+            {
+                if (File.Exists(locationFile))
+                    uri = new Uri(locationFile);
+                else
+                    uri = s_uri_imageNotFound;
+                m_image_locationFile.Source = new BitmapImage(uri);
+            }
+        }
+
+        private BitmapImage LoadImageFromHttp(string httpFile)
+        {
+            // cheesed from http://stackoverflow.com/questions/3148163/wpf-image-urisource-and-data-binding-using-http-url
+            var image = new BitmapImage();
+            const int BytesToRead = 100;
+
+            WebRequest request = WebRequest.Create(new Uri(httpFile, UriKind.Absolute));
+            request.Timeout = -1;
+            WebResponse response = request.GetResponse();
+            Stream responseStream = response.GetResponseStream();
+            BinaryReader reader = new BinaryReader(responseStream);
+            MemoryStream memoryStream = new MemoryStream();
+
+            byte[] bytebuffer = new byte[BytesToRead];
+            int bytesRead = reader.Read(bytebuffer, 0, BytesToRead);
+
+            while (bytesRead > 0)
+            {
+                memoryStream.Write(bytebuffer, 0, bytesRead);
+                bytesRead = reader.Read(bytebuffer, 0, BytesToRead);
+            }
+
+            image.BeginInit();
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            image.StreamSource = memoryStream;
+            image.EndInit();
+
+            return image;
         }
 
         private void ComboBox_Location_SelectionChanged(object sender, SelectionChangedEventArgs e)

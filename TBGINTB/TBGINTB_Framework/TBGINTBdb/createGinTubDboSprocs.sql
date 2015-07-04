@@ -6,48 +6,117 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+/******************************************************************************************************************************************/
+/*Player Login*****************************************************************************************************************************/
+/******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[f_PlayerHasRequirementsForAction]') AND [xtype] = 'FN')
-  EXEC('CREATE FUNCTION [dbo].[f_PlayerHasRequirementsForAction] () RETURNS bit AS BEGIN RETURN 1 END')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[PlayerLogin]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[PlayerLogin] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 6/30/2015
--- Description:	Verifies that the specified Player has all the appropriate Requirements to
--- perform an Action
+-- Create date: 7/3/2015
+-- Description:	Returns the uniqueidentifier associated with a Player's login details
 -- =============================================
-ALTER FUNCTION [dbo].[f_PlayerHasRequirementsForAction]
-(
-	@player uniqueidentifier,
-	@action int
-)
-RETURNS bit
+ALTER PROCEDURE [dbo].[PlayerLogin]
+	@emailUserName varchar(256),
+	@emailDomainName varchar(256),
+	@emailDomain varchar(256),
+	@password varchar(256)
 AS
 BEGIN
-	DECLARE @result1 bit, @result2 bit, @result3 bit
 
-	SELECT @result1 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
-	FROM [dbo].[ItemActionRequirements] iar WITH (NOLOCK)
-	INNER JOIN [dbo].[PlayerInventory] pli WITH (NOLOCK)
-	ON iar.[Item] = pli.[Item] AND pli.[Player] = @player
-	WHERE iar.[Action] = @action
-	AND pli.[InInventory] = 0
+	DECLARE @playerId uniqueidentifier
+	SELECT @playerId = p.[Id]
+	FROM  [dbo].[EmailUserNames] eun
+	INNER JOIN [dbo].[Players] p
+	ON eun.[Id] = p.[EmailUserName]
+	INNER JOIN [dbo].[EmailDomainNames] edn
+	ON edn.[Id] = p.[EmailDomainName]
+	INNER JOIN [dbo].[EmailDomains] ed
+	ON ed.[Id] = p.[EmailDomain]
+	WHERE eun.[UserName] = @emailUserName
+	AND edn.[DomainName] = @emailDomainName
+	AND ed.[Domain] = @emailDomain
+	AND p.[Password] = @password
 	
-	SELECT @result2 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
-	FROM [dbo].[EventActionRequirements] ear WITH (NOLOCK)
-	INNER JOIN [dbo].[PlayerHistory] pli WITH (NOLOCK)
-	ON ear.[Event] = pli.[Event] AND pli.[Player] = @player
-	WHERE ear.[Action] = @action
-	AND pli.[InHistory] = 0
+	IF (@playerId IS NOT NULL)
+		UPDATE [dbo].[PlayerLoginActivities]
+		SET [LastLogin] = GETDATE()
+		WHERE [Player] = @playerId
+		
+	SELECT @playerId AS [Player]
 
-	SELECT @result3 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
-	FROM [dbo].[CharacterActionRequirements] car  WITH (NOLOCK)
-	INNER JOIN [dbo].[PlayerParty] pli WITH (NOLOCK)
-	ON car.[Character] = pli.[Character] AND pli.[Player] = @player
-	WHERE car.[Action] = @action
-	AND pli.[InParty] = 0
+END
+GO
 
-	RETURN @result1 & @result2 & @result3
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[CreatePlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[CreatePlayer] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/3/2015
+-- Description:	Creates a Player record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dbo].[CreatePlayer]
+	@username varchar(256),
+	@domainname varchar(256),
+	@domain varchar(256),
+	@password varchar(256)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @userNameId int
+	DECLARE @domainNameId int
+	DECLARE @domainId int
+	DECLARE @playerId uniqueidentifier
+
+	-- Insert the UserName, get the new Id
+	INSERT INTO [dbo].[EmailUserNames] ([UserName])
+	VALUES (@username)
+	
+	SELECT @userNameId = SCOPE_IDENTITY()
+	
+	-- Check to see if the DomainName is already there and, if not, create it
+	SELECT @domainNameId = [Id] FROM [dbo].[EmailDomainNames] WHERE [DomainName] = @domainname
+	
+	IF (@domainNameId IS NULL)
+	BEGIN
+		INSERT INTO [dbo].[EmailDomainNames] ([DomainName])
+		VALUES (@domainname)
+		
+		SELECT @domainNameId = SCOPE_IDENTITY()		
+	END
+	
+	-- Check to see if the Domain is already there and, if not, create it
+	SELECT @domainId = [Id] FROM [dbo].[EmailDomains] WHERE [Domain] = @domain
+	
+	IF (@domainId IS NULL)
+	BEGIN
+		INSERT INTO [dbo].[EmailDomains] ([Domain])
+		VALUES (@domain)
+		
+		SELECT @domainId = SCOPE_IDENTITY()		
+	END
+	
+	-- Insert player	
+	SELECT @playerId = ISNULL(@playerId, NEWID())
+	
+	INSERT INTO [dbo].[Players] ([EmailUserName], [EmailDomainName], [EmailDomain], [Password], [Id])
+	VALUES (@userNameId, @domainNameId, @domainId, @password, @playerId)
+	
+	INSERT INTO [dbo].[PlayerLoginActivities] ([Player], [LastLogin])
+	VALUES (@playerId, GETDATE())
+	
+	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
+	SELECT TOP 1 @playerId,
+				 [Room]
+	FROM [dbo].[AreaRoomOnInitialLoad]
+	
+	SELECT @playerId
 
 END
 GO
@@ -65,6 +134,11 @@ ALTER PROCEDURE [dbo].[CreateDefaultPlayerStates]
 	@player uniqueidentifier
 AS
 BEGIN
+
+	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
+	SELECT TOP 1 @player,
+				 [Room]
+	FROM [dbo].[AreaRoomOnInitialLoad]
 
 	INSERT INTO [dbo].[PlayerStatesOfRooms] ([Player], [Room], [State])
 	SELECT @player,
@@ -129,6 +203,49 @@ BEGIN
 
 END
 GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadGame]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadGame] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/26/2015
+-- Description:	Loads data for a game
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadGame]
+	@player uniqueidentifier
+AS
+BEGIN
+
+	DECLARE @area int
+	DECLARE @x int
+	DECLARE @y int
+	DECLARE @z int
+	SELECT @area = r.[Area],
+		   @x = r.[X],
+		   @y = r.[Y],
+		   @z = r.[Z]
+	FROM [dbo].[PlayerGameStates] p WITH (NOLOCK)
+	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
+	ON p.[LastRoom] = r.[Id]
+	WHERE p.[Player] = @player
+	
+	EXEC [dbo].[LoadArea]
+	@area = @area
+	
+	EXEC [dbo].[LoadRoomXYZ]
+	@player = @player,
+	@area = @area,
+	@x = @x,
+	@y = @y,
+	@z = @z
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*Game Engine Content**********************************************************************************************************************/
+/******************************************************************************************************************************************/
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNounsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[LoadNounsForRoom] AS SELECT 1')
@@ -321,44 +438,9 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadGame]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadGame] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 6/26/2015
--- Description:	Loads data for a new game
--- =============================================
-ALTER PROCEDURE [dbo].[LoadGame]
-	@player uniqueidentifier
-AS
-BEGIN
-
-	DECLARE @area int
-	DECLARE @x int
-	DECLARE @y int
-	DECLARE @z int
-	SELECT @area = r.[Area],
-		   @x = r.[X],
-		   @y = r.[Y],
-		   @z = r.[Z]
-	FROM [dbo].[PlayerGameStates] p WITH (NOLOCK)
-	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
-	ON p.[LastRoom] = r.[Id]
-	WHERE p.[Player] = @player
-	
-	EXEC [dbo].[LoadArea]
-	@area = @area
-	
-	EXEC [dbo].[LoadRoomXYZ]
-	@player = @player,
-	@area = @area,
-	@x = @x,
-	@y = @y,
-	@z = @z
-
-END
-GO
+/******************************************************************************************************************************************/
+/*Game Engine Internal Logic***************************************************************************************************************/
+/******************************************************************************************************************************************/
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[GetActionResults]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[GetActionResults] AS SELECT 1')
@@ -413,6 +495,55 @@ BEGIN
 
 END
 GO
+
+IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[f_PlayerHasRequirementsForAction]') AND [xtype] = 'FN')
+  EXEC('CREATE FUNCTION [dbo].[f_PlayerHasRequirementsForAction] () RETURNS bit AS BEGIN RETURN 1 END')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/30/2015
+-- Description:	Verifies that the specified Player has all the appropriate Requirements to
+-- perform an Action
+-- =============================================
+ALTER FUNCTION [dbo].[f_PlayerHasRequirementsForAction]
+(
+	@player uniqueidentifier,
+	@action int
+)
+RETURNS bit
+AS
+BEGIN
+	DECLARE @result1 bit, @result2 bit, @result3 bit
+
+	SELECT @result1 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
+	FROM [dbo].[ItemActionRequirements] iar WITH (NOLOCK)
+	INNER JOIN [dbo].[PlayerInventory] pli WITH (NOLOCK)
+	ON iar.[Item] = pli.[Item] AND pli.[Player] = @player
+	WHERE iar.[Action] = @action
+	AND pli.[InInventory] = 0
+	
+	SELECT @result2 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
+	FROM [dbo].[EventActionRequirements] ear WITH (NOLOCK)
+	INNER JOIN [dbo].[PlayerHistory] pli WITH (NOLOCK)
+	ON ear.[Event] = pli.[Event] AND pli.[Player] = @player
+	WHERE ear.[Action] = @action
+	AND pli.[InHistory] = 0
+
+	SELECT @result3 = CASE COUNT(*) WHEN 0 THEN 1 ELSE 0 END
+	FROM [dbo].[CharacterActionRequirements] car  WITH (NOLOCK)
+	INNER JOIN [dbo].[PlayerParty] pli WITH (NOLOCK)
+	ON car.[Character] = pli.[Character] AND pli.[Player] = @player
+	WHERE car.[Action] = @action
+	AND pli.[InParty] = 0
+
+	RETURN @result1 & @result2 & @result3
+
+END
+GO
+
+/******************************************************************************************************************************************/
+/*Game Engine Player State*****************************************************************************************************************/
+/******************************************************************************************************************************************/
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[PlayerMoveXYZ]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[PlayerMoveXYZ] AS SELECT 1')

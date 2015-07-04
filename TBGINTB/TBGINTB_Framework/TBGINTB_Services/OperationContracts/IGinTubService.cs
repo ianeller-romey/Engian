@@ -19,8 +19,16 @@ namespace GinTub.Services.OperationContracts
         BodyStyle = WebMessageBodyStyle.Wrapped,
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "LoadNewGame")]
-        DataContracts.AllData LoadNewGame(Guid playerId);
+        UriTemplate = "PlayerLogin")]
+        DataContracts.PlayerLogin PlayerLogin(string emailAddress, string password);
+
+        [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "LoadGame")]
+        DataContracts.AllData LoadGame(Guid playerId);
 
         [OperationContract]
         [WebInvoke(Method = "POST",

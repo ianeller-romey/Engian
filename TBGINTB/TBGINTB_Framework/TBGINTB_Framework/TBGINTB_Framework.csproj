@@ -57,6 +57,10 @@
     <Reference Include="System.EnterpriseServices" />-->
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\login.css" />
+    <Content Include="images\placeholder.jpg" />
+    <Content Include="lib\login.js" />
+    <Content Include="login.html" />
     <Content Include="lib\action-queue.js" />
     <Content Include="lib\action-array.js" />
     <Content Include="lib\interface-manager.js" />
@@ -72,9 +76,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="css\gui.css" />
+    <None Include="css\play.css" />
     <None Include="lib\driver.js" />
-    <None Include="index.html" />
+    <None Include="play.html" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
@@ -111,9 +115,10 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>echo F|xcopy "$(ProjectDir)index.html" C:\inetpub\ironandrose\gintub\lion\index.html /R /Y
+    <PostBuildEvent>echo D|xcopy "$(ProjectDir)*.html" C:\inetpub\ironandrose\gintub\lion /R /Y
 echo D|xcopy "$(ProjectDir)lib" C:\inetpub\ironandrose\gintub\lion\lib /R /Y
-echo D|xcopy "$(ProjectDir)css" C:\inetpub\ironandrose\gintub\lion\css /R /Y</PostBuildEvent>
+echo D|xcopy "$(ProjectDir)css" C:\inetpub\ironandrose\gintub\lion\css /R /Y
+echo D|xcopy "$(ProjectDir)images" C:\inetpub\ironandrose\gintub\lion\images /R /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

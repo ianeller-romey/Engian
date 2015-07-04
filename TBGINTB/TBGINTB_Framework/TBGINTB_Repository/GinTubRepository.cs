@@ -14,16 +14,27 @@ namespace GinTub.Repository
 {
     public class GinTubRepository : Interface.IGinTubRepository
     {
+        public Guid? PlayerLogin(string userName, string domainName, string domain, string password)
+        {
+            Guid? playerId = null;
+            using (var entities = new GinTubEntities())
+            {
+                var results = entities.PlayerLogin(userName, domainName, domain, password);
+                playerId = results.OfType<Guid?>().SingleOrDefault();
+            }
+            return playerId;
+        }
+
         public Tuple<Area, IEnumerable<RoomState>> 
-            LoadNewGame(Guid playerId)
+            LoadGame(Guid playerId)
         {
             Area area;
             IEnumerable<RoomState> roomStates;
             IEnumerable<ParagraphState> paragraphStates;
             IEnumerable<Noun> nouns;
-            using (GinTubEntities entities = new GinTubEntities())
+            using (var entities = new GinTubEntities())
             {
-                var areaResults = entities.LoadNewGame(playerId);
+                var areaResults = entities.LoadGame(playerId);
                 area = TypeAdapter.Adapt<Area>(areaResults.Single());
 
                 var roomStateResults = areaResults.GetNextResult<LoadRoomStatesForRoom_Result>();

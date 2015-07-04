@@ -68,6 +68,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dboSchema.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Database\GetActionResults_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Database\GetMessageChoiceResults_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Database\LoadArea_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
