@@ -149,8 +149,44 @@ BEGIN
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Name] varchar(256) NOT NULL
 	)
-	DBCC CHECKIDENT ('[dbo].[Verbs]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ResultTypes]', RESEED, 0)
 END
+
+IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
+			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'JSONPropertyDataTypes')
+BEGIN
+	CREATE TABLE [dev].[JSONPropertyDataTypes] (
+		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
+		[DataType] varchar(256) NOT NULL
+	)
+	DBCC CHECKIDENT ('[dev].[JSONPropertyDataTypes]', RESEED, 0)
+END
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'Number')
+	INSERT INTO [dev].[JSONPropertyDataTypes] ([DataType])
+	VALUES ('Number')
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'String')
+	INSERT INTO [dev].[JSONPropertyDataTypes] ([DataType])
+	VALUES ('String')
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'Boolean')
+	INSERT INTO [dev].[JSONPropertyDataTypes] ([DataType])
+	VALUES ('Boolean')
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'DateTime')
+	INSERT INTO [dev].[JSONPropertyDataTypes] ([DataType])
+	VALUES ('DateTime')
+	
+DECLARE @numberDataTypeId int
+DECLARE @stringDataTypeId int
+DECLARE @booleanDataTypeId int
+DECLARE @datetimeDataTypeId int
+
+SELECT @numberDataTypeId = [Id] FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'Number'
+SELECT @stringDataTypeId = [Id] FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'String'
+SELECT @booleanDataTypeId = [Id] FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'Boolean'
+SELECT @datetimeDataTypeId = [Id] FROM [dev].[JSONPropertyDataTypes] WHERE [DataType] = 'DateTime'
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'ResultTypeJSONProperties')
@@ -158,6 +194,7 @@ BEGIN
 	CREATE TABLE [dev].[ResultTypeJSONProperties] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[JSONProperty] varchar(256) NOT NULL,
+		[DataType] int NOT NULL FOREIGN KEY REFERENCES [dev].[JSONPropertyDataTypes]([Id]),
 		[ResultType] int NOT NULL FOREIGN KEY REFERENCES [dbo].[ResultTypes]([Id])
 	)
 	CREATE NONCLUSTERED INDEX IX__ResultTypeJSONProperties__ResultType ON [dev].[ResultTypeJSONProperties]([ResultType])
@@ -190,6 +227,7 @@ END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room XYZ Movement')
 BEGIN
+
 	DECLARE @roomXyzMovementResultTypeName varchar(256)
 	SET @roomXyzMovementResultTypeName = 'Room XYZ Movement'
 	DECLARE @roomXyzMovementResultTypeId int
@@ -197,18 +235,18 @@ BEGIN
 	VALUES (@roomXyzMovementResultTypeName)
 	SELECT @roomXyzMovementResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('xDir', @roomXyzMovementResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('yDir', @roomXyzMovementResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('zDir', @roomXyzMovementResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('xDir', @numberDataTypeId, @roomXyzMovementResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('yDir', @numberDataTypeId, @roomXyzMovementResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('zDir', @numberDataTypeId, @roomXyzMovementResultTypeId)
 
 	DECLARE @move_Y_North1ResultName varchar(256)
 	DECLARE @move_Y_North1ResultJSONData varchar(256)
 	DECLARE @move_Y_North1ResultId int
 	SET @move_Y_North1ResultName = 'Move_Y_North1'
-	SET @move_Y_North1ResultJSONData = '{ "xDir":"0", "yDir":"-1", "zDir":"0" }'
+	SET @move_Y_North1ResultJSONData = '{ "xDir": 0, "yDir": -1, "zDir": 0 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_Y_North1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_Y_North1ResultId = SCOPE_IDENTITY()
@@ -219,7 +257,7 @@ BEGIN
 	DECLARE @move_Y_South1ResultJSONData varchar(256)
 	DECLARE @move_Y_South1ResultId int
 	SET @move_Y_South1ResultName = 'Move_Y_South1'
-	SET @move_Y_South1ResultJSONData = '{ "xDir":"0", "yDir":"1", "zDir":"0" }'
+	SET @move_Y_South1ResultJSONData = '{ "xDir": 0, "yDir": 1, "zDir": 0 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_Y_South1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_Y_South1ResultId = SCOPE_IDENTITY()
@@ -230,7 +268,7 @@ BEGIN
 	DECLARE @move_X_West1ResultJSONData varchar(256)
 	DECLARE @move_X_West1ResultId int
 	SET @move_X_West1ResultName = 'Move_X_West1'
-	SET @move_X_West1ResultJSONData = '{ "xDir":"-1", "yDir":"0", "zDir":"0" }'
+	SET @move_X_West1ResultJSONData = '{ "xDir": -1, "yDir": 0, "zDir": 0 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_X_West1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_X_West1ResultId = SCOPE_IDENTITY()
@@ -241,7 +279,7 @@ BEGIN
 	DECLARE @move_X_East1ResultJSONData varchar(256)
 	DECLARE @move_X_East1ResultId int
 	SET @move_X_East1ResultName = 'Move_X_East1'
-	SET @move_X_East1ResultJSONData = '{ "xDir":"1", "yDir":"0", "zDir":"0" }'
+	SET @move_X_East1ResultJSONData = '{ "xDir": 1, "yDir": 0, "zDir": 0 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_X_East1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_X_East1ResultId = SCOPE_IDENTITY()
@@ -252,7 +290,7 @@ BEGIN
 	DECLARE @move_Z_Up1ResultJSONData varchar(256)
 	DECLARE @move_Z_Up1ResultId int
 	SET @move_Z_Up1ResultName = 'Move_Z_Up1'
-	SET @move_Z_Up1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"1" }'
+	SET @move_Z_Up1ResultJSONData = '{ "xDir": 0, "yDir": 0, "zDir": 1 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_Z_Up1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_Z_Up1ResultId = SCOPE_IDENTITY()
@@ -263,7 +301,7 @@ BEGIN
 	DECLARE @move_Z_Down1ResultJSONData varchar(256)
 	DECLARE @move_Z_Down1ResultId int
 	SET @move_Z_Down1ResultName = 'Move_Z_Down1'
-	SET @move_Z_Down1ResultJSONData = '{ "xDir":"0", "yDir":"0", "zDir":"-1" }'
+	SET @move_Z_Down1ResultJSONData = '{ "xDir": 0, "yDir": 0, "zDir": -1 }'
 	INSERT INTO [dbo].[Results] ([JSONData], [ResultType])
 	VALUES (@move_Z_Down1ResultJSONData, @roomXyzMovementResultTypeId)
 	SELECT @move_Z_Down1ResultId = SCOPE_IDENTITY()
@@ -280,12 +318,12 @@ BEGIN
 	VALUES (@roomXyzTeleportResultTypeName)
 	SELECT @roomXyzTeleportResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('xPos', @roomXyzTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('yPos', @roomXyzTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('zPos', @roomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('xPos', @numberDataTypeId, @roomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('yPos', @numberDataTypeId, @roomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('zPos', @numberDataTypeId, @roomXyzTeleportResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room Id Teleport')
@@ -297,8 +335,8 @@ BEGIN
 	VALUES (@roomIdTeleportResultTypeName)
 	SELECT @roomIdTeleportResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('roomId', @roomIdTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('roomId', @numberDataTypeId, @roomIdTeleportResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Area Id Room XYZ Teleport')
@@ -310,14 +348,14 @@ BEGIN
 	VALUES (@areaIdRoomXyzTeleportResultTypeName)
 	SELECT @areaIdRoomXyzTeleportResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('areaId', @areaIdRoomXyzTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('xPos', @areaIdRoomXyzTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('yPos', @areaIdRoomXyzTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('zPos', @areaIdRoomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('areaId', @numberDataTypeId, @areaIdRoomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('xPos', @numberDataTypeId, @areaIdRoomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('yPos', @numberDataTypeId, @areaIdRoomXyzTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('zPos', @numberDataTypeId, @areaIdRoomXyzTeleportResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Area Id Room Id Teleport')
@@ -329,10 +367,10 @@ BEGIN
 	VALUES (@areaIdRoomIdTeleportResultTypeName)
 	SELECT @areaIdRoomIdTeleportResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('areaId', @areaIdRoomIdTeleportResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('roomId', @areaIdRoomIdTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('areaId', @numberDataTypeId, @areaIdRoomIdTeleportResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('roomId', @numberDataTypeId, @areaIdRoomIdTeleportResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Item Acquisition')
@@ -344,8 +382,8 @@ BEGIN
 	VALUES (@itemAcquisitionResultTypeName)
 	SELECT @itemAcquisitionResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('itemId', @itemAcquisitionResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('itemId', @numberDataTypeId, @itemAcquisitionResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Event Acquisition')
@@ -357,8 +395,8 @@ BEGIN
 	VALUES (@eventAcquisitionResultTypeName)
 	SELECT @eventAcquisitionResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('eventId', @eventAcquisitionResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('eventId', @numberDataTypeId, @eventAcquisitionResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Character Acquisition')
@@ -370,8 +408,8 @@ BEGIN
 	VALUES (@characterAcquisitionResultTypeName)
 	SELECT @characterAcquisitionResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('characterId', @characterAcquisitionResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('characterId', @numberDataTypeId, @characterAcquisitionResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Paragraph State Change')
@@ -383,10 +421,10 @@ BEGIN
 	VALUES (@paragraphStateChangeResultTypeName)
 	SELECT @paragraphStateChangeResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('paragraphId', @paragraphStateChangeResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('state', @paragraphStateChangeResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('paragraphId', @numberDataTypeId, @paragraphStateChangeResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('state', @numberDataTypeId, @paragraphStateChangeResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Room State Change')
@@ -398,10 +436,10 @@ BEGIN
 	VALUES (@roomStateChangeResultTypeName)
 	SELECT @roomStateChangeResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('roomId', @roomStateChangeResultTypeId)
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('state', @roomStateChangeResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('roomId', @numberDataTypeId, @roomStateChangeResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('state', @numberDataTypeId, @roomStateChangeResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[ResultTypes] WHERE [Name] = 'Message Activation')
@@ -413,8 +451,8 @@ BEGIN
 	VALUES (@messageActivationResultTypeName)
 	SELECT @messageActivationResultTypeId = SCOPE_IDENTITY()
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES ('messageId', @messageActivationResultTypeId)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES ('messageId', @numberDataTypeId, @messageActivationResultTypeId)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -471,7 +509,7 @@ BEGIN
 		[Name] varchar(256) NOT NULL,
 		[Description] varchar(256) NOT NULL
 	)
-	DBCC CHECKIDENT ('[dbo].[Events]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Characters]', RESEED, 0)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 

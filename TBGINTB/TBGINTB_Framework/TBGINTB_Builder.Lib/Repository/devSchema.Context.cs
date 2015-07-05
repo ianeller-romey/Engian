@@ -141,6 +141,15 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddItemActionRequirement", itemParameter, actionParameter);
         }
     
+        public virtual ObjectResult<Nullable<decimal>> dev_AddJSONPropertyDataType(string datatype)
+        {
+            var datatypeParameter = datatype != null ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddJSONPropertyDataType", datatypeParameter);
+        }
+    
         public virtual ObjectResult<Nullable<decimal>> dev_AddLocation(string name, string locationfile)
         {
             var nameParameter = name != null ?
@@ -291,17 +300,21 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResultType", nameParameter);
         }
     
-        public virtual ObjectResult<Nullable<decimal>> dev_AddResultTypeJSONProperty(string jsonproperty, Nullable<int> resulttype)
+        public virtual ObjectResult<Nullable<decimal>> dev_AddResultTypeJSONProperty(string jsonproperty, Nullable<int> datatype, Nullable<int> resulttype)
         {
             var jsonpropertyParameter = jsonproperty != null ?
                 new ObjectParameter("jsonproperty", jsonproperty) :
                 new ObjectParameter("jsonproperty", typeof(string));
     
+            var datatypeParameter = datatype.HasValue ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(int));
+    
             var resulttypeParameter = resulttype.HasValue ?
                 new ObjectParameter("resulttype", resulttype) :
                 new ObjectParameter("resulttype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResultTypeJSONProperty", jsonpropertyParameter, resulttypeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<decimal>>("dev_AddResultTypeJSONProperty", jsonpropertyParameter, datatypeParameter, resulttypeParameter);
         }
     
         public virtual ObjectResult<Nullable<decimal>> dev_AddRoom(string name, Nullable<int> x, Nullable<int> y, Nullable<int> z, Nullable<int> area)
@@ -440,6 +453,11 @@ namespace TBGINTB_Builder.Lib.Repository
         public virtual int dev_DeleteAllItems()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllItems");
+        }
+    
+        public virtual int dev_DeleteAllJSONPropertyDataTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_DeleteAllJSONPropertyDataTypes");
         }
     
         public virtual int dev_DeleteAllLocations()
@@ -670,6 +688,11 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllItems_Result>("dev_GetAllItems");
         }
     
+        public virtual ObjectResult<dev_GetAllJSONPropertyDataTypes_Result> dev_GetAllJSONPropertyDataTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllJSONPropertyDataTypes_Result>("dev_GetAllJSONPropertyDataTypes");
+        }
+    
         public virtual ObjectResult<dev_GetAllLocations_Result> dev_GetAllLocations()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllLocations_Result>("dev_GetAllLocations");
@@ -705,6 +728,15 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("paragraphstate", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllNounsForParagraphState_Result>("dev_GetAllNounsForParagraphState", paragraphstateParameter);
+        }
+    
+        public virtual ObjectResult<dev_GetAllParagraphsForRoom_Result> dev_GetAllParagraphsForRoom(Nullable<int> room)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphsForRoom_Result>("dev_GetAllParagraphsForRoom", roomParameter);
         }
     
         public virtual ObjectResult<dev_GetAllParagraphsForRoomAndRoomState_Result> dev_GetAllParagraphsForRoomAndRoomState(Nullable<int> room, Nullable<int> roomstate)
@@ -883,6 +915,15 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetItemActionRequirement_Result>("dev_GetItemActionRequirement", idParameter);
         }
     
+        public virtual ObjectResult<dev_GetJSONPropertyDataType_Result> dev_GetJSONPropertyDataType(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetJSONPropertyDataType_Result>("dev_GetJSONPropertyDataType", idParameter);
+        }
+    
         public virtual ObjectResult<dev_GetLocation_Result> dev_GetLocation(Nullable<int> id)
         {
             var idParameter = id.HasValue ?
@@ -995,13 +1036,13 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
         }
     
-        public virtual ObjectResult<dev_GetRoomPreviewParagraphStates_Result> dev_GetRoomPreview(Nullable<int> roompreview)
+        public virtual ObjectResult<dev_GetRoomPreview_Result> dev_GetRoomPreview(Nullable<int> roompreview)
         {
             var roompreviewParameter = roompreview.HasValue ?
                 new ObjectParameter("roompreview", roompreview) :
                 new ObjectParameter("roompreview", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomPreviewParagraphStates_Result>("dev_GetRoomPreview", roompreviewParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomPreview_Result>("dev_GetRoomPreview", roompreviewParameter);
         }
     
         public virtual ObjectResult<dev_GetRoomPreviewNouns_Result> dev_GetRoomPreviewNouns(Nullable<int> room)
@@ -1211,6 +1252,19 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportItemActionRequirement", idParameter, itemParameter, actionParameter);
         }
     
+        public virtual int dev_ImportJSONPropertyDataType(Nullable<int> id, string datatype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var datatypeParameter = datatype != null ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportJSONPropertyDataType", idParameter, datatypeParameter);
+        }
+    
         public virtual int dev_ImportLocation(Nullable<int> id, string name, string locationfile)
         {
             var idParameter = id.HasValue ?
@@ -1376,7 +1430,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResultType", idParameter, nameParameter);
         }
     
-        public virtual int dev_ImportResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> resulttype)
+        public virtual int dev_ImportResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> datatype, Nullable<int> resulttype)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -1386,11 +1440,15 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("jsonproperty", jsonproperty) :
                 new ObjectParameter("jsonproperty", typeof(string));
     
+            var datatypeParameter = datatype.HasValue ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(int));
+    
             var resulttypeParameter = resulttype.HasValue ?
                 new ObjectParameter("resulttype", resulttype) :
                 new ObjectParameter("resulttype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResultTypeJSONProperty", idParameter, jsonpropertyParameter, resulttypeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_ImportResultTypeJSONProperty", idParameter, jsonpropertyParameter, datatypeParameter, resulttypeParameter);
         }
     
         public virtual int dev_ImportRoom(Nullable<int> id, string name, Nullable<int> x, Nullable<int> y, Nullable<int> z, Nullable<int> area)
@@ -1647,6 +1705,19 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateItemActionRequirement", idParameter, itemParameter, actionParameter);
         }
     
+        public virtual int dev_UpdateJSONPropertyDataType(Nullable<int> id, string datatype)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var datatypeParameter = datatype != null ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateJSONPropertyDataType", idParameter, datatypeParameter);
+        }
+    
         public virtual int dev_UpdateLocation(Nullable<int> id, string name, string locationfile)
         {
             var idParameter = id.HasValue ?
@@ -1863,7 +1934,7 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultType", idParameter, nameParameter);
         }
     
-        public virtual int dev_UpdateResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> resulttype)
+        public virtual int dev_UpdateResultTypeJSONProperty(Nullable<int> id, string jsonproperty, Nullable<int> datatype, Nullable<int> resulttype)
         {
             var idParameter = id.HasValue ?
                 new ObjectParameter("id", id) :
@@ -1873,11 +1944,15 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("jsonproperty", jsonproperty) :
                 new ObjectParameter("jsonproperty", typeof(string));
     
+            var datatypeParameter = datatype.HasValue ?
+                new ObjectParameter("datatype", datatype) :
+                new ObjectParameter("datatype", typeof(int));
+    
             var resulttypeParameter = resulttype.HasValue ?
                 new ObjectParameter("resulttype", resulttype) :
                 new ObjectParameter("resulttype", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONProperty", idParameter, jsonpropertyParameter, resulttypeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpdateResultTypeJSONProperty", idParameter, jsonpropertyParameter, datatypeParameter, resulttypeParameter);
         }
     
         public virtual int dev_UpdateRoom(Nullable<int> id, string name, Nullable<int> x, Nullable<int> y, Nullable<int> z, Nullable<int> area)
@@ -1975,15 +2050,6 @@ namespace TBGINTB_Builder.Lib.Repository
                 new ObjectParameter("room", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("dev_UpsertAreaRoomOnInitialLoad", areaParameter, roomParameter);
-        }
-    
-        public virtual ObjectResult<dev_GetAllParagraphsForRoom_Result> dev_GetAllParagraphsForRoom(Nullable<int> room)
-        {
-            var roomParameter = room.HasValue ?
-                new ObjectParameter("room", room) :
-                new ObjectParameter("room", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetAllParagraphsForRoom_Result>("dev_GetAllParagraphsForRoom", roomParameter);
         }
     }
 }

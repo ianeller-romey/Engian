@@ -14,6 +14,7 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
     {
         int m_id;
         string m_jsonProperty;
+        int m_dataType;
         int m_resultType;
 
         [DataMember]
@@ -35,6 +36,17 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
             {
                 if (m_jsonProperty != value)
                     m_jsonProperty = value;
+            }
+        }
+
+        [DataMember]
+        public int DataType
+        {
+            get { return m_dataType; }
+            private set
+            {
+                if (m_dataType != value)
+                    m_dataType = value;
             }
         }
 

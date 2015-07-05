@@ -46,9 +46,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -62,7 +67,9 @@
     <Compile Include="Exceptions\DatabaseException.cs" />
     <Compile Include="GinTubBuilderManager_XmlImportAndExport.cs" />
     <Compile Include="GinTubBuilderManager_DbRetrieveAndUpdate.cs" />
+    <Compile Include="JSONPropertyManager.cs" />
     <Compile Include="Model\DbModel\AreaRoomOnInitialLoad.cs" />
+    <Compile Include="Model\DbModel\JSONPropertyDataType.cs" />
     <Compile Include="Model\DbModel\RoomPreviewNoun.cs" />
     <Compile Include="Model\DbModel\RoomPreviewParagraphState.cs" />
     <Compile Include="Model\XmlModel\Action.cs" />
@@ -163,6 +170,9 @@
     <Compile Include="Repository\dev_GetAllItems_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetAllJSONPropertyDataTypes_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetAllLocations_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
@@ -241,6 +251,9 @@
     <Compile Include="Repository\dev_GetItem_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\dev_GetJSONPropertyDataType_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\dev_GetLocation_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
@@ -278,6 +291,9 @@
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetRoomPreviewParagraphStates_Result.cs">
+      <DependentUpon>devSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\dev_GetRoomPreview_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Repository\dev_GetRoomState_Result.cs">

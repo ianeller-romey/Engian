@@ -11,9 +11,6 @@ using System.Windows.Media.Imaging;
 using TBGINTB_Builder.Extensions;
 using TBGINTB_Builder.Lib;
 
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-
 
 namespace TBGINTB_Builder.BuilderControls
 {
@@ -42,7 +39,18 @@ namespace TBGINTB_Builder.BuilderControls
                     (
                         "{{{0}}}",
                         m_stackPanel_jsonProperties.Children.OfType<GroupBox_JSONPropertyValueEditor>().
-                        Select(g => string.Format("\"{0}\":\"{1}\"", g.JSONPropertyName, g.JSONPropertyValue)).
+                        Select(g => 
+                                string.Format
+                                (
+                                    "\"{0}\":{1}", 
+                                    g.JSONPropertyName, 
+                                    JSONPropertyManager.FormatJSONPropertyStringValueFromDataTypeId
+                                    (
+                                        g.JSONPropertyValue,
+                                        g.JSONPropertyDataTypeId
+                                    )
+                                )
+                            ).
                         Aggregate((x, y) => string.Format("{0}, {1}", x, y))
                     );
             }
@@ -208,7 +216,7 @@ namespace TBGINTB_Builder.BuilderControls
                 m_stackPanel_jsonProperties != null && 
                 !m_stackPanel_jsonProperties.Children.OfType<GroupBox_JSONPropertyValueEditor>().Any(g => g.JSONPropertyName == args.JSONProperty))
             {
-                AddJSONProperty(args.JSONProperty, "");
+                AddJSONProperty(args.JSONProperty, "", args.DataType);
             }
         }
 
@@ -226,24 +234,21 @@ namespace TBGINTB_Builder.BuilderControls
                 m_groupBox_jsonProperties.Content = null;
                 m_stackPanel_jsonProperties = new StackPanel() { Orientation = Orientation.Vertical };
 
-                dynamic convertedJSON = JsonConvert.DeserializeObject(resultJSONData);
-                JObject jObject = (JObject)convertedJSON;
-                foreach (JToken jToken in jObject.Children())
-                {
-                    if (jToken is JProperty)
-                    {
-                        JProperty jProperty = jToken as JProperty;
-                        AddJSONProperty(jProperty.Name, jProperty.Value.ToString());
-                    }
-                }
+                foreach(var property in JSONPropertyManager.ParseJSONIntoJSONProperties(resultJSONData))
+                    AddJSONProperty
+                        (
+                            property.Name,
+                            property.Value.ToString(),
+                            property.DataTypeId
+                        );
 
                 m_groupBox_jsonProperties.Content = m_stackPanel_jsonProperties;
             }
         }
 
-        private void AddJSONProperty(string jsonPropertyName, string jsonPropertyValue)
+        private void AddJSONProperty(string jsonPropertyName, string jsonPropertyValue, int jsonPropertyDataTypeId)
         {
-            m_stackPanel_jsonProperties.Children.Add(new GroupBox_JSONPropertyValueEditor(jsonPropertyName, jsonPropertyValue));
+            m_stackPanel_jsonProperties.Children.Add(new GroupBox_JSONPropertyValueEditor(jsonPropertyName, jsonPropertyValue, jsonPropertyDataTypeId));
         }
 
         private void SetResultTypeId(int resultTypeId)

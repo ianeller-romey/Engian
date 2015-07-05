@@ -26,6 +26,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         public int? ResultTypeJSONPropertyId { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyId; } }
         public string ResultTypeJSONPropertyJSONProperty { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty; } }
+        public int? ResultTypeJSONPropertyDataType { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyDataType; } }
         public int ResultTypeId { get { return m_userControl_resultTypeJSONProperty.ResultTypeId; } }
 
         #endregion
@@ -35,13 +36,20 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public Window_ResultTypeJSONProperty(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId, TaskOnAccept task) :
-            base("Result Type JSON Property Data", task)
+        public Window_ResultTypeJSONProperty
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty,
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId, 
+            TaskOnAccept task
+        ) : base("Result Type JSON Property Data", task)
         {
             Width = 300;
             Height = 300;
-            Content = CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId);
+            Content = CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyDataType, resultTypeId);
             m_userControl_resultTypeJSONProperty.SetActiveAndRegisterForGinTubEvents(); // needed for result types
+            GinTubBuilderManager.LoadAllJSONPropertyDataTypes();
             GinTubBuilderManager.LoadAllResultTypes();
         }
 
@@ -50,9 +58,23 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private UIElement CreateControls(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId)
+        private UIElement CreateControls
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty,
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId
+        )
         {
-            m_userControl_resultTypeJSONProperty = new UserControl_ResultTypeJSONProperty(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId, true);
+            m_userControl_resultTypeJSONProperty = 
+                new UserControl_ResultTypeJSONProperty
+                (
+                    resultTypeJSONPropertyId, 
+                    resultTypeJSONPropertyJSONProperty,
+                    resultTypeJSONPropertyDataType,
+                    resultTypeId, 
+                    true
+                );
             return m_userControl_resultTypeJSONProperty;
         }
 

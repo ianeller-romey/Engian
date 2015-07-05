@@ -14,6 +14,7 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
     {
         int m_id;
         string m_jsonProperty;
+        int m_dataType;
 
         [XmlAttribute("Id")]
         public int Id
@@ -34,6 +35,17 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
             {
                 if (m_jsonProperty != value)
                     m_jsonProperty = value;
+            }
+        }
+
+        [XmlAttribute("DataType")]
+        public int DataType
+        {
+            get { return m_dataType; }
+            set
+            {
+                if (m_dataType != value)
+                    m_dataType = value;
             }
         }
     }

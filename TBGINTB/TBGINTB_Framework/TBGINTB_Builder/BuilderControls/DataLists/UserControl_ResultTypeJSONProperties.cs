@@ -80,9 +80,17 @@ namespace TBGINTB_Builder.BuilderControls
         {
             if (args.ResultType == ResultTypeId && !m_itemsControl_results.Items.OfType<UserControl_ResultTypeJSONPropertyModification>().Any(i => i.ResultTypeJSONPropertyId == args.Id))
             {
-                UserControl_ResultTypeJSONPropertyModification grid = new UserControl_ResultTypeJSONPropertyModification(args.Id, args.JSONProperty, args.ResultType);
+                UserControl_ResultTypeJSONPropertyModification grid = 
+                    new UserControl_ResultTypeJSONPropertyModification
+                    (
+                        args.Id, 
+                        args.JSONProperty, 
+                        args.DataType,
+                        args.ResultType
+                    );
                 grid.SetActiveAndRegisterForGinTubEvents();
                 m_itemsControl_results.Items.Add(grid);
+                GinTubBuilderManager.LoadAllJSONPropertyDataTypes();
                 GinTubBuilderManager.LoadAllResultTypes();
             }
         }
@@ -94,12 +102,18 @@ namespace TBGINTB_Builder.BuilderControls
                 (
                     null, 
                     null,
+                    null,
                     ResultTypeId,
                     (win) =>
                     {
                         Window_ResultTypeJSONProperty wWin = win as Window_ResultTypeJSONProperty;
                         if (wWin != null)
-                            GinTubBuilderManager.AddResultTypeJSONProperty(wWin.ResultTypeJSONPropertyJSONProperty, wWin.ResultTypeId);
+                            GinTubBuilderManager.AddResultTypeJSONProperty
+                            (
+                                wWin.ResultTypeJSONPropertyJSONProperty, 
+                                wWin.ResultTypeJSONPropertyDataType.Value, 
+                                wWin.ResultTypeId
+                            );
                     }
                 );
             window.Show();

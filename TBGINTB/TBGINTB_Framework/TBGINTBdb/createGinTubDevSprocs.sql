@@ -2423,6 +2423,173 @@ END
 GO
 
 /******************************************************************************************************************************************/
+/*JSONPropertyDataType*********************************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_AddJSONPropertyDataType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/4/2015
+-- Description:	Adds a JSONPropertyDataType record and returns the newly generated ID
+-- =============================================
+ALTER PROCEDURE [dev].[dev_AddJSONPropertyDataType]
+	@datatype varchar(256)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dev].[JSONPropertyDataTypes] ([DataType])
+	VALUES (@datatype)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportJSONPropertyDataType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/4/2015
+-- Description:	Imports an JSONPropertyDataType record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportJSONPropertyDataType]
+	@id int,
+	@datatype varchar(256)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dev].[JSONPropertyDataTypes] ON ' + 
+						N'INSERT INTO [dev].[JSONPropertyDataTypes] ([Id], [DataType]) VALUES (@id_, @datatype_) ' +
+						N'SET IDENTITY_INSERT [dev].[JSONPropertyDataTypes] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @datatype_ varchar(256)',
+					   @id, @datatype
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateJSONPropertyDataType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/4/2015
+-- Description:	Updates a JSONPropertyDataType record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateJSONPropertyDataType]
+	@id int,
+	@datatype varchar(256)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dev].[JSONPropertyDataTypes] 
+	SET	[DataType] = ISNULL(@datatype, [DataType])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllJSONPropertyDataTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetAllJSONPropertyDataTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/4/2015
+-- Description:	Gets the Id and Name fields of all JSONPropertyDataType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetAllJSONPropertyDataTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [DataType]
+	FROM [dev].[JSONPropertyDataTypes]
+	ORDER BY [Id]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_GetJSONPropertyDataType] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/2/2015
+-- Description:	Gets data about a JSONPropertyDataType record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_GetJSONPropertyDataType]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [DataType]
+	FROM [dev].[JSONPropertyDataTypes]
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllJSONPropertyDataTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllJSONPropertyDataTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/16/2015
+-- Description:	Deletes the Id and Name fields of all JSONPropertyDataType records currently in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllJSONPropertyDataTypes]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	DELETE
+	FROM [dbo].[MessageChoiceResults]
+	
+	DELETE
+	FROM [dbo].[ActionResults]
+	
+	DELETE
+	FROM [dbo].[Results]
+	
+	DELETE
+	FROM [dev].[ResultTypeJSONProperties]
+	
+	DELETE
+	FROM [dev].[JSONPropertyDataTypes]
+	
+	DBCC CHECKIDENT ('[dbo].[MessageChoiceResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[Results]', RESEED, 0)
+	DBCC CHECKIDENT ('[dev].[ResultTypeJSONProperties]', RESEED, 0)
+	DBCC CHECKIDENT ('[dev].[JSONPropertyDataTypes]', RESEED, 0)
+
+END
+GO
+
+/******************************************************************************************************************************************/
 /*ResultTypeJSONProperty*******************************************************************************************************************/
 /******************************************************************************************************************************************/
 
@@ -2436,6 +2603,7 @@ GO
 -- =============================================
 ALTER PROCEDURE [dev].[dev_AddResultTypeJSONProperty]
 	@jsonproperty varchar(256),
+	@datatype int,
 	@resulttype int
 AS
 BEGIN
@@ -2443,8 +2611,8 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [ResultType])
-	VALUES (@jsonproperty, @resulttype)
+	INSERT INTO [dev].[ResultTypeJSONProperties] ([JSONProperty], [DataType], [ResultType])
+	VALUES (@jsonproperty, @datatype, @resulttype)
 	
 	SELECT SCOPE_IDENTITY()
 
@@ -2462,6 +2630,7 @@ GO
 ALTER PROCEDURE [dev].[dev_ImportResultTypeJSONProperty]
 	@id int,
 	@jsonproperty varchar(256),
+	@datatype int,
 	@resulttype int
 AS
 BEGIN
@@ -2471,12 +2640,12 @@ BEGIN
 
 	DECLARE @insertstring nvarchar(MAX)
 	SET @insertstring = N'SET IDENTITY_INSERT [dev].[ResultTypeJSONProperties] ON ' + 
-						N'INSERT INTO [dev].[ResultTypeJSONProperties] ([Id], [JSONProperty], [ResultType]) VALUES (@id_, @jsonproperty_, @resulttype_) ' +
+						N'INSERT INTO [dev].[ResultTypeJSONProperties] ([Id], [JSONProperty], [DataType], [ResultType]) VALUES (@id_, @jsonproperty_, @datatype_, @resulttype_) ' +
 						N'SET IDENTITY_INSERT [dev].[ResultTypeJSONProperties] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @jsonproperty_ varchar(256), @resulttype_ int',
-					   @id, @jsonproperty, @resulttype
+					   N'@id_ int, @jsonproperty_ varchar(256), @datatype_ int, @resulttype_ int',
+					   @id, @jsonproperty, @datatype, @resulttype
 
 END
 GO
@@ -2492,6 +2661,7 @@ GO
 ALTER PROCEDURE [dev].[dev_UpdateResultTypeJSONProperty]
 	@id int,
 	@jsonproperty varchar(256),
+	@datatype int,
 	@resulttype int
 AS
 BEGIN
@@ -2501,6 +2671,7 @@ BEGIN
 
 	UPDATE [dev].[ResultTypeJSONProperties] 
 	SET	[JSONProperty] = ISNULL(@jsonproperty, [JSONProperty]),
+		[DataType] = ISNULL(@datatype, [DataType]),
 		[ResultType] = ISNULL(@resulttype, [ResultType])
 	WHERE [Id] = @id
 
@@ -2525,6 +2696,7 @@ BEGIN
 
 	SELECT [Id],
 		   [JSONProperty],
+		   [DataType],
 		   [ResultType]
 	FROM [dev].[ResultTypeJSONProperties]
 	WHERE [ResultType] = @resulttype
@@ -2550,6 +2722,7 @@ BEGIN
 
 	SELECT [Id],
 		   [JSONProperty],
+		   [DataType],
 		   [ResultType]
 	FROM [dev].[ResultTypeJSONProperties]
 	WHERE [Id] = @id

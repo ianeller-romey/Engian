@@ -27,6 +27,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         public string JSONPropertyName { get; private set; }
         public string JSONPropertyValue { get; private set; }
+        public int JSONPropertyDataTypeId { get; private set; }
 
         #endregion
 
@@ -35,10 +36,11 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public GroupBox_JSONPropertyValueEditor(string jsonPropertyName, string jsonPropertyValue)
+        public GroupBox_JSONPropertyValueEditor(string jsonPropertyName, string jsonPropertyValue, int jsonPropertyDataTypeId)
         {
             JSONPropertyName = jsonPropertyName;
             JSONPropertyValue = jsonPropertyValue;
+            JSONPropertyDataTypeId = jsonPropertyDataTypeId;
 
             CreateControls();
         }

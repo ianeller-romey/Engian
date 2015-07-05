@@ -133,6 +133,7 @@ namespace TBGINTB_Builder
         private void CreateGinTubManager()
         {
             GinTubBuilderManager.Initialize();
+            JSONPropertyManager.Initialize();
         }
 
         private void GinTubBuilderManager_AreaRoomOnInitialLoadAdded(object sender, GinTubBuilderManager.AreaRoomOnInitialLoadAddedEventArgs args)

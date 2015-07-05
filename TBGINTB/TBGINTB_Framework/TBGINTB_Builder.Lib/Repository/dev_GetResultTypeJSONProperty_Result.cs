@@ -15,6 +15,7 @@ namespace TBGINTB_Builder.Lib.Repository
     {
         public int Id { get; set; }
         public string JSONProperty { get; set; }
+        public int DataType { get; set; }
         public int ResultType { get; set; }
     }
 }

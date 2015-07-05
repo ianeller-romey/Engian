@@ -295,7 +295,7 @@ namespace TBGINTB_Builder.Lib
         {
             ImportResultType(resultType.Id, resultType.Name);
             foreach (var resultTypeJSONProperty in resultType.ResultTypeJSONProperties)
-                ImportResultTypeJSONProperty(resultTypeJSONProperty.Id, resultTypeJSONProperty.JSONProperty, resultType.Id);
+                ImportResultTypeJSONProperty(resultTypeJSONProperty.Id, resultTypeJSONProperty.JSONProperty, resultTypeJSONProperty.DataType, resultType.Id);
             foreach (var result in resultType.Results)
                 ImportResult(result.Id, result.Name, result.JSONData, resultType.Id);
         }
@@ -440,11 +440,11 @@ namespace TBGINTB_Builder.Lib
             }
         }
 
-        private static void ImportResultTypeJSONProperty(int id, string jsonProperty, int resultType)
+        private static void ImportResultTypeJSONProperty(int id, string jsonProperty, int dataType, int resultType)
         {
             try
             {
-                m_entities.dev_ImportResultTypeJSONProperty(id, jsonProperty, resultType);
+                m_entities.dev_ImportResultTypeJSONProperty(id, jsonProperty, dataType, resultType);
             }
             catch (Exception e)
             {

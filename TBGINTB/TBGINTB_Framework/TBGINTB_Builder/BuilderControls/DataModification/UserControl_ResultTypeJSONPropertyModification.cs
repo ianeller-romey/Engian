@@ -26,6 +26,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         public int? ResultTypeJSONPropertyId { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyId; } }
         public string ResultTypeJSONPropertyJSONProperty { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty; } }
+        public int? ResultTypeJSONPropertyDataType { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyDataType; } }
         public int ResultTypeId { get { return m_userControl_resultTypeJSONProperty.ResultTypeId; } }
 
         #endregion
@@ -35,9 +36,15 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public UserControl_ResultTypeJSONPropertyModification(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId)
+        public UserControl_ResultTypeJSONPropertyModification
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty,
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId
+        )
         {
-            CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId);
+            CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyDataType, resultTypeId);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -55,7 +62,13 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private void CreateControls(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId)
+        private void CreateControls
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty, 
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId
+        )
         {
             Grid grid_main = new Grid();
             grid_main.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -65,7 +78,15 @@ namespace TBGINTB_Builder.BuilderControls
             button_modifyResultTypeJSONProperty.Click += Button_ModifyResultTypeJSONProperty_Click;
             grid_main.SetGridRowColumn(button_modifyResultTypeJSONProperty, 0, 0);
 
-            m_userControl_resultTypeJSONProperty = new UserControl_ResultTypeJSONProperty(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId, false);
+            m_userControl_resultTypeJSONProperty = 
+                new UserControl_ResultTypeJSONProperty
+                (
+                    resultTypeJSONPropertyId,
+                    resultTypeJSONPropertyJSONProperty, 
+                    resultTypeJSONPropertyDataType, 
+                    resultTypeId, 
+                    false
+                );
             grid_main.SetGridRowColumn(m_userControl_resultTypeJSONProperty, 1, 0);
             m_userControl_resultTypeJSONProperty.SetActiveAndRegisterForGinTubEvents();
 
@@ -80,6 +101,7 @@ namespace TBGINTB_Builder.BuilderControls
                 (
                     m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyId, 
                     m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty,
+                    m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyDataType,
                     m_userControl_resultTypeJSONProperty.ResultTypeId,
                     (win) =>
                     {
@@ -89,6 +111,7 @@ namespace TBGINTB_Builder.BuilderControls
                             (
                                 wWin.ResultTypeJSONPropertyId.Value,
                                 wWin.ResultTypeJSONPropertyJSONProperty,
+                                wWin.ResultTypeJSONPropertyDataType.Value,
                                 wWin.ResultTypeId
                             );
                     }

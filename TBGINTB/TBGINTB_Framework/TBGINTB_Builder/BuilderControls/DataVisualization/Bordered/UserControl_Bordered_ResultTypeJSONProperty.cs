@@ -26,6 +26,7 @@ namespace TBGINTB_Builder.BuilderControls
 
         public int? ResultTypeJSONPropertyId { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyId; } }
         public string ResultTypeJSONPropertyJSONProperty { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyJSONProperty; } }
+        public int? ResultTypeJSONPropertyDataType { get { return m_userControl_resultTypeJSONProperty.ResultTypeJSONPropertyDataType; } }
         public int ResultTypeId { get { return m_userControl_resultTypeJSONProperty.ResultTypeId; } }
 
         #endregion
@@ -35,9 +36,16 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Public Functionality
 
-        public UserControl_Bordered_ResultTypeJSONProperty(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId, bool enableEditing)
+        public UserControl_Bordered_ResultTypeJSONProperty
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty, 
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId, 
+            bool enableEditing
+        )
         {
-            CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId, enableEditing);
+            CreateControls(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyDataType, resultTypeId, enableEditing);
         }
 
         public void SetActiveAndRegisterForGinTubEvents()
@@ -55,9 +63,24 @@ namespace TBGINTB_Builder.BuilderControls
 
         #region Private Functionality
 
-        private void CreateControls(int? resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeId, bool enableEditing)
+        private void CreateControls
+        (
+            int? resultTypeJSONPropertyId, 
+            string resultTypeJSONPropertyJSONProperty,
+            int? resultTypeJSONPropertyDataType,
+            int resultTypeId, 
+            bool enableEditing
+        )
         {
-            m_userControl_resultTypeJSONProperty = new UserControl_ResultTypeJSONProperty(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeId, enableEditing);
+            m_userControl_resultTypeJSONProperty = 
+                new UserControl_ResultTypeJSONProperty
+                (
+                    resultTypeJSONPropertyId, 
+                    resultTypeJSONPropertyJSONProperty,
+                    resultTypeJSONPropertyDataType,
+                    resultTypeId, 
+                    enableEditing
+                );
             Border border = new Border() { Style = new Style_DefaultBorder(), Child = m_userControl_resultTypeJSONProperty };
             Content = border;
         }

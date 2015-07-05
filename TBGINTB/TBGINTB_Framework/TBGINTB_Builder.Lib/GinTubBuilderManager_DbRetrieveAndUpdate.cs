@@ -698,17 +698,74 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
+        #region JSONPropertyDataTypes
+
+        public class JSONPropertyDataTypeEventArgs : EventArgs
+        {
+            public int Id { get; set; }
+            public string DataType { get; set; }
+            public JSONPropertyDataTypeEventArgs(int id, string dataType)
+            {
+                Id = id;
+                DataType = dataType;
+            }
+        }
+
+
+        public class JSONPropertyDataTypeAddedEventArgs : JSONPropertyDataTypeEventArgs
+        {
+            public JSONPropertyDataTypeAddedEventArgs(int id, string dataType) : base(id, dataType) { }
+        }
+        public delegate void JSONPropertyDataTypeAddedEventHandler(object sender, JSONPropertyDataTypeAddedEventArgs args);
+        public static event JSONPropertyDataTypeAddedEventHandler JSONPropertyDataTypeAdded;
+        private static void OnJSONPropertyDataTypeAdded(JSONPropertyDataType jsonPropertyDataType)
+        {
+            if (JSONPropertyDataTypeAdded != null)
+                JSONPropertyDataTypeAdded(typeof(GinTubBuilderManager), new JSONPropertyDataTypeAddedEventArgs(jsonPropertyDataType.Id, jsonPropertyDataType.DataType));
+        }
+
+
+        public class JSONPropertyDataTypeModifiedEventArgs : JSONPropertyDataTypeEventArgs
+        {
+            public JSONPropertyDataTypeModifiedEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void JSONPropertyDataTypeModifiedEventHandler(object sender, JSONPropertyDataTypeModifiedEventArgs args);
+        public static event JSONPropertyDataTypeModifiedEventHandler JSONPropertyDataTypeModified;
+        private static void OnJSONPropertyDataTypeModified(JSONPropertyDataType jsonPropertyDataType)
+        {
+            if (JSONPropertyDataTypeModified != null)
+                JSONPropertyDataTypeModified(typeof(GinTubBuilderManager), new JSONPropertyDataTypeModifiedEventArgs(jsonPropertyDataType.Id, jsonPropertyDataType.DataType));
+        }
+
+
+        public class JSONPropertyDataTypeGetEventArgs : JSONPropertyDataTypeEventArgs
+        {
+            public JSONPropertyDataTypeGetEventArgs(int id, string name) : base(id, name) { }
+        }
+        public delegate void JSONPropertyDataTypeGetEventHandler(object sender, JSONPropertyDataTypeGetEventArgs args);
+        public static event JSONPropertyDataTypeGetEventHandler JSONPropertyDataTypeGet;
+        private static void OnJSONPropertyDataTypeGet(JSONPropertyDataType jsonPropertyDataType)
+        {
+            if (JSONPropertyDataTypeGet != null)
+                JSONPropertyDataTypeGet(typeof(GinTubBuilderManager), new JSONPropertyDataTypeGetEventArgs(jsonPropertyDataType.Id, jsonPropertyDataType.DataType));
+        }
+
+        #endregion
+
+
         #region ResultTypeJSONProperties
 
         public class ResultTypeJSONPropertyEventArgs : EventArgs
         {
             public int Id { get; set; }
             public string JSONProperty { get; set; }
+            public int DataType { get; set; }
             public int ResultType { get; set; }
-            public ResultTypeJSONPropertyEventArgs(int id, string jsonProperty, int resultType)
+            public ResultTypeJSONPropertyEventArgs(int id, string jsonProperty, int dataType, int resultType)
             {
                 Id = id;
                 JSONProperty = jsonProperty;
+                DataType = dataType;
                 ResultType = resultType;
             }
         }
@@ -716,8 +773,8 @@ namespace TBGINTB_Builder.Lib
 
         public class ResultTypeJSONPropertyAddedEventArgs : ResultTypeJSONPropertyEventArgs
         {
-            public ResultTypeJSONPropertyAddedEventArgs(int id, string jsonProperty, int resultType) :
-                base(id, jsonProperty, resultType) { }
+            public ResultTypeJSONPropertyAddedEventArgs(int id, string jsonProperty, int dataType, int resultType) :
+                base(id, jsonProperty, dataType, resultType) { }
         }
         public delegate void ResultTypeJSONPropertyAddedEventHandler(object sender, ResultTypeJSONPropertyAddedEventArgs args);
         public static event ResultTypeJSONPropertyAddedEventHandler ResultTypeJSONPropertyAdded;
@@ -731,6 +788,7 @@ namespace TBGINTB_Builder.Lib
                     (
                         resultTypeJSONProperty.Id, 
                         resultTypeJSONProperty.JSONProperty, 
+                        resultTypeJSONProperty.DataType,
                         resultTypeJSONProperty.ResultType
                     )
                 );
@@ -739,7 +797,7 @@ namespace TBGINTB_Builder.Lib
 
         public class ResultTypeJSONPropertyModifiedEventArgs : ResultTypeJSONPropertyEventArgs
         {
-            public ResultTypeJSONPropertyModifiedEventArgs(int id, string name, int ResultTypeJSONPropertyType) : base(id, name, ResultTypeJSONPropertyType) { }
+            public ResultTypeJSONPropertyModifiedEventArgs(int id, string name, int dataType, int resultType) : base(id, name, dataType, resultType) { }
         }
         public delegate void ResultTypeJSONPropertyModifiedEventHandler(object sender, ResultTypeJSONPropertyModifiedEventArgs args);
         public static event ResultTypeJSONPropertyModifiedEventHandler ResultTypeJSONPropertyModified;
@@ -753,6 +811,7 @@ namespace TBGINTB_Builder.Lib
                     (
                         resultTypeJSONProperty.Id,
                         resultTypeJSONProperty.JSONProperty,
+                        resultTypeJSONProperty.DataType,
                         resultTypeJSONProperty.ResultType
                     )
                 );
@@ -761,7 +820,7 @@ namespace TBGINTB_Builder.Lib
 
         public class ResultTypeJSONPropertyGetEventArgs : ResultTypeJSONPropertyEventArgs
         {
-            public ResultTypeJSONPropertyGetEventArgs(int id, string name, int ResultTypeJSONPropertyType) : base(id, name, ResultTypeJSONPropertyType) { }
+            public ResultTypeJSONPropertyGetEventArgs(int id, string name, int dataType, int resultType) : base(id, name, dataType, resultType) { }
         }
         public delegate void ResultTypeJSONPropertyGetEventHandler(object sender, ResultTypeJSONPropertyGetEventArgs args);
         public static event ResultTypeJSONPropertyGetEventHandler ResultTypeJSONPropertyGet;
@@ -775,6 +834,7 @@ namespace TBGINTB_Builder.Lib
                     (
                         resultTypeJSONProperty.Id,
                         resultTypeJSONProperty.JSONProperty,
+                        resultTypeJSONProperty.DataType,
                         resultTypeJSONProperty.ResultType
                     )
                 );
@@ -2003,18 +2063,50 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
+        #region JSONPropertyDataTypes
+
+        public static void AddJSONPropertyDataType(string jsonPropertyDataTypeDataType)
+        {
+            int id = InsertJSONPropertyDataType(jsonPropertyDataTypeDataType);
+            JSONPropertyDataType jsonPropertyDataType = SelectJSONPropertyDataType(id);
+            OnJSONPropertyDataTypeAdded(jsonPropertyDataType);
+        }
+
+        public static void ModifyJSONPropertyDataType(int jsonPropertyDataTypeId, string jsonPropertyDataTypeDataType)
+        {
+            UpdateJSONPropertyDataType(jsonPropertyDataTypeId, jsonPropertyDataTypeDataType);
+            JSONPropertyDataType jsonPropertyDataType = SelectJSONPropertyDataType(jsonPropertyDataTypeId);
+            OnJSONPropertyDataTypeModified(jsonPropertyDataType);
+        }
+
+        public static void GetJSONPropertyDataType(int jsonPropertyDataTypeId)
+        {
+            JSONPropertyDataType jsonPropertyDataType = SelectJSONPropertyDataType(jsonPropertyDataTypeId);
+            OnJSONPropertyDataTypeGet(jsonPropertyDataType);
+        }
+
+        public static void LoadAllJSONPropertyDataTypes()
+        {
+            List<JSONPropertyDataType> jsonPropertyDataTypes = SelectAllJSONPropertyDataTypes();
+            foreach (var jsonPropertyDataType in jsonPropertyDataTypes)
+                OnJSONPropertyDataTypeAdded(jsonPropertyDataType);
+        }
+
+        #endregion
+
+
         #region ResultTypeJSONProperties
 
-        public static void AddResultTypeJSONProperty(string resultTypeJSONPropertyJSONProperty, int resultTypeJSONPropertyResultTypeId)
+        public static void AddResultTypeJSONProperty(string resultTypeJSONPropertyJSONProperty, int resultTypeJSONPropertyDataType, int resultTypeJSONPropertyResultTypeId)
         {
-            int id = InsertResultTypeJSONProperty(resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyResultTypeId);
+            int id = InsertResultTypeJSONProperty(resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyDataType, resultTypeJSONPropertyResultTypeId);
             ResultTypeJSONProperty resultTypeJSONProperty = SelectResultTypeJSONProperty(id);
             OnResultTypeJSONPropertyAdded(resultTypeJSONProperty);
         }
 
-        public static void ModifyResultTypeJSONProperty(int resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeJSONPropertyResultTypeId)
+        public static void ModifyResultTypeJSONProperty(int resultTypeJSONPropertyId, string resultTypeJSONPropertyJSONProperty, int resultTypeJSONPropertyDataType, int resultTypeJSONPropertyResultTypeId)
         {
-            UpdateResultTypeJSONProperty(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyResultTypeId);
+            UpdateResultTypeJSONProperty(resultTypeJSONPropertyId, resultTypeJSONPropertyJSONProperty, resultTypeJSONPropertyDataType, resultTypeJSONPropertyResultTypeId);
             ResultTypeJSONProperty resultTypeJSONProperty = SelectResultTypeJSONProperty(resultTypeJSONPropertyId);
             OnResultTypeJSONPropertyModified(resultTypeJSONProperty);
         }
@@ -2479,6 +2571,9 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<dev_GetResultType_Result, ResultType>();
             Mapper.CreateMap<dev_GetAllResultTypes_Result, ResultType>();
+
+            Mapper.CreateMap<dev_GetJSONPropertyDataType_Result, JSONPropertyDataType>();
+            Mapper.CreateMap<dev_GetAllJSONPropertyDataTypes_Result, JSONPropertyDataType>();
 
             Mapper.CreateMap<dev_GetResultTypeJSONProperty_Result, ResultTypeJSONProperty>();
             Mapper.CreateMap<dev_GetAllResultTypeJSONPropertiesForResultType_Result, ResultTypeJSONProperty>();
@@ -3361,14 +3456,85 @@ namespace TBGINTB_Builder.Lib
         #endregion
 
 
-        #region ResultTypeJSONProperties
+        #region JSONPropertyDataTypes
 
-        private static int InsertResultTypeJSONProperty(string jsonProperty, int resultType)
+        private static int InsertJSONPropertyDataType(string dataType)
         {
             ObjectResult<decimal?> databaseResult = null;
             try
             {
-                databaseResult = m_entities.dev_AddResultTypeJSONProperty(jsonProperty, resultType);
+                databaseResult = m_entities.dev_AddJSONPropertyDataType(dataType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_AddJSONPropertyDataType", e);
+            }
+            var result = databaseResult.FirstOrDefault();
+            if (!result.HasValue)
+                throw new GinTubDatabaseException("dev_AddJSONPropertyDataType", new Exception("No [Id] was returned after [JSONPropertyDataType] INSERT."));
+
+            return (int)result.Value;
+        }
+
+        private static void UpdateJSONPropertyDataType(int id, string dataType)
+        {
+            try
+            {
+                m_entities.dev_UpdateJSONPropertyDataType(id, dataType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_UpdateJSONPropertyDataType", e);
+            }
+        }
+
+        private static JSONPropertyDataType SelectJSONPropertyDataType(int id)
+        {
+            ObjectResult<dev_GetJSONPropertyDataType_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetJSONPropertyDataType(id);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetJSONPropertyDataType", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetJSONPropertyDataType", new Exception(string.Format("No [JSONPropertyDataTypes] record found with [Id] = {0}.", id)));
+
+            JSONPropertyDataType jsonPropertyDataType = Mapper.Map<JSONPropertyDataType>(databaseResult.Single());
+            return jsonPropertyDataType;
+        }
+
+        private static List<JSONPropertyDataType> SelectAllJSONPropertyDataTypes()
+        {
+            ObjectResult<dev_GetAllJSONPropertyDataTypes_Result> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_GetAllJSONPropertyDataTypes();
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_GetAllJSONPropertyDataTypes", e);
+            }
+            if (databaseResult == null)
+                throw new GinTubDatabaseException("dev_GetAllJSONPropertyDataTypes", new Exception("No [JSONPropertyDataTypes] records found."));
+
+            List<JSONPropertyDataType> jsonPropertyDataTypes = databaseResult.Select(r => Mapper.Map<JSONPropertyDataType>(r)).ToList();
+            return jsonPropertyDataTypes;
+        }
+
+        #endregion
+
+
+        #region ResultTypeJSONProperties
+
+        private static int InsertResultTypeJSONProperty(string jsonProperty, int dataType, int resultType)
+        {
+            ObjectResult<decimal?> databaseResult = null;
+            try
+            {
+                databaseResult = m_entities.dev_AddResultTypeJSONProperty(jsonProperty, dataType, resultType);
             }
             catch (Exception e)
             {
@@ -3381,11 +3547,11 @@ namespace TBGINTB_Builder.Lib
             return (int)result.Value;
         }
 
-        private static void UpdateResultTypeJSONProperty(int id, string jsonProperty, int resultType)
+        private static void UpdateResultTypeJSONProperty(int id, string jsonProperty, int dataType, int resultType)
         {
             try
             {
-                m_entities.dev_UpdateResultTypeJSONProperty(id, jsonProperty, resultType);
+                m_entities.dev_UpdateResultTypeJSONProperty(id, jsonProperty, dataType, resultType);
             }
             catch (Exception e)
             {
