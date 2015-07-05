@@ -108,6 +108,7 @@ namespace TBGINTB_Builder.Lib
         public static void Initialize()
         {
             m_dictionary_dataTypeFormatters = new Dictionary<int, string>();
+            m_dictionary_dataTypeFormatterValidators = new Dictionary<int, ValidateBeforeFormatting>();
             m_dictionary_dataTypeJTokenTypes = new Dictionary<JTokenType, int>();
 
             GinTubBuilderManager.JSONPropertyDataTypeAdded += GinTubBuilderManager_JSONPropertyDataTypeAdded;

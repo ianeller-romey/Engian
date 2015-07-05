@@ -18,6 +18,7 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
         Item[] m_items;
         Event[] m_events;
         Character[] m_characters;
+        JSONPropertyDataType[] m_jsonPropertyDataTypes;
         ResultType[] m_resultTypes;
         VerbType[] m_verbTypes;
         Location[] m_locations;
@@ -32,17 +33,6 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
             {
                 if (m_exportDate != value)
                     m_exportDate = value;
-            }
-        }
-
-        [XmlElement("AreaOnInitialLoad")]
-        public AreaRoomOnInitialLoad AreaRoomOnInitialLoad
-        {
-            get { return m_areaOnInitialLoad; }
-            set
-            {
-                if (m_areaOnInitialLoad != value)
-                    m_areaOnInitialLoad = value;
             }
         }
         
@@ -76,6 +66,17 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
             {
                 if (m_characters != value)
                     m_characters = value;
+            }
+        }
+
+        [XmlArray("JSONPropertyTypes")]
+        public JSONPropertyDataType[] JSONPropertyTypes
+        {
+            get { return m_jsonPropertyDataTypes; }
+            set
+            {
+                if (m_jsonPropertyDataTypes != value)
+                    m_jsonPropertyDataTypes = value;
             }
         }
 
@@ -131,6 +132,17 @@ namespace TBGINTB_Builder.Lib.Model.XmlModel
             {
                 if (m_areas != value)
                     m_areas = value;
+            }
+        }
+
+        [XmlElement("AreaOnInitialLoad")]
+        public AreaRoomOnInitialLoad AreaRoomOnInitialLoad
+        {
+            get { return m_areaOnInitialLoad; }
+            set
+            {
+                if (m_areaOnInitialLoad != value)
+                    m_areaOnInitialLoad = value;
             }
         }
     }

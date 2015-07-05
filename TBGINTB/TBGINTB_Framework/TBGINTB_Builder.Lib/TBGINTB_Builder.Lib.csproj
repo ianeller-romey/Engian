@@ -75,6 +75,7 @@
     <Compile Include="Model\XmlModel\Action.cs" />
     <Compile Include="Model\XmlModel\ActionResult.cs" />
     <Compile Include="Model\XmlModel\AreaRoomOnInitialLoad.cs" />
+    <Compile Include="Model\XmlModel\JSONPropertyDataType.cs" />
     <Compile Include="Model\XmlModel\GinTub.cs" />
     <Compile Include="Model\XmlModel\Area.cs" />
     <Compile Include="Model\XmlModel\Character.cs" />

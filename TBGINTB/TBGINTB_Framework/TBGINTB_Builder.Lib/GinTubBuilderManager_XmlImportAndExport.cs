@@ -103,6 +103,8 @@ namespace TBGINTB_Builder.Lib
 
             Mapper.CreateMap<Db.ResultType, Xml.ResultType>();
 
+            Mapper.CreateMap<Db.JSONPropertyDataType, Xml.JSONPropertyDataType>();
+
             Mapper.CreateMap<Db.ResultTypeJSONProperty, Xml.ResultTypeJSONProperty>();
 
             Mapper.CreateMap<Db.Result, Xml.Result>();
@@ -134,13 +136,13 @@ namespace TBGINTB_Builder.Lib
 
         private static Xml.GinTub ExportGinTubToXml()
         {
-            Xml.AreaRoomOnInitialLoad areaRoomOnInitialLoad = Mapper.Map<Xml.AreaRoomOnInitialLoad>(SelectAreaRoomOnInitialLoad());
-
             Xml.Item[] items = SelectAllItems().Select(i => Mapper.Map<Xml.Item>(i)).ToArray();
 
             Xml.Event[] events = SelectAllEvents().Select(e => Mapper.Map<Xml.Event>(e)).ToArray();
 
             Xml.Character[] characters = SelectAllCharacters().Select(c => Mapper.Map<Xml.Character>(c)).ToArray();
+
+            Xml.JSONPropertyDataType[] jsonPropertyDataTypes = SelectAllJSONPropertyDataTypes().Select(t => Mapper.Map<Xml.JSONPropertyDataType>(t)).ToArray();
 
             Xml.ResultType[] resultTypes = SelectAllResultTypes().Select(rt => Mapper.Map<Xml.ResultType>(rt)).ToArray();
             for (int i = 0; i < resultTypes.Length; ++i)
@@ -160,16 +162,19 @@ namespace TBGINTB_Builder.Lib
             for (int i = 0; i < areas.Length; ++i)
                 ExportAreaToXml(ref areas[i]);
 
+            Xml.AreaRoomOnInitialLoad areaRoomOnInitialLoad = Mapper.Map<Xml.AreaRoomOnInitialLoad>(SelectAreaRoomOnInitialLoad());
+
             Xml.GinTub ginTub = new Xml.GinTub();
-            ginTub.AreaRoomOnInitialLoad = areaRoomOnInitialLoad;
             ginTub.Items = items;
             ginTub.Events = events;
             ginTub.Characters = characters;
+            ginTub.JSONPropertyTypes = jsonPropertyDataTypes;
             ginTub.ResultTypes = resultTypes;
             ginTub.VerbTypes = verbTypes;
             ginTub.Locations = locations;
             ginTub.Messages = messages;
             ginTub.Areas = areas;
+            ginTub.AreaRoomOnInitialLoad = areaRoomOnInitialLoad;
             return ginTub;
         }
 
@@ -277,6 +282,8 @@ namespace TBGINTB_Builder.Lib
                 ImportEvent(evnt.Id, evnt.Name, evnt.Description);
             foreach (var character in ginTub.Characters)
                 ImportCharacter(character.Id, character.Name, character.Description);
+            foreach (var jsonPropertyDataType in ginTub.JSONPropertyTypes)
+                ImportJSONPropertyDataType(jsonPropertyDataType.Id, jsonPropertyDataType.DataType);
             foreach (var resultType in ginTub.ResultTypes)
                 ImportResultTypeFromXml(resultType);
             foreach (var verbType in ginTub.VerbTypes)
@@ -437,6 +444,18 @@ namespace TBGINTB_Builder.Lib
             catch (Exception e)
             {
                 throw new GinTubDatabaseException("dev_ImportResultType", e);
+            }
+        }
+
+        private static void ImportJSONPropertyDataType(int id, string dataType)
+        {
+            try
+            {
+                m_entities.dev_ImportJSONPropertyDataType(id, dataType);
+            }
+            catch (Exception e)
+            {
+                throw new GinTubDatabaseException("dev_ImportJSONPropertyDataType", e);
             }
         }
 
