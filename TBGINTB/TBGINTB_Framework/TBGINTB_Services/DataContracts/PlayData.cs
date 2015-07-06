@@ -58,7 +58,7 @@ namespace GinTub.Services.DataContracts
     }
 
     [DataContract]
-    public class AllData
+    public class PlayData
     {
         [DataMember]
         public AreaData Area { get; set; }

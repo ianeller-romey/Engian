@@ -58,18 +58,18 @@ namespace GinTub.Services
             return new PlayerLogin() { PlayerId = playerId };
         }
 
-        public AllData LoadGame(Guid playerId)
+        public PlayData LoadGame(Guid playerId)
         {
-            AllData data = new AllData();
+            PlayData data = new PlayData();
             var result = _repository.LoadGame(playerId);
             data.Area = TypeAdapter.Adapt<AreaData>(result.Item1);
             data.RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList();
             return data;
         }
 
-        public AllData LoadRoom(Guid playerId, int area, int x, int y, int z)
+        public PlayData LoadRoom(Guid playerId, int area, int x, int y, int z)
         {
-            AllData data = new AllData();
+            PlayData data = new PlayData();
             var result = _repository.LoadRoom(playerId);
             return null;
         }

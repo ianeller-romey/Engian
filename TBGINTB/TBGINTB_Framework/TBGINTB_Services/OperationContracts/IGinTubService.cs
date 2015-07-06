@@ -28,7 +28,7 @@ namespace GinTub.Services.OperationContracts
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "LoadGame")]
-        DataContracts.AllData LoadGame(Guid playerId);
+        DataContracts.PlayData LoadGame(Guid playerId);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
@@ -36,6 +36,6 @@ namespace GinTub.Services.OperationContracts
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
         UriTemplate = "LoadRoom")]
-        DataContracts.AllData LoadRoom(Guid playerId, int area, int x, int y, int z);
+        DataContracts.PlayData LoadRoom(Guid playerId, int area, int x, int y, int z);
     }
 }

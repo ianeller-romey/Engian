@@ -75,7 +75,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\AllData.cs" />
+    <Compile Include="DataContracts\PlayData.cs" />
     <Compile Include="DataContracts\PlayerLogin.cs" />
     <Compile Include="GinTubService.svc.cs">
       <DependentUpon>GinTubService.svc</DependentUpon>
