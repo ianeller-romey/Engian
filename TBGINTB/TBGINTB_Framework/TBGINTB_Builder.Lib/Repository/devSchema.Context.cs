@@ -1036,13 +1036,13 @@ namespace TBGINTB_Builder.Lib.Repository
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoom_Result>("dev_GetRoom", idParameter);
         }
     
-        public virtual ObjectResult<dev_GetRoomPreview_Result> dev_GetRoomPreview(Nullable<int> roompreview)
+        public virtual ObjectResult<dev_GetRoomPreviewParagraphStates_Result> dev_GetRoomPreview(Nullable<int> roompreview)
         {
             var roompreviewParameter = roompreview.HasValue ?
                 new ObjectParameter("roompreview", roompreview) :
                 new ObjectParameter("roompreview", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomPreview_Result>("dev_GetRoomPreview", roompreviewParameter);
+
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<dev_GetRoomPreviewParagraphStates_Result>("dev_GetRoomPreview", roompreviewParameter);
         }
     
         public virtual ObjectResult<dev_GetRoomPreviewNouns_Result> dev_GetRoomPreviewNouns(Nullable<int> room)

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Text.RegularExpressions;
 
 using FastMapper;
 
@@ -21,6 +22,21 @@ namespace GinTub.Services
 
         public GinTubService()
         {
+            TypeAdapterConfig<Repository.Entities.Noun, WordData>
+                .NewConfig()
+                .MapFrom(dest => dest.NounId, src => src.Id); ;
+            TypeAdapterConfig<Repository.Entities.ParagraphState, ParagraphData>
+                .NewConfig()
+                .MapFrom<IEnumerable<WordData>>
+                (
+                    dest => dest.Words, 
+                    src => (from x in Regex.Split(src.Text, "(\\s|\\.|,|;|\\?|!|\")")
+                            join n in src.Nouns on x equals n.Text into nx
+                            where !string.IsNullOrWhiteSpace(x)
+                            from nn in nx.DefaultIfEmpty()
+                            select new WordData() { Text = x, NounId = (nn != null) ? (int?)nn.Id : null })
+                            .ToList()
+                );
             _repository = new Repository.GinTubRepository();
         }
 

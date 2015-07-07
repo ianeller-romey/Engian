@@ -132,16 +132,34 @@ body {
 }
 
 .unParagraph {
-    line-height: 140%;
-    letter-spacing: 1px;
-    font-family: Georgia;
-    font-size: large;
-    padding: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
     .unParagraph:hover {
         text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
     }
+
+.unWord {
+    line-height: 140%;
+    letter-spacing: 1px;
+    font-family: Georgia;
+    font-size: large;
+}
+
+    .unWord:hover {
+        text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
+    }
+
+   /* $(document).ready(function () {
+  $('.span1').hover(
+      function () {
+          $('.span2').css('color', 'red');
+      }, function () {
+          $('.span2').css('color', 'black');
+      }
+   );
+});*/
 
 .verb {
     margin: 5px 15px 5px 15px;

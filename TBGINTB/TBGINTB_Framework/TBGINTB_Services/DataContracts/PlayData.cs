@@ -10,25 +10,23 @@ namespace GinTub.Services.DataContracts
 {
 
     [DataContract]
-    public class NounData
+    public class WordData
     {
         [DataMember] 
-        public int Id { get; set; }
+        public int? NounId { get; set; }
         [DataMember] 
         public string Text { get; set; }
     }
 
     [DataContract]
-    public class ParagraphStateData
+    public class ParagraphData
     {
         [DataMember] 
         public int Id { get; set; }
         [DataMember] 
-        public string Text { get; set; }
-        [DataMember] 
         public int Order { get; set; }
         [DataMember] 
-        public IEnumerable<NounData> Nouns { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
     }
 
     [DataContract]
@@ -45,7 +43,7 @@ namespace GinTub.Services.DataContracts
         [DataMember]
         public int Room { get; set; }
         [DataMember]
-        public IEnumerable<ParagraphStateData> ParagraphStates { get; set; }
+        public IEnumerable<ParagraphData> ParagraphStates { get; set; }
     }
 
     [DataContract]

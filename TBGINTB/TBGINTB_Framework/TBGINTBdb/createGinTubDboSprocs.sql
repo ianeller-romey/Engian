@@ -135,19 +135,21 @@ ALTER PROCEDURE [dbo].[CreateDefaultPlayerStates]
 AS
 BEGIN
 
-	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
-	SELECT TOP 1 @player,
-				 [Room]
-	FROM [dbo].[AreaRoomOnInitialLoad]
-
 	INSERT INTO [dbo].[PlayerStatesOfRooms] ([Player], [Room], [State])
 	SELECT @player,
 		   r.[Id],
-		   0
+		   -1
 	FROM [dbo].[Rooms] r WITH (NOLOCK)
 	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON p.[Id] = @player
 	AND r.[Id] NOT IN (SELECT [Room] FROM [dbo].[PlayerStatesOfRooms] WHERE [Player] = @player)
+	
+	UPDATE psr
+	SET psr.[State] = 0
+	FROM [dbo].[PlayerStatesOfRooms] psr
+	INNER JOIN [dbo].[PlayerGameStates] pgs
+	ON psr.[Player] = pgs.[Player] AND psr.[Room] = pgs.[LastRoom]
+	WHERE psr.[Player] = @player
 	
 	INSERT INTO [dbo].[PlayerStatesOfParagraphs] ([Player], [Paragraph], [State])
 	SELECT @player,
@@ -467,7 +469,7 @@ BEGIN
 	ON ar.[Result] = r.[Id]
 	WHERE a.[Noun] = @noun
 	AND a.[VerbType] = @verbType
-	AND [dbo].[f_PlayerHasRequirementsForAction](@player, a.[Id]) = 1
+	AND (SELECT TOP 1 [HasRequirements] FROM [dbo].[f_PlayerHasRequirementsForAction](@player, a.[Id])) = 1
 
 END
 GO
@@ -496,8 +498,8 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[f_PlayerHasRequirementsForAction]') AND [xtype] = 'FN')
-  EXEC('CREATE FUNCTION [dbo].[f_PlayerHasRequirementsForAction] () RETURNS bit AS BEGIN RETURN 1 END')
+IF NOT EXISTS (SELECT * FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[f_PlayerHasRequirementsForAction]') AND [xtype] = 'TF')
+  EXEC('CREATE FUNCTION [dbo].[f_PlayerHasRequirementsForAction] () RETURNS @output TABLE([Data] bit) AS BEGIN INSERT INTO @output ([Data]) VALUES (1) RETURN END')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
@@ -510,7 +512,9 @@ ALTER FUNCTION [dbo].[f_PlayerHasRequirementsForAction]
 	@player uniqueidentifier,
 	@action int
 )
-RETURNS bit
+RETURNS @output TABLE (
+		[HasRequirements] bit NOT NULL
+	)
 AS
 BEGIN
 	DECLARE @result1 bit, @result2 bit, @result3 bit
@@ -536,7 +540,10 @@ BEGIN
 	WHERE car.[Action] = @action
 	AND pli.[InParty] = 0
 
-	RETURN @result1 & @result2 & @result3
+	INSERT INTO @output ([HasRequirements])
+	VALUES (@result1 & @result2 & @result3)
+
+	RETURN 
 
 END
 GO
@@ -574,6 +581,11 @@ BEGIN
 	AND r.[X] = r2.[X] + @xDir
 	AND r.[Y] = r2.[Y] + @yDir
 	AND r.[Z] = r2.[Z] + @zDir
+	
+	UPDATE [dbo].[PlayerStatesOfRooms]
+	SET [State] = CASE WHEN [State] < 0 THEN 0 ELSE [State] END
+	WHERE [Player] = @player
+	AND [Room] = @room
 	
 	UPDATE [dbo].[PlayerGameStates]
 	SET [LastRoom] = @room

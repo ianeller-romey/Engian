@@ -294,9 +294,6 @@
     <Compile Include="Repository\dev_GetRoomPreviewParagraphStates_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
-    <Compile Include="Repository\dev_GetRoomPreview_Result.cs">
-      <DependentUpon>devSchema.tt</DependentUpon>
-    </Compile>
     <Compile Include="Repository\dev_GetRoomState_Result.cs">
       <DependentUpon>devSchema.tt</DependentUpon>
     </Compile>
