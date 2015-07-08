@@ -19,7 +19,7 @@ namespace GinTub.Services.DataContracts
     }
 
     [DataContract]
-    public class ParagraphData
+    public class ParagraphStateData
     {
         [DataMember] 
         public int Id { get; set; }
@@ -43,7 +43,7 @@ namespace GinTub.Services.DataContracts
         [DataMember]
         public int Room { get; set; }
         [DataMember]
-        public IEnumerable<ParagraphData> ParagraphStates { get; set; }
+        public IEnumerable<ParagraphStateData> ParagraphStates { get; set; }
     }
 
     [DataContract]

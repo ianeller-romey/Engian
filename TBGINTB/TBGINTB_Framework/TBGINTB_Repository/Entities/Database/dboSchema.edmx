@@ -4,8 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="GinTubModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="GinTubModelStoreContainer" />
+    <Schema Namespace="GinTubModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="CreateDefaultPlayerInventories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
         </Function>
@@ -18,9 +17,16 @@
           <Parameter Name="domain" Type="varchar" Mode="In" />
           <Parameter Name="password" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="f_PlayerHasRequirementsForAction" ReturnType="bit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="f_PlayerHasRequirementsForAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
           <Parameter Name="action" Type="int" Mode="In" />
+          <ReturnType>
+            <CollectionType>
+              <RowType>
+                <Property Name="HasRequirements" Type="bit" Nullable="false" />
+              </RowType>
+            </CollectionType>
+          </ReturnType>
         </Function>
         <Function Name="GetActionResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
@@ -30,11 +36,15 @@
         <Function Name="GetMessageChoiceResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="messageChoice" Type="int" Mode="In" />
         </Function>
+        <Function Name="LoadAllVerbTypes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="LoadArea" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="area" Type="int" Mode="In" />
         </Function>
         <Function Name="LoadGame" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
+        </Function>
+        <Function Name="LoadNounsForParagraphState" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="paragraphState" Type="int" Mode="In" />
         </Function>
         <Function Name="LoadNounsForRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="player" Type="uniqueidentifier" Mode="In" />
@@ -72,6 +82,7 @@
           <Parameter Name="yDir" Type="int" Mode="In" />
           <Parameter Name="zDir" Type="int" Mode="In" />
         </Function>
+        <EntityContainer Name="GinTubModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -96,7 +107,7 @@
           <Parameter Name="area" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="CreateDefaultPlayerInventories">
-            <Parameter Name="player" Mode="In" Type="Guid" />
+          <Parameter Name="player" Mode="In" Type="Guid" />
           </FunctionImport>
           <FunctionImport Name="CreatePlayer" ReturnType="Collection(Guid)">
             <Parameter Name="username" Mode="In" Type="String" />
@@ -110,7 +121,7 @@
             <Parameter Name="verbType" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetMessageChoiceResults" ReturnType="Collection(GinTubModel.GetMessageChoiceResults_Result)">
-            <Parameter Name="messageChoice" Mode="In" Type="Int32" />
+          <Parameter Name="messageChoice" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LoadGame">
             <ReturnType Type="Collection(GinTubModel.LoadArea_Result)" />
@@ -125,7 +136,7 @@
             <ReturnType Type="Collection(GinTubModel.LoadNounsForRoom_Result)" />
             <Parameter Name="player" Mode="In" Type="Guid" />
             <Parameter Name="room" Mode="In" Type="Int32" />
-          </FunctionImport>
+            </FunctionImport>
           <FunctionImport Name="LoadRoomXYZ">
             <ReturnType Type="Collection(GinTubModel.LoadRoomStatesForRoom_Result)" />
             <ReturnType Type="Collection(GinTubModel.LoadParagraphStatesForRoom_Result)" />
@@ -135,7 +146,7 @@
             <Parameter Name="x" Mode="In" Type="Int32" />
             <Parameter Name="y" Mode="In" Type="Int32" />
             <Parameter Name="z" Mode="In" Type="Int32" />
-          </FunctionImport>
+            </FunctionImport>
           <FunctionImport Name="PlayerLogin" ReturnType="Collection(Guid)">
             <Parameter Name="emailUserName" Mode="In" Type="String" />
             <Parameter Name="emailDomainName" Mode="In" Type="String" />
@@ -151,6 +162,10 @@
             <Parameter Name="xDir" Mode="In" Type="Int32" />
             <Parameter Name="yDir" Mode="In" Type="Int32" />
             <Parameter Name="zDir" Mode="In" Type="Int32" />
+            </FunctionImport>
+          <FunctionImport Name="LoadAllVerbTypes" ReturnType="Collection(GinTubModel.LoadAllVerbTypes_Result)" />
+          <FunctionImport Name="LoadNounsForParagraphState" ReturnType="Collection(GinTubModel.LoadNounsForParagraphState_Result)">
+            <Parameter Name="paragraphState" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="LoadNounsForRoom_Result">
@@ -184,6 +199,15 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="JSONData" Nullable="true" MaxLength="500" />
           <Property Type="Int32" Name="ResultType" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="LoadAllVerbTypes_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" />
+        </ComplexType>
+        <ComplexType Name="LoadNounsForParagraphState_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Text" Nullable="false" MaxLength="256" />
+          <Property Type="Int32" Name="ParagraphState" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -355,6 +379,23 @@
             </ResultMapping>
             <ResultMapping>
               <ComplexTypeMapping TypeName="GinTubModel.LoadNounsForRoom_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ParagraphState" ColumnName="ParagraphState" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LoadAllVerbTypes" FunctionName="GinTubModel.Store.LoadAllVerbTypes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.LoadAllVerbTypes_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LoadNounsForParagraphState" FunctionName="GinTubModel.Store.LoadNounsForParagraphState">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="GinTubModel.LoadNounsForParagraphState_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="ParagraphState" ColumnName="ParagraphState" />

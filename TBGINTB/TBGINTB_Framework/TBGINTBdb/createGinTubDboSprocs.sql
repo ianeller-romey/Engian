@@ -28,12 +28,12 @@ BEGIN
 
 	DECLARE @playerId uniqueidentifier
 	SELECT @playerId = p.[Id]
-	FROM  [dbo].[EmailUserNames] eun
-	INNER JOIN [dbo].[Players] p
+	FROM  [dbo].[EmailUserNames] eun WITH (NOLOCK)
+	INNER JOIN [dbo].[Players] p WITH (NOLOCK)
 	ON eun.[Id] = p.[EmailUserName]
-	INNER JOIN [dbo].[EmailDomainNames] edn
+	INNER JOIN [dbo].[EmailDomainNames] edn WITH (NOLOCK)
 	ON edn.[Id] = p.[EmailDomainName]
-	INNER JOIN [dbo].[EmailDomains] ed
+	INNER JOIN [dbo].[EmailDomains] ed WITH (NOLOCK)
 	ON ed.[Id] = p.[EmailDomain]
 	WHERE eun.[UserName] = @emailUserName
 	AND edn.[DomainName] = @emailDomainName
@@ -114,7 +114,7 @@ BEGIN
 	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
 	SELECT TOP 1 @playerId,
 				 [Room]
-	FROM [dbo].[AreaRoomOnInitialLoad]
+	FROM [dbo].[AreaRoomOnInitialLoad] WITH(NOLOCK)
 	
 	SELECT @playerId
 
@@ -146,8 +146,8 @@ BEGIN
 	
 	UPDATE psr
 	SET psr.[State] = 0
-	FROM [dbo].[PlayerStatesOfRooms] psr
-	INNER JOIN [dbo].[PlayerGameStates] pgs
+	FROM [dbo].[PlayerStatesOfRooms] psr WITH (NOLOCK)
+	INNER JOIN [dbo].[PlayerGameStates] pgs WITH(NOLOCK)
 	ON psr.[Player] = pgs.[Player] AND psr.[Room] = pgs.[LastRoom]
 	WHERE psr.[Player] = @player
 	
@@ -248,6 +248,47 @@ GO
 /******************************************************************************************************************************************/
 /*Game Engine Content**********************************************************************************************************************/
 /******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadAllVerbTypes] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/7/2015
+-- Description:	Loads all VerbType data in the database
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadAllVerbTypes]
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[VerbTypes] WITH (NOLOCK)
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadNounsForParagraphState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/7/2015
+-- Description:	Loads all Nouns for specified ParagraphState
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadNounsForParagraphState]
+	@paragraphState int
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Text],
+		   [ParagraphState]
+	FROM [dbo].[Nouns] WITH (NOLOCK)
+	WHERE [ParagraphState] = @paragraphState
+
+END
+GO
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNounsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[LoadNounsForRoom] AS SELECT 1')

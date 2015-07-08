@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using GinTubRepoEntities = GinTub.Repository.Entities;
+using GinTub.Repository.Entities;
 
 
 namespace GinTub.Repository.Interface
@@ -13,7 +13,10 @@ namespace GinTub.Repository.Interface
     {
         Guid? PlayerLogin(string userName, string domainName, string domain, string password);
 
-        Tuple<GinTubRepoEntities.Area, IEnumerable<GinTubRepoEntities.RoomState>> LoadGame(Guid playerId);
-        IEnumerable<GinTubRepoEntities.RoomState> LoadRoom(Guid playerId);
+        IEnumerable<VerbType> LoadAllVerbTypes();
+
+        IEnumerable<Noun> LoadNounsForParagraphState(int paragraphStateId);
+
+        Tuple<Area, IEnumerable<RoomState>> LoadGame(Guid playerId);
     }
 }

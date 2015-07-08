@@ -25,163 +25,262 @@
 }));
 
 var VerbList = function(idOfVerbList){
-    this.verbListElem = $(idOfVerbList);
-    this.verbListElemX = $(idOfVerbList + "X");
-    this.interfaceElem = this.verbListElem.parent("div");
+    var verbListElem = $(idOfVerbList);
+    var verbListElemX = $(idOfVerbList + "X");
+    var interfaceElem = verbListElem.parent("div");
+
+    var messengerEngine = globalMessengerEngine;
+
     this.states = {
         closed: 0,
         updating: 1,
         open: 2
     };
     this.state = this.states.closed;
-    this.actionQueue = new ActionQueue(3);
+    var actionQueue = new ActionQueue(3);
+    var verbTypesForParagraphs = [{
+        name: "Inspect",
+        id: -1,
+        call: function () {
+            messengerEngine.post("VerbList.paragraphClick");
+        }
+    }];
+    var verbTypesForWords = null;
+    var activeVerbTypes = null;
 
     var that = this;
-    this.verbListElemX.click(function () {
+
+    verbListElemX.click(function () {
         that.close();
     });
-};
 
-VerbList.prototype.openExec = function(clientX, clientY) {
-    if(this.state === this.states.open) {
-        return;
-    }
+    var setActiveVerbTypesForParagraphs = function () {
+        activeVerbTypes = verbTypesForParagraphs;
+    };
 
-    var that = this;
+    var setActiveVerbTypesForWords = function () {
+        activeVerbTypes = verbTypesForWords;
+    };
 
-    // create all the divs that represent Verbs
-    // TODO: Load from DB
-    var i = 0;
-    for (; i < 3; ++i) {
-        var div = $(document.createElement("div"));
-        div.addClass("verb");
-        div.text("TEST");
-        this.verbListElem.append(div);
-    }
+    var update = function () {
+        if (!actionQueue.isEmpty()) {
+            actionQueue.pop();
+        }
+    };
 
-    // set position immediately
-    this.verbListElem.css({
-        left: clientX - this.interfaceElem.offset().left,
-        top: clientY - this.interfaceElem.offset().top - 20
-    });
-    // animate opening
-    this.verbListElem.animateAuto("width", 50, function () {
-        that.verbListElem.animateAuto("height", 50, function () {
-            that.verbListElem.animate({
-                padding: 10
-            }, 50, function () {
-                that.verbListElemX.css({
-                    display: "inline"
-                });
-                that.verbListElemX.animate({
-                    opacity: 1
-                }, 25, function () {
-                    if (that.actionQueue.isEmpty()) {
-                        that.state = that.states.open;
-                    }
-                    else {
-                        that.update();
-                    }
-                });
-            });
+    var continueUpdating = function () {
+        actionQueue.pop();
+    };
+
+    var openExec = function (clientX, clientY) {
+        if (that.state === that.states.open) {
+            return;
+        }
+
+        // create all the divs that represent Verbs
+        var createVerbClick = function (verb) {
+            return function (e) {
+                verb.call(verb.id);
+            };
+        };
+
+        var i = 0;
+        var len = activeVerbTypes.length;
+        for (; i < len; ++i) {
+            verbListElem.append($("<div/>", {
+                class: "verb",
+                text: activeVerbTypes[i].name
+            }).click(createVerbClick(activeVerbTypes[i])));
+        }
+
+        // set position immediately
+        verbListElem.css({
+            left: clientX - interfaceElem.offset().left,
+            top: clientY - interfaceElem.offset().top - 20
         });
-    });
-};
-
-VerbList.prototype.closeExec = function() {
-    if(this.state === this.states.closed){
-        return;
-    }
-
-    var that = this;
-
-    // animate closing in reverse order
-    this.verbListElemX.animate({
-        opacity: 0
-    }, 25, function () {
-        that.verbListElemX.css({
-            display: "none"
-        });
-        that.verbListElem.animate({
-            height: 0
-        }, 50, function () {
-            // remove the verbs after animating down the height, and
-            // before anything else, since we see weird artifacts if we
-            // remove them last
-            $(".verb").remove();
-            that.verbListElem.animate({
-                width: 0
-            }, 50, function () {
-                that.verbListElem.animate({
-                    padding: 0
+        verbListElem.addClass("verbListShadowed");
+        // animate opening
+        verbListElem.animateAuto("width", 50, function () {
+            verbListElem.animateAuto("height", 50, function () {
+                verbListElem.animate({
+                    padding: 10
                 }, 50, function () {
-                    if (that.actionQueue.isEmpty()) {
-                        that.state = that.states.closed;
-                    }
-                    else {
-                        that.update();
-                    }
+                    verbListElemX.css({
+                        display: "inline"
+                    });
+                    verbListElemX.animate({
+                        opacity: 1
+                    }, 25, function () {
+                        if (actionQueue.isEmpty()) {
+                            that.state = that.states.open;
+                        }
+                        else {
+                            update();
+                        }
+                    });
                 });
             });
         });
-    });
-};
+    };
 
-VerbList.prototype.open = function (clientX, clientY) {
-    if (this.state === this.states.updating) {
-        return;
-    }
-    this.state = this.states.updating;
-    this.actionQueue.push(this, this.openExec, clientX, clientY);
-    this.update();
-};
+    var closeExec = function () {
+        if (that.state === that.states.closed) {
+            return;
+        }
 
-VerbList.prototype.close = function () {
-    if (this.state === this.states.updating) {
-        return;
-    }
-    this.state = this.states.updating;
-    this.actionQueue.push(this, this.closeExec);
-    this.update();
-};
+        // animate closing in reverse order
+        verbListElemX.animate({
+            opacity: 0
+        }, 25, function () {
+            verbListElemX.css({
+                display: "none"
+            });
+            verbListElem.animate({
+                height: 0
+            }, 50, function () {
+                // remove the verbs after animating down the height, and
+                // before anything else, since we see weird artifacts if we
+                // remove them last
+                $(".verb").remove();
+                verbListElem.removeClass("verbListShadowed");
+                verbListElem.animate({
+                    width: 0
+                }, 50, function () {
+                    verbListElem.animate({
+                        padding: 0
+                    }, 50, function () {
+                        if (actionQueue.isEmpty()) {
+                            that.state = that.states.closed;
+                        }
+                        else {
+                            update();
+                        }
+                    });
+                });
+            });
+        });
+    };
 
-VerbList.prototype.closeAndReopen = function (clientX, clientY) {
-    if (this.state === this.states.updating) {
-        return;
-    }
-    this.state = this.states.updating;
-    this.actionQueue.push(this, this.closeExec);
-    this.actionQueue.push(this, this.openExec, clientX, clientY);
-    this.update();
-};
+    var open = function (clientX, clientY) {
+        if (that.state === that.states.updating) {
+            return;
+        }
+        that.state = that.states.updating;
+        actionQueue.push(that, openExec, clientX, clientY);
+        update();
+    };
 
-VerbList.prototype.update = function () {
-    if(!this.actionQueue.isEmpty()){
-        this.actionQueue.pop();
-    }
-};
+    this.openForParagraphs = function (clientX, clientY) {
+        setActiveVerbTypesForParagraphs();
+        open(clientX, clientY);
+    };
 
-VerbList.prototype.continueUpdating = function () {
-    this.actionQueue.pop();
+    this.openForWords = function (clientX, clientY) {
+        setActiveVerbTypesForWords();
+        open(clientX, clientY);
+    };
+
+    this.close = function () {
+        if (that.state === that.states.updating) {
+            return;
+        }
+        that.state = that.states.updating;
+        actionQueue.push(that, closeExec);
+        update();
+    };
+
+
+    var closeAndReopen = function (clientX, clientY) {
+        that.state = that.states.updating;
+        actionQueue.push(that, closeExec);
+        actionQueue.push(that, openExec, clientX, clientY);
+        update();
+    };
+
+    this.closeAndReopenForParagraphs = function (clientX, clientY) {
+        if (that.state === that.states.updating) {
+            return;
+        }
+        setActiveVerbTypesForParagraphs();
+        closeAndReopen(clientX, clientY);
+    };
+
+    this.closeAndReopenForWords = function (clientX, clientY) {
+        if (that.state === that.states.updating) {
+            return;
+        }
+        setActiveVerbTypesForWords();
+        closeAndReopen(clientX, clientY);
+    };
+
+    loadAllVerbTypes = function (verbUseData) {
+        verbTypesForWords = [];
+
+        var vt = verbUseData.VerbTypes;
+        var i = 0;
+        var len = vt.length;
+        for (; i < len; ++i) {
+            var verbType = vt[i];
+            verbTypesForWords[i] = {
+                id: verbType.Id,
+                name: verbType.Name,
+                call: function (vId) {
+                    messengerEngine.post("VerbList.wordClick", vId);
+                }
+            };
+        }
+
+        messengerEngine.unregister("ServicesEngine.loadAllVerbTypes");
+    };
+
+    messengerEngine.register("ServicesEngine.loadAllVerbTypes", that, loadAllVerbTypes);
 };
 
 var UserInputManager = function (verbListId) {
     this.verbList = new VerbList(verbListId);
+
+    this.activeId = null;
+
+    this.messengerEngine = globalMessengerEngine;
+
+    this.messengerEngine.register("InterfaceManager.unParagraphClick", this, this.closeAndReopenVerbListForParagraphs);
+    this.messengerEngine.register("InterfaceManager.unWordClick", this, this.closeAndReopenVerbListForWords);
+    this.messengerEngine.register("VerbList.paragraphClick", this, this.loadNounsForParagraphState)
 };
 
-UserInputManager.prototype.openVerbList = function (clientX, clientY) {
-    this.verbList.open(clientX, clientY);
+UserInputManager.prototype.openVerbListForParagraphs = function (clientX, clientY) {
+    this.verbList.openForParagraphs(clientX, clientY);
+};
+
+UserInputManager.prototype.openVerbListForWords = function (clientX, clientY) {
+    this.verbList.openForWords(clientX, clientY);
 };
 
 UserInputManager.prototype.closeVerbList = function () {
     this.verbList.close();
 };
 
-UserInputManager.prototype.closeAndReopenVerbList = function (clientX, clientY) {
+UserInputManager.prototype.closeAndReopenVerbListForParagraphs = function (clientX, clientY, psId) {
     if (this.verbList.state === this.verbList.states.open) {
-        this.verbList.closeAndReopen(clientX, clientY);
+        this.verbList.closeAndReopenForParagraphs(clientX, clientY);
     }
     else {
-        this.verbList.open(clientX, clientY);
+        this.verbList.openForParagraphs(clientX, clientY);
     }
+    this.activeId = psId;
+};
+
+UserInputManager.prototype.closeAndReopenVerbListForWords = function (clientX, clientY, wId) {
+    if (this.verbList.state === this.verbList.states.open) {
+        this.verbList.closeAndReopenForWords(clientX, clientY);
+    }
+    else {
+        this.verbList.openForWords(clientX, clientY);
+    }
+    this.activeId = wId;
+};
+
+UserInputManager.prototype.loadNounsForParagraphState = function () {
+    this.verbList.close();
+    this.messengerEngine.post("UserInputManager.loadNounsForParagraphState", this.activeId);
 };

@@ -19,7 +19,7 @@ html {
 
 body {
     height: 100%;
-    color: white;
+    color: black;
 }
 
 #master-container {
@@ -42,23 +42,39 @@ body {
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
-    background-color: black;
+    background-color: silver;
     overflow: visible;
 }
 
+/*****************/
+/* LOCATION */
+/*****************/
+
 #location {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/*****************/
+/* INTERFACE */
+/*****************/
+
+#interfaceTop {
+    position: relative;
+    top: 0;
     width: 640px;
     height: 270px;
 }
 
-#interface {
+#interfaceBottom {
     position: relative;
     top: 0;
     height: 100%;
 }
 
-    #interface:hover #gradient {
-        top: -13px;
+    #interfaceBottom:hover #gradient {
+        top: -10px;
         height: 10px;
     }
 
@@ -75,21 +91,23 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
 }
 
-#paragraphs {
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: default;
-}
+/*****************/
+/* VERBS */
+/*****************/
 
 #verbList {
     position: absolute;
     top: 0px;
     left: 0px;
     display: inline;
+    color: aliceblue;
     background-color: dimgray;
     border-radius: 24px;
     -webkit-border-radius: 24px;
     -moz-border-radius: 24px;
+}
+
+.verbListShadowed {
     box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
     -webkit-box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 24px 5px rgba(0,0,0,0.75);
@@ -118,6 +136,72 @@ body {
         text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
     }
 
+.verb {
+    margin: 5px 15px 5px 15px;
+    font-family: 'Courier New';
+    font-size: x-large;
+    font-weight: bold;
+    cursor: default;
+}
+
+    .verb:hover {
+        text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
+    }
+
+/*****************/
+/* PARAGRAPHS */
+/*****************/
+
+#paragraphs {
+    padding-left: 10px;
+    padding-right: 10px;
+    cursor: default;
+}
+
+.unParagraph {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-shadow: 0px 0px 16px rgba(255, 235, 158, .25);
+}
+
+.unWord {
+    line-height: 200%;
+    letter-spacing: 1px;
+    font-family: Georgia;
+    font-size: large;
+}
+
+.unHover:hover {
+    color: aliceblue;
+    text-shadow: 0px 0px 8px black;
+}
+
+/*****************/
+/* MESSAGES */
+/*****************/
+
+#messageTop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0px;
+    background-color: red;
+}
+
+#messageBottom {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 0px;
+    background-color: blue;
+}
+
+/*****************/
+/* GENERIC */
+/*****************/
+
 .center {
     margin-left: auto;
     margin-right: auto;
@@ -130,45 +214,3 @@ body {
     -o-transition: all 150ms linear;
     transition: all 150ms linear;
 }
-
-.unParagraph {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-    .unParagraph:hover {
-        text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
-    }
-
-.unWord {
-    line-height: 140%;
-    letter-spacing: 1px;
-    font-family: Georgia;
-    font-size: large;
-}
-
-    .unWord:hover {
-        text-shadow: 0px 0px 5px rgba(255, 255, 255, 1);
-    }
-
-   /* $(document).ready(function () {
-  $('.span1').hover(
-      function () {
-          $('.span2').css('color', 'red');
-      }, function () {
-          $('.span2').css('color', 'black');
-      }
-   );
-});*/
-
-.verb {
-    margin: 5px 15px 5px 15px;
-    font-family: 'Courier New';
-    font-size: x-large;
-    font-weight: bold;
-    cursor: default;
-}
-
-    .verb:hover {
-        text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
-    }

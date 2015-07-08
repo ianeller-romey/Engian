@@ -3,3 +3,8 @@ C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Fra
 C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\_5.55db.pdb
 C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\_5.55db.dll
 C:\Users\Ian Eller-Romey\Documents\!Ian Eller\My Code\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\_5.55db.pdb
+C:\Users\elleri\Documents\GitHub\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\TBGINTBdb.dacpac
+C:\Users\elleri\Documents\GitHub\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\_5.55db.dll
+C:\Users\elleri\Documents\GitHub\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\bin\Debug\_5.55db.pdb
+C:\Users\elleri\Documents\GitHub\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\_5.55db.dll
+C:\Users\elleri\Documents\GitHub\Engian\TBGINTB\TBGINTB_Framework\TBGINTBdb\obj\Debug\_5.55db.pdb

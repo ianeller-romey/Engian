@@ -147,7 +147,7 @@ namespace GinTub.Repository.Entities.Database
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
                 new ObjectParameter("player", typeof(System.Guid));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadArea_Result>("LoadGame", playerParameter);
         }
     
@@ -160,10 +160,10 @@ namespace GinTub.Repository.Entities.Database
             var roomParameter = room.HasValue ?
                 new ObjectParameter("room", room) :
                 new ObjectParameter("room", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoomId", playerParameter, roomParameter);
         }
-
+    
         public virtual ObjectResult<LoadRoomStatesForRoom_Result> LoadRoomXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> x, Nullable<int> y, Nullable<int> z)
         {
             var playerParameter = player.HasValue ?
@@ -185,7 +185,7 @@ namespace GinTub.Repository.Entities.Database
             var zParameter = z.HasValue ?
                 new ObjectParameter("z", z) :
                 new ObjectParameter("z", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoomXYZ", playerParameter, areaParameter, xParameter, yParameter, zParameter);
         }
     
@@ -209,7 +209,7 @@ namespace GinTub.Repository.Entities.Database
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.Guid>>("PlayerLogin", emailUserNameParameter, emailDomainNameParameter, emailDomainParameter, passwordParameter);
         }
-
+    
         public virtual ObjectResult<LoadRoomStatesForRoom_Result> PlayerMoveXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> xDir, Nullable<int> yDir, Nullable<int> zDir)
         {
             var playerParameter = player.HasValue ?
@@ -231,8 +231,22 @@ namespace GinTub.Repository.Entities.Database
             var zDirParameter = zDir.HasValue ?
                 new ObjectParameter("zDir", zDir) :
                 new ObjectParameter("zDir", typeof(int));
-
+    
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("PlayerMoveXYZ", playerParameter, areaParameter, xDirParameter, yDirParameter, zDirParameter);
+        }
+    
+        public virtual ObjectResult<LoadAllVerbTypes_Result> LoadAllVerbTypes()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadAllVerbTypes_Result>("LoadAllVerbTypes");
+        }
+    
+        public virtual ObjectResult<LoadNounsForParagraphState_Result> LoadNounsForParagraphState(Nullable<int> paragraphState)
+        {
+            var paragraphStateParameter = paragraphState.HasValue ?
+                new ObjectParameter("paragraphState", paragraphState) :
+                new ObjectParameter("paragraphState", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadNounsForParagraphState_Result>("LoadNounsForParagraphState", paragraphStateParameter);
         }
     }
 }

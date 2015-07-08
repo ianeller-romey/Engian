@@ -4,7 +4,9 @@ $(document).ready(function init() { // on initialization ...
     
     var servicesEngine = new ServicesEngine();
     var userInputManager = new UserInputManager("#verbList");
-    var interfaceManager = new InterfaceManager("#location", "#paragraphs", userInputManager);
+    var interfaceManager = new InterfaceManager("#location", "#paragraphs");
+    var messageManager = new MessageManager("#messageTop", "#messageBottom", "#messageText", "#messageChoices");
+    servicesEngine.loadAllVerbTypes();
     servicesEngine.loadGame(sessionStorage.playerId);
         
     var textParagraphClasses = $(".unParagraph");

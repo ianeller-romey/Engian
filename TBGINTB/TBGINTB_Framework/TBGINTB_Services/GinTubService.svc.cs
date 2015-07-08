@@ -22,21 +22,6 @@ namespace GinTub.Services
 
         public GinTubService()
         {
-            TypeAdapterConfig<Repository.Entities.Noun, WordData>
-                .NewConfig()
-                .MapFrom(dest => dest.NounId, src => src.Id); ;
-            TypeAdapterConfig<Repository.Entities.ParagraphState, ParagraphData>
-                .NewConfig()
-                .MapFrom<IEnumerable<WordData>>
-                (
-                    dest => dest.Words, 
-                    src => (from x in Regex.Split(src.Text, "(\\s|\\.|,|;|\\?|!|\")")
-                            join n in src.Nouns on x equals n.Text into nx
-                            where !string.IsNullOrWhiteSpace(x)
-                            from nn in nx.DefaultIfEmpty()
-                            select new WordData() { Text = x, NounId = (nn != null) ? (int?)nn.Id : null })
-                            .ToList()
-                );
             _repository = new Repository.GinTubRepository();
         }
 
@@ -74,20 +59,39 @@ namespace GinTub.Services
             return new PlayerLogin() { PlayerId = playerId };
         }
 
-        public PlayData LoadGame(Guid playerId)
+        public VerbUseData LoadAllVerbTypes()
         {
-            PlayData data = new PlayData();
-            var result = _repository.LoadGame(playerId);
-            data.Area = TypeAdapter.Adapt<AreaData>(result.Item1);
-            data.RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList();
-            return data;
+            var result = _repository.LoadAllVerbTypes();
+            return new VerbUseData()
+                {
+                    VerbTypes = result.Select(v => TypeAdapter.Adapt<VerbTypeData>(v)).ToList()
+                };
         }
 
-        public PlayData LoadRoom(Guid playerId, int area, int x, int y, int z)
+        public MessageData LoadNounsForParagraphState(int paragraphStateId)
         {
-            PlayData data = new PlayData();
-            var result = _repository.LoadRoom(playerId);
-            return null;
+            var result = _repository.LoadNounsForParagraphState(paragraphStateId);
+            return new MessageData()
+            {
+                Id = -1,
+                Text =
+                    string.Format
+                    (
+                        "Your eyes are caught by the {0}.",
+                        result.Select(n => n.Text).Aggregate((x, y) => string.Format("{0}, {1}", x, y))
+                    ),
+                MessageChoices = new List<MessageChoiceData> { new MessageChoiceData() { Id = -1, Text = "..." } }
+            };
+        }
+
+        public PlayData LoadGame(Guid playerId)
+        {
+            var result = _repository.LoadGame(playerId);
+            return new PlayData()
+                {
+                    Area = TypeAdapter.Adapt<AreaData>(result.Item1),
+                    RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList(),
+                };
         }
     }
 }

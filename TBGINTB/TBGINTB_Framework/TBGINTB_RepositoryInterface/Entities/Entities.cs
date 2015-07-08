@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace GinTub.Repository.Entities
 {
+    public class VerbType
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
     public class Noun
     {
         public int Id { get; set; }
