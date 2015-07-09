@@ -1,93 +1,83 @@
 ﻿
-var InterfaceManager = function (locationId, paragraphsId) {
-    this.locationElem = $(locationId);
-    this.paragraphsElem = $(paragraphsId);
+var InterfaceManager = function (locationId, paragraphsId, timeId) {
+    var locationElem = $(locationId);
+    var paragraphsElem = $(paragraphsId);
+    var timeElem = $(timeId);
 
-    this.messengerEngine = globalMessengerEngine;
+    var messengerEngine = globalMessengerEngine;
 
-    this.paragraphs = null;
-    this.nouns = null;
-
-    this.messengerEngine.register("ServicesEngine.loadGame", this, this.loadGame);
-    this.messengerEngine.register("ServicesEngine.loadRoom", this, this.loadRoom);
-};
-
-InterfaceManager.prototype.loadGame = function (areaAndRoomData) {
-    this.loadRoom(areaAndRoomData.RoomStates);
-};
-
-InterfaceManager.prototype.loadRoom = function (roomData) {
     var that = this;
-    this.paragraphs = {};
-    this.nouns = {};
 
-    var roomState = roomData[0];
+    var loadRoomState = function (roomStateData, paragraphStateData) {
 
-    this.locationElem.attr("src", roomState.Location);
+        locationElem.attr("src", roomStateData.location);
 
-    var createParagraphSpanClick = function (psId) {
-        return function (e) {
-            that.messengerEngine.post("InterfaceManager.unParagraphClick", e.pageX, e.pageY, psId);
+        var createParagraphSpanClick = function (psId) {
+            return function (e) {
+                messengerEngine.post("InterfaceManager.iParagraphClick", e.pageX, e.pageY, psId);
+            };
         };
-    };
-    var createWordSpanClick = function (wId) {
-        return function (e) {
-            that.messengerEngine.post("InterfaceManager.unWordClick", e.pageX, e.pageY, wId);
+        var createWordSpanClick = function (wId) {
+            return function (e) {
+                e.stopPropagation();
+                messengerEngine.post("InterfaceManager.iWordClick", e.pageX, e.pageY, wId);
+            };
         };
-    };
 
-    var paragraphStates = roomState.ParagraphStates;
-    var i = 0;
-    var len = paragraphStates.length;
-    for (; i < len; ++i) {
-        var ps = paragraphStates[i];
-        if (ps.Words.length == 0) {
-            continue;
-        }
-
-        var paragraphSpan = $("<span/>", {
-            class: "unParagraph"
-        }).click(createParagraphSpanClick(ps.Id)).mouseenter(function (e) {
-            $(this).addClass("unHover");
-        }).mouseleave(function (e) {
-            $(this).removeClass("unHover");
-        });
-
-        this.paragraphs[paragraphSpan] = { id: ps.Id, order: ps.Order };
-
-        var words = paragraphStates[i].Words;
-        var j = 0;
-        var len2 = words.length;
-        for(; j < len2; ++j) {
-            var w = words[j];
-            paragraphSpan.append($("<span/>", { 
-                class: "unWord",
-                text: w.Text
-            }).click(createWordSpanClick(w.Id)).mouseenter(function (e) {
-                $(this).addClass("unHover").parent().removeClass("unHover");
-            }).mouseleave(function (e) {
-                $(this).removeClass("unHover").parent().addClass("unHover");
-            }));
-
-            if (w.NounId != null) {
-                this.nouns[w] = { id: w.NounId };
+        var i = 0;
+        var len = paragraphStateData.length;
+        for (; i < len; ++i) {
+            var ps = paragraphStateData[i];
+            if (ps.words.length == 0) {
+                continue;
             }
 
-            if (j != len2 - 1) {
-                w = words[j + 1];
-                wt = w.Text;
-                if (wt != "." &&
-                    wt != "," &&
-                    wt != ";" &&
-                    wt != ":" &&
-                    wt != "?" &&
-                    wt != "!" &&
-                    wt != "\"") {
-                    paragraphSpan.append(" ");
+            var paragraphSpan = $("<span/>", {
+                class: "iParagraph"
+            }).click(createParagraphSpanClick(ps.id)).mouseenter(function (e) {
+                $(this).addClass("iHover");
+            }).mouseleave(function (e) {
+                $(this).removeClass("iHover");
+            });
+
+            var words = ps.words;
+            var j = 0;
+            var len2 = words.length;
+            for (; j < len2; ++j) {
+                var w = words[j];
+                paragraphSpan.append($("<span/>", {
+                    class: "iWord",
+                    text: w.Text
+                }).click(createWordSpanClick(w.NounId)).mouseenter(function (e) {
+                    $(this).addClass("iHover").parent().removeClass("iHover");
+                }).mouseleave(function (e) {
+                    $(this).removeClass("iHover").parent().addClass("iHover");
+                }));
+
+                if (j != len2 - 1) {
+                    w = words[j + 1];
+                    wt = w.Text;
+                    if (wt != "." &&
+                        wt != "," &&
+                        wt != ";" &&
+                        wt != ":" &&
+                        wt != "?" &&
+                        wt != "!" &&
+                        wt != "\"") {
+                        paragraphSpan.append(" ");
+                    }
                 }
             }
+            paragraphsElem.append(paragraphSpan);
+            paragraphsElem.append(" ");
         }
-        this.paragraphsElem.append(paragraphSpan);
-        this.paragraphsElem.append(" ");
-    }
+    };
+
+    var updateTime = function (time) {
+        var timeString = ("0" + time.getHours()).slice(-2) + ":" + ("0" + time.getMinutes()).slice(-2);
+        timeElem.text(timeString);
+    };
+    
+    messengerEngine.register("GameStateEngine.setActiveRoomState", this, loadRoomState);
+    messengerEngine.register("TimeEngine.updateTime", this, updateTime);
 };

@@ -36,7 +36,7 @@ namespace GinTub
                             select new WordData() { Text = x, NounId = (nn != null) ? (int?)nn.Id : null })
                             .ToList()
                 );
-            RouteTable.Routes.Add(new ServiceRoute("",new WebServiceHostFactory(),typeof(GinTub.Services.GinTubService)));
+            RouteTable.Routes.Add(new ServiceRoute("", new WebServiceHostFactory(), typeof(GinTub.Services.GinTubService)));
         }
 
         protected void Session_Start(object sender, EventArgs e)

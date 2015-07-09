@@ -2,7 +2,8 @@
 var ServicesEngine = function () {
     this.messengerEngine = globalMessengerEngine;
 
-    this.messengerEngine.register("UserInputManager.loadNounsForParagraphState", this, this.loadNounsForParagraphState);
+    this.messengerEngine.register("UserInputManager.getNounsForParagraphState", this, this.getNounsForParagraphState);
+    this.messengerEngine.register("GameStateEngine.doAction", this, this.doAction);
 };
 
 ServicesEngine.prototype.loadAllVerbTypes = function () {
@@ -14,8 +15,8 @@ ServicesEngine.prototype.loadAllVerbTypes = function () {
         dataType: 'text',
         contentType: 'application/json',
         success: function (data, status) {
-            var allData = JSON.parse(data);
-            that.messengerEngine.post("ServicesEngine.loadAllVerbTypes", allData.LoadAllVerbTypesResult);
+            var verbUseData = JSON.parse(data);
+            that.messengerEngine.post("ServicesEngine.loadAllVerbTypes", verbUseData.LoadAllVerbTypesResult);
         },
         error: function (request, status, error) {
             var iii = 0;
@@ -23,11 +24,11 @@ ServicesEngine.prototype.loadAllVerbTypes = function () {
     });
 };
 
-ServicesEngine.prototype.loadNounsForParagraphState = function (paragraphStateId) {
+ServicesEngine.prototype.getNounsForParagraphState = function (paragraphStateId) {
     var that = this;
 
     $.ajax({
-        url: "http://ironandrose/gintub/lion/gintubservices/GinTubService.svc/LoadNounsForParagraphState",
+        url: "http://ironandrose/gintub/lion/gintubservices/GinTubService.svc/GetNounsForParagraphState",
         type: 'post',
         dataType: 'text',
         contentType: 'application/json',
@@ -35,8 +36,8 @@ ServicesEngine.prototype.loadNounsForParagraphState = function (paragraphStateId
             paragraphStateId: paragraphStateId
         }),
         success: function (data, status) {
-            var allData = JSON.parse(data);
-            that.messengerEngine.post("ServicesEngine.loadNounsForParagraphState", allData.LoadNounsForParagraphStateResult);
+            var nounData = JSON.parse(data);
+            that.messengerEngine.post("ServicesEngine.getNounsForParagraphState", nounData.GetNounsForParagraphStateResult);
         },
         error: function (request, status, error) {
             var iii = 0;
@@ -44,7 +45,7 @@ ServicesEngine.prototype.loadNounsForParagraphState = function (paragraphStateId
     });
 };
 
-ServicesEngine.prototype.loadGame = function (playerIdGuid) {
+ServicesEngine.prototype.loadGame = function (playerId) {
     var that = this;
 
     $.ajax({
@@ -53,11 +54,11 @@ ServicesEngine.prototype.loadGame = function (playerIdGuid) {
         dataType: 'text',
         contentType: 'application/json',
         data: JSON.stringify({
-            playerId: playerIdGuid
+            playerId: playerId
         }),
         success: function (data, status) {
-            var allData = JSON.parse(data);
-            that.messengerEngine.post("ServicesEngine.loadGame", allData.LoadGameResult);
+            var playData = JSON.parse(data);
+            that.messengerEngine.post("ServicesEngine.loadGame", playData.LoadGameResult);
         },
         error: function (request, status, error) {
             var iii = 0;
@@ -65,23 +66,22 @@ ServicesEngine.prototype.loadGame = function (playerIdGuid) {
     });
 };
 
-ServicesEngine.prototype.loadRoomXYZ = function (playerIdGuid, areaInt, xInt, yInt, zInt, currentTimeDateTime) {
+ServicesEngine.prototype.doAction = function (playerId, nounId, verbTypeId) {
     var that = this;
 
     $.ajax({
-        url: "http://ironandrose/gintub/lion/gintubservices/GinTubService.svc/LoadRoom",
+        url: "http://ironandrose/gintub/lion/gintubservices/GinTubService.svc/DoAction",
         type: 'post',
         dataType: 'text',
         contentType: 'application/json',
         data: JSON.stringify({
-            playerId: playerIdGuid,
-            area: areaInt,
-            x: xInt,
-            y: yInt,
-            z: zInt
+            playerId: playerId,
+            nounId: nounId,
+            verbTypeId: verbTypeId
         }),
         success: function (data, status) {
-            that.messengerEngine.post("ServicesEngine.loadRoomXYZ", roomData);
+            var playData = JSON.parse(data);
+            that.messengerEngine.post("ServicesEngine.doAction", playData.DoActionResult);
         },
         error: function (request, status, error) {
             var iii = 0;

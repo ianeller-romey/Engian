@@ -15,8 +15,12 @@ namespace GinTub.Repository.Interface
 
         IEnumerable<VerbType> LoadAllVerbTypes();
 
-        IEnumerable<Noun> LoadNounsForParagraphState(int paragraphStateId);
+        Tuple<Area, Room, IEnumerable<RoomState>, IEnumerable<ParagraphState>> LoadGame(Guid playerId);
 
-        Tuple<Area, IEnumerable<RoomState>> LoadGame(Guid playerId);
+        Message LoadMessage(int messageId);
+
+        IEnumerable<Noun> GetNounsForParagraphState(int paragraphStateId);
+
+        IEnumerable<Result> GetActionResults(Guid playerId, int nounId, int verbTypeId);
     }
 }

@@ -80,6 +80,15 @@
     <Compile Include="Entities\Database\LoadArea_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Database\LoadMessageChoicesForMessage_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Database\LoadMessageId_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Database\LoadMessage_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
     <Compile Include="Entities\Database\LoadNounsForParagraphState_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
@@ -90,6 +99,9 @@
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="Entities\Database\LoadRoomStatesForRoom_Result.cs">
+      <DependentUpon>dboSchema.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entities\Database\LoadRoom_Result.cs">
       <DependentUpon>dboSchema.tt</DependentUpon>
     </Compile>
     <Compile Include="GinTubRepository.cs" />

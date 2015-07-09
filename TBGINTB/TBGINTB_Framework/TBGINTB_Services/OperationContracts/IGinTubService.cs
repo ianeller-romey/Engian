@@ -23,6 +23,14 @@ namespace GinTub.Services.OperationContracts
         DataContracts.PlayerLogin PlayerLogin(string emailAddress, string password);
 
         [OperationContract]
+        [WebInvoke(Method = "POST",
+        BodyStyle = WebMessageBodyStyle.Wrapped,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json,
+        UriTemplate = "LoadGame")]
+        DataContracts.PlayData LoadGame(Guid playerId);
+
+        [OperationContract]
         [WebInvoke(Method = "GET",
         BodyStyle = WebMessageBodyStyle.Wrapped,
         RequestFormat = WebMessageFormat.Json,
@@ -35,15 +43,15 @@ namespace GinTub.Services.OperationContracts
         BodyStyle = WebMessageBodyStyle.Wrapped,
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "LoadNounsForParagraphState")]
-        DataContracts.MessageData LoadNounsForParagraphState(int paragraphStateId);
+        UriTemplate = "GetNounsForParagraphState")]
+        DataContracts.PlayData GetNounsForParagraphState(int paragraphStateId);
 
         [OperationContract]
         [WebInvoke(Method = "POST",
         BodyStyle = WebMessageBodyStyle.Wrapped,
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json,
-        UriTemplate = "LoadGame")]
-        DataContracts.PlayData LoadGame(Guid playerId);
+        UriTemplate = "DoAction")]
+        DataContracts.PlayData DoAction(Guid playerId, int? nounId, int verbTypeId);
     }
 }

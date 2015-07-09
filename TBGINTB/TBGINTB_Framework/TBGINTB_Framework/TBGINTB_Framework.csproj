@@ -59,8 +59,11 @@
   <ItemGroup>
     <Content Include="css\login.css" />
     <Content Include="images\placeholder.jpg" />
+    <Content Include="lib\action-text.js" />
     <Content Include="lib\login.js" />
     <Content Include="lib\message-manager.js" />
+    <Content Include="lib\game-state-engine.js" />
+    <Content Include="lib\time-engine.js" />
     <Content Include="login.html" />
     <Content Include="lib\action-queue.js" />
     <Content Include="lib\action-array.js" />

@@ -151,7 +151,7 @@ namespace GinTub.Repository.Entities.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadArea_Result>("LoadGame", playerParameter);
         }
     
-        public virtual ObjectResult<LoadRoomStatesForRoom_Result> LoadRoomId(Nullable<System.Guid> player, Nullable<int> room)
+        public virtual ObjectResult<LoadRoom_Result> LoadRoomId(Nullable<System.Guid> player, Nullable<int> room)
         {
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
@@ -161,10 +161,10 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("room", room) :
                 new ObjectParameter("room", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoomId", playerParameter, roomParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoom_Result>("LoadRoomId", playerParameter, roomParameter);
         }
     
-        public virtual ObjectResult<LoadRoomStatesForRoom_Result> LoadRoomXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> x, Nullable<int> y, Nullable<int> z)
+        public virtual ObjectResult<LoadRoom_Result> LoadRoomXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> x, Nullable<int> y, Nullable<int> z)
         {
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
@@ -186,7 +186,7 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("z", z) :
                 new ObjectParameter("z", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("LoadRoomXYZ", playerParameter, areaParameter, xParameter, yParameter, zParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoom_Result>("LoadRoomXYZ", playerParameter, areaParameter, xParameter, yParameter, zParameter);
         }
     
         public virtual ObjectResult<Nullable<System.Guid>> PlayerLogin(string emailUserName, string emailDomainName, string emailDomain, string password)
@@ -210,7 +210,7 @@ namespace GinTub.Repository.Entities.Database
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<System.Guid>>("PlayerLogin", emailUserNameParameter, emailDomainNameParameter, emailDomainParameter, passwordParameter);
         }
     
-        public virtual ObjectResult<LoadRoomStatesForRoom_Result> PlayerMoveXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> xDir, Nullable<int> yDir, Nullable<int> zDir)
+        public virtual ObjectResult<LoadRoom_Result> PlayerMoveXYZ(Nullable<System.Guid> player, Nullable<int> area, Nullable<int> xDir, Nullable<int> yDir, Nullable<int> zDir)
         {
             var playerParameter = player.HasValue ?
                 new ObjectParameter("player", player) :
@@ -232,7 +232,7 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("zDir", zDir) :
                 new ObjectParameter("zDir", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoomStatesForRoom_Result>("PlayerMoveXYZ", playerParameter, areaParameter, xDirParameter, yDirParameter, zDirParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoom_Result>("PlayerMoveXYZ", playerParameter, areaParameter, xDirParameter, yDirParameter, zDirParameter);
         }
     
         public virtual ObjectResult<LoadAllVerbTypes_Result> LoadAllVerbTypes()
@@ -247,6 +247,42 @@ namespace GinTub.Repository.Entities.Database
                 new ObjectParameter("paragraphState", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadNounsForParagraphState_Result>("LoadNounsForParagraphState", paragraphStateParameter);
+        }
+    
+        public virtual ObjectResult<LoadRoom_Result> LoadRoom(Nullable<int> room)
+        {
+            var roomParameter = room.HasValue ?
+                new ObjectParameter("room", room) :
+                new ObjectParameter("room", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadRoom_Result>("LoadRoom", roomParameter);
+        }
+    
+        public virtual ObjectResult<LoadMessage_Result> LoadMessage(Nullable<int> message)
+        {
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadMessage_Result>("LoadMessage", messageParameter);
+        }
+    
+        public virtual ObjectResult<LoadMessageChoicesForMessage_Result> LoadMessageChoicesForMessage(Nullable<int> message)
+        {
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadMessageChoicesForMessage_Result>("LoadMessageChoicesForMessage", messageParameter);
+        }
+    
+        public virtual ObjectResult<LoadMessageId_Result> LoadMessageId(Nullable<int> message)
+        {
+            var messageParameter = message.HasValue ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<LoadMessageId_Result>("LoadMessageId", messageParameter);
         }
     }
 }

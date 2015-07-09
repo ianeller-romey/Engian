@@ -39,8 +39,8 @@ var VerbList = function(idOfVerbList){
     this.state = this.states.closed;
     var actionQueue = new ActionQueue(3);
     var verbTypesForParagraphs = [{
-        name: "Inspect",
         id: -1,
+        name: "Inspect",
         call: function () {
             messengerEngine.post("VerbList.paragraphClick");
         }
@@ -87,10 +87,8 @@ var VerbList = function(idOfVerbList){
         var i = 0;
         var len = activeVerbTypes.length;
         for (; i < len; ++i) {
-            verbListElem.append($("<div/>", {
-                class: "verb",
-                text: activeVerbTypes[i].name
-            }).click(createVerbClick(activeVerbTypes[i])));
+            var avt = activeVerbTypes[i];
+            verbListElem.append(createActionText(avt.id, avt.name, avt.call));
         }
 
         // set position immediately
@@ -141,7 +139,7 @@ var VerbList = function(idOfVerbList){
                 // remove the verbs after animating down the height, and
                 // before anything else, since we see weird artifacts if we
                 // remove them last
-                $(".verb").remove();
+                $(idOfVerbList + " .actionText").remove();
                 verbListElem.removeClass("verbListShadowed");
                 verbListElem.animate({
                     width: 0
@@ -213,74 +211,78 @@ var VerbList = function(idOfVerbList){
         closeAndReopen(clientX, clientY);
     };
 
-    loadAllVerbTypes = function (verbUseData) {
+    loadAllVerbTypes = function (verbTypesData) {
         verbTypesForWords = [];
 
-        var vt = verbUseData.VerbTypes;
         var i = 0;
-        var len = vt.length;
+        var len = verbTypesData.length;
         for (; i < len; ++i) {
-            var verbType = vt[i];
+            var vt = verbTypesData[i];
             verbTypesForWords[i] = {
-                id: verbType.Id,
-                name: verbType.Name,
+                id: vt.id,
+                name: vt.name,
                 call: function (vId) {
                     messengerEngine.post("VerbList.wordClick", vId);
                 }
             };
         }
 
-        messengerEngine.unregister("ServicesEngine.loadAllVerbTypes");
+        messengerEngine.unregister("GameStateEngine.loadAllVerbTypes");
     };
 
-    messengerEngine.register("ServicesEngine.loadAllVerbTypes", that, loadAllVerbTypes);
+    messengerEngine.register("GameStateEngine.loadAllVerbTypes", that, loadAllVerbTypes);
 };
 
 var UserInputManager = function (verbListId) {
-    this.verbList = new VerbList(verbListId);
+    var verbList = new VerbList(verbListId);
 
-    this.activeId = null;
+    var activeId = null;
 
-    this.messengerEngine = globalMessengerEngine;
+    var messengerEngine = globalMessengerEngine;
 
-    this.messengerEngine.register("InterfaceManager.unParagraphClick", this, this.closeAndReopenVerbListForParagraphs);
-    this.messengerEngine.register("InterfaceManager.unWordClick", this, this.closeAndReopenVerbListForWords);
-    this.messengerEngine.register("VerbList.paragraphClick", this, this.loadNounsForParagraphState)
-};
-
-UserInputManager.prototype.openVerbListForParagraphs = function (clientX, clientY) {
-    this.verbList.openForParagraphs(clientX, clientY);
-};
-
-UserInputManager.prototype.openVerbListForWords = function (clientX, clientY) {
-    this.verbList.openForWords(clientX, clientY);
-};
-
-UserInputManager.prototype.closeVerbList = function () {
-    this.verbList.close();
-};
-
-UserInputManager.prototype.closeAndReopenVerbListForParagraphs = function (clientX, clientY, psId) {
-    if (this.verbList.state === this.verbList.states.open) {
-        this.verbList.closeAndReopenForParagraphs(clientX, clientY);
-    }
-    else {
+    var openVerbListForParagraphs = function (clientX, clientY) {
         this.verbList.openForParagraphs(clientX, clientY);
-    }
-    this.activeId = psId;
-};
+    };
 
-UserInputManager.prototype.closeAndReopenVerbListForWords = function (clientX, clientY, wId) {
-    if (this.verbList.state === this.verbList.states.open) {
-        this.verbList.closeAndReopenForWords(clientX, clientY);
-    }
-    else {
+    var openVerbListForWords = function (clientX, clientY) {
         this.verbList.openForWords(clientX, clientY);
-    }
-    this.activeId = wId;
-};
+    };
 
-UserInputManager.prototype.loadNounsForParagraphState = function () {
-    this.verbList.close();
-    this.messengerEngine.post("UserInputManager.loadNounsForParagraphState", this.activeId);
+    var closeVerbList = function () {
+        this.verbList.close();
+    };
+
+    var closeAndReopenVerbListForParagraphs = function (clientX, clientY, psId) {
+        if (verbList.state === verbList.states.open) {
+            verbList.closeAndReopenForParagraphs(clientX, clientY);
+        }
+        else {
+            verbList.openForParagraphs(clientX, clientY);
+        }
+        activeId = psId;
+    };
+
+    var closeAndReopenVerbListForWords = function (clientX, clientY, wId) {
+        if (verbList.state === verbList.states.open) {
+            verbList.closeAndReopenForWords(clientX, clientY);
+        }
+        else {
+            verbList.openForWords(clientX, clientY);
+        }
+        activeId = wId;
+    };
+
+    var getNounsForParagraphState = function () {
+        verbList.close();
+        messengerEngine.post("UserInputManager.getNounsForParagraphState", activeId);
+    };
+
+    var doAction = function (verbId) {
+        messengerEngine.post("UserInputManager.doAction", activeId, verbId);
+    };
+
+    messengerEngine.register("InterfaceManager.iParagraphClick", this, closeAndReopenVerbListForParagraphs);
+    messengerEngine.register("InterfaceManager.iWordClick", this, closeAndReopenVerbListForWords);
+    messengerEngine.register("VerbList.paragraphClick", this, getNounsForParagraphState);
+    messengerEngine.register("VerbList.wordClick", this, doAction);
 };

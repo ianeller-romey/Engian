@@ -220,13 +220,9 @@ AS
 BEGIN
 
 	DECLARE @area int
-	DECLARE @x int
-	DECLARE @y int
-	DECLARE @z int
+	DECLARE @room int
 	SELECT @area = r.[Area],
-		   @x = r.[X],
-		   @y = r.[Y],
-		   @z = r.[Z]
+		   @room = r.[Id]
 	FROM [dbo].[PlayerGameStates] p WITH (NOLOCK)
 	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
 	ON p.[LastRoom] = r.[Id]
@@ -235,12 +231,9 @@ BEGIN
 	EXEC [dbo].[LoadArea]
 	@area = @area
 	
-	EXEC [dbo].[LoadRoomXYZ]
+	EXEC [dbo].[LoadRoomId]
 	@player = @player,
-	@area = @area,
-	@x = @x,
-	@y = @y,
-	@z = @z
+	@room = @room
 
 END
 GO
@@ -248,6 +241,72 @@ GO
 /******************************************************************************************************************************************/
 /*Game Engine Content**********************************************************************************************************************/
 /******************************************************************************************************************************************/
+
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadMessageChoicesForMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/8/2015
+-- Description:	Loads all MessageChoices for specified Message
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadMessageChoicesForMessage]
+	@message int
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Text],
+		   [Message]
+	FROM [dbo].[MessageChoices] WITH (NOLOCK)
+	WHERE [Message] = @message
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessageId]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadMessageId] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/8/2015
+-- Description:	Loads a specific Message record
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadMessageId]
+	@message int
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Text]
+	FROM [dbo].[Messages] WITH (NOLOCK)
+	WHERE [Id] = @message
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadMessage] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/8/2015
+-- Description:	Loads Message data
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadMessage]
+	@message int
+AS
+BEGIN
+
+	EXEC [dbo].[LoadMessageId]
+	@message = @message
+	
+	EXEC [dbo].[LoadMessageChoicesForMessage]
+	@message = @message
+
+END
+GO
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
   EXEC('CREATE PROCEDURE [dbo].[LoadAllVerbTypes] AS SELECT 1')
@@ -357,6 +416,7 @@ BEGIN
 	AND rs.[Room] = @room
 	AND psp.[Player] = @player
 	AND psr.[Player] = @player
+	ORDER BY p.[Order]
 
 END
 GO
@@ -387,6 +447,32 @@ BEGIN
 	ON rs.[Location] = l.[Id]
 	WHERE rs.[Room] = @room
 	AND psr.[Player] = @player
+	ORDER BY rs.[Time]
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[LoadRoom] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/8/2015
+-- Description:	Loads Room data
+-- =============================================
+ALTER PROCEDURE [dbo].[LoadRoom]
+	@room int
+AS
+BEGIN
+	
+	SELECT [Id],
+		   [Name],
+		   [X],
+		   [Y],
+		   [Z],
+		   [Area]
+	FROM [dbo].[Rooms]
+	WHERE [Id] = @room
 
 END
 GO
@@ -416,6 +502,9 @@ BEGIN
 	AND [Y] = @y
 	AND [Z] = @z
 	
+	EXEC [dbo].[LoadRoom]
+	@room = @room
+	
 	EXEC [dbo].[LoadRoomStatesForRoom]
 	@player = @player,
 	@room = @room
@@ -444,6 +533,9 @@ ALTER PROCEDURE [dbo].[LoadRoomId]
 	@room int
 AS
 BEGIN
+	
+	EXEC [dbo].[LoadRoom]
+	@room = @room
 	
 	EXEC [dbo].[LoadRoomStatesForRoom]
 	@player = @player,

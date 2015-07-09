@@ -10,6 +10,8 @@ using System.Text.RegularExpressions;
 
 using FastMapper;
 
+using Newtonsoft.Json;
+
 using GinTub;
 using GinTub.Services.DataContracts;
 
@@ -18,7 +20,18 @@ namespace GinTub.Services
 {
     public class GinTubService : OperationContracts.IGinTubService
     {
+        #region MEMBER FIELDS
+
         Repository.Interface.IGinTubRepository _repository;
+
+        delegate void ResultHandler(dynamic obj, ref PlayData playData);
+
+        #endregion
+
+
+        #region MEMBER METHODS
+
+        #region Public Functionality
 
         public GinTubService()
         {
@@ -68,30 +81,90 @@ namespace GinTub.Services
                 };
         }
 
-        public MessageData LoadNounsForParagraphState(int paragraphStateId)
-        {
-            var result = _repository.LoadNounsForParagraphState(paragraphStateId);
-            return new MessageData()
-            {
-                Id = -1,
-                Text =
-                    string.Format
-                    (
-                        "Your eyes are caught by the {0}.",
-                        result.Select(n => n.Text).Aggregate((x, y) => string.Format("{0}, {1}", x, y))
-                    ),
-                MessageChoices = new List<MessageChoiceData> { new MessageChoiceData() { Id = -1, Text = "..." } }
-            };
-        }
-
         public PlayData LoadGame(Guid playerId)
         {
             var result = _repository.LoadGame(playerId);
             return new PlayData()
                 {
                     Area = TypeAdapter.Adapt<AreaData>(result.Item1),
-                    RoomStates = result.Item2.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList(),
+                    Room = TypeAdapter.Adapt<RoomData>(result.Item2),
+                    RoomStates = result.Item3.Select(x => TypeAdapter.Adapt<RoomStateData>(x)).ToList(),
+                    ParagraphStates = result.Item4.Select(x => TypeAdapter.Adapt<ParagraphStateData>(x)).ToList()
                 };
         }
+
+        public PlayData GetNounsForParagraphState(int paragraphStateId)
+        {
+            var result = _repository.GetNounsForParagraphState(paragraphStateId);
+            return new PlayData()
+            {
+                Message = new MessageData()
+                {
+                    Id = -1,
+                    Text =
+                        (result.Any())
+                        ? 
+                            string.Format
+                            (
+                                "You take special notice of the {0}.",
+                                result.Select(n => n.Text).Aggregate((x, y) => string.Format("{0}, {1}", x, y))
+                            )
+                        : "Nothing in particular catches your eye here."
+                }
+            };
+        }
+
+        public PlayData DoAction(Guid playerId, int? nounId, int verbTypeId)
+        {
+            if (nounId.HasValue)
+            {
+                var results = _repository.GetActionResults(playerId, nounId.Value, verbTypeId);
+                if(results.Any())
+                {
+                    PlayData playData = new PlayData();
+                    foreach (var result in results)
+                    {
+                        dynamic data = JsonConvert.DeserializeObject(result.JSONData);
+                        ResultSwitch(result.ResultType, data, ref playData);
+                    }
+                    return playData;
+                }
+            }
+
+            return new PlayData()
+            {
+                Message = new MessageData()
+                {
+                    Id = -1,
+                    Text = "Nothing happens."
+                }
+            }; 
+        }
+
+        #endregion
+
+
+        #region Private Functionality
+
+        public void ResultSwitch(int resultTypeId, dynamic data, ref PlayData playData)
+        {
+            switch(resultTypeId)
+            {
+                case 10:
+                    Result_MessageActivation(data, ref playData);
+                    break;
+            }
+        }
+
+        public void Result_MessageActivation(dynamic data, ref PlayData playData)
+        {
+            int messageId = data.messageId;
+            var result = _repository.LoadMessage(messageId);
+            playData.Message = TypeAdapter.Adapt<MessageData>(result);
+        }
+
+        #endregion
+
+        #endregion
     }
 }

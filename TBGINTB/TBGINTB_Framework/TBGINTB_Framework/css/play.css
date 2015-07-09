@@ -34,7 +34,7 @@ body {
 
 #viewport {
     width: 640px;
-    height:100%;
+    height: 100%;
     min-height: 530px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -42,8 +42,21 @@ body {
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
     -moz-border-radius-topright: 5px;
-    background-color: silver;
     overflow: visible;
+}
+
+/*****************/
+/* TIME */
+/*****************/
+
+#time {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 5px 5px 0px 0px;
+    cursor: default;
+    font-family: 'Arial';
+    font-size: larger;
 }
 
 /*****************/
@@ -71,25 +84,36 @@ body {
     position: relative;
     top: 0;
     height: 100%;
+    background-color: silver;
+    z-index: 1;
 }
 
-    #interfaceBottom:hover #gradient {
+    #interfaceBottom:hover {
         top: -10px;
-        height: 10px;
-    }
+    }    
 
-#gradient {
-    position: relative;
-    top: 0;
-    height: 0px;
-    background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.65))); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 ); /* IE6-9 */
+#paragraphs {
+    padding: 40px 48px 16px 48px;
+    cursor: default;
 }
+
+.iParagraph {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-shadow: 0px 0px 16px rgba(255, 235, 158, .25);
+}
+
+.iWord {
+    line-height: 200%;
+    letter-spacing: 1px;
+    font-family: Georgia;
+    font-size: large;
+}
+
+    .iHover:hover {
+        color: aliceblue;
+        text-shadow: 0px 0px 8px black;
+    }
 
 /*****************/
 /* VERBS */
@@ -100,7 +124,6 @@ body {
     top: 0px;
     left: 0px;
     display: inline;
-    color: aliceblue;
     background-color: dimgray;
     border-radius: 24px;
     -webkit-border-radius: 24px;
@@ -118,12 +141,12 @@ body {
     top: -8px;
     left: -5px;
     padding: 3px 5px 3px 5px;
-    display: none;
-    opacity: 0;
     font-family: 'Courier New';
-    font-size: large;
+    font-size: x-large;
     font-weight: bold;
     cursor: default;
+    display: none;
+    opacity: 0;
     color: black;
     background-color: darkgray;
     border-radius: 15px;
@@ -136,46 +159,6 @@ body {
         text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
     }
 
-.verb {
-    margin: 5px 15px 5px 15px;
-    font-family: 'Courier New';
-    font-size: x-large;
-    font-weight: bold;
-    cursor: default;
-}
-
-    .verb:hover {
-        text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
-    }
-
-/*****************/
-/* PARAGRAPHS */
-/*****************/
-
-#paragraphs {
-    padding-left: 10px;
-    padding-right: 10px;
-    cursor: default;
-}
-
-.unParagraph {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-shadow: 0px 0px 16px rgba(255, 235, 158, .25);
-}
-
-.unWord {
-    line-height: 200%;
-    letter-spacing: 1px;
-    font-family: Georgia;
-    font-size: large;
-}
-
-.unHover:hover {
-    color: aliceblue;
-    text-shadow: 0px 0px 8px black;
-}
-
 /*****************/
 /* MESSAGES */
 /*****************/
@@ -186,7 +169,8 @@ body {
     top: 0;
     height: 100%;
     width: 0px;
-    background-color: red;
+    background-color: silver;
+    opacity: 0.925;
 }
 
 #messageBottom {
@@ -195,12 +179,35 @@ body {
     right: 0;
     height: 100%;
     width: 0px;
-    background-color: blue;
+    background-color: darkgray;
+}
+
+#messageText {
+    width: 75%;
+    padding: 48px 24px 16px 24px;
+}
+
+#messageChoices {
+    padding: 48px 24px 16px 24px;
+    width: 75%;
 }
 
 /*****************/
 /* GENERIC */
 /*****************/
+
+.actionText {
+    margin: 5px 15px 5px 15px;
+    color: aliceblue;
+    font-family: 'Courier New';
+    font-size: x-large;
+    font-weight: bold;
+    cursor: default;
+}
+    
+    .actionText:hover {
+        text-shadow: 0px 0px 8px rgba(255, 235, 158, 1);
+    }
 
 .center {
     margin-left: auto;

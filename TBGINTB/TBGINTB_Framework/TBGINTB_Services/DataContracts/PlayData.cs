@@ -10,6 +10,26 @@ namespace GinTub.Services.DataContracts
 {
 
     [DataContract]
+    public class MessageChoiceData
+    {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Text { get; set; }
+    }
+
+    [DataContract]
+    public class MessageData
+    {
+        [DataMember]
+        public int Id { get; set; }
+        [DataMember]
+        public string Text { get; set; }
+        [DataMember]
+        public IEnumerable<MessageChoiceData> MessageChoices { get; set; }
+    }
+
+    [DataContract]
     public class WordData
     {
         [DataMember] 
@@ -25,6 +45,8 @@ namespace GinTub.Services.DataContracts
         public int Id { get; set; }
         [DataMember] 
         public int Order { get; set; }
+        [DataMember]
+        public int? RoomState { get; set; }
         [DataMember] 
         public IEnumerable<WordData> Words { get; set; }
     }
@@ -40,10 +62,21 @@ namespace GinTub.Services.DataContracts
         public DateTime Time { get; set; }
         [DataMember]
         public string Location { get; set; }
+    }
+
+    [DataContract]
+    public class RoomData
+    {
         [DataMember]
-        public int Room { get; set; }
+        public int Id { get; set; }
         [DataMember]
-        public IEnumerable<ParagraphStateData> ParagraphStates { get; set; }
+        public string Name { get; set; }
+        [DataMember]
+        public int X { get; set; }
+        [DataMember]
+        public int Y { get; set; }
+        [DataMember]
+        public int Z { get; set; }
     }
 
     [DataContract]
@@ -61,6 +94,12 @@ namespace GinTub.Services.DataContracts
         [DataMember]
         public AreaData Area { get; set; }
         [DataMember]
+        public RoomData Room { get; set; }
+        [DataMember]
         public IEnumerable<RoomStateData> RoomStates { get; set; }
+        [DataMember]
+        public IEnumerable<ParagraphStateData> ParagraphStates { get; set; }
+        [DataMember]
+        public MessageData Message { get; set; }
     }
 }
