@@ -15,7 +15,6 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         int m_id;
         int m_order;
         int m_room;
-        int m_roomState;
 
         [DataMember]
         public int Id
@@ -47,17 +46,6 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
             {
                 if (m_room != value)
                     m_room = value;
-            }
-        }
-
-        [DataMember]
-        public int RoomState
-        {
-            get { return m_roomState; }
-            private set
-            {
-                if (m_roomState != value)
-                    m_roomState = value;
             }
         }
     }

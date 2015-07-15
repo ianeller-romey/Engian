@@ -13,7 +13,7 @@ DECLARE @devPlayerId uniqueidentifier
 SET @devPlayerId = 'E1751135-88F7-46D4-9D78-FA3769A571AB'
 
 IF NOT EXISTS (SELECT 1 FROM [dbo].[Players] WHERE [Id] = @devPlayerId)
-	EXEC [dev].[dev_AddPlayer]
+	EXEC [dev].[dev_CreatePlayer]
 	@username = @devUserName,
 	@domainname = @devDomainName,
 	@domain = @devDomain,

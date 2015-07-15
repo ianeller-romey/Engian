@@ -69,6 +69,7 @@
     <Compile Include="GinTubBuilderManager_DbRetrieveAndUpdate.cs" />
     <Compile Include="JSONPropertyManager.cs" />
     <Compile Include="Model\DbModel\AreaRoomOnInitialLoad.cs" />
+    <Compile Include="Model\DbModel\ParagraphRoomState.cs" />
     <Compile Include="Model\DbModel\JSONPropertyDataType.cs" />
     <Compile Include="Model\DbModel\RoomPreviewNoun.cs" />
     <Compile Include="Model\DbModel\RoomPreviewParagraphState.cs" />

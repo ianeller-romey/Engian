@@ -16,7 +16,7 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         int m_room;
         int m_state;
         int m_location;
-        DateTime m_time;
+        TimeSpan m_time;
 
         [DataMember]
         public int Id
@@ -63,7 +63,7 @@ namespace TBGINTB_Builder.Lib.Model.DbModel
         }
 
         [DataMember]
-        public DateTime Time
+        public TimeSpan Time
         {
             get { return m_time; }
             private set

@@ -114,7 +114,7 @@ BEGIN
 	INSERT INTO [dbo].[PlayerGameStates] ([Player], [LastRoom])
 	SELECT TOP 1 @playerId,
 				 [Room]
-	FROM [dbo].[AreaRoomOnInitialLoad] WITH(NOLOCK)
+	FROM [dbo].[AreaRoomOnInitialRead] WITH(NOLOCK)
 	
 	SELECT @playerId
 
@@ -206,15 +206,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadGame]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadGame] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadGame]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadGame] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/26/2015
--- Description:	Loads data for a game
+-- Description:	Reads data for a game
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadGame]
+ALTER PROCEDURE [dbo].[ReadGame]
 	@player uniqueidentifier
 AS
 BEGIN
@@ -228,10 +228,10 @@ BEGIN
 	ON p.[LastRoom] = r.[Id]
 	WHERE p.[Player] = @player
 	
-	EXEC [dbo].[LoadArea]
+	EXEC [dbo].[ReadArea]
 	@area = @area
 	
-	EXEC [dbo].[LoadRoomId]
+	EXEC [dbo].[ReadRoomForPlayer]
 	@player = @player,
 	@room = @room
 
@@ -243,15 +243,15 @@ GO
 /******************************************************************************************************************************************/
 
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadMessageChoicesForMessage] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadMessageChoicesForMessage] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/8/2015
--- Description:	Loads all MessageChoices for specified Message
+-- Description:	Reads all MessageChoices for specified Message
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadMessageChoicesForMessage]
+ALTER PROCEDURE [dbo].[ReadMessageChoicesForMessage]
 	@message int
 AS
 BEGIN
@@ -265,15 +265,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessageId]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadMessageId] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadMessage] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/8/2015
--- Description:	Loads a specific Message record
+-- Description:	Reads a specific Message record
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadMessageId]
+ALTER PROCEDURE [dbo].[ReadMessage]
 	@message int
 AS
 BEGIN
@@ -286,37 +286,37 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadMessage] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadMessageForPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadMessageForPlayer] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/8/2015
--- Description:	Loads Message data
+-- Description:	Reads Message data
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadMessage]
+ALTER PROCEDURE [dbo].[ReadMessageForPlayer]
 	@message int
 AS
 BEGIN
 
-	EXEC [dbo].[LoadMessageId]
+	EXEC [dbo].[ReadMessageId]
 	@message = @message
 	
-	EXEC [dbo].[LoadMessageChoicesForMessage]
+	EXEC [dbo].[ReadMessageChoicesForMessage]
 	@message = @message
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadAllVerbTypes] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadAllVerbTypes] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/7/2015
--- Description:	Loads all VerbType data in the database
+-- Description:	Reads all VerbType data in the database
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadAllVerbTypes]
+ALTER PROCEDURE [dbo].[ReadAllVerbTypes]
 AS
 BEGIN
 
@@ -327,15 +327,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadNounsForParagraphState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadNounsForParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/7/2015
--- Description:	Loads all Nouns for specified ParagraphState
+-- Description:	Reads all Nouns for specified ParagraphState
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadNounsForParagraphState]
+ALTER PROCEDURE [dbo].[ReadNounsForParagraphState]
 	@paragraphState int
 AS
 BEGIN
@@ -349,15 +349,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadNounsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadNounsForRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadNounsForPlayerRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadNounsForPlayerRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/28/2015
--- Description:	Loads all Noun data for a Room and Player
+-- Description:	Reads all Noun data for a Room and Player
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadNounsForRoom]
+ALTER PROCEDURE [dbo].[ReadNounsForPlayerRoom]
 	@player uniqueidentifier,
 	@room int
 AS
@@ -373,11 +373,16 @@ BEGIN
 	ON ps.[Paragraph] = psp.[Paragraph] AND ps.[State] = psp.[State]
 	INNER JOIN [dbo].[Paragraphs] p WITH (NOLOCK)
 	ON ps.[Paragraph] = p.[Id]
-	INNER JOIN [dbo].[RoomStates] rs WITH (NOLOCK)
-	ON p.[RoomState] = rs.[Id] OR p.[RoomState] IS NULL
+	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
+	ON p.[Room] = r.[Id]
 	INNER JOIN [dbo].[PlayerStatesOfRooms] psr WITH (NOLOCK)
-	ON rs.[Room] = psr.[Room] AND rs.[State] = psr.[State]
+	ON psr.[Room] = r.[Id]
+	INNER JOIN [dbo].[RoomStates] rs WITH (NOLOCK)
+	ON rs.[Room] = r.[Id] AND CASE WHEN psr.[State] < 0 THEN 0 ELSE psr.[State] END = rs.[State]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs WITH (NOLOCK)
+	ON prs.[Paragraph] = p.[Id] AND prs.[RoomState] = rs.[Id]
 	WHERE p.[Room] = @room
+	AND r.[Id] = @room
 	AND rs.[Room] = @room
 	AND psp.[Player] = @player
 	AND psr.[Player] = @player
@@ -385,15 +390,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadParagraphStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadParagraphStatesForRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadParagraphStatesForPlayerRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadParagraphStatesForPlayerRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/28/2015
--- Description:	Loads all Paragraph data for a Room and Player
+-- Description:	Reads all Paragraph data for a Room and Player
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadParagraphStatesForRoom]
+ALTER PROCEDURE [dbo].[ReadParagraphStatesForPlayerRoom]
 	@player uniqueidentifier,
 	@room int
 AS
@@ -402,17 +407,22 @@ BEGIN
 	SELECT ps.[Id],
 		   ps.[Text],
 		   p.[Order],
-		   p.[RoomState]
+		   rs.[Id] as [RoomState]
 	FROM [dbo].[ParagraphStates] ps WITH (NOLOCK)
 	INNER JOIN [dbo].[PlayerStatesOfParagraphs] psp WITH (NOLOCK)
 	ON ps.[Paragraph] = psp.[Paragraph] AND ps.[State] = psp.[State]
 	INNER JOIN [dbo].[Paragraphs] p WITH (NOLOCK)
 	ON ps.[Paragraph] = p.[Id]
-	INNER JOIN [dbo].[RoomStates] rs WITH (NOLOCK)
-	ON p.[RoomState] = rs.[Id] OR p.[RoomState] IS NULL
+	INNER JOIN [dbo].[Rooms] r WITH (NOLOCK)
+	ON p.[Room] = r.[Id]
 	INNER JOIN [dbo].[PlayerStatesOfRooms] psr WITH (NOLOCK)
-	ON rs.[Room] = psr.[Room] AND rs.[State] = psr.[State]
+	ON psr.[Room] = r.[Id]
+	INNER JOIN [dbo].[RoomStates] rs WITH (NOLOCK)
+	ON rs.[Room] = r.[Id] AND CASE WHEN psr.[State] < 0 THEN 0 ELSE psr.[State] END = rs.[State]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs WITH (NOLOCK)
+	ON prs.[Paragraph] = p.[Id] AND prs.[RoomState] = rs.[Id]
 	WHERE p.[Room] = @room
+	AND r.[Id] = @room
 	AND rs.[Room] = @room
 	AND psp.[Player] = @player
 	AND psr.[Player] = @player
@@ -421,15 +431,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadRoomStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadRoomStatesForRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadRoomStatesForPlayerRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadRoomStatesForPlayerRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/26/2015
--- Description:	Loads room data for a player
+-- Description:	Reads room data for a player
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadRoomStatesForRoom]
+ALTER PROCEDURE [dbo].[ReadRoomStatesForPlayerRoom]
 	@player uniqueidentifier,
 	@room int
 AS
@@ -452,15 +462,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/8/2015
--- Description:	Loads Room data
+-- Description:	Reads Room data
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadRoom]
+ALTER PROCEDURE [dbo].[ReadRoom]
 	@room int
 AS
 BEGIN
@@ -477,15 +487,47 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadRoomXYZ]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadRoomXYZ] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadRoomForPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadRoomForPlayer] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/26/2015
--- Description:	Loads room data for a player
+-- Description:	Reads room data for a player
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadRoomXYZ]
+ALTER PROCEDURE [dbo].[ReadRoomForPlayer]
+	@player uniqueidentifier,
+	@room int
+AS
+BEGIN
+	
+	EXEC [dbo].[ReadRoom]
+	@room = @room
+	
+	EXEC [dbo].[ReadRoomStatesForRoom]
+	@player = @player,
+	@room = @room
+	
+	EXEC [dbo].[ReadParagraphStatesForRoom]
+	@player = @player,
+	@room = @room
+	
+	EXEC [dbo].[ReadNounsForRoom]
+	@player = @player,
+	@room = @room
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadRoomForPlayerXYZ]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadRoomForPlayerXYZ] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/26/2015
+-- Description:	Reads room data for a player
+-- =============================================
+ALTER PROCEDURE [dbo].[ReadRoomForPlayerXYZ]
 	@player uniqueidentifier,
 	@area int,
 	@x int,
@@ -502,65 +544,42 @@ BEGIN
 	AND [Y] = @y
 	AND [Z] = @z
 	
-	EXEC [dbo].[LoadRoom]
-	@room = @room
-	
-	EXEC [dbo].[LoadRoomStatesForRoom]
-	@player = @player,
-	@room = @room
-	
-	EXEC [dbo].[LoadParagraphStatesForRoom]
-	@player = @player,
-	@room = @room
-	
-	EXEC [dbo].[LoadNounsForRoom]
-	@player = @player,
+	EXEC [dbo].[ReadRoomForPlayer]
 	@room = @room
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadRoomId]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadRoomId] AS SELECT 1')
-GO
--- =============================================
--- Author:		Ian Eller-Romey
--- Create date: 6/26/2015
--- Description:	Loads room data for a player
--- =============================================
-ALTER PROCEDURE [dbo].[LoadRoomId]
-	@player uniqueidentifier,
-	@room int
-AS
-BEGIN
-	
-	EXEC [dbo].[LoadRoom]
-	@room = @room
-	
-	EXEC [dbo].[LoadRoomStatesForRoom]
-	@player = @player,
-	@room = @room
-	
-	EXEC [dbo].[LoadParagraphStatesForRoom]
-	@player = @player,
-	@room = @room
-	
-	EXEC [dbo].[LoadNounsForRoom]
-	@player = @player,
-	@room = @room
-
-END
-GO
-
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[LoadArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dbo].[LoadArea] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadArea] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/29/2015
--- Description:	Loads Area data for a player
+-- Description:	Reads Area data for a player
 -- =============================================
-ALTER PROCEDURE [dbo].[LoadArea]
+ALTER PROCEDURE [dbo].[ReadArea]
+	@area int
+AS
+BEGIN
+
+	SELECT [Id],
+		   [Name]
+	FROM [dbo].[Areas] WITH (NOLOCK)
+	WHERE [Id] = @area
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dbo].[ReadAreaForPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dbo].[ReadAreaForPlayer] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 6/29/2015
+-- Description:	Reads Area data for a player
+-- =============================================
+ALTER PROCEDURE [dbo].[ReadAreaForPlayer]
 	@area int
 AS
 BEGIN
@@ -691,7 +710,7 @@ GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/30/2015
--- Description:	Loads Area data for a player
+-- Description:	Reads Area data for a player
 -- =============================================
 ALTER PROCEDURE [dbo].[PlayerMoveXYZ]
 	@player uniqueidentifier,
@@ -724,7 +743,7 @@ BEGIN
 	SET [LastRoom] = @room
 	WHERE [Player] = @player
 		
-	EXEC [dbo].[LoadRoomId] 
+	EXEC [dbo].[ReadRoomForPlayer] 
 	@player = @player, 
 	@room = @room
 

@@ -44,15 +44,15 @@ GO
 /*Area*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddArea] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateArea] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Area record and returns the newly generated ID
+-- Description:	Creates an Area record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddArea]
+ALTER PROCEDURE [dev].[dev_CreateArea]
 	@name varchar(256)
 AS
 BEGIN
@@ -121,15 +121,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllAreas] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllAreas]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllAreas] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/14/2015
--- Description:	Gets the Id and Name fields of all Area records currently in the database
+-- Description:	Reads the Id and Name fields of all Area records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllAreas]
+ALTER PROCEDURE [dev].[dev_ReadAllAreas]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -143,15 +143,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetArea] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadArea] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/14/2015
--- Description:	Gets data about an Area record in the database
+-- Description:	Reads data about an Area record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetArea]
+ALTER PROCEDURE [dev].[dev_ReadArea]
 	@id int
 AS
 BEGIN
@@ -218,6 +218,9 @@ BEGIN
 
 	DELETE
 	FROM [dbo].[RoomStates]
+	
+	DELETE
+	FROM [dbo].[ParagraphRoomStates]
 
 	DELETE
 	FROM [dbo].[Rooms]
@@ -234,6 +237,7 @@ BEGIN
 	DBCC CHECKIDENT ('[dbo].[ParagraphStates]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Paragraphs]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[RoomStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ParagraphRoomStates]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Rooms]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Areas]', RESEED, 0)
 
@@ -244,15 +248,15 @@ GO
 /*Location*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddLocation] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateLocation] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Location record and returns the newly generated ID
+-- Description:	Creates a Location record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddLocation]
+ALTER PROCEDURE [dev].[dev_CreateLocation]
 	@name varchar(256),
 	@locationfile varchar(256)
 AS
@@ -325,15 +329,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllLocations] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllLocations]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllLocations] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/20/2015
--- Description:	Gets the Id and Location fields of all Location records currently in the database
+-- Description:	Reads the Id and Location fields of all Location records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllLocations]
+ALTER PROCEDURE [dev].[dev_ReadAllLocations]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -348,15 +352,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetLocation] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadLocation]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadLocation] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/20/2015
--- Description:	Gets data about an Location record in the database
+-- Description:	Reads data about an Location record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetLocation]
+ALTER PROCEDURE [dev].[dev_ReadLocation]
 	@id int
 AS
 BEGIN
@@ -411,10 +415,12 @@ BEGIN
 
 	DELETE
 	FROM [dbo].[Paragraphs]
-	WHERE [RoomState] IS NOT NULL
 
 	DELETE
 	FROM [dbo].[RoomStates]
+	
+	DELETE
+	FROM [dbo].[ParagraphRoomStates]
 
 	DELETE
 	FROM [dbo].[Locations]
@@ -427,6 +433,7 @@ BEGIN
 	DBCC CHECKIDENT ('[dbo].[Nouns]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[ParagraphStates]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[RoomStates]', RESEED, 0)
+	DBCC CHECKIDENT ('[dbo].[ParagraphRoomStates]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Locations]', RESEED, 0)
 
 END
@@ -436,15 +443,15 @@ GO
 /*Room*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Room record and returns the newly generated ID
+-- Description:	Creates a Room record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddRoom]
+ALTER PROCEDURE [dev].[dev_CreateRoom]
 	@name varchar(256),
 	@x int,
 	@y int,
@@ -459,7 +466,19 @@ BEGIN
 	INSERT INTO [dbo].[Rooms] ([Name], [X], [Y], [Z], [Area])
 	VALUES (@name, @x, @y, @z, @area)
 	
-	SELECT SCOPE_IDENTITY()
+	DECLARE @room int
+	SELECT @room = SCOPE_IDENTITY()
+	
+	DECLARE @location int
+	SELECT TOP 1 @location = [Location]
+	FROM [dev].[PlaceholderLocation]
+	
+	SELECT @room
+	EXEC [dev].[dev_CreateRoomState]
+		@time = '00:00:00.0000',
+		@location = @location,
+		@room = @room
+	
 
 END
 GO
@@ -557,15 +576,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomsInArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomsInArea] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllRoomsInArea]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllRoomsInArea] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/14/2015
--- Description:	Gets all Room records associated with the specified Area
+-- Description:	Reads all Room records associated with the specified Area
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllRoomsInArea]
+ALTER PROCEDURE [dev].[dev_ReadAllRoomsInArea]
 	@area int
 AS
 BEGIN
@@ -585,15 +604,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomsInAreaOnFloor]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomsInAreaOnFloor] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllRoomsInAreaOnFloor]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllRoomsInAreaOnFloor] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/19/2015
--- Description:	Gets all Room records associated with the specified Area, on a specific floor (Z)
+-- Description:	Reads all Room records associated with the specified Area, on a specific floor (Z)
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllRoomsInAreaOnFloor]
+ALTER PROCEDURE [dev].[dev_ReadAllRoomsInAreaOnFloor]
 	@area int,
 	@z int
 AS
@@ -615,15 +634,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/15/2015
--- Description:	Gets data about an Room record in the database
+-- Description:	Reads data about an Room record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoom]
+ALTER PROCEDURE [dev].[dev_ReadRoom]
 	@id int
 AS
 BEGIN
@@ -753,6 +772,14 @@ BEGIN
 
 	DELETE rs
 	FROM [dbo].[RoomStates] rs
+	INNER JOIN [dbo].[Rooms] r
+	ON rs.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	
+	DELETE prs
+	FROM [dbo].[ParagraphRoomStates] prs
+	INNER JOIN [dbo].[RoomStates] rs
+	ON prs.[RoomState] = rs.[Id]
 	INNER JOIN [dbo].[Rooms] r
 	ON rs.[Room] = r.[Id]
 	WHERE r.[Area] = @area
@@ -887,12 +914,20 @@ BEGIN
 	ON rs.[Room] = r.[Id]
 	WHERE r.[Area] = @area
 	AND r.[Z] = @z
+	
+	DELETE prs
+	FROM [dbo].[ParagraphRoomStates] prs
+	INNER JOIN [dbo].[RoomStates] rs
+	ON prs.[RoomState] = rs.[Id]
+	INNER JOIN [dbo].[Rooms] r
+	ON rs.[Room] = r.[Id]
+	WHERE r.[Area] = @area
+	AND r.[Z] = @z
 
 	DELETE
 	FROM [dbo].[Rooms]
 	WHERE [Area] = @area
 	AND [Z] = @z
-
 
 END
 GO
@@ -901,16 +936,16 @@ GO
 /*RoomState********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddRoomState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateRoomState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a RoomState record and returns the newly generated ID
+-- Description:	Creates a RoomState record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddRoomState]
-	@time datetime,
+ALTER PROCEDURE [dev].[dev_CreateRoomState]
+	@time time,
 	@location int,
 	@room int
 AS
@@ -943,7 +978,7 @@ GO
 ALTER PROCEDURE [dev].[dev_ImportRoomState]
 	@id int,
 	@state int,
-	@time datetime,
+	@time time,
 	@location int,
 	@room int
 AS
@@ -958,7 +993,7 @@ BEGIN
 						N'SET IDENTITY_INSERT [dbo].[RoomStates] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @state_ int, @time_ datetime, @location_ int, @room_ int',
+					   N'@id_ int, @state_ int, @time_ time, @location_ int, @room_ int',
 					   @id, @state, @time, @location, @room
 
 END
@@ -975,7 +1010,7 @@ GO
 ALTER PROCEDURE [dev].[dev_UpdateRoomState]
 	@id int,
 	@state int,
-	@time datetime,
+	@time time,
 	@location int,
 	@room int
 AS
@@ -986,7 +1021,7 @@ BEGIN
 
 	UPDATE [dbo].[RoomStates] 
 	SET	[State] = ISNULL(@state, [State]), 
-		[Time] = @time,
+		[Time] = ISNULL(@time, [Time]),
 		[Location] = ISNULL(@location, [Location]),
 		[Room] = ISNULL(@room, [Room])
 	WHERE [Id] = @id
@@ -994,15 +1029,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllRoomStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllRoomStatesForRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllRoomStatesForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllRoomStatesForRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/19/2015
--- Description:	Gets all RoomState records associated with the specified Room
+-- Description:	Reads all RoomState records associated with the specified Room
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllRoomStatesForRoom]
+ALTER PROCEDURE [dev].[dev_ReadAllRoomStatesForRoom]
 	@room int
 AS
 BEGIN
@@ -1021,15 +1056,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadRoomState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/21/2015
--- Description:	Gets data about an RoomState record in the database
+-- Description:	Reads data about an RoomState record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoomState]
+ALTER PROCEDURE [dev].[dev_ReadRoomState]
 	@id int
 AS
 BEGIN
@@ -1074,8 +1109,10 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 	
 	DELETE ar
@@ -1088,8 +1125,10 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 	
 	DELETE ar
@@ -1102,8 +1141,10 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 	
 	DELETE ar
@@ -1116,8 +1157,10 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 	
 	DELETE a
@@ -1128,8 +1171,10 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 
 	DELETE n
@@ -1138,27 +1183,39 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 
 	DELETE ps
 	FROM [dbo].[ParagraphStates] ps
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 
 	DELETE p
 	FROM [dbo].[Paragraphs] p
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON prs.[Paragraph] = p.[Id]
 	INNER JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
+	ON prs.[RoomState] = rs.[Id]
 	WHERE rs.[Room] = @room
 
 	DELETE
 	FROM [dbo].[RoomStates]
 	WHERE [Room] = @room
+	
+	DELETE prs
+	FROM [dbo].[ParagraphRoomStates] prs
+	INNER JOIN [dbo].[RoomStates] rs
+	ON prs.[RoomState] = rs.[Id]
+	WHERE rs.[Room] = @room
 
 END
 GO
@@ -1167,28 +1224,33 @@ GO
 /*Paragraph********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraph] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateParagraph] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Paragraph record and returns the newly generated ID
+-- Description:	Creates a Paragraph record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddParagraph]
+ALTER PROCEDURE [dev].[dev_CreateParagraph]
 	@order int,
-	@room int,
-	@roomstate int
+	@room int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
     
-	INSERT INTO [dbo].[Paragraphs] ([Order], [Room], [RoomState])
-	VALUES (@order, @room, @roomstate)
+	INSERT INTO [dbo].[Paragraphs] ([Order], [Room])
+	VALUES (@order, @room)
 	
-	SELECT SCOPE_IDENTITY()
+	DECLARE @paragraph int
+	SELECT @paragraph = SCOPE_IDENTITY()
+	
+	SELECT @paragraph
+	EXEC [dev].[dev_CreateParagraphState]
+		@text = '',
+		@paragraph = @paragraph
 
 END
 GO
@@ -1204,8 +1266,7 @@ GO
 ALTER PROCEDURE [dev].[dev_ImportParagraph]
 	@id int,
 	@order int,
-	@room int,
-	@roomstate int
+	@room int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1214,12 +1275,12 @@ BEGIN
 
 	DECLARE @insertstring nvarchar(MAX)
 	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[Paragraphs] ON ' + 
-						N'INSERT INTO [dbo].[Paragraphs] ([Id], [Order], [Room], [RoomState]) VALUES (@id_, @order_, @room_, @roomstate_) ' +
+						N'INSERT INTO [dbo].[Paragraphs] ([Id], [Order], [Room]) VALUES (@id_, @order_, @room_) ' +
 						N'SET IDENTITY_INSERT [dbo].[Paragraphs] OFF'
 						
 	EXEC sp_executesql @insertstring,
-					   N'@id_ int, @order_ int, @room_ int, @roomstate_ int',
-					   @id, @order, @room, @roomstate
+					   N'@id_ int, @order_ int, @room_ int',
+					   @id, @order, @room
 
 END
 GO
@@ -1235,8 +1296,7 @@ GO
 ALTER PROCEDURE [dev].[dev_UpdateParagraph]
 	@id int,
 	@order int,
-	@room int,
-	@roomstate int
+	@room int
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -1245,22 +1305,21 @@ BEGIN
 
 	UPDATE [dbo].[Paragraphs] 
 	SET	[Order] = ISNULL(@order, [Order]),
-		[Room] = ISNULL(@room, [Room]),
-		[RoomState] = @roomState
+		[Room] = ISNULL(@room, [Room])
 	WHERE [Id] = @id
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphsForRoom] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllParagraphsForRoom]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllParagraphsForRoom] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/2/2015
--- Description:	Gets all Paragraph records associated with the specified Room
+-- Description:	Reads all Paragraph records associated with the specified Room
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllParagraphsForRoom]
+ALTER PROCEDURE [dev].[dev_ReadAllParagraphsForRoom]
 	@room int
 AS
 BEGIN
@@ -1270,8 +1329,7 @@ BEGIN
 
 	SELECT [Id],
 		   [Order],
-		   [Room],
-		   [RoomState]
+		   [Room]
 	FROM [dbo].[Paragraphs]
 	WHERE [Room] = @room
 	ORDER BY [Order]
@@ -1279,15 +1337,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphsForRoomAndRoomState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllParagraphsForRoomAndRoomState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/27/2015
--- Description:	Gets all Paragraph records associated with the specified Room and RoomState
+-- Description:	Reads all Paragraph records associated with the specified Room and RoomState
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllParagraphsForRoomAndRoomState]
+ALTER PROCEDURE [dev].[dev_ReadAllParagraphsForRoomAndRoomState]
 	@room int,
 	@roomstate int
 AS
@@ -1296,27 +1354,28 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	SELECT [Id],
-		   [Order],
-		   [Room],
-		   [RoomState]
-	FROM [dbo].[Paragraphs]
-	WHERE [Room] = @room
-	AND ((@roomstate IS NULL AND [RoomState] IS NULL) OR [RoomState] = @roomstate)
+	SELECT p.[Id],
+		   p.[Order],
+		   p.[Room]
+	FROM [dbo].[Paragraphs] p
+	INNER JOIN [dbo].[ParagraphRoomStates] prs
+	ON p.[Id] = prs.[Paragraph]
+	WHERE p.[Room] = @room
+	AND prs.[RoomState] = @roomstate
 	ORDER BY [Order]
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraph] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadParagraph] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/21/2015
--- Description:	Gets data about an Paragraph record in the database
+-- Description:	Reads data about an Paragraph record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetParagraph]
+ALTER PROCEDURE [dev].[dev_ReadParagraph]
 	@id int
 AS
 BEGIN
@@ -1326,114 +1385,192 @@ BEGIN
 
 	SELECT [Id],
 		   [Order],
-		   [Room],
-		   [RoomState]
+		   [Room]
 	FROM [dbo].[Paragraphs]
 	WHERE [Id] = @id
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllParagraphsForRoomAndRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllParagraphsForRoomAndRoomState] AS SELECT 1')
+/******************************************************************************************************************************************/
+/*ParagraphRoomState***********************************************************************************************************************/
+/******************************************************************************************************************************************/
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateParagraphRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateParagraphRoomState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
--- Create date: 6/16/2015
--- Description:	Deletes all Paragraph records associated with the specified Room and RoomState
+-- Create date: 7/10/2015
+-- Description:	Creates a ParagraphRoomState record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_DeleteAllParagraphsForRoomAndRoomState]
-	@room int,
+ALTER PROCEDURE [dev].[dev_CreateParagraphRoomState]
+	@roomstate int,
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	INSERT INTO [dbo].[ParagraphRoomStates] ([RoomState], [Paragraph])
+	VALUES (@roomstate, @paragraph)
+	
+	SELECT SCOPE_IDENTITY()
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ImportParagraphRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_ImportParagraphRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Imports an ParagraphRoomState record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ImportParagraphRoomState]
+	@id int,
+	@roomstate int,
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	DECLARE @insertstring nvarchar(MAX)
+	SET @insertstring = N'SET IDENTITY_INSERT [dbo].[ParagraphRoomStates] ON ' + 
+						N'INSERT INTO [dbo].[ParagraphRoomStates] ([Id], [RoomState], [Paragraph]) VALUES (@id_, @roomstate_, @paragraph_) ' +
+						N'SET IDENTITY_INSERT [dbo].[ParagraphRoomStates] OFF'
+						
+	EXEC sp_executesql @insertstring,
+					   N'@id_ int, @roomstate_ int, @paragraph_ int',
+					   @id, @roomstate, @paragraph
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_UpdateParagraphRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_UpdateParagraphRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Updates a ParagraphRoomState record
+-- =============================================
+ALTER PROCEDURE [dev].[dev_UpdateParagraphRoomState]
+	@id int,
+	@roomstate int,
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	UPDATE [dbo].[ParagraphRoomStates] 
+	SET	[RoomState] = ISNULL(@roomstate, [RoomState]),
+		[Paragraph] = ISNULL(@paragraph, [Paragraph])
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllParagraphRoomStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllParagraphRoomStatesForParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Reads all ParagraphRoomState records associated with the specified Paragraph
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ReadAllParagraphRoomStatesForParagraph]
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [RoomState],
+		   [Paragraph]
+	FROM [dbo].[ParagraphRoomStates]
+	WHERE [Paragraph] = @paragraph
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllParagraphRoomStatesForRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllParagraphRoomStatesForRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Reads all ParagraphRoomState records associated with the specified Paragraph
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ReadAllParagraphRoomStatesForRoomState]
 	@roomstate int
 AS
 BEGIN
-	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	
-	DELETE ar
-	FROM [dbo].[ItemActionRequirements] ar
-	INNER JOIN [dbo].[Actions] a
-	ON ar.[Action] = a.[Id]
-	INNER JOIN [dbo].[Nouns] n
-	ON a.[Noun] = n.[Id]
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
-	
-	DELETE ar
-	FROM [dbo].[EventActionRequirements] ar
-	INNER JOIN [dbo].[Actions] a
-	ON ar.[Action] = a.[Id]
-	INNER JOIN [dbo].[Nouns] n
-	ON a.[Noun] = n.[Id]
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
-	
-	DELETE ar
-	FROM [dbo].[CharacterActionRequirements] ar
-	INNER JOIN [dbo].[Actions] a
-	ON ar.[Action] = a.[Id]
-	INNER JOIN [dbo].[Nouns] n
-	ON a.[Noun] = n.[Id]
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
-	
-	DELETE ar
-	FROM [dbo].[ActionResults] ar
-	INNER JOIN [dbo].[Actions] a
-	ON ar.[Action] = a.[Id]
-	INNER JOIN [dbo].[Nouns] n
-	ON a.[Noun] = n.[Id]
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
-	
-	DELETE a
-	FROM [dbo].[Actions] a
-	INNER JOIN [dbo].[Nouns] n
-	ON a.[Noun] = n.[Id]
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
 
-	DELETE n
-	FROM [dbo].[Nouns] n
-	INNER JOIN [dbo].[ParagraphStates] ps
-	ON n.[ParagraphState] = ps.[Id]
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+	SELECT [Id],
+		   [RoomState],
+		   [Paragraph]
+	FROM [dbo].[ParagraphRoomStates]
+	WHERE [RoomState] = @roomstate
 
-	DELETE ps
-	FROM [dbo].[ParagraphStates] ps
-	INNER JOIN [dbo].[Paragraphs] p
-	ON ps.[Paragraph] = p.[Id]
-	WHERE p.[Room] = @room
-	AND (p.[RoomState] = @roomstate OR p.[RoomState] IS NULL)
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadParagraphRoomState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadParagraphRoomState] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Reads data about a ParagraphRoomState record in the database
+-- =============================================
+ALTER PROCEDURE [dev].[dev_ReadParagraphRoomState]
+	@id int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	SELECT [Id],
+		   [RoomState],
+		   [Paragraph]
+	FROM [dbo].[ParagraphRoomStates]
+	WHERE [Id] = @id
+
+END
+GO
+
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_DeleteAllParagraphRoomStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_DeleteAllParagraphRoomStatesForParagraph] AS SELECT 1')
+GO
+-- =============================================
+-- Author:		Ian Eller-Romey
+-- Create date: 7/10/2015
+-- Description:	Deletes all ParagraphRoomState records associated with the specified Paragraph
+-- =============================================
+ALTER PROCEDURE [dev].[dev_DeleteAllParagraphRoomStatesForParagraph]
+	@paragraph int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra roomstate sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
 
 	DELETE
-	FROM [dbo].[Paragraphs]
-	WHERE [Room] = @room
-	AND ([RoomState] = @roomstate OR [RoomState] IS NULL)
+	FROM [dbo].[ParagraphRoomStates]
+	WHERE [Paragraph] = @paragraph
 
 END
 GO
@@ -1442,15 +1579,15 @@ GO
 /*ParagraphState***************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddParagraphState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Adds a ParagraphState record and returns the newly generated ID
+-- Description:	Creates a ParagraphState record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddParagraphState]
+ALTER PROCEDURE [dev].[dev_CreateParagraphState]
 	@text varchar(256),
 	@paragraph int
 AS
@@ -1531,15 +1668,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllParagraphStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllParagraphStatesForParagraph] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllParagraphStatesForParagraph]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllParagraphStatesForParagraph] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Gets all ParagraphState records associated with a specified Paragraph
+-- Description:	Reads all ParagraphState records associated with a specified Paragraph
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllParagraphStatesForParagraph]
+ALTER PROCEDURE [dev].[dev_ReadAllParagraphStatesForParagraph]
 	@paragraph int
 AS
 BEGIN
@@ -1558,15 +1695,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphStateForParagraphPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphStateForParagraphPreview] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadParagraphStateForParagraphPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadParagraphStateForParagraphPreview] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/19/2015
--- Description:	Gets data about a ParagraphState record in the database
+-- Description:	Reads data about a ParagraphState record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetParagraphStateForParagraphPreview]
+ALTER PROCEDURE [dev].[dev_ReadParagraphStateForParagraphPreview]
 	@state int,
 	@paragraph int
 AS
@@ -1586,15 +1723,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetParagraphState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/1/2015
--- Description:	Gets data about a ParagraphState record in the database
+-- Description:	Reads data about a ParagraphState record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetParagraphState]
+ALTER PROCEDURE [dev].[dev_ReadParagraphState]
 	@id int
 AS
 BEGIN
@@ -1693,16 +1830,16 @@ GO
 /*Noun*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddNoun] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateNoun] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Noun record, checking to ensure that the specified text value IS present in the ParagraphState, 
+-- Description:	Creates a Noun record, checking to ensure that the specified text value IS present in the ParagraphState, 
 -- and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddNoun]
+ALTER PROCEDURE [dev].[dev_CreateNoun]
 	@text varchar(256),
 	@paragraphstate int
 AS
@@ -1793,15 +1930,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllNounsForParagraphState] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllNounsForParagraphState]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllNounsForParagraphState] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets all Noun records associated with a specified ParagraphState
+-- Description:	Reads all Noun records associated with a specified ParagraphState
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllNounsForParagraphState]
+ALTER PROCEDURE [dev].[dev_ReadAllNounsForParagraphState]
 	@paragraphstate int
 AS
 BEGIN
@@ -1818,15 +1955,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetNoun] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadNoun] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets data about a Noun record in the database
+-- Description:	Reads data about a Noun record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetNoun]
+ALTER PROCEDURE [dev].[dev_ReadNoun]
 	@id int
 AS
 BEGIN
@@ -1908,15 +2045,15 @@ GO
 /*VerbType*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddVerbType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateVerbType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a VerbType record and returns the newly generated ID
+-- Description:	Creates a VerbType record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddVerbType]
+ALTER PROCEDURE [dev].[dev_CreateVerbType]
 	@name varchar(256)
 AS
 BEGIN
@@ -1985,15 +2122,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllVerbTypes] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllVerbTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllVerbTypes] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets the Id and Name fields of all VerbType records currently in the database
+-- Description:	Reads the Id and Name fields of all VerbType records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllVerbTypes]
+ALTER PROCEDURE [dev].[dev_ReadAllVerbTypes]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2008,15 +2145,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetVerbType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadVerbType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets data about a VerbType record in the database
+-- Description:	Reads data about a VerbType record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetVerbType]
+ALTER PROCEDURE [dev].[dev_ReadVerbType]
 	@id int
 AS
 BEGIN
@@ -2099,15 +2236,15 @@ GO
 /*Verb*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddVerb] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateVerb] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Verb record and returns the newly generated ID
+-- Description:	Creates a Verb record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddVerb]
+ALTER PROCEDURE [dev].[dev_CreateVerb]
 	@name varchar(256),
 	@verbtype int
 AS
@@ -2180,15 +2317,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllVerbsForVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllVerbsForVerbType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllVerbsForVerbType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllVerbsForVerbType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets all Verb records associated with a specified VerbType
+-- Description:	Reads all Verb records associated with a specified VerbType
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllVerbsForVerbType]
+ALTER PROCEDURE [dev].[dev_ReadAllVerbsForVerbType]
 	@verbtype int
 AS
 BEGIN
@@ -2205,15 +2342,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetVerb] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadVerb]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadVerb] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets data about a Verb record in the database
+-- Description:	Reads data about a Verb record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetVerb]
+ALTER PROCEDURE [dev].[dev_ReadVerb]
 	@id int
 AS
 BEGIN
@@ -2257,15 +2394,15 @@ GO
 /*ResultType*******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a ResultType record and returns the newly generated ID
+-- Description:	Creates a ResultType record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResultType]
+ALTER PROCEDURE [dev].[dev_CreateResultType]
 	@name varchar(256)
 AS
 BEGIN
@@ -2334,15 +2471,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypes] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllResultTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllResultTypes] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/3/2015
--- Description:	Gets the Id and Name fields of all ResultType records currently in the database
+-- Description:	Reads the Id and Name fields of all ResultType records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultTypes]
+ALTER PROCEDURE [dev].[dev_ReadAllResultTypes]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2356,15 +2493,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/3/2015
--- Description:	Gets data about a ResultType record in the database
+-- Description:	Reads data about a ResultType record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetResultType]
+ALTER PROCEDURE [dev].[dev_ReadResultType]
 	@id int
 AS
 BEGIN
@@ -2409,6 +2546,9 @@ BEGIN
 	
 	DELETE
 	FROM [dev].[ResultTypeJSONProperties]
+	
+	DELETE
+	FROM [dev].[JSONPropertyDataTypes]
 
 	DELETE
 	FROM [dbo].[ResultTypes]
@@ -2416,6 +2556,7 @@ BEGIN
 	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[MessageChoiceResults]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[Results]', RESEED, 0)
+	DBCC CHECKIDENT ('[dev].[JSONPropertyDataTypes]', RESEED, 0)
 	DBCC CHECKIDENT ('[dev].[ResultTypeJSONProperties]', RESEED, 0)
 	DBCC CHECKIDENT ('[dbo].[ResultTypes]', RESEED, 0)
 
@@ -2426,15 +2567,15 @@ GO
 /*JSONPropertyDataType*********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddJSONPropertyDataType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateJSONPropertyDataType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/4/2015
--- Description:	Adds a JSONPropertyDataType record and returns the newly generated ID
+-- Description:	Creates a JSONPropertyDataType record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddJSONPropertyDataType]
+ALTER PROCEDURE [dev].[dev_CreateJSONPropertyDataType]
 	@datatype varchar(256)
 AS
 BEGIN
@@ -2503,15 +2644,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllJSONPropertyDataTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllJSONPropertyDataTypes] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllJSONPropertyDataTypes]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllJSONPropertyDataTypes] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 7/4/2015
--- Description:	Gets the Id and Name fields of all JSONPropertyDataType records currently in the database
+-- Description:	Reads the Id and Name fields of all JSONPropertyDataType records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllJSONPropertyDataTypes]
+ALTER PROCEDURE [dev].[dev_ReadAllJSONPropertyDataTypes]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -2526,15 +2667,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetJSONPropertyDataType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadJSONPropertyDataType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadJSONPropertyDataType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/2/2015
--- Description:	Gets data about a JSONPropertyDataType record in the database
+-- Description:	Reads data about a JSONPropertyDataType record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetJSONPropertyDataType]
+ALTER PROCEDURE [dev].[dev_ReadJSONPropertyDataType]
 	@id int
 AS
 BEGIN
@@ -2593,15 +2734,15 @@ GO
 /*ResultTypeJSONProperty*******************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResultTypeJSONProperty] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateResultTypeJSONProperty] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Adds a ResultTypeJSONProperty record and returns the newly generated ID
+-- Description:	Creates a ResultTypeJSONProperty record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResultTypeJSONProperty]
+ALTER PROCEDURE [dev].[dev_CreateResultTypeJSONProperty]
 	@jsonproperty varchar(256),
 	@datatype int,
 	@resulttype int
@@ -2678,15 +2819,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultTypeJSONPropertiesForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultTypeJSONPropertiesForResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllResultTypeJSONPropertiesForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllResultTypeJSONPropertiesForResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets the all ResultTypeJSONProperties records associated with the specified ResultType
+-- Description:	Reads the all ResultTypeJSONProperties records associated with the specified ResultType
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultTypeJSONPropertiesForResultType]
+ALTER PROCEDURE [dev].[dev_ReadAllResultTypeJSONPropertiesForResultType]
 	@resulttype int
 AS
 BEGIN
@@ -2704,15 +2845,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetResultTypeJSONProperty] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadResultTypeJSONProperty]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadResultTypeJSONProperty] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets data about a ResultTypeJSONProperty record in the database
+-- Description:	Reads data about a ResultTypeJSONProperty record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetResultTypeJSONProperty]
+ALTER PROCEDURE [dev].[dev_ReadResultTypeJSONProperty]
 	@id int
 AS
 BEGIN
@@ -2757,15 +2898,15 @@ GO
 /*Result***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Adds a Result record and returns the newly generated ID
+-- Description:	Creates a Result record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddResult]
+ALTER PROCEDURE [dev].[dev_CreateResult]
 	@name varchar(256),
 	@jsondata varchar(500),
 	@resulttype int
@@ -2853,15 +2994,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllResultsForResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllResultsForResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets all Result records associated with a specified ResultType
+-- Description:	Reads all Result records associated with a specified ResultType
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultsForResultType]
+ALTER PROCEDURE [dev].[dev_ReadAllResultsForResultType]
 	@resulttype int
 AS
 BEGIN
@@ -2880,15 +3021,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForActionResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForActionResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllResultsForActionResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllResultsForActionResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/9/2015
--- Description:	Gets all Result records associated with all ResultTypes associated with the specified Action
+-- Description:	Reads all Result records associated with all ResultTypes associated with the specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultsForActionResultType]
+ALTER PROCEDURE [dev].[dev_ReadAllResultsForActionResultType]
 	@action int
 AS
 BEGIN
@@ -2909,15 +3050,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllResultsForMessageChoiceResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllResultsForMessageChoiceResultType] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllResultsForMessageChoiceResultType]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllResultsForMessageChoiceResultType] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/15/2015
--- Description:	Gets all Result records associated with all ResultTypes associated with the specified MessageChoice
+-- Description:	Reads all Result records associated with all ResultTypes associated with the specified MessageChoice
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllResultsForMessageChoiceResultType]
+ALTER PROCEDURE [dev].[dev_ReadAllResultsForMessageChoiceResultType]
 	@messagechoice int
 AS
 BEGIN
@@ -2938,15 +3079,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Get a Result record in the database
+-- Description:	Read a Result record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetResult]
+ALTER PROCEDURE [dev].[dev_ReadResult]
 	@id int
 AS
 BEGIN
@@ -3063,15 +3204,15 @@ GO
 /*Action***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds a Action record and returns the newly generated ID
+-- Description:	Creates a Action record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddAction]
+ALTER PROCEDURE [dev].[dev_CreateAction]
 	@verbtype int,
 	@noun int
 AS
@@ -3144,15 +3285,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllActionsForNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllActionsForNoun] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllActionsForNoun]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllActionsForNoun] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/3/2015
--- Description:	Get all Action records associated with the specified Noun
+-- Description:	Read all Action records associated with the specified Noun
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllActionsForNoun]
+ALTER PROCEDURE [dev].[dev_ReadAllActionsForNoun]
 	@noun int
 AS
 BEGIN
@@ -3174,15 +3315,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/3/2015
--- Description:	Get an Action record in the database
+-- Description:	Read an Action record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAction]
+ALTER PROCEDURE [dev].[dev_ReadAction]
 	@id int
 AS
 BEGIN
@@ -3255,15 +3396,15 @@ GO
 /*ActionResult*****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddActionResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateActionResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Adds a ActionResult record and returns the newly generated ID
+-- Description:	Creates a ActionResult record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddActionResult]
+ALTER PROCEDURE [dev].[dev_CreateActionResult]
 	@result int,
 	@action int
 AS
@@ -3336,15 +3477,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllActionResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllActionResultsForAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllActionResultsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllActionResultsForAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/4/2015
--- Description:	Gets all ActionResult records associated with the specified Action
+-- Description:	Reads all ActionResult records associated with the specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllActionResultsForAction]
+ALTER PROCEDURE [dev].[dev_ReadAllActionResultsForAction]
 	@action int
 AS
 BEGIN
@@ -3361,15 +3502,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetActionResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadActionResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadActionResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/3/2015
--- Description:	Gets data about a ActionResult record in the database
+-- Description:	Reads data about a ActionResult record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetActionResult]
+ALTER PROCEDURE [dev].[dev_ReadActionResult]
 	@id int
 AS
 BEGIN
@@ -3413,15 +3554,15 @@ GO
 /*Item*************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddItem] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateItem] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Item record and returns the newly generated ID
+-- Description:	Creates an Item record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddItem]
+ALTER PROCEDURE [dev].[dev_CreateItem]
 	@name varchar(256),
 	@description varchar(256)
 AS
@@ -3494,15 +3635,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllItems]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllItems] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllItems]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllItems] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about all Item records currently in the database
+-- Description:	Reads data about all Item records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllItems]
+ALTER PROCEDURE [dev].[dev_ReadAllItems]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3518,15 +3659,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetItem] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadItem]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadItem] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about an Item record from the database
+-- Description:	Reads data about an Item record from the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetItem]
+ALTER PROCEDURE [dev].[dev_ReadItem]
 	@id int
 AS
 BEGIN
@@ -3574,15 +3715,15 @@ GO
 /*Event************************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddEvent] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateEvent] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Event record and returns the newly generated ID
+-- Description:	Creates an Event record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddEvent]
+ALTER PROCEDURE [dev].[dev_CreateEvent]
 	@name varchar(256),
 	@description varchar(256)
 AS
@@ -3655,15 +3796,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllEvents]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllEvents] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllEvents]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllEvents] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about all Event records currently in the database
+-- Description:	Reads data about all Event records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllEvents]
+ALTER PROCEDURE [dev].[dev_ReadAllEvents]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3679,15 +3820,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetEvent] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadEvent]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadEvent] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about an Event record from the database
+-- Description:	Reads data about an Event record from the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetEvent]
+ALTER PROCEDURE [dev].[dev_ReadEvent]
 	@id int
 AS
 BEGIN
@@ -3735,15 +3876,15 @@ GO
 /*Character********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddCharacter] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateCharacter] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Character record and returns the newly generated ID
+-- Description:	Creates an Character record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddCharacter]
+ALTER PROCEDURE [dev].[dev_CreateCharacter]
 	@name varchar(256),
 	@description varchar(256)
 AS
@@ -3816,15 +3957,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllCharacters]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllCharacters] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllCharacters]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllCharacters] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about all Character records currently in the database
+-- Description:	Reads data about all Character records currently in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllCharacters]
+ALTER PROCEDURE [dev].[dev_ReadAllCharacters]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -3840,15 +3981,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetCharacter] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadCharacter]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadCharacter] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/10/2015
--- Description:	Gets data about an Character record from the database
+-- Description:	Reads data about an Character record from the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetCharacter]
+ALTER PROCEDURE [dev].[dev_ReadCharacter]
 	@id int
 AS
 BEGIN
@@ -3896,15 +4037,15 @@ GO
 /*ItemActionRequirement********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddItemActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateItemActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Adds an ItemActionRequirement record and returns the newly generated ID
+-- Description:	Creates an ItemActionRequirement record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddItemActionRequirement]
+ALTER PROCEDURE [dev].[dev_CreateItemActionRequirement]
 	@item int,
 	@action int
 AS
@@ -3977,15 +4118,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllItemActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllItemActionRequirementsForAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllItemActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllItemActionRequirementsForAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets all ItemActionRequirements record for a specified Action
+-- Description:	Reads all ItemActionRequirements record for a specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllItemActionRequirementsForAction]
+ALTER PROCEDURE [dev].[dev_ReadAllItemActionRequirementsForAction]
 	@action int
 AS
 BEGIN
@@ -4008,15 +4149,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetItemActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadItemActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadItemActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets an ItemActionRequirement record
+-- Description:	Reads an ItemActionRequirement record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetItemActionRequirement]
+ALTER PROCEDURE [dev].[dev_ReadItemActionRequirement]
 	@id int
 AS
 BEGIN
@@ -4066,15 +4207,15 @@ GO
 /*EventActionRequirement*******************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddEventActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateEventActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Adds an EventActionRequirement record and returns the newly generated ID
+-- Description:	Creates an EventActionRequirement record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddEventActionRequirement]
+ALTER PROCEDURE [dev].[dev_CreateEventActionRequirement]
 	@item int,
 	@action int
 AS
@@ -4147,15 +4288,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllEventActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllEventActionRequirementsForAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllEventActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllEventActionRequirementsForAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets all EventActionRequirements record for a specified Action
+-- Description:	Reads all EventActionRequirements record for a specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllEventActionRequirementsForAction]
+ALTER PROCEDURE [dev].[dev_ReadAllEventActionRequirementsForAction]
 	@action int
 AS
 BEGIN
@@ -4178,15 +4319,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetEventActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadEventActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadEventActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets an EventActionRequirement record
+-- Description:	Reads an EventActionRequirement record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetEventActionRequirement]
+ALTER PROCEDURE [dev].[dev_ReadEventActionRequirement]
 	@id int
 AS
 BEGIN
@@ -4236,15 +4377,15 @@ GO
 /*CharacterActionRequirement***************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_AddCharacterActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_CreateCharacterActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Adds an CharacterActionRequirement record and returns the newly generated ID
+-- Description:	Creates an CharacterActionRequirement record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddCharacterActionRequirement]
+ALTER PROCEDURE [dev].[dev_CreateCharacterActionRequirement]
 	@item int,
 	@action int
 AS
@@ -4317,15 +4458,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllCharacterActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllCharacterActionRequirementsForAction] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllCharacterActionRequirementsForAction]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllCharacterActionRequirementsForAction] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets all CharacterActionRequirements record for a specified Action
+-- Description:	Reads all CharacterActionRequirements record for a specified Action
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllCharacterActionRequirementsForAction]
+ALTER PROCEDURE [dev].[dev_ReadAllCharacterActionRequirementsForAction]
 	@action int
 AS
 BEGIN
@@ -4348,15 +4489,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetCharacterActionRequirement] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadCharacterActionRequirement]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadCharacterActionRequirement] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/11/2015
--- Description:	Gets an CharacterActionRequirement record
+-- Description:	Reads an CharacterActionRequirement record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetCharacterActionRequirement]
+ALTER PROCEDURE [dev].[dev_ReadCharacterActionRequirement]
 	@id int
 AS
 BEGIN
@@ -4406,15 +4547,15 @@ GO
 /*Message**********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddMessage] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateMessage] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Message record and returns the newly generated ID
+-- Description:	Creates an Message record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddMessage]
+ALTER PROCEDURE [dev].[dev_CreateMessage]
 	@name varchar(256),
 	@text varchar(256)
 AS
@@ -4498,15 +4639,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessages]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessages] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllMessages]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllMessages] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/12/2015
--- Description:	Gets all Message records from the database
+-- Description:	Reads all Message records from the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllMessages]
+ALTER PROCEDURE [dev].[dev_ReadAllMessages]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -4522,15 +4663,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetMessage] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadMessage] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/12/2015
--- Description:	Gets a Message record
+-- Description:	Reads a Message record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetMessage]
+ALTER PROCEDURE [dev].[dev_ReadMessage]
 	@id int
 AS
 BEGIN
@@ -4588,15 +4729,15 @@ GO
 /*MessageChoice****************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoice] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateMessageChoice] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an MessageChoice record and returns the newly generated ID
+-- Description:	Creates an MessageChoice record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddMessageChoice]
+ALTER PROCEDURE [dev].[dev_CreateMessageChoice]
 	@name varchar(256),
 	@text varchar(256),
 	@message int
@@ -4684,15 +4825,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessageChoicesForMessage] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllMessageChoicesForMessage]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllMessageChoicesForMessage] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/12/2015
--- Description:	Gets all MessageChoice records from the database
+-- Description:	Reads all MessageChoice records from the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllMessageChoicesForMessage]
+ALTER PROCEDURE [dev].[dev_ReadAllMessageChoicesForMessage]
 	@message int
 AS
 BEGIN
@@ -4710,15 +4851,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetMessageChoice] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadMessageChoice] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/12/2015
--- Description:	Gets a MessageChoice record
+-- Description:	Reads a MessageChoice record
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetMessageChoice]
+ALTER PROCEDURE [dev].[dev_ReadMessageChoice]
 	@id int
 AS
 BEGIN
@@ -4775,15 +4916,15 @@ GO
 /*MessageChoiceResult*********************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddMessageChoiceResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreateMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreateMessageChoiceResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an MessageChoiceResult record and returns the newly generated ID
+-- Description:	Creates an MessageChoiceResult record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddMessageChoiceResult]
+ALTER PROCEDURE [dev].[dev_CreateMessageChoiceResult]
 	@result int,
 	@messagechoice int
 AS
@@ -4856,15 +4997,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAllMessageChoiceResultsForMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAllMessageChoiceResultsForMessageChoice] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAllMessageChoiceResultsForMessageChoice]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAllMessageChoiceResultsForMessageChoice] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/13/2015
--- Description:	Gets all MessageChoiceResult records associated with the specified MessageChoice
+-- Description:	Reads all MessageChoiceResult records associated with the specified MessageChoice
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAllMessageChoiceResultsForMessageChoice]
+ALTER PROCEDURE [dev].[dev_ReadAllMessageChoiceResultsForMessageChoice]
 	@messagechoice int
 AS
 BEGIN
@@ -4881,15 +5022,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetMessageChoiceResult] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadMessageChoiceResult]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadMessageChoiceResult] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/13/2015
--- Description:	Gets data about a MessageChoiceResult record in the database
+-- Description:	Reads data about a MessageChoiceResult record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetMessageChoiceResult]
+ALTER PROCEDURE [dev].[dev_ReadMessageChoiceResult]
 	@id int
 AS
 BEGIN
@@ -5020,15 +5161,15 @@ GO
 /*Player***********************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_AddPlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-  EXEC('CREATE PROCEDURE [dev].[dev_AddPlayer] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_CreatePlayer]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+  EXEC('CREATE PROCEDURE [dev].[dev_CreatePlayer] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 5/12/2015
--- Description:	Adds an Player record and returns the newly generated ID
+-- Description:	Creates an Player record and returns the newly generated ID
 -- =============================================
-ALTER PROCEDURE [dev].[dev_AddPlayer]
+ALTER PROCEDURE [dev].[dev_CreatePlayer]
 	@username varchar(256),
 	@domainname varchar(256),
 	@domain varchar(256),
@@ -5095,15 +5236,15 @@ GO
 /*RoomPreview******************************************************************************************************************************/
 /******************************************************************************************************************************************/
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreviewParagraphStates]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreviewParagraphStates] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadRoomPreviewParagraphStates]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadRoomPreviewParagraphStates] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/23/2015
--- Description:	Gets data about a RoomPreviewParagraphStates in the database
+-- Description:	Reads data about a RoomPreviewParagraphStates in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoomPreviewParagraphStates]
+ALTER PROCEDURE [dev].[dev_ReadRoomPreviewParagraphStates]
 	@room int
 AS
 BEGIN
@@ -5119,25 +5260,22 @@ BEGIN
 	FROM [dbo].[ParagraphStates] ps
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
-	LEFT JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
 	WHERE ps.[State] = 0
 	AND p.[Room] = @room
-	AND (rs.[State] = 0 OR p.[RoomState] IS NULL)
 	ORDER BY p.[Order]
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreviewNouns]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreviewNouns] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadRoomPreviewNouns]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadRoomPreviewNouns] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/23/2015
--- Description:	Gets data about a RoomPreviewNouns in the database
+-- Description:	Reads data about a RoomPreviewNouns in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoomPreviewNouns]
+ALTER PROCEDURE [dev].[dev_ReadRoomPreviewNouns]
 	@room int
 AS
 BEGIN
@@ -5154,24 +5292,21 @@ BEGIN
 	ON n.[ParagraphState] = ps.[Id]
 	INNER JOIN [dbo].[Paragraphs] p
 	ON ps.[Paragraph] = p.[Id]
-	LEFT JOIN [dbo].[RoomStates] rs
-	ON p.[RoomState] = rs.[Id]
 	WHERE p.[Room] = @room
-	AND (rs.[State] = 0 OR p.[RoomState] IS NULL)
 	ORDER BY p.[Order]
 
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetRoomPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetRoomPreview] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadRoomPreview]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadRoomPreview] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/22/2015
--- Description:	Gets data about a RoomPreview in the database
+-- Description:	Reads data about a RoomPreview in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetRoomPreview]
+ALTER PROCEDURE [dev].[dev_ReadRoomPreview]
 	@roompreview int
 AS
 BEGIN
@@ -5179,9 +5314,9 @@ BEGIN
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
 
-	EXEC [dev].[dev_GetRoomPreviewParagraphStates] @room = @roompreview
+	EXEC [dev].[dev_ReadRoomPreviewParagraphStates] @room = @roompreview
 
-	EXEC [dev].[dev_GetRoomPreviewNouns] @room = @roompreview
+	EXEC [dev].[dev_ReadRoomPreviewNouns] @room = @roompreview
 
 END
 GO
@@ -5242,15 +5377,15 @@ BEGIN
 END
 GO
 
-IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_GetAreaRoomOnInitialLoad]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
-	EXEC('CREATE PROCEDURE [dev].[dev_GetAreaRoomOnInitialLoad] AS SELECT 1')
+IF NOT EXISTS (SELECT 1 FROM [dbo].[sysobjects] WHERE [id] = object_id(N'[dev].[dev_ReadAreaRoomOnInitialLoad]') AND OBJECTPROPERTY([id], N'IsProcedure') = 1)
+	EXEC('CREATE PROCEDURE [dev].[dev_ReadAreaRoomOnInitialLoad] AS SELECT 1')
 GO
 -- =============================================
 -- Author:		Ian Eller-Romey
 -- Create date: 6/29/2015
--- Description:	Gets data about an AreaRoomOnInitialLoad record in the database
+-- Description:	Reads data about an AreaRoomOnInitialLoad record in the database
 -- =============================================
-ALTER PROCEDURE [dev].[dev_GetAreaRoomOnInitialLoad]
+ALTER PROCEDURE [dev].[dev_ReadAreaRoomOnInitialLoad]
 AS
 BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from

@@ -21,6 +21,34 @@ BEGIN
 	DBCC CHECKIDENT ('[dbo].[Locations]', RESEED, 0)
 END
 
+DECLARE @placeholderLocationName varchar(256)
+DECLARE @placeholderLocationFile varchar(256)
+SET @placeholderLocationName = 'Placeholder'
+SET @placeholderLocationFile = 'https://www.google.com/images/srpr/logo1w.png'
+DECLARE @placeholderLocationId int
+IF NOT EXISTS (SELECT 1 FROM [dbo].[Locations] WHERE [Name] = @placeholderLocationName)
+BEGIN
+	INSERT INTO [dbo].[Locations] ([Name], [LocationFile])
+	VALUES (@placeholderLocationName, @placeholderLocationFile)
+END
+SELECT @placeholderLocationId = [Id]
+FROM [dbo].[Locations]
+WHERE [Name] = @placeholderLocationName
+
+IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
+			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dev' and t.[name] = 'PlaceholderLocation')
+BEGIN
+	CREATE TABLE [dev].[PlaceholderLocation] (
+		[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id])
+	)
+END
+
+IF NOT EXISTS (SELECT 1 FROM [dev].[PlaceholderLocation] WHERE [Location] = @placeholderLocationId)
+BEGIN
+	INSERT INTO [dev].[PlaceholderLocation] ([Location])
+	VALUES (@placeholderLocationId)
+END
+
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
 			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'Rooms')
 BEGIN
@@ -43,7 +71,7 @@ BEGIN
 	CREATE TABLE [dbo].[RoomStates] (
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[State] int NOT NULL,
-		[Time] datetime NULL,
+		[Time] time NOT NULL,
 		[Location] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Locations]([Id]),
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id])
 	)
@@ -59,12 +87,23 @@ BEGIN
 		[Id] int PRIMARY KEY CLUSTERED IDENTITY,
 		[Order] int NOT NULL,
 		[Room] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Rooms]([Id]),
-		[RoomState] int NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
-		CONSTRAINT UQ__Paragraphs UNIQUE NONCLUSTERED ([Order], [Room], [RoomState])
+		CONSTRAINT UQ__Paragraphs UNIQUE NONCLUSTERED ([Order], [Room])
 	)
-	CREATE NONCLUSTERED INDEX IX__Paragraphs__RoomRoomState ON [dbo].[Paragraphs]([Room], [RoomState])
+	CREATE NONCLUSTERED INDEX IX__Paragraphs__RoomRoomState ON [dbo].[Paragraphs]([Room])
 	INCLUDE([Order])
 	DBCC CHECKIDENT ('[dbo].[Paragraphs]', RESEED, 0)
+END
+
+IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
+			   INNER JOIN [sys].[schemas] s ON (t.[schema_id] = s.[schema_id]) WHERE s.[name] = 'dbo' and t.[name] = 'ParagraphRoomStates')
+BEGIN
+	CREATE TABLE [dbo].[ParagraphRoomStates] (
+		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
+		[RoomState] int NOT NULL FOREIGN KEY REFERENCES [dbo].[RoomStates]([Id]),
+		[Paragraph] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Paragraphs]([Id])
+	)
+	CREATE CLUSTERED INDEX IX__ParagraphRoomStates__Clustered ON [dbo].[ParagraphRoomStates]([Paragraph])
+	DBCC CHECKIDENT ('[dbo].[ParagraphRoomStates]', RESEED, 0)
 END
 
 IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t 
@@ -472,8 +511,8 @@ IF NOT EXISTS (SELECT 1 FROM [sys].[tables] t
 BEGIN
 	CREATE TABLE [dbo].[ActionResults] (
 		[Id] int PRIMARY KEY NONCLUSTERED IDENTITY,
-		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id]),
 		[Result] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Results]([Id]),
+		[Action] int NOT NULL FOREIGN KEY REFERENCES [dbo].[Actions]([Id])
 	)
 	CREATE CLUSTERED INDEX IX__ActionResults__Clustered ON [dbo].[ActionResults]([Action])
 	DBCC CHECKIDENT ('[dbo].[ActionResults]', RESEED, 0)
