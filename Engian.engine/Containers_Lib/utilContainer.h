@@ -26,7 +26,7 @@ namespace Util
       class Iterator;
 
     protected:
-      /*!  \class IteratorImpl
+      /*! \class IteratorImpl
        *  \brief This abstract class contains the actual implementation of an Iterator,
        *  and must be derived from in any class that derives from a Container< T >.
        */
