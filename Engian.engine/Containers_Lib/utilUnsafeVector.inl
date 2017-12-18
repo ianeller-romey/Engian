@@ -1,7 +1,9 @@
 
+#include <cstring>
+
+
 namespace Util
 {
-
   
   template< typename T >
   UnsafeVector< T >::UnsafeVector() :

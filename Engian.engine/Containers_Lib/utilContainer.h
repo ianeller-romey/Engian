@@ -138,6 +138,12 @@ namespace Util
             return *this;
           }
 
+          Iterator& operator++( int )
+          {
+            ++( *m_implementation );
+            return *this;
+          }
+
           bool operator==( Iterator const& iterator ) const;
           bool operator!=( Iterator const& iterator ) const;
 

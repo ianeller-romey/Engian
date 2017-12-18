@@ -181,7 +181,7 @@ namespace CPPHeaderTestFileGenerator_Console
                 List<ClassDefinition> classes = CPPParser.Parse(headerFile);
                 TestFileGenerator.GenerateTestFileAndUpdateChassisFile(info, strings, classes, chassisFile);
             }
-
+            
             GeneratedTestFileList list = GeneratedTestFileList.Deserialize(generatedXmlFile);
             list.GeneratedTestFiles.Add(info);
             GeneratedTestFileList.Serialize(list, generatedXmlFile);

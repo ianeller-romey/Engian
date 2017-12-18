@@ -484,7 +484,7 @@ namespace Util
     }
 
     if( node == 0 )
-      throw; // TODO: actually throw something
+      throw 0; // TODO: actually throw something
 
     if( prevNode != 0 )
       prevNode->m_next = node->m_next;

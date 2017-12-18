@@ -29,6 +29,9 @@ namespace Test
 
 #define OBJECTS_PER_BLOCK 8
 
+#define HOMOGENEOUSINSTANCE( x ) HomogeneousMemoryManager< x >::INSTANCE()
+#define HOMOGENEOUSINSTANCE_SIZEOF( x ) HOMOGENEOUSINSTANCE( sizeof( x ) )
+
 
 namespace Memory 
 {

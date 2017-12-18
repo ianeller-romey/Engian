@@ -226,7 +226,7 @@
           **** UNIT TESTS: TestUtilHashTable
           ***/
           T_FUNC_ARR_DEC( TestUtilHashTable );
-          static char const * const TestUtilHashTable_KeyedIterator_CopyConstructor( char const * const name );
+          /*static char const * const TestUtilHashTable_KeyedIterator_CopyConstructor( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Constructor0( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Constructor1( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Key( char const * const name );
@@ -274,7 +274,33 @@
           static char const * const TestUtilHashTable_HashTable_BasicAssignment1( char const * const name );
           static char const * const TestUtilHashTable_HashTable_ArraySubscript( char const * const name );
           static char const * const TestUtilHashTable_HashTable_Addition( char const * const name );
-          static char const * const TestUtilHashTable_HashTable_AdditionAssignment( char const * const name );
+          static char const * const TestUtilHashTable_HashTable_AdditionAssignment( char const * const name );*/
+          /***/
+
+
+          /***
+          **** UNIT TESTS: TestMemoryHomogeneousMemoryManager
+          ***/
+          T_FUNC_ARR_DEC( TestMemoryHomogeneousMemoryManager );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Block_Constructor( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Block_IsBlockFull( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Block_IsObjectAvailable( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Block_ToggleObjectAvailability( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Block_GetObject( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Constructor( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Destructor( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Allocate0( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Allocate1( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_Free( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_ObjectsInUse( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_IsFull( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_Page_IsOnPage( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_PageNode_Constructor(char const * const name);
+          static char const * const TestMemoryHomogeneousMemoryManager_HomogeneousMemoryManager_Constructor( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_HomogeneousMemoryManager_INSTANCE( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_HomogeneousMemoryManager_Allocate0( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_HomogeneousMemoryManager_Allocate1( char const * const name );
+          static char const * const TestMemoryHomogeneousMemoryManager_HomogeneousMemoryManager_Free( char const * const name );
           /***/
 
 /* END OF UNIT TEST FUNCTIONS */

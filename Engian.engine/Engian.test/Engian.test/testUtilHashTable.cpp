@@ -3,7 +3,7 @@
 
 #ifdef RUN_UNIT_TESTS
 
-#include "utilHashTable.h"
+#include "testTestHelper_UtilHashTable.h"
 
 
 namespace Test
