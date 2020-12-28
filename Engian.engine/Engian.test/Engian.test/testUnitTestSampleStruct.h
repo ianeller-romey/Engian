@@ -25,7 +25,7 @@ namespace Test
     bool const operator>=( UnitTestSampleStruct const& other ) const;
     bool const operator<=( UnitTestSampleStruct const& other ) const;
 
-    int const Sum() const;
+    double const Sum() const;
 
     static void UpdateAnArray( UnitTestSampleStruct* array, unsigned const arraySize );
   };

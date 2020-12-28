@@ -474,8 +474,8 @@ namespace Util
     DFT_FUNC_TRACK( "void HashTable< T, KEY >::Pop( KEY const& key )" );
     unsigned const index = m_hashFunc( &key, m_capacity );
 
-    HashTableNode  *node = m_buckets[ index ],
-            *prevNode = 0;
+    HashTableNode *node = m_buckets[ index ],
+                  *prevNode = 0;
 
     while( node != 0 && node->m_key != key )
     {

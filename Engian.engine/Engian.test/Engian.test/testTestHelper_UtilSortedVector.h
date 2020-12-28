@@ -26,8 +26,7 @@ namespace Test
       static unsigned const SortedVector_PushBackRange0();
       static unsigned const SortedVector_PushBackRange1();
       static unsigned const SortedVector_Search();
-      static unsigned const SortedVector_BasicAssignment0();
-      static unsigned const SortedVector_BasicAssignment1();
+      static unsigned const SortedVector_BasicAssignment();
       static unsigned const SortedVector_Addition();
       static unsigned const SortedVector_AdditionAssignment();
 

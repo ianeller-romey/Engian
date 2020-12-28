@@ -47,5 +47,11 @@ void main( void )
         Util::SortedList< double > sList;
         Util::HashTable< int, int > hashTable;
         Util::Dictionary< char > dictionary;
+
+        hashTable.Push( 1, 2 );
+        hashTable.Push( 3, 4 );
+        hashTable.Push( 5, 6 );
+
+        auto value = hashTable[6];
     }
 }

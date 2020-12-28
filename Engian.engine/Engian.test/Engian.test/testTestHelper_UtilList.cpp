@@ -419,7 +419,7 @@ namespace Test
 
   unsigned const TestHelper_UtilList::List_Contains()
   {
-    Util::List< long > list;
+    Util::List< long long > list;
     list.PushBack( 10000000 );
     list.PushBack( 9999999999999999 );
     list.PushBack( 12345678987654321 );
@@ -428,7 +428,7 @@ namespace Test
     RETURNLINEIFFAILED( list.Contains( 9999999999999999 ) );
     RETURNLINEIFFAILED( list.Contains( 12345678987654321 ) );
     RETURNLINEIFFAILED( list.Contains( 1 ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< long >, "bool const List< T >::Contains( T const& t ) const" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::List< long long >, "bool const List< T >::Contains( T const& t ) const" ) );
     return 0;
   }
 
@@ -552,9 +552,9 @@ namespace Test
     
   template< typename T >
   unsigned const TestHelper_UtilList::CheckUtilListAgainstArray( Util::List< T > const& list, 
-                                                                      T const* compareAgainst, 
-                                                                      unsigned const arraySize, 
-                                                                      int const incr )
+                                                                 T const* compareAgainst, 
+                                                                 unsigned const arraySize, 
+                                                                 int const incr )
   {
     int i = 0;
     Util::List< T >::ListNode* node = list.m_front;

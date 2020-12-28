@@ -20,8 +20,7 @@ namespace Test
     T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_PushBackRange0 ),
     T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_PushBackRange1 ),
     T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_Search ),
-    T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_BasicAssignment0 ),
-    T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_BasicAssignment1 ),
+    T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_BasicAssignment ),
     T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_Addition ),
     T_FUNC_ARR_DEF( TestUtilSortedVector_SortedVector_AdditionAssignment )
   };
@@ -87,7 +86,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_CopyConstructor );
     }
     catch( ... )
     {
@@ -101,7 +100,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_PushFront );
     }
     catch( ... )
     {
@@ -115,7 +114,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_PushBack );
     }
     catch( ... )
     {
@@ -129,7 +128,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_PushBackRange0 );
     }
     catch( ... )
     {
@@ -143,7 +142,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_PushBackRange1 );
     }
     catch( ... )
     {
@@ -157,7 +156,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Search );
     }
     catch( ... )
     {
@@ -167,25 +166,11 @@ namespace Test
   }
 
 
-  char const * const UnitTestChassis::TestUtilSortedVector_SortedVector_BasicAssignment0( char const * const name )
+  char const * const UnitTestChassis::TestUtilSortedVector_SortedVector_BasicAssignment( char const * const name )
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
-    }
-    catch( ... )
-    {
-      return TEST_EXCEPTION;
-    }
-    return 0;
-  }
-
-
-  char const * const UnitTestChassis::TestUtilSortedVector_SortedVector_BasicAssignment1( char const * const name )
-  {
-    try
-    {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_BasicAssignment );
     }
     catch( ... )
     {
@@ -199,7 +184,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Addition );
     }
     catch( ... )
     {
@@ -213,7 +198,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedVector, SortedVector_AdditionAssignment );
     }
     catch( ... )
     {

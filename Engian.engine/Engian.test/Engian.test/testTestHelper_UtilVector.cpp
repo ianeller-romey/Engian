@@ -430,7 +430,7 @@ namespace Test
 
   unsigned const TestHelper_UtilVector::Vector_Contains()
   {
-    Util::Vector< long > vector;
+    Util::Vector< long long > vector;
     vector.PushBack( 10000000 );
     vector.PushBack( 9999999999999999 );
     vector.PushBack( 12345678987654321 );
@@ -439,7 +439,7 @@ namespace Test
     RETURNLINEIFFAILED( vector.Contains( 9999999999999999 ) );
     RETURNLINEIFFAILED( vector.Contains( 12345678987654321 ) );
     RETURNLINEIFFAILED( vector.Contains( 1 ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< long >, "bool const Vector< T >::Contains( T const& t ) const" ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::Vector< long long >, "bool const Vector< T >::Contains( T const& t ) const" ) );
     return 0;
   }
 

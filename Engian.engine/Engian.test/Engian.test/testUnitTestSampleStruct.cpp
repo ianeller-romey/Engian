@@ -100,7 +100,7 @@ namespace Test
   }
 
 
-  int const UnitTestSampleStruct::Sum() const
+  double const UnitTestSampleStruct::Sum() const
   {
     return m_int1 + m_int2 + m_int3 + m_doubles[ 0 ] + m_doubles[ 1 ] + m_doubles[ 2 ] + m_doubles[ 3 ] + m_doubles[ 4 ];
   }

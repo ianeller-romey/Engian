@@ -1,6 +1,6 @@
 
-#ifndef TEST_UNITTESTHELPER_H
-#define TEST_UNITTESTHELPER_H
+#ifndef TEST_TESTHELPER_UTILSORTEDLIST_H
+#define TEST_TESTHELPER_UTILSORTEDLIST_H
 
 
 namespace Util
@@ -27,8 +27,7 @@ namespace Test
       static unsigned const SortedList_PopAll();
       static unsigned const SortedList_Contains();
       static unsigned const SortedList_Clear();
-      static unsigned const SortedList_BasicAssignment0();
-      static unsigned const SortedList_BasicAssignment1();
+      static unsigned const SortedList_BasicAssignment();
       static unsigned const SortedList_Addition();
       static unsigned const SortedList_AdditionAssignment();
 

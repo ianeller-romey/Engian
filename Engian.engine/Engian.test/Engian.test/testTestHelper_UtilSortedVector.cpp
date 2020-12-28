@@ -84,8 +84,8 @@ namespace Test
       doubles[ i ] = (double)rand();
     Util::SortedVector< double > sVector1( doubles, number ),
                                  sVector2( sVector1 );
-    RETURNLINEIFFAILED( CheckUtilSortedVectorInit< double >( sVector2, sVector1.m_capacity, sVector1.m_size ) );
-    RETURNLINEIFFAILED( CheckUtilSortedVector< double >( sVector2 ) );
+    RETURNLINEIFFAILED( CheckUtilSortedVectorInit< double >( sVector2, sVector1.m_capacity, sVector1.m_size ) == 0 );
+    RETURNLINEIFFAILED( CheckUtilSortedVector< double >( sVector2 ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< double >, "SortedVector< T >::SortedVector( SortedVector const& sortedVector )" ) );
     return 0;
   }
@@ -148,7 +148,7 @@ namespace Test
     sVector.PushBackRange( list );
     RETURNLINEIFFAILED( CheckUtilSortedVector< unsigned char >( sVector ) == 0 );
     RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< unsigned char >, 
-                                        "void SortedVector< T >::PushBackRange( T const * const tArray, unsigned const size )" ) );
+                                        "void SortedVector< T >::PushBackRange( Container< T > const& container )" ) );
     return 0;
   }
 
@@ -174,28 +174,7 @@ namespace Test
   }
 
 
-  unsigned const TestHelper_UtilSortedVector::SortedVector_BasicAssignment0()
-  {
-    unsigned const number1 = 500, number2 = 200;
-    float numbers1[ number1 ], numbers2[ number2 ];
-    for( unsigned i = 0; i < number1; ++i )
-      numbers1[ i ] = (float)rand();
-    for( unsigned i = 0; i < number2; ++i )
-      numbers2[ i ] = (float)rand();
-    Util::SortedVector< float > sVector1( numbers1, number1 ),
-                                sVector2( numbers2, number2 );
-
-    sVector2 = sVector1;
-    RETURNLINEIFFAILED( CheckUtilSortedVectorInit< float >( sVector2, sVector1.m_size, sVector1.m_size ) == 0 );
-    RETURNLINEIFFAILED( CheckUtilSortedVector< float >( sVector2 ) == 0 );
-    RETURNLINEIFFAILED( CheckUtilSortedVectorAgainstArray< float >( sVector2, sVector1.m_array, sVector1.m_size ) == 0 )
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::SortedVector< float >, 
-                                        "SortedVector< T >& SortedVector< T >::operator=( SortedVector< T > const& sortedVector )" ) );
-    return 0;
-  }
-
-
-  unsigned const TestHelper_UtilSortedVector::SortedVector_BasicAssignment1()
+  unsigned const TestHelper_UtilSortedVector::SortedVector_BasicAssignment()
   {
     unsigned const number1 = 500, number2 = 200;
     float numbers1[ number1 ], numbers2[ number2 ];
@@ -271,10 +250,14 @@ namespace Test
   template< typename T >
   unsigned const TestHelper_UtilSortedVector::CheckUtilSortedVector( Util::SortedVector< T > const& sVector )
   {
-    if( sVector.m_size == 0 ) 
+    if( sVector.m_size < 1 ) 
       return 0;
-    for( unsigned i = 0, j = sVector.m_size - 1; i < j; ++i )
+    unsigned i = 0,
+             j = sVector.m_size - 2;
+    do
+    {
       RETURNLINEIFFAILED( sVector.m_array[ i ] <= sVector.m_array[ i + 1 ] );
+    } while ( ++i <= j );
     return 0;
   }
      

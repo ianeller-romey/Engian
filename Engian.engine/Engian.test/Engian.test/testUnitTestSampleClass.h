@@ -30,6 +30,8 @@ namespace Test
       bool const operator>=( UnitTestSampleClass const& other ) const;
       bool const operator<=( UnitTestSampleClass const& other ) const;
 
+      double const Sum() const;
+
       static void UpdateAnArray( UnitTestSampleClass* array, unsigned const arraySize );
   };
 

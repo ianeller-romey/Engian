@@ -53,10 +53,15 @@ namespace Util
     protected:
       virtual bool const Search( unsigned& startIndex, T const& t ) const;
 
-      void ShiftAndPush( unsigned const pushIndex, T const& t );
+      void ShiftAndPush( unsigned pushIndex, T const& t );
 
       unsigned const FindInsertionIndex( T const& t, bool& contains ) const;
       void QuickSort(  T* const tArray, int left, int rght );
+
+
+    private:
+      unsigned const GetMidpoint( unsigned max, unsigned min ) const;
+
   };
 
 }

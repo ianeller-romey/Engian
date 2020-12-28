@@ -1,7 +1,16 @@
 
 #include "testTestHelper_UtilHashTable.h"
+#include "testTestHelper_UtilContainer.h"
+
+#include "testUnitTestSampleStruct.h"
+#include "testUnitTestSampleClass.h"
 
 #include "utilHashTable.h"
+#include "utilString.h"
+#include "utilKeyValuePair.h"
+
+#include <iostream>
+#include <fstream>
 
 
 #define RETURNLINEIFFAILED( check ) if( ( check ) == false ) return __LINE__;
@@ -114,6 +123,7 @@ namespace Test
 
   unsigned const TestHelper_UtilHashTable::HashTable_Constructor0()
   {
+    Util::HashTable< UnitTestSampleClass, Util::String > hashTable;
     return 0;
   }
 
@@ -313,6 +323,29 @@ namespace Test
   unsigned const TestHelper_UtilHashTable::HashTable_AdditionAssignment()
   {
     return 0;
+  }
+
+
+  template< typename T, typename KEY >
+  unsigned const TestHelper_UtilHashTable::CheckUtilHashTable( Util::HashTable< T, KEY > const& hTable, Util::Container< Util::KeyValuePair< T, KEY > > const& contains )
+  {
+    auto counted = 0;
+    for( auto i = 0; i < hTable.m_buckets; ++i )
+    {
+      auto node = hTable.m_buckets[ i ];
+      while( node != NULL )
+      {
+        ++counted;
+        node = node->m_next;
+      }
+    }
+    RETURNLINEIFFAILED( counted == hTable.m_size );
+
+    for( auto itB = contains.Begin(), itE = contains.End(); itB != itE; ++itB )
+    {
+      auto kv = *itB;
+      RETURNLINEIFFAILED( hTable[ kv.m_value2 ] == kv.m_value1 );
+    }
   }
 
 }

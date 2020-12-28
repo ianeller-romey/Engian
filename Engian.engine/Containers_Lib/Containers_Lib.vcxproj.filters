@@ -33,6 +33,9 @@
     <ClCompile Include="utilString.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="utilNple.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utilContainer.h">
@@ -74,6 +77,12 @@
     <ClInclude Include="utilSorter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utilKeyValuePair.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilNple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="utilContainer.inl">
@@ -101,6 +110,9 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="utilVector.inl">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="utilNple.inl">
       <Filter>Source Files</Filter>
     </None>
   </ItemGroup>

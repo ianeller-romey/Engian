@@ -214,17 +214,17 @@ namespace Test
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilString_String_BeginsWith0" ) );
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilVector" ) == false );
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilString_String_BeginsWith000" ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string ) const" ) );
 
     RETURNLINEIFFAILED( string.BeginsWith( "Test", 3 ) );
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilString_String_BeginsWith0", charactersLen ) );
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilVector", 10 ) == false );
     RETURNLINEIFFAILED( string.BeginsWith( "TestUtilString_String_BeginsWith000", 34 ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string, unsigned strLen ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const * const string, unsigned strLen ) const" ) );
 
     RETURNLINEIFFAILED( string.BeginsWith( 'T' ) );
     RETURNLINEIFFAILED( string.BeginsWith( 't' ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const character ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( char const character ) const" ) );
 
     stringAlt = "TestUtilString";
     RETURNLINEIFFAILED( string.BeginsWith( stringAlt ) );
@@ -234,7 +234,7 @@ namespace Test
     RETURNLINEIFFAILED( string.BeginsWith( stringAlt ) == false );
     stringAlt = "TestUtilString_String_BeginsWith000";
     RETURNLINEIFFAILED( string.BeginsWith( stringAlt ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( String const& string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( String const& string ) const" ) );
 
     list.Clear();
     for( unsigned i = 0, j = charactersLen / 2; i < j; ++i ) list.PushBack( characters[ i ] );
@@ -249,7 +249,7 @@ namespace Test
     for( unsigned i = 0; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
     list.PushBack( '0' );
     RETURNLINEIFFAILED( string.BeginsWith( list ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( Container< char > const& container ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::BeginsWith( Container< char > const& container ) const" ) );
     return 0;
   }
 
@@ -265,17 +265,17 @@ namespace Test
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilString_String_EndsWith0" ) );
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilVector" ) == false );
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilString_String_EndsWith000" ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string ) const" ) );
 
     RETURNLINEIFFAILED( string.EndsWith( "With0With0With0", 5 ) );
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilString_String_EndsWith0", charactersLen ) );
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilVector", 10 ) == false );
     RETURNLINEIFFAILED( string.EndsWith( "TestUtilString_String_EndsWith000", 34 ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string, unsigned strLen ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const * const string, unsigned strLen ) const" ) );
 
     RETURNLINEIFFAILED( string.EndsWith( '0' ) );
     RETURNLINEIFFAILED( string.EndsWith( 't' ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const character ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( char const character ) const" ) );
 
     stringAlt = "EndsWith0";
     RETURNLINEIFFAILED( string.EndsWith( stringAlt ) );
@@ -285,7 +285,7 @@ namespace Test
     RETURNLINEIFFAILED( string.EndsWith( stringAlt ) == false );
     stringAlt = "TestUtilString_String_EndsWith000";
     RETURNLINEIFFAILED( string.EndsWith( stringAlt ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( String const& string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( String const& string ) const" ) );
 
     list.Clear();
     for( unsigned i = charactersLen / 2; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
@@ -300,7 +300,7 @@ namespace Test
     for( unsigned i = 0; i < charactersLen; ++i ) list.PushBack( characters[ i ] );
     list.PushBack( '0' );
     RETURNLINEIFFAILED( string.EndsWith( list ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( Container< char > const& container ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::EndsWith( Container< char > const& container ) const" ) );
     return 0;
   }
 
@@ -397,11 +397,11 @@ namespace Test
       
     RETURNLINEIFFAILED( string == characters );
     RETURNLINEIFFAILED( ( string == "This is a non-equivalent string" ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const * const string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const * const string ) const" ) );
                          
     RETURNLINEIFFAILED( ( string != characters ) == false );
     RETURNLINEIFFAILED( string != "This is a non-equivalent string" );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const * const string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const * const string ) const" ) );
     return 0;
   }
 
@@ -417,7 +417,7 @@ namespace Test
     RETURNLINEIFFAILED( ( string == '1' ) == false );
     string = "^^^";
     RETURNLINEIFFAILED( ( string == character ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const character ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( char const character ) const" ) );
                   
     string.Clear();
     string.PushBack( character );
@@ -425,7 +425,7 @@ namespace Test
     RETURNLINEIFFAILED( string != '1' );
     string = "^^^";
     RETURNLINEIFFAILED( string != character );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const character ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( char const character ) const" ) );
     return 0;
   }
 
@@ -446,7 +446,7 @@ namespace Test
     string3.PushBackRange( characters + charactersHalfLen, charactersLen - charactersHalfLen );
     string3.PushBackRange( "000", 3 );
     RETURNLINEIFFAILED( ( string1 == string3 ) == false );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( String const& string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator==( String const& string ) const" ) );
                          
     string3.Clear();
     string3.PushBackRange( characters, charactersHalfLen );
@@ -455,7 +455,7 @@ namespace Test
     string3.PushBackRange( characters + charactersHalfLen, charactersLen - charactersHalfLen );
     string3.PushBackRange( "000", 3 );
     RETURNLINEIFFAILED( string1 != string3 );
-    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( String const& string ) const", true ) );
+    RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "bool const String::operator!=( String const& string ) const" ) );
     return 0;
   }
 
@@ -618,7 +618,7 @@ namespace Test
       string << i;
       RETURNLINEIFFAILED( CheckUtilStringInit( string, charactersLen + 1 ) == 0 );                     
       RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string, characters, charactersLen ) == 0 );                     
-      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( int const integer )", true ) );                     
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( int const integer )" ) );                     
     }
       
     {
@@ -631,7 +631,7 @@ namespace Test
       string << u;
       RETURNLINEIFFAILED( CheckUtilStringInit( string, charactersLen + 1 ) == 0 );                     
       RETURNLINEIFFAILED( CheckUtilStringAgainstArray( string, characters, charactersLen ) == 0 );                     
-      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( unsigned const uinteger )", true ) );
+      RETURNLINEIFFAILED( DFT_FUNC_CHECK( Util::String, "String& String::operator<<( unsigned const uinteger )" ) );
     }
     return 0;  
   }

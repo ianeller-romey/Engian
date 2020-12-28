@@ -23,7 +23,7 @@ namespace Test
   {
     char const** const testNames = new char const*[ numTests ];
       
-    for( unsigned i = 0; i < numTests; ++i )
+    for( auto i = 0; i < numTests; ++i )
       testNames[ i ] = unitTestArray[ i ].Name;
       
     *allTests = UnitTestChassis::MarshalArrayOfStrings( testNames, numTests );
@@ -42,9 +42,9 @@ namespace Test
   {
     char const** const testResults = new char const*[ numTestsToRun ];
 
-    for( unsigned i = 0; i < numTestsToRun; ++i )
+    for( auto i = 0; i < numTestsToRun; ++i )
     {
-      for( unsigned j = 0; j < numUnitTests; ++j )
+      for( auto j = 0; j < numUnitTests; ++j )
       {
         if( strcmp( unitTestArray[ j ].Name, testsToRun[ i ] ) == 0 )
         {
@@ -57,7 +57,7 @@ namespace Test
 
     *allResults = UnitTestChassis::MarshalArrayOfStrings( testResults, numTestsToRun );
 
-    for( unsigned i = 0; i < numTestsToRun; ++i )
+    for( auto i = 0; i < numTestsToRun; ++i )
       if( testResults[ i ] != 0 )
         delete [] testResults[ i ];
     delete [] testResults;

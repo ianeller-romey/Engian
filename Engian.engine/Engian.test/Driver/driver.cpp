@@ -9,7 +9,7 @@ void main()
 
   Test::UnitTestChassis::TestUtilVector_Vector_Clear("");
 
-  Test::UnitTestChassis::TestUtilSortedList_SortedList_CopyConstructor("");
+  //Test::UnitTestChassis::TestUtilSortedList_SortedList_CopyConstructor("");
 
 
   //output = Test::UnitTestChassis::TestUtilVector_Vector_Constructor0( "" );
@@ -19,14 +19,14 @@ void main()
   //output = Test::UnitTestChassis::TestUtilList_List_PopFirst( "" );
   
   {
-    unsigned const numTests = 28;
+    unsigned const numTests = 15;
     char** allTests = new char*[ numTests ];
   
     unsigned const numTestsToRun = numTests;
     char** allTestsToRun = new char*[ numTestsToRun ];
 
-    Test::UnitTestChassis::GetTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilVector, numTests, &allTests );
-    Test::UnitTestChassis::RunTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilVector, numTests, allTests, numTestsToRun, &allTestsToRun );
+    Test::UnitTestChassis::GetTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilSortedList, numTests, &allTests );
+    Test::UnitTestChassis::RunTests_UnitTests( Test::UnitTestChassis::UnitTestArray_TestUtilSortedList, numTests, allTests, numTestsToRun, &allTestsToRun );
     int i = 0;
   }
 

@@ -191,8 +191,7 @@
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange0( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_PushBackRange1( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Search( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_BasicAssignment0( char const * const name );
-          static char const * const TestUtilSortedVector_SortedVector_BasicAssignment1( char const * const name );
+          static char const * const TestUtilSortedVector_SortedVector_BasicAssignment( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_Addition( char const * const name );
           static char const * const TestUtilSortedVector_SortedVector_AdditionAssignment( char const * const name );
           /***/
@@ -214,9 +213,7 @@
           static char const * const TestUtilSortedList_SortedList_PopAll( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Contains( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Clear( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_Push( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_BasicAssignment0( char const * const name );
-          static char const * const TestUtilSortedList_SortedList_BasicAssignment1( char const * const name );
+          static char const * const TestUtilSortedList_SortedList_BasicAssignment( char const * const name );
           static char const * const TestUtilSortedList_SortedList_Addition( char const * const name );
           static char const * const TestUtilSortedList_SortedList_AdditionAssignment( char const * const name );
           /***/
@@ -226,7 +223,7 @@
           **** UNIT TESTS: TestUtilHashTable
           ***/
           T_FUNC_ARR_DEC( TestUtilHashTable );
-          /*static char const * const TestUtilHashTable_KeyedIterator_CopyConstructor( char const * const name );
+          static char const * const TestUtilHashTable_KeyedIterator_CopyConstructor( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Constructor0( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Constructor1( char const * const name );
           static char const * const TestUtilHashTable_KeyedIterator_Key( char const * const name );
@@ -235,6 +232,7 @@
           static char const * const TestUtilHashTable_HashTableIteratorImpl_Constructor0( char const * const name );
           static char const * const TestUtilHashTable_HashTableIteratorImpl_Constructor1( char const * const name );
           static char const * const TestUtilHashTable_HashTableIteratorImpl_CopyConstructor( char const * const name );
+          static char const * const TestUtilHashTable_HashTableIteratorImpl_Clone(char const * const name);
           static char const * const TestUtilHashTable_HashTableIteratorImpl_Key( char const * const name );
           static char const * const TestUtilHashTable_HashTableIteratorImpl_AdvanceValue( char const * const name );
           static char const * const TestUtilHashTable_HashTableIteratorImpl_GetValue( char const * const name );
@@ -269,12 +267,13 @@
           static char const * const TestUtilHashTable_HashTable_Clear1( char const * const name );
           static char const * const TestUtilHashTable_HashTable_CheckAndGrow( char const * const name );
           static char const * const TestUtilHashTable_HashTable_Grow( char const * const name );
+          static char const * const TestUtilHashTable_HashTable_Deallocate( char const * const name );
           static char const * const TestUtilHashTable_HashTable_CreateKeyedIteratorFromImplementation( char const * const name );
           static char const * const TestUtilHashTable_HashTable_BasicAssignment0( char const * const name );
           static char const * const TestUtilHashTable_HashTable_BasicAssignment1( char const * const name );
           static char const * const TestUtilHashTable_HashTable_ArraySubscript( char const * const name );
           static char const * const TestUtilHashTable_HashTable_Addition( char const * const name );
-          static char const * const TestUtilHashTable_HashTable_AdditionAssignment( char const * const name );*/
+          static char const * const TestUtilHashTable_HashTable_AdditionAssignment( char const * const name );
           /***/
 
 

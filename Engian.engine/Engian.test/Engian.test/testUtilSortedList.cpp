@@ -22,8 +22,7 @@ namespace Test
     T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_PopAll ),
     T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_Contains ),
     T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_Clear ),
-    T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_BasicAssignment0 ),
-    T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_BasicAssignment1 ),
+    T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_BasicAssignment ),
     T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_Addition ),
     T_FUNC_ARR_DEF( TestUtilSortedList_SortedList_AdditionAssignment )
   };
@@ -61,7 +60,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor2 );
     }
     catch( ... )
     {
@@ -89,7 +88,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PushFront );
     }
     catch( ... )
     {
@@ -103,7 +102,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PushBack );
     }
     catch( ... )
     {
@@ -117,7 +116,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PopFront );
     }
     catch( ... )
     {
@@ -131,7 +130,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PopBack );
     }
     catch( ... )
     {
@@ -145,7 +144,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PopFirst );
     }
     catch( ... )
     {
@@ -159,7 +158,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_PopAll );
     }
     catch( ... )
     {
@@ -173,7 +172,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Contains );
     }
     catch( ... )
     {
@@ -187,7 +186,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Clear );
     }
     catch( ... )
     {
@@ -197,25 +196,11 @@ namespace Test
   }
 
 
-  char const * const UnitTestChassis::TestUtilSortedList_SortedList_BasicAssignment0( char const * const name )
+  char const * const UnitTestChassis::TestUtilSortedList_SortedList_BasicAssignment( char const * const name )
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
-    }
-    catch( ... )
-    {
-      return TEST_EXCEPTION;
-    }
-    return 0;
-  }
-
-
-  char const * const UnitTestChassis::TestUtilSortedList_SortedList_BasicAssignment1( char const * const name )
-  {
-    try
-    {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_BasicAssignment );
     }
     catch( ... )
     {
@@ -229,7 +214,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Addition );
     }
     catch( ... )
     {
@@ -243,7 +228,7 @@ namespace Test
   {
     try
     {
-      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_Constructor0 );
+      TEST_HELPER_FUNCTION_ASSERT( TestHelper_UtilSortedList, SortedList_AdditionAssignment );
     }
     catch( ... )
     {

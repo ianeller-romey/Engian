@@ -72,25 +72,31 @@ namespace Test
 
   bool const UnitTestSampleClass::operator>( UnitTestSampleClass const& other ) const
   {
-    return strcmp( m_string, other.m_string ) > 0 && m_int > other.m_int && m_struct > other.m_struct;
+    return Sum() > other.Sum();
   }
 
 
   bool const UnitTestSampleClass::operator<( UnitTestSampleClass const& other ) const
   {
-    return strcmp( m_string, other.m_string ) < 0 && m_int < other.m_int && m_struct < other.m_struct;
+    return Sum() < other.Sum();
   }
 
 
   bool const UnitTestSampleClass::operator>=( UnitTestSampleClass const& other ) const
   {
-    return strcmp( m_string, other.m_string ) >= 0 && m_int >= other.m_int && m_struct >= other.m_struct;
+    return Sum() >= other.Sum();
   }
 
 
   bool const UnitTestSampleClass::operator<=( UnitTestSampleClass const& other ) const
   {
-    return strcmp( m_string, other.m_string ) <= 0 && m_int <= other.m_int && m_struct <= other.m_struct;
+    return Sum() <= other.Sum();
+  }
+
+
+  double const UnitTestSampleClass::Sum() const
+  {
+    return strlen( m_string ) + m_int + m_struct.Sum();
   }
 
 

@@ -36,8 +36,11 @@ namespace Util
     Vector< T >( sortedVector.m_capacity )
   {
     DFT_FUNC_TRACK( "SortedVector< T >::SortedVector( SortedVector const& sortedVector )" );
-    for( unsigned i = 0; i < sortedVector.m_size; ++i )
-      Vector< T >::PushBack( sortedVector[ i ] );
+    m_size = sortedVector.m_size;
+    for( unsigned i = 0; i < m_size; ++i )
+    {
+      m_array[ i ] = sortedVector.m_array[ i ];
+    }
   }
 
     
@@ -64,10 +67,14 @@ namespace Util
     DFT_FUNC_TRACK( "SortedVector< T >& SortedVector< T >::operator=( SortedVector< T > const& sortedVector )" );
     Clear();
 
-    m_capacity = sortedVector.GetSize();
+    // it's already sorted, so we don't need to worry about finding insertion indices
+    m_capacity = sortedVector.m_capacity;
+    m_size = sortedVector.m_size;
     m_array = new T[ m_capacity ];
-    for( unsigned i = 0, j = sortedVector.GetSize(); i < j; ++i )
-      PushBack( sortedVector[ i ] );
+    for( unsigned i = 0; i < m_size; ++i )
+    {
+      m_array[ i ] = sortedVector.m_array[ i ];
+    }
 
     return *this;
   }
@@ -147,14 +154,28 @@ namespace Util
 
 
   template< typename T >
-  void SortedVector< T >::ShiftAndPush( unsigned const startIndex, T const& t )
+  void SortedVector< T >::ShiftAndPush( unsigned pushIndex, T const& t )
   {
     DFT_FUNC_TRACK( "void SortedVector< T >::ShiftAndPush( unsigned const startIndex, T const& t )" );
-    CheckAndGrow();
-    for( unsigned i = m_size; i > startIndex; --i )
+    CheckAndGrow();    
+    
+    if( pushIndex != 0 && m_greaterThanFunc( m_array[ pushIndex ], t ) )
+    {
+      --pushIndex;
+    }
+    else if ( m_lessThanFunc( m_array[ pushIndex ], t ) )
+    {
+      // we don't need to worry about stepping out of bounds, because the call to CheckAndGrow
+      // will prevent that possibility
+      ++pushIndex;
+    }
+
+    for( unsigned i = m_size; i > pushIndex; --i )
       m_array[ i ] = m_array[ i - 1 ];
-    m_array[ startIndex ] = t;
+
+    m_array[ pushIndex ] = t;
     ++m_size;
+
     InvalidateAllIteratorImplementations();
   }
 
@@ -165,20 +186,45 @@ namespace Util
     DFT_FUNC_TRACK( "unsigned const SortedVector< T >::FindInsertionIndex( T const& t, bool& contains ) const" );
     contains = false;
     unsigned 
-      max = m_size,
+      max = ( m_size == 0 ) ? 0 : m_size - 1,
       min = 0,
-      index = ( max - min ) / 2;
-    while( max - min > 1 )
+      index = GetMidpoint( max, min );
+
+    // since we're already sorted, let's start by checking if we can just
+    // by default insert at the end or beginning
+    if( m_lessThanFunc( m_array[ max ], t ) )
+    {
+      index = max;
+      return index;
+    }
+    else if( m_greaterThanFunc( m_array[ min ], t ) )
+    {
+      index = min;
+      return index;
+    }
+
+    // iterative binary search
+    do
     {
       if( m_greaterThanFunc( m_array[ index ], t ) )
-        max = index;
-      else if( m_lessThanFunc( m_array[ index ], t ) )
-        min = index;
+      {
+        max = index - 1;
+      }
+      else if ( m_lessThanFunc( m_array[ index ], t ) )
+      {
+        min = index + 1;
+      }
       else if( m_equalityFunc( m_array[ index ], t ) )
       {
         contains = true;
-        break;
+        return index;
       }
+      index = GetMidpoint( max, min );
+    } while( max != min );
+
+    if( m_equalityFunc( m_array[ index ], t ) )
+    {
+      contains = true;
     }
     return index;
   }
@@ -221,6 +267,11 @@ namespace Util
       QuickSort( tArray, i, rght );
   }
 
-  //template class SortedVector< int >;
+
+  template< typename T >
+  unsigned const SortedVector< T >::GetMidpoint( unsigned max, unsigned min ) const
+  {
+    return min + (unsigned)roundf( ( ( (float)max - (float)min ) / 2.0f ) );
+  }
 
 }
